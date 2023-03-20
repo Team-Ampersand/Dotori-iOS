@@ -1,8 +1,11 @@
 import UIKit
+import Moordinator
+import RootFeature
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    private let moordinatorWorker = MoordinatorWorker()
 
     func scene(
         _ scene: UIScene,
@@ -10,6 +13,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         options connectionOptions: UIScene.ConnectionOptions
     ) {
         guard let scene = (scene as? UIWindowScene) else { return }
+        let window = UIWindow(windowScene: scene)
+        let rootMoordinator = RootMoordinator(window: window)
+        moordinatorWorker.coordinate(moordinator: rootMoordinator)
+        self.window = window
     }
 
     func sceneDidDisconnect(_ scene: UIScene) { }
