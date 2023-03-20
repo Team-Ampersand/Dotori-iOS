@@ -6,7 +6,7 @@ let dependencies = Dependencies(
     swiftPackageManager: SwiftPackageManagerDependencies(
         [
             .remote(url: "https://github.com/GSM-MSG/Moordinator.git", requirement: .exact("1.1.1")),
-            .remote(url: "https://github.com/GSM-MSG/Emdpoint.git", requirement: .exact("2.0.0")),
+            .remote(url: "https://github.com/GSM-MSG/Emdpoint.git", requirement: .exact("2.1.0")),
             .remote(url: "https://github.com/GSM-MSG/MSGLayout.git", requirement: .exact("1.1.0")),
             .remote(url: "https://github.com/Swinject/Swinject.git", requirement: .exact("2.8.3")),
     
