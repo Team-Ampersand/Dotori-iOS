@@ -1,5 +1,5 @@
 import Foundation
-import KeychainInterface
+import JwtStoreInterface
 
 public struct KeychainJwtStore: JwtStore {
     public func save(property: JwtStoreProperties, value: String) {
