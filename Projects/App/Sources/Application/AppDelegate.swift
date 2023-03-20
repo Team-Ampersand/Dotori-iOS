@@ -1,7 +1,9 @@
 import UIKit
+import Swinject
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    let container = Container()
 
     func application(
         _ application: UIApplication,
