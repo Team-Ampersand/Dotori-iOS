@@ -9,7 +9,7 @@ extension AuthEndpoint: DotoriEndpoint {
     typealias ErrorType = Error
 
     var route: Route {
-        .post("")
+        .post("/auth")
     }
 
     var task: HTTPTask {
