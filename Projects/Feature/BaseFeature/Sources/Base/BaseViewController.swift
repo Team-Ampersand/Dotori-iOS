@@ -1,7 +1,7 @@
 import Combine
 import UIKit
 
-open class BaseViewController<VM: BaseViewModel>: UIViewController, BoundsProviable {
+open class BaseViewController<Store: BaseStore>: UIViewController, BoundsProviable {
 
     // MARK: - Properties
 
@@ -10,13 +10,13 @@ open class BaseViewController<VM: BaseViewModel>: UIViewController, BoundsProvia
     private let viewDidAppearSubject = PassthroughSubject<Void, Never>()
     private let viewWillDisappearSubject = PassthroughSubject<Void, Never>()
     private let viewDidDisappearSubject = PassthroughSubject<Void, Never>()
-    public let viewModel: VM
+    public let store: Store
     public var bag = Set<AnyCancellable>()
 
     // MARK: - Init
 
-    public init(viewModel: VM) {
-        self.viewModel = viewModel
+    public init(store: Store) {
+        self.store = store
         super.init(nibName: nil, bundle: nil)
     }
 
