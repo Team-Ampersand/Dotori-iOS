@@ -4,6 +4,6 @@ import DependencyPlugin
 
 let project = Project.makeModule(
     name: ModulePaths.Shared.UtilityModule.rawValue,
-    product: .staticFramework,
+    product: .framework,
     targets: [.unitTest]
 )

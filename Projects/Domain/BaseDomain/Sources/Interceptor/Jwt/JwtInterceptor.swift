@@ -12,7 +12,7 @@ public struct JwtInterceptor: InterceptorType {
     public func prepare(
         _ request: URLRequest,
         endpoint: EndpointType,
-        completion: (Result<URLRequest, Error>) -> Void
+        completion: (Result<URLRequest, EmdpointError>) -> Void
     ) {
         guard let jwtTokenType = (endpoint as? JwtAuthorizable)?.jwtTokenType,
               jwtTokenType != .none
@@ -27,7 +27,7 @@ public struct JwtInterceptor: InterceptorType {
     }
 
     public func didReceive(
-        _ result: Result<DataResponse, Error>,
+        _ result: Result<DataResponse, EmdpointError>,
         endpoint: EndpointType
     ) {
         switch result {
