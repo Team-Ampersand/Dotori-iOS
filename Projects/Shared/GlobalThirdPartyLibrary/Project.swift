@@ -5,5 +5,8 @@ import DependencyPlugin
 let project = Project.makeModule(
     name: ModulePaths.Shared.GlobalThirdPartyLibrary.rawValue,
     product: .framework,
-    targets: []
+    targets: [],
+    externalDependencies: [
+        .SPM.Swinject
+    ]
 )
