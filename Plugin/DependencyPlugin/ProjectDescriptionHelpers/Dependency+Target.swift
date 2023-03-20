@@ -24,6 +24,18 @@ public extension TargetDependency.Feature {
 }
 
 public extension TargetDependency.Domain {
+    static let AuthDomainTesting = TargetDependency.project(
+        target: ModulePaths.Domain.AuthDomain.targetName(type: .testing),
+        path: .relativeToDomain(ModulePaths.Domain.AuthDomain.targetName(type: .testing))
+    )
+    static let AuthDomainInterface = TargetDependency.project(
+        target: ModulePaths.Domain.AuthDomain.targetName(type: .interface),
+        path: .relativeToDomain(ModulePaths.Domain.AuthDomain.targetName(type: .interface))
+    )
+    static let AuthDomain = TargetDependency.project(
+        target: ModulePaths.Domain.AuthDomain.targetName(type: .sources),
+        path: .relativeToDomain(ModulePaths.Domain.AuthDomain.targetName(type: .sources))
+    )
     static let BaseDomain = TargetDependency.project(
         target: ModulePaths.Domain.BaseDomain.targetName(type: .sources),
         path: .relativeToDomain(ModulePaths.Domain.BaseDomain.targetName(type: .sources))
