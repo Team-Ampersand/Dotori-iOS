@@ -1,15 +1,23 @@
 import UIKit
 import Swinject
+import RootFeature
+import MainFeature
+import SigninFeature
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    let container = Container()
+    static let container = Container()
+    var assembler: Assembler!
 
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        // Override point for customization after application launch.
+        assembler = Assembler([
+            MainAssembly(),
+            SigninAssembly(),
+            RootAssembly()
+        ], container: AppDelegate.container)
         return true
     }
 

@@ -1,10 +1,10 @@
 import Combine
+import SigninFeatureInterface
 import Moordinator
-import RootFeatureInterface
 
-final class RootRouter: Router {
+final class SigninRouter: Router {
     let route: PassthroughSubject<any RoutePath, Never> = .init()
     var initialPath: RoutePath {
-        RootRoutePath.auth
+        SigninRoutePath.signin
     }
 }
