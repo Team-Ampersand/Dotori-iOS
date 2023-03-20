@@ -10,6 +10,7 @@ let project = Project.makeModule(
         .SPM.Emdpoint
     ],
     internalDependencies: [
+        .Core.JwtStoreInterface,
         .Shared.GlobalThirdPartyLibrary,
         .Shared.UtilityModule
     ]

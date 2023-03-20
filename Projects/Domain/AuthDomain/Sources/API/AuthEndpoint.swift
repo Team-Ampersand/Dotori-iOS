@@ -16,6 +16,10 @@ extension AuthEndpoint: DotoriEndpoint {
         .requestPlain
     }
 
+    var jwtTokenType: JwtTokenType {
+        .none
+    }
+
     var errorMapper: [Int : ErrorType]? {
         [:]
     }

@@ -1,7 +1,7 @@
 import Emdpoint
 import Foundation
 
-public protocol DotoriEndpoint: EndpointType {
+public protocol DotoriEndpoint: EndpointType, JwtAuthorizable {
     associatedtype ErrorType: Error
     var errorMapper: [Int: ErrorType]? { get }
 }
