@@ -11,7 +11,7 @@ public extension TargetDependency {
 public extension TargetDependency.Feature {
     static let MainFeatureInterface = TargetDependency.project(
         target: ModulePaths.Feature.MainFeature.targetName(type: .interface),
-        path: .relativeToFeature(ModulePaths.Feature.MainFeature.targetName(type: .interface))
+        path: .relativeToFeature(ModulePaths.Feature.MainFeature.rawValue)
     )
     static let MainFeature = TargetDependency.project(
         target: ModulePaths.Feature.MainFeature.targetName(type: .sources),
@@ -19,7 +19,7 @@ public extension TargetDependency.Feature {
     )
     static let RootFeatureInterface = TargetDependency.project(
         target: ModulePaths.Feature.RootFeature.targetName(type: .interface),
-        path: .relativeToFeature(ModulePaths.Feature.RootFeature.targetName(type: .interface))
+        path: .relativeToFeature(ModulePaths.Feature.RootFeature.rawValue)
     )
     static let RootFeature = TargetDependency.project(
         target: ModulePaths.Feature.RootFeature.targetName(type: .sources),
@@ -27,7 +27,7 @@ public extension TargetDependency.Feature {
     )
     static let SigninFeatureInterface = TargetDependency.project(
         target: ModulePaths.Feature.SigninFeature.targetName(type: .interface),
-        path: .relativeToFeature(ModulePaths.Feature.SigninFeature.targetName(type: .interface))
+        path: .relativeToFeature(ModulePaths.Feature.SigninFeature.rawValue)
     )
     static let SigninFeature = TargetDependency.project(
         target: ModulePaths.Feature.SigninFeature.targetName(type: .sources),
