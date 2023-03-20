@@ -5,6 +5,7 @@ public extension TargetDependency {
 }
 
 public extension TargetDependency.SPM {
+    static let MSGLayout = TargetDependency.external(name: "MSGLayout")
     static let Swinject = TargetDependency.external(name: "Swinject")
 }
 
