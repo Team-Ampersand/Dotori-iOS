@@ -23,6 +23,10 @@ public extension TargetDependency.Domain {
 }
 
 public extension TargetDependency.Core {
+    static let DWebKit = TargetDependency.project(
+        target: ModulePaths.Core.DWebKit.targetName(type: .sources),
+        path: .relativeToCore(ModulePaths.Core.DWebKit.targetName(type: .sources))
+    )
     static let DesignSystem = TargetDependency.project(
         target: ModulePaths.Core.DesignSystem.targetName(type: .sources),
         path: .relativeToCore(ModulePaths.Core.DesignSystem.targetName(type: .sources))

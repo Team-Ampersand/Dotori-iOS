@@ -30,6 +30,7 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum Core: String {
+        case DWebKit
         case DesignSystem
 
         func targetName(type: MicroTargetType) -> String {
