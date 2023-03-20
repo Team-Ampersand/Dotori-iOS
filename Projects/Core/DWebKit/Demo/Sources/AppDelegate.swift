@@ -1,4 +1,5 @@
 import UIKit
+import DWebKit
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -9,7 +10,14 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let viewController = UIViewController()
+        let viewController = DWebViewController(
+            urlString: "https://dotori-v2.vercel.app",
+            tokenDTO: .init(
+                accessToken: "",
+                refreshToken: "",
+                expiresAt: ""
+            )
+        )
         viewController.view.backgroundColor = .yellow
         window?.rootViewController = viewController
         window?.makeKeyAndVisible()
