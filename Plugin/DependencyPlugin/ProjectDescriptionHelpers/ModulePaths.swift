@@ -10,6 +10,7 @@ public enum ModulePaths {
 
 public extension ModulePaths {
     enum Feature: String {
+        case SigninFeature
         case BaseFeature
 
         func targetName(type: MicroTargetType) -> String {
