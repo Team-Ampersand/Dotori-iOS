@@ -4,7 +4,7 @@ import DependencyPlugin
 
 let project = Project.makeModule(
     name: ModulePaths.Core.DWebKit.rawValue,
-    product: .staticLibrary,
+    product: .framework,
     targets: [.unitTest, .demo],
     internalDependencies: []
 )
