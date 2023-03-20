@@ -34,6 +34,7 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum Core: String {
+        case Keychain
         case DWebKit
         case DesignSystem
 

@@ -59,6 +59,18 @@ public extension TargetDependency.Domain {
 }
 
 public extension TargetDependency.Core {
+    static let KeychainTesting = TargetDependency.project(
+        target: ModulePaths.Core.Keychain.targetName(type: .testing),
+        path: .relativeToCore(ModulePaths.Core.Keychain.rawValue)
+    )
+    static let KeychainInterface = TargetDependency.project(
+        target: ModulePaths.Core.Keychain.targetName(type: .interface),
+        path: .relativeToCore(ModulePaths.Core.Keychain.rawValue)
+    )
+    static let Keychain = TargetDependency.project(
+        target: ModulePaths.Core.Keychain.targetName(type: .sources),
+        path: .relativeToCore(ModulePaths.Core.Keychain.rawValue)
+    )
     static let DWebKit = TargetDependency.project(
         target: ModulePaths.Core.DWebKit.targetName(type: .sources),
         path: .relativeToCore(ModulePaths.Core.DWebKit.rawValue)
