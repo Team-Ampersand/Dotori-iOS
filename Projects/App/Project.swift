@@ -40,7 +40,8 @@ let targets: [Target] = [
             .Feature.RootFeature,
             .Feature.SigninFeature,
             .Feature.MainFeature,
-            .Domain.AuthDomain
+            .Domain.AuthDomain,
+            .Core.JwtStore
         ],
         settings: .settings(base: env.baseSetting)
     )

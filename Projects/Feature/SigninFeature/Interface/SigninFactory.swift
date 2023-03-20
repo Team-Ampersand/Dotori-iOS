@@ -1,5 +1,6 @@
+import Moordinator
 import UIKit
 
 public protocol SigninFactory {
-    func makeViewController() -> UIViewController
+    func makeMoordinator() -> Moordinator
 }

@@ -8,5 +8,8 @@ let project = Project.makeModule(
     targets: [.interface, .unitTest],
     internalDependencies: [
         .Feature.BaseFeature
+    ],
+    interfaceDependencies: [
+        .SPM.Moordinator
     ]
 )

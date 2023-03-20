@@ -11,6 +11,9 @@ let dependencies = Dependencies(
             .remote(url: "https://github.com/Swinject/Swinject.git", requirement: .exact("2.8.3")),
     
         ],
+        productTypes: [
+            "Moordinator": .framework
+        ],
         baseSettings: .settings(
             configurations: [
                 .debug(name: .dev),
