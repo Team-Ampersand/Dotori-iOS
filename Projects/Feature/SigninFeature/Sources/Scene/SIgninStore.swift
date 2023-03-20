@@ -7,7 +7,7 @@ final class SigninStore: BaseStore {
     enum Action: Equatable {
     }
 
-    var stateSubject = CurrentValueSubject<State, Never>(State())
+    let stateSubject = CurrentValueSubject<State, Never>(State())
     
     func process(_ action: Action) {
         
