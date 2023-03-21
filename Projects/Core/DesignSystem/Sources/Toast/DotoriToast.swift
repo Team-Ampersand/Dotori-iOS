@@ -50,7 +50,6 @@ public final class DotoriToast: UIView {
         self.duration = duration
         super.init(frame: .zero)
         self.text = text
-        self.label.textColor = style.color
         self.iconView.image = UIImage(systemName: style.systemName)
         self.iconView.tintColor = style.color
         setupView()

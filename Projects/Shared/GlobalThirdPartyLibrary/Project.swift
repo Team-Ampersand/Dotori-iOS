@@ -8,5 +8,8 @@ let project = Project.makeModule(
     targets: [],
     externalDependencies: [
         .SPM.Swinject
+    ],
+    internalDependencies: [
+        .Shared.Then
     ]
 )
