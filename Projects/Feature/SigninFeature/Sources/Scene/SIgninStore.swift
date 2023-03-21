@@ -17,8 +17,12 @@ final class SigninStore: BaseStore, RouterProvidable {
     }
 
     struct State: Equatable {
+        var email: String = ""
+        var password: String = ""
     }
     enum Action: Equatable {
+        case updateEmail(String)
+        case updatePassword(String)
         case signupButtonDidTap
         case renewalPasswordButtonDidTap
     }
@@ -30,6 +34,12 @@ final class SigninStore: BaseStore, RouterProvidable {
         var newState = currentState
 
         switch action {
+        case let .updateEmail(email):
+            newState.email = email
+
+        case let .updatePassword(password):
+            newState.password = password
+
         case .signupButtonDidTap:
             router.route.send(SigninRoutePath.signup)
 

@@ -83,6 +83,18 @@ final class SigninViewController: BaseViewController<SigninStore> {
     }
 
     override func bindAction() {
+        emailTextField.textPublisher
+            .sink(with: store, receiveValue: { store, email in
+                store.process(.updateEmail(email))
+            })
+            .store(in: &bag)
+
+        passwordTextField.textPublisher
+            .sink(with: store, receiveValue: { store, password in
+                store.process(.updatePassword(password))
+            })
+            .store(in: &bag)
+
         signupButton.tapPublisher
             .sink(with: store, receiveValue: { store, _ in
                 store.process(.signupButtonDidTap)
