@@ -1,3 +1,4 @@
+import DesignSystem
 import Moordinator
 
 public enum SigninRoutePath: RoutePath {
@@ -5,4 +6,5 @@ public enum SigninRoutePath: RoutePath {
     case signup
     case renewalPassword
     case main
+    case toast(text: String, style: DotoriToast.Style, duration: DotoriToast.Duration = .short)
 }

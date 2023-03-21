@@ -1,7 +1,9 @@
+import DesignSystem
 import Moordinator
+import RenewalPasswordFeatureInterface
+import RootFeatureInterface
 import SigninFeatureInterface
 import SignupFeatureInterface
-import RenewalPasswordFeatureInterface
 import UIKit
 
 final class SigninMoordinator: Moordinator {
@@ -42,6 +44,12 @@ final class SigninMoordinator: Moordinator {
             let viewController = renewalPasswordFactory.makeViewController(router: router)
             rootVC.pushViewController(viewController, animated: true)
             return .one(.contribute(viewController))
+
+        case .main:
+            return .one(.forwardToParent(with: RootRoutePath.main))
+
+        case let .toast(text, style, duration):
+            DotoriToast.makeToast(text: text, style: style, duration: duration)
 
         default:
             return .none

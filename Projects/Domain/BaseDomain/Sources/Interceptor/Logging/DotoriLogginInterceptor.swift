@@ -28,7 +28,7 @@ public struct DotoriLoggingInterceptor: InterceptorType {
         case let .success(response):
             onSuceed(response, endpoint: endpoint, isFromError: false)
         case let .failure(error):
-            onFail(error, target: endpoint)
+            onFail(error, endpoint: endpoint)
         }
     }
 
@@ -53,9 +53,13 @@ public struct DotoriLoggingInterceptor: InterceptorType {
         print(log)
     }
 
-    func onFail(_ error: EmdpointError, target: EndpointType) {
+    func onFail(_ error: EmdpointError, endpoint: EndpointType) {
+        if let resopnse = error.response {
+            onSuceed(resopnse, endpoint: endpoint, isFromError: true)
+            return
+        }
         var log = "네트워크 통신 실패"
-        log.append("<-- \(error.errorCode) \(target)\n")
+        log.append("<-- \(error.errorCode) \(endpoint)\n")
         log.append("\(error.failureReason ?? error.errorDescription ?? "unknown error")\n")
         log.append("<-- END HTTP\n")
         print(log)

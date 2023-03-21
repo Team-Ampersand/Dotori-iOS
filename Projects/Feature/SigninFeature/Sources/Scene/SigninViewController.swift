@@ -15,7 +15,9 @@ final class SigninViewController: BaseViewController<SigninStore> {
             .resize(width: 182, height: 41)
     }
     private let emailTextField = DotoriIconTextField(placeholder: "이메일", icon: .person)
-    private let passwordTextField = DotoriIconTextField(placeholder: "비밀번호", icon: .lock)
+    private let passwordTextField = DotoriIconTextField(placeholder: "비밀번호", icon: .lock).then {
+        $0.isSecureTextEntry = true
+    }
     private let renewalPasswordButton = DotoriTextButton(
         text: "비밀번호 찾기",
         color: .dotori(.neutral(.n20)),
@@ -104,6 +106,12 @@ final class SigninViewController: BaseViewController<SigninStore> {
         renewalPasswordButton.tapPublisher
             .sink(with: store, receiveValue: { store, _ in
                 store.process(.renewalPasswordButtonDidTap)
+            })
+            .store(in: &bag)
+
+        signinButton.tapPublisher
+            .sink(with: store, receiveValue: { store, _ in
+                store.process(.signinButtonDidTap)
             })
             .store(in: &bag)
     }

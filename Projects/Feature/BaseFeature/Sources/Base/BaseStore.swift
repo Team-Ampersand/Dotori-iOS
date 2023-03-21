@@ -8,6 +8,7 @@ public protocol BaseStore {
 
     var stateSubject: CurrentValueSubject<State, Never> { get }
     var state: AnyPublisher<State, Never> { get }
+    var bag: Set<AnyCancellable> { get }
 
     func process(_ action: Action)
 }

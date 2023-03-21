@@ -10,5 +10,8 @@ let project = Project.makeModule(
         .Feature.SigninFeatureInterface,
         .Feature.MainFeatureInterface,
         .Feature.BaseFeature
+    ],
+    interfaceDependencies: [
+        .SPM.Moordinator
     ]
 )

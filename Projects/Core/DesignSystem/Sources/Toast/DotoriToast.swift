@@ -20,7 +20,7 @@ public final class DotoriToast: UIView {
         }
 
         enum Padding {
-            static let horizontal: CGFloat = 24
+            static let horizontal: CGFloat = 8
             static let vertical: CGFloat = 28
         }
 
@@ -50,6 +50,7 @@ public final class DotoriToast: UIView {
         self.duration = duration
         super.init(frame: .zero)
         self.text = text
+        self.label.font = .dotori(.body2)
         self.iconView.image = UIImage(systemName: style.systemName)
         self.iconView.tintColor = style.color
         setupView()
@@ -147,6 +148,10 @@ private extension DotoriToast {
                 equalTo: iconView.trailingAnchor,
                 constant: Dimension.viewSpacing
             ),
+            label.trailingAnchor.constraint(
+                equalTo: self.trailingAnchor,
+                constant: -Dimension.Padding.vertical
+            ),
             label.heightAnchor.constraint(
                 equalTo: self.heightAnchor,
                 constant: -Dimension.Padding.vertical
@@ -160,8 +165,8 @@ private extension DotoriToast.Style {
     var color: UIColor {
         switch self {
         case .success: return .dotori(.system(.positive))
-        case .warning: return .dotori(.system(.error))
-        case .error: return .dotori(.sub(.yellow))
+        case .warning: return .dotori(.sub(.yellow))
+        case .error: return .dotori(.system(.error))
         }
     }
 

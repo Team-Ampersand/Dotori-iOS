@@ -13,5 +13,8 @@ let project = Project.makeModule(
         .Core.JwtStoreInterface,
         .Shared.GlobalThirdPartyLibrary,
         .Shared.UtilityModule
+    ],
+    additionalPlistRows: [
+        "BASE_URL": .string("$(BASE_URL)")
     ]
 )

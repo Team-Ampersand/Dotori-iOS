@@ -55,8 +55,11 @@ private extension BaseRemoteDataSource {
             .retry(maxRetryCount)
             .timeout(45, scheduler: RunLoop.main)
             .mapError {
-                if case let .statusCode(response) = $0 {
-                    return endpoint.errorMapper?[response.statusCode] ?? $0 as Error
+                if case let .underlying(err) = $0,
+                   let emdpointError = err as? EmdpointError,
+                   case let .statusCode(response) = emdpointError,
+                   let httpResponse = response.response as? HTTPURLResponse {
+                    return endpoint.errorMapper?[httpResponse.statusCode] ?? $0 as Error
                 }
                 return $0 as Error
             }

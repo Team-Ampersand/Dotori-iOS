@@ -8,7 +8,7 @@ enum AuthEndpoint {
 }
 
 extension AuthEndpoint: DotoriEndpoint {
-    typealias ErrorType = Error
+    typealias ErrorType = AuthDomainError
 
     var route: Route {
         switch self {
@@ -41,6 +41,19 @@ extension AuthEndpoint: DotoriEndpoint {
     }
 
     var errorMapper: [Int: ErrorType]? {
-        [:]
+        switch self {
+        case .signin:
+            return [
+                400: .invalidPassword,
+                404: .invalidPassword,
+                500: .unknown
+            ]
+
+        case .refresh:
+            return [
+                401: .unknown,
+                500: .unknown
+            ]
+        }
     }
 }
