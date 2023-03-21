@@ -3,6 +3,7 @@ import MainFeature
 import RootFeature
 import SigninFeature
 import SignupFeature
+import RenewalPasswordFeature
 import Swinject
 import UIKit
 import JwtStore
@@ -21,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             MainAssembly(),
             SigninAssembly(),
             SignupAssembly(),
+            RenewalPasswordAssembly(),
             RootAssembly(),
             AuthDomainAssembly()
         ], container: AppDelegate.container)
