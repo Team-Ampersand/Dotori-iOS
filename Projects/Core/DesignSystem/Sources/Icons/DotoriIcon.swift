@@ -6,9 +6,10 @@ public extension UIImage {
     static let lock = DesignSystemAsset.DotoriIcon.lock.image
     static let person = DesignSystemAsset.DotoriIcon.person.image
     static let xmarkCircle = DesignSystemAsset.DotoriIcon.xmarkCircle.image
+    static let dotoriSigninLogo = DesignSystemAsset.DotoriIcon.dotoriSigninLogo.image
 }
 
-internal extension UIImage {
+public extension UIImage {
     func resize(to length: CGFloat) -> UIImage {
         let newSize = CGSize(width: length, height: length)
         let image = UIGraphicsImageRenderer(size: newSize).image { _ in
