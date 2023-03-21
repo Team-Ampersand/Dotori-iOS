@@ -5,6 +5,13 @@ public final class DotoriToast: UIView {
         case short = 1.5
         case long = 3
     }
+
+    public enum Style {
+        case success
+        case warning
+        case error
+    }
+
     private enum Dimension {
         // swiftlint: disable nesting
         enum Margin {
@@ -16,6 +23,8 @@ public final class DotoriToast: UIView {
             static let horizontal: CGFloat = 24
             static let vertical: CGFloat = 28
         }
+
+        static let viewSpacing: CGFloat = 12
     }
 
     private let label: UILabel = {
@@ -24,16 +33,26 @@ public final class DotoriToast: UIView {
         label.numberOfLines = 0
         return label
     }()
+    private let iconView: DotoriIconView = DotoriIconView()
     private var text: String? {
         get { label.text }
         set { label.text = newValue }
     }
+    private let color: UIColor
     private let duration: Duration
 
-    private init(text: String?, duration: Duration) {
+    private init(
+        text: String?,
+        style: DotoriToast.Style,
+        duration: DotoriToast.Duration
+    ) {
+        self.color = style.color
         self.duration = duration
         super.init(frame: .zero)
         self.text = text
+        self.label.textColor = style.color
+        self.iconView.image = UIImage(systemName: style.systemName)
+        self.iconView.tintColor = style.color
         setupView()
     }
 
@@ -43,10 +62,15 @@ public final class DotoriToast: UIView {
 
     public static func makeToast(
         text: String?,
+        style: DotoriToast.Style,
         duration: DotoriToast.Duration = .short
     ) {
         guard let text, !text.isEmpty else { return }
-        let toast = DotoriToast(text: text, duration: duration)
+        let toast = DotoriToast(
+            text: text,
+            style: style,
+            duration: duration
+        )
 
         guard let window = UIApplication.currentWindow() else { return }
         window.addSubview(toast)
@@ -102,6 +126,7 @@ public final class DotoriToast: UIView {
 private extension DotoriToast {
     func setupView() {
         self.addSubview(label)
+        self.addSubview(iconView)
         setLayout()
         self.backgroundColor = .dotori(.background(.bg))
         self.layer.cornerRadius = 8
@@ -111,17 +136,41 @@ private extension DotoriToast {
 
     func setLayout() {
         label.translatesAutoresizingMaskIntoConstraints = false
+        iconView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            label.widthAnchor.constraint(
-                lessThanOrEqualTo: self.widthAnchor,
-                constant: -Dimension.Padding.horizontal
+            iconView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            iconView.leadingAnchor.constraint(
+                equalTo: self.leadingAnchor,
+                constant: Dimension.Padding.horizontal
+            ),
+
+            label.leadingAnchor.constraint(
+                equalTo: iconView.trailingAnchor,
+                constant: Dimension.viewSpacing
             ),
             label.heightAnchor.constraint(
                 equalTo: self.heightAnchor,
                 constant: -Dimension.Padding.vertical
             ),
-            label.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             label.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
+    }
+}
+
+private extension DotoriToast.Style {
+    var color: UIColor {
+        switch self {
+        case .success: return .dotori(.system(.positive))
+        case .warning: return .dotori(.system(.error))
+        case .error: return .dotori(.sub(.yellow))
+        }
+    }
+
+    var systemName: String {
+        switch self {
+        case .success: return "checkmark.circle.fill"
+        case .warning: return "exclamationmark.triangle.fill"
+        case .error: return "exclamationmark.circle.fill"
+        }
     }
 }

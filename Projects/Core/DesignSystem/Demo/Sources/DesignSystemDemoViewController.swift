@@ -18,6 +18,7 @@ final class DesignSystemDemoViewController: UIViewController {
         button.addTarget(self, action: #selector(buttonTap), for: .touchUpInside)
     }
     @objc func buttonTap(_ sender: UIButton) {
-        DotoriToast.makeToast(text: "Toast")
+        let style = [DotoriToast.Style.success, .error, .warning].randomElement() ?? .success
+        DotoriToast.makeToast(text: "Toast", style: style)
     }
 }
