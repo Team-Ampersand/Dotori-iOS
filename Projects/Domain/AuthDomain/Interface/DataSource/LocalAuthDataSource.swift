@@ -2,5 +2,5 @@ import Combine
 import Foundation
 
 public protocol LocalAuthDataSource {
-    func loadJwtToken() -> AnyPublisher<JwtTokenEntity, AuthDomainError>
+    func loadJwtToken() -> AnyPublisher<JwtTokenEntity, Never>
 }

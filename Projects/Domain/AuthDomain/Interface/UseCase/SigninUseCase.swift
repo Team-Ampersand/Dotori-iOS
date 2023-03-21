@@ -1,5 +1,5 @@
 import Combine
 
 public protocol SigninUseCase {
-    func execute() -> AnyPublisher<Void, AuthDomainError>
+    func execute(req: SigninRequestDTO) -> AnyPublisher<Void, AuthDomainError>
 }
