@@ -1,4 +1,5 @@
 import Combine
+import DesignSystem
 import UIKit
 
 open class BaseViewController<Store: BaseStore>: UIViewController, BoundsProviable {
@@ -28,7 +29,7 @@ open class BaseViewController<Store: BaseStore>: UIViewController, BoundsProviab
 
     open override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .dotori(.background(.bg))
         addView()
         setLayout()
         configureViewController()

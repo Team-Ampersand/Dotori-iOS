@@ -7,6 +7,7 @@ public extension UIControl {
         return UIControl.EventPublisher(control: self, event: event)
     }
 
+    // swiftlint: disable nesting
     struct EventPublisher: Publisher {
         public typealias Output = UIControl
         public typealias Failure = Never
@@ -36,7 +37,7 @@ public extension UIControl {
             self.control = control
             self.subscriber = subscrier
             self.event = event
-            
+
             control.addTarget(self, action: #selector(eventDidOccur), for: event)
         }
 

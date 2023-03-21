@@ -8,14 +8,3 @@ public extension UIImage {
     static let xmarkCircle = DesignSystemAsset.DotoriIcon.xmarkCircle.image
     static let dotoriSigninLogo = DesignSystemAsset.DotoriIcon.dotoriSigninLogo.image
 }
-
-public extension UIImage {
-    func resize(to length: CGFloat) -> UIImage {
-        let newSize = CGSize(width: length, height: length)
-        let image = UIGraphicsImageRenderer(size: newSize).image { _ in
-            draw(in: CGRect(origin: .zero, size: newSize))
-        }
-
-        return image
-    }
-}
