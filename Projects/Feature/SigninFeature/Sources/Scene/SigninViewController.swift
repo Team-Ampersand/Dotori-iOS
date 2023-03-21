@@ -76,4 +76,8 @@ final class SigninViewController: BaseViewController<SigninStore> {
                 .top(.to(signinButton).bottom, .equal(16))
         }
     }
+
+    override func configureNavigation() {
+        self.navigationItem.title = "로그인"
+    }
 }
