@@ -34,6 +34,7 @@ open class BaseViewController<Store: BaseStore>: UIViewController, BoundsProviab
         setLayout()
         configureViewController()
         configureNavigation()
+        bindAction()
         bind()
         viewDidLoadSubject.send(())
     }
@@ -67,6 +68,8 @@ open class BaseViewController<Store: BaseStore>: UIViewController, BoundsProviab
     open func configureViewController() {}
 
     open func configureNavigation() {}
+
+    open func bindAction() {}
 
     open func bind() {}
 }

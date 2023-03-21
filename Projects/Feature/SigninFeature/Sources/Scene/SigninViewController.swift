@@ -1,5 +1,6 @@
 import BaseFeature
 import DesignSystem
+import CombineUtility
 import GlobalThirdPartyLibrary
 import MSGLayout
 import Then
@@ -79,5 +80,13 @@ final class SigninViewController: BaseViewController<SigninStore> {
 
     override func configureNavigation() {
         self.navigationItem.title = "로그인"
+    }
+
+    override func bindAction() {
+        signupButton.tapPublisher
+            .sink(with: store, receiveValue: { store, _ in
+                store.process(.signupButtonDidTap)
+            })
+            .store(in: &bag)
     }
 }
