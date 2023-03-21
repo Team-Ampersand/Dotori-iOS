@@ -4,6 +4,7 @@ import Swinject
 import JwtStoreInterface
 
 public final class AuthDomainAssembly: Assembly {
+    public init() {}
     public func assemble(container: Container) {
         // MARK: - DataSource
         container.register(RemoteAuthDataSource.self) { resolver in

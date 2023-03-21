@@ -1,8 +1,9 @@
-import UIKit
-import Swinject
-import RootFeature
+import AuthDomain
 import MainFeature
+import RootFeature
 import SigninFeature
+import Swinject
+import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,7 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         assembler = Assembler([
             MainAssembly(),
             SigninAssembly(),
-            RootAssembly()
+            RootAssembly(),
+            AuthDomainAssembly()
         ], container: AppDelegate.container)
         return true
     }
