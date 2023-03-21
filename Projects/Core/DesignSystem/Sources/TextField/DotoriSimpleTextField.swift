@@ -1,6 +1,6 @@
 import UIKit
 
-public final class DotoriTextField: UITextField {
+public final class DotoriSimpleTextField: UITextField {
     public override var placeholder: String? {
         didSet { setNeedsDisplay() }
     }
@@ -85,7 +85,7 @@ public final class DotoriTextField: UITextField {
     }
 }
 
-private extension DotoriTextField {
+private extension DotoriSimpleTextField {
     func setupTextField() {
         self.backgroundColor = .dotori(.neutral(.n50))
         self.font = .dotori(.body1)
