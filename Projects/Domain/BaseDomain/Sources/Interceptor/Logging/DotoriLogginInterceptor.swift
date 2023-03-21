@@ -1,7 +1,7 @@
 import Foundation
 import Emdpoint
 
-#if DEBUG
+#if DEV || STAGE
 // swiftlint: disable line_length
 public struct DotoriLoggingInterceptor: InterceptorType {
     public init() {}
