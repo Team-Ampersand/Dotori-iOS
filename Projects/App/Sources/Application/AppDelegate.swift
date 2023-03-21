@@ -4,6 +4,7 @@ import RootFeature
 import SigninFeature
 import Swinject
 import UIKit
+import JwtStore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         assembler = Assembler([
+            JwtStoreAssembly(),
             MainAssembly(),
             SigninAssembly(),
             RootAssembly(),

@@ -1,8 +1,8 @@
 import Foundation
 import JwtStoreInterface
 
-public struct KeychainJwtStore: JwtStore {
-    public func save(property: JwtStoreProperties, value: String) {
+struct KeychainJwtStore: JwtStore {
+    func save(property: JwtStoreProperties, value: String) {
         let query: NSDictionary = [
             kSecClass: kSecClassGenericPassword,
             kSecAttrAccount: property.rawValue,
@@ -12,7 +12,7 @@ public struct KeychainJwtStore: JwtStore {
         SecItemAdd(query, nil)
     }
 
-    public func load(property: JwtStoreProperties) -> String {
+    func load(property: JwtStoreProperties) -> String {
         let query: NSDictionary = [
             kSecClass: kSecClassGenericPassword,
             kSecAttrAccount: property.rawValue,
@@ -28,7 +28,7 @@ public struct KeychainJwtStore: JwtStore {
         return ""
     }
 
-    public func delete(property: JwtStoreProperties) {
+    func delete(property: JwtStoreProperties) {
         let query: NSDictionary = [
             kSecClass: kSecClassGenericPassword,
             kSecAttrAccount: property.rawValue
