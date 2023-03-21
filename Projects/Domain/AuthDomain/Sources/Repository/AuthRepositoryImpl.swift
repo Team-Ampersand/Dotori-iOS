@@ -17,7 +17,7 @@ struct AuthRepositoryImpl: AuthRepository {
         remoteAuthDataSource.signin(req: req)
     }
 
-    func loadJwtToken() -> AnyPublisher<JwtTokenEntity, Never> {
+    func loadJwtToken() -> JwtTokenEntity {
         localAuthDataSource.loadJwtToken()
     }
 }

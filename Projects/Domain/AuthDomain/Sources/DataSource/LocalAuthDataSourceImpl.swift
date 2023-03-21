@@ -9,12 +9,10 @@ struct LocalAuthDataSourceImpl: LocalAuthDataSource {
         self.jwtStore = jwtStore
     }
 
-    func loadJwtToken() -> AnyPublisher<JwtTokenEntity, Never> {
-        let tokenEntity = JwtTokenEntity(
+    func loadJwtToken() -> JwtTokenEntity {
+        JwtTokenEntity(
             accessToken: jwtStore.load(property: .accessToken),
             refreshToken: jwtStore.load(property: .refreshToken)
         )
-        return Just(tokenEntity)
-            .eraseToAnyPublisher()
     }
 }

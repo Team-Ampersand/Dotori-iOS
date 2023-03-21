@@ -9,6 +9,7 @@ public final class DotoriTextButton: UIButton {
         super.init(frame: .zero)
         self.setTitle(text, for: .normal)
         self.setTitleColor(color, for: .normal)
+        self.titleLabel?.font = font
     }
 
     required init?(coder: NSCoder) {
