@@ -40,6 +40,8 @@ let targets: [Target] = [
             .Feature.RootFeature,
             .Feature.SigninFeature,
             .Feature.MainFeature,
+            .Feature.SignupFeature,
+            .Feature.RenewalPasswordFeature,
             .Domain.AuthDomain,
             .Core.JwtStore
         ],

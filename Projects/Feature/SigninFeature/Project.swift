@@ -7,7 +7,9 @@ let project = Project.makeModule(
     product: .staticLibrary,
     targets: [.interface, .unitTest],
     internalDependencies: [
-        .Feature.BaseFeature
+        .Feature.BaseFeature,
+        .Feature.SignupFeatureInterface,
+        .Feature.RenewalPasswordFeatureInterface
     ],
     interfaceDependencies: [
         .SPM.Moordinator
