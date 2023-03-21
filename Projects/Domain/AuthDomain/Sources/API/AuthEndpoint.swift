@@ -40,7 +40,7 @@ extension AuthEndpoint: DotoriEndpoint {
         }
     }
 
-    var errorMapper: [Int : ErrorType]? {
+    var errorMapper: [Int: ErrorType]? {
         [:]
     }
 }

@@ -1,12 +1,18 @@
 import AuthDomainInterface
 import SigninFeatureInterface
+import SignupFeatureInterface
 import Moordinator
 
 struct SigninFactoryImpl: SigninFactory {
     private let signinUseCase: any SigninUseCase
+    private let signupFactory: any SignupFactory
 
-    init(signinUseCase: any SigninUseCase) {
+    init(
+        signinUseCase: any SigninUseCase,
+        signupFactory: any SignupFactory
+    ) {
         self.signinUseCase = signinUseCase
+        self.signupFactory = signupFactory
     }
 
     func makeMoordinator() -> Moordinator {
@@ -18,7 +24,8 @@ struct SigninFactoryImpl: SigninFactory {
         let signinViewController = SigninViewController(store: signinStore)
         return SigninMoordinator(
             router: signinRouter,
-            signinViewController: signinViewController
+            signinViewController: signinViewController,
+            signupFactory: self.signupFactory
         )
     }
 }

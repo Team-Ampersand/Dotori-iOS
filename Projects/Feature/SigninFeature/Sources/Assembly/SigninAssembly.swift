@@ -1,5 +1,6 @@
 import AuthDomainInterface
 import SigninFeatureInterface
+import SignupFeatureInterface
 import Swinject
 
 public final class SigninAssembly: Assembly {
@@ -7,7 +8,8 @@ public final class SigninAssembly: Assembly {
     public func assemble(container: Container) {
         container.register(SigninFactory.self) { resolver in
             SigninFactoryImpl(
-                signinUseCase: resolver.resolve(SigninUseCase.self)!
+                signinUseCase: resolver.resolve(SigninUseCase.self)!,
+                signupFactory: resolver.resolve(SignupFactory.self)!
             )
         }
     }
