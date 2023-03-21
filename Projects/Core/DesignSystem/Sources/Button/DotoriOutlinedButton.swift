@@ -50,7 +50,7 @@ private extension DotoriOutlineButton {
         setTitleColor(textForegroundColor, for: .normal)
         setTitleColor(textForegroundColor.withAlphaComponent(1.2), for: .highlighted)
         setBackgroundColor(backgroundColor, for: .normal)
-        setBackgroundColor(backgroundColor.withAlphaComponent(0.2), for: .highlighted)
+        setBackgroundColor(backgroundColor.withAlphaComponent(0.1), for: .highlighted)
         self.layer.borderColor = borderColor.cgColor
     }
 }
