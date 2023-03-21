@@ -82,6 +82,10 @@ public extension TargetDependency.Core {
 }
 
 public extension TargetDependency.Shared {
+    static let Then = TargetDependency.project(
+        target: ModulePaths.Shared.Then.targetName(type: .sources),
+        path: .relativeToShared(ModulePaths.Shared.Then.rawValue)
+    )
     static let UtilityModule = TargetDependency.project(
         target: ModulePaths.Shared.UtilityModule.targetName(type: .sources),
         path: .relativeToShared(ModulePaths.Shared.UtilityModule.rawValue)
