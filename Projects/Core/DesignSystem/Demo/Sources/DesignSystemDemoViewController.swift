@@ -15,5 +15,9 @@ final class DesignSystemDemoViewController: UIViewController {
             button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
             button.heightAnchor.constraint(equalToConstant: 52)
         ])
+        button.addTarget(self, action: #selector(buttonTap), for: .touchUpInside)
+    }
+    @objc func buttonTap(_ sender: UIButton) {
+        DotoriToast.makeToast(text: "Toast")
     }
 }
