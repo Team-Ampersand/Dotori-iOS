@@ -14,7 +14,7 @@ public final class DotoriToast: UIView {
 
         enum Padding {
             static let horizontal: CGFloat = 24
-            static let vertical: CGFloat = 24
+            static let vertical: CGFloat = 28
         }
     }
 
@@ -106,6 +106,7 @@ private extension DotoriToast {
         self.backgroundColor = .dotori(.background(.bg))
         self.layer.cornerRadius = 8
         self.alpha = 0
+        DotoriShadow.toastShadow(toast: self)
     }
 
     func setLayout() {
