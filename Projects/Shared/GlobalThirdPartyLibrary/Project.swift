@@ -11,6 +11,7 @@ let project = Project.makeModule(
     ],
     internalDependencies: [
         .Shared.CombineUtility,
+        .Shared.DateUtility,
         .Shared.Then
     ]
 )

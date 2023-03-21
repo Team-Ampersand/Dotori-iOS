@@ -48,6 +48,7 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum Shared: String {
+        case DateUtility
         case CombineUtility
         case Then
         case UtilityModule
