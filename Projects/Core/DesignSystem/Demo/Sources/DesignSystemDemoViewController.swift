@@ -2,10 +2,10 @@ import DesignSystem
 import UIKit
 
 final class DesignSystemDemoViewController: UIViewController {
-    let button = DotoriButton(text: "Asdf")
+    let button = DotoriOutlineButton(text: "ASD")
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .gray
+        view.backgroundColor = .white
         view.addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
