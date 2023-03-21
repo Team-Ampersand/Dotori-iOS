@@ -1,6 +1,7 @@
 import AuthDomainInterface
 import SigninFeatureInterface
 import SignupFeatureInterface
+import RenewalPasswordFeatureInterface
 import Moordinator
 
 struct SigninFactoryImpl: SigninFactory {

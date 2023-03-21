@@ -88,5 +88,11 @@ final class SigninViewController: BaseViewController<SigninStore> {
                 store.process(.signupButtonDidTap)
             })
             .store(in: &bag)
+
+        renewalPasswordButton.tapPublisher
+            .sink(with: store, receiveValue: { store, _ in
+                store.process(.renewalPasswordButtonDidTap)
+            })
+            .store(in: &bag)
     }
 }

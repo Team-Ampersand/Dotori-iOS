@@ -20,6 +20,7 @@ final class SigninStore: BaseStore, RouterProvidable {
     }
     enum Action: Equatable {
         case signupButtonDidTap
+        case renewalPasswordButtonDidTap
     }
 
     let stateSubject = CurrentValueSubject<State, Never>(State())
@@ -27,10 +28,13 @@ final class SigninStore: BaseStore, RouterProvidable {
     func process(_ action: Action) {
         let currentState = stateSubject.value
         var newState = currentState
-        
+
         switch action {
         case .signupButtonDidTap:
             router.route.send(SigninRoutePath.signup)
+
+        case .renewalPasswordButtonDidTap:
+            router.route.send(SigninRoutePath.renewalPassword)
         }
 
         stateSubject.send(newState)
