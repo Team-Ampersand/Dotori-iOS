@@ -10,6 +10,7 @@ let project = Project.makeModule(
         .SPM.Swinject
     ],
     internalDependencies: [
+        .Shared.CombineUtility,
         .Shared.Then
     ]
 )
