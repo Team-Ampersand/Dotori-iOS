@@ -1,11 +1,13 @@
 import XCTest
+import Then
 
 final class ThenTests: XCTestCase {
-    override func setUpWithError() throws {}
-
-    override func tearDownWithError() throws {}
-
-    func testExample() {
-        XCTAssertEqual(1, 1)
+    func testThen() {
+        let queue = OperationQueue().then {
+            $0.name = "awesome"
+            $0.maxConcurrentOperationCount = 5
+        }
+        XCTAssertEqual(queue.name, "awesome")
+        XCTAssertEqual(queue.maxConcurrentOperationCount, 5)
     }
 }
