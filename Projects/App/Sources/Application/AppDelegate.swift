@@ -2,6 +2,7 @@ import AuthDomain
 import MainFeature
 import RootFeature
 import SigninFeature
+import SignupFeature
 import Swinject
 import UIKit
 import JwtStore
@@ -19,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             JwtStoreAssembly(),
             MainAssembly(),
             SigninAssembly(),
+            SignupAssembly(),
             RootAssembly(),
             AuthDomainAssembly()
         ], container: AppDelegate.container)

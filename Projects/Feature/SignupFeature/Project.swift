@@ -6,5 +6,7 @@ let project = Project.makeModule(
     name: ModulePaths.Feature.SignupFeature.rawValue,
     product: .staticLibrary,
     targets: [.interface, .unitTest],
-    internalDependencies: []
+    internalDependencies: [
+        .Domain.AuthDomainInterface
+    ]
 )
