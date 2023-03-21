@@ -1,17 +1,28 @@
 import UIKit
 
-public final class DotoriSimpleTextField: UITextField {
+public final class DotoriIconTextField: UITextField {
     public override var placeholder: String? {
         didSet { setNeedsDisplay() }
     }
     private var cleanrButtonWidth: CGFloat {
         clearButtonRect(forBounds: bounds).width
     }
+    private var iconViweWidth: CGFloat {
+        iconView.frame.width
+    }
+    private let iconView: DotoriIconView
 
-    public init(placeholder: String? = "") {
+    public init(
+        placeholder: String? = "",
+        icon: UIImage
+    ) {
+        let dotoriIconView = DotoriIconView()
+        dotoriIconView.image = icon.withRenderingMode(.alwaysTemplate)
+        dotoriIconView.tintColor = .dotori(.neutral(.n30))
+        self.iconView = dotoriIconView
         super.init(frame: .zero)
-        self.placeholder = placeholder
         setupTextField()
+        self.placeholder = placeholder
     }
 
     required init?(coder: NSCoder) {
@@ -23,6 +34,7 @@ public final class DotoriSimpleTextField: UITextField {
         if didBecomeFirstResponder {
             self.layer.borderWidth = 1
             self.layer.borderColor = UIColor.dotori(.primary(.p10)).cgColor
+            self.iconView.tintColor = .dotori(.neutral(.n10))
         }
         return didBecomeFirstResponder
     }
@@ -30,8 +42,9 @@ public final class DotoriSimpleTextField: UITextField {
     public override func resignFirstResponder() -> Bool {
         let didResignFirstResponder = super.resignFirstResponder()
         if didResignFirstResponder {
-            self.layer.borderWidth = 1
+            self.layer.borderWidth = 0
             self.layer.borderColor = nil
+            self.iconView.tintColor = .dotori(.neutral(.n30))
         }
         return didResignFirstResponder
     }
@@ -41,8 +54,6 @@ public final class DotoriSimpleTextField: UITextField {
         setPlaceholderTextColor()
     }
 
-    ///  clearButton의 Bound에 관한 함수
-    ///  clearButton 우측 마진을 주기 위해 사용
     public override func clearButtonRect(forBounds bounds: CGRect) -> CGRect {
         let rect = super.clearButtonRect(forBounds: bounds)
         return rect.offsetBy(
@@ -55,37 +66,15 @@ public final class DotoriSimpleTextField: UITextField {
     }
 
     public override func textRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(
-            by: UIEdgeInsets(
-                top: 0,
-                left: DotoriTextFieldProperty.Dimension.leftMargin,
-                bottom: 0,
-                right: (
-                    DotoriTextFieldProperty.Dimension.rightMargin
-                    + self.cleanrButtonWidth
-                    + DotoriTextFieldProperty.Dimension.subviewSpacing
-                )
-            )
-        )
+        return bounds.inset(by: textAreaEdges())
     }
 
     public override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(
-            by: UIEdgeInsets(
-                top: 0,
-                left: DotoriTextFieldProperty.Dimension.leftMargin,
-                bottom: 0,
-                right: (
-                    DotoriTextFieldProperty.Dimension.rightMargin
-                    + self.cleanrButtonWidth
-                    + DotoriTextFieldProperty.Dimension.subviewSpacing
-                )
-            )
-        )
+        return bounds.inset(by: textAreaEdges())
     }
 }
 
-private extension DotoriSimpleTextField {
+private extension DotoriIconTextField {
     func setupTextField() {
         self.backgroundColor = .dotori(.neutral(.n50))
         self.font = .dotori(.body1)
@@ -94,12 +83,20 @@ private extension DotoriSimpleTextField {
         self.clipsToBounds = true
         self.layer.cornerRadius = 8
 
+        self.addSubview(iconView)
+        iconView.translatesAutoresizingMaskIntoConstraints = false
+        iconView.leadingAnchor.constraint(
+            equalTo: self.leadingAnchor,
+            constant: DotoriTextFieldProperty.Dimension.leftMargin
+        ).isActive = true
+        iconView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+
         self.heightAnchor.constraint(
             equalToConstant: DotoriTextFieldProperty.Dimension.textFieldHeight
         ).isActive = true
         self.isEnabled = true
         self.textColor = .dotori(.neutral(.n10))
-        self.layer.borderWidth = 1
+        self.layer.borderWidth = 0
         self.layer.borderColor = nil
     }
 
@@ -112,6 +109,23 @@ private extension DotoriSimpleTextField {
             attributes: [
                 .foregroundColor: placeholderTextColor
             ]
+        )
+    }
+
+    func textAreaEdges() -> UIEdgeInsets {
+        UIEdgeInsets(
+            top: 0,
+            left: (
+                DotoriTextFieldProperty.Dimension.leftMargin
+                + self.iconViweWidth
+                + DotoriTextFieldProperty.Dimension.subviewSpacing
+            ),
+            bottom: 0,
+            right: (
+                DotoriTextFieldProperty.Dimension.rightMargin
+                + self.cleanrButtonWidth
+                + DotoriTextFieldProperty.Dimension.subviewSpacing
+            )
         )
     }
 }

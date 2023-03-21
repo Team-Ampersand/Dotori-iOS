@@ -3,7 +3,7 @@ import DesignSystem
 import MSGLayout
 
 final class SigninViewController: BaseViewController<SigninStore> {
-    private let textField = DotoriSimpleTextField(placeholder: "이메일")
+    private let textField = DotoriIconTextField(placeholder: "ASDF", icon: .person)
 
     override func addView() {
         view.addSubviews {
