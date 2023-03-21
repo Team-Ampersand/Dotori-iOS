@@ -11,7 +11,7 @@ extension RefreshError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .unknown:
-            return "알 수 없는 오류입니다. 지속될 시 문의해주세요."
+            return "알 수 없는 오류가 발생했습니다. 지속될 시 문의해주세요."
 
         case .expiredToken, .invalidToken:
             return "로그인 세션이 만료되었습니다. 앱을 종료 후 다시 로그인해주세요."

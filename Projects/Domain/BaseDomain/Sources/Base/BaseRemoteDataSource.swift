@@ -12,7 +12,7 @@ open class BaseRemoteDataSource<Endpoint: DotoriEndpoint> {
 
     public init(
         jwtStore: any JwtStore,
-        client: EmdpointClient<Endpoint>?,
+        client: EmdpointClient<Endpoint>? = nil,
         decoder: JSONDecoder = JSONDecoder()
     ) {
         self.jwtStore = jwtStore
