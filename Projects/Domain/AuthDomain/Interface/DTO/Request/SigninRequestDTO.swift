@@ -1,6 +1,6 @@
 import Foundation
 
-public struct SigninRequestDTO: Equatable {
+public struct SigninRequestDTO: Encodable {
     public init(email: String, password: String) {
         self.email = email
         self.password = password

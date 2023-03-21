@@ -1,23 +1,43 @@
+import AuthDomainInterface
 import BaseDomain
 import Emdpoint
 
 enum AuthEndpoint {
-    case signin
+    case signin(SigninRequestDTO)
+    case refresh
 }
 
 extension AuthEndpoint: DotoriEndpoint {
     typealias ErrorType = Error
 
     var route: Route {
-        .post("/auth")
+        switch self {
+        case .signin:
+            return .post("/auth")
+
+        case .refresh:
+            return .patch("/auth")
+        }
     }
 
     var task: HTTPTask {
-        .requestPlain
+        switch self {
+        case let .signin(req):
+            return .requestJSONEncodable(req)
+
+        default:
+            return .requestPlain
+        }
     }
 
     var jwtTokenType: JwtTokenType {
-        .none
+        switch self {
+        case .refresh:
+            return .refreshToken
+
+        default:
+            return .none
+        }
     }
 
     var errorMapper: [Int : ErrorType]? {

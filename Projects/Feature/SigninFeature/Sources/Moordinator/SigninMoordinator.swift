@@ -17,6 +17,9 @@ final class SigninMoordinator: Moordinator {
             let store = SigninStore(router: router)
             let viewController = SigninViewController(store: store)
             rootVC.setViewControllers([viewController], animated: true)
+
+        default:
+            return .none
         }
         return .none
     }
