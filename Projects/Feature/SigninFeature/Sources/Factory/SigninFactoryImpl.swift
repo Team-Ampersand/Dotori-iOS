@@ -6,13 +6,16 @@ import Moordinator
 struct SigninFactoryImpl: SigninFactory {
     private let signinUseCase: any SigninUseCase
     private let signupFactory: any SignupFactory
+    private let renewalPasswordFactory: any RenewalPasswordFactory
 
     init(
         signinUseCase: any SigninUseCase,
-        signupFactory: any SignupFactory
+        signupFactory: any SignupFactory,
+        renewalPasswordFactory: any RenewalPasswordFactory
     ) {
         self.signinUseCase = signinUseCase
         self.signupFactory = signupFactory
+        self.renewalPasswordFactory = renewalPasswordFactory
     }
 
     func makeMoordinator() -> Moordinator {
@@ -25,7 +28,8 @@ struct SigninFactoryImpl: SigninFactory {
         return SigninMoordinator(
             router: signinRouter,
             signinViewController: signinViewController,
-            signupFactory: self.signupFactory
+            signupFactory: self.signupFactory,
+            renewalPasswordFactory: self.renewalPasswordFactory
         )
     }
 }

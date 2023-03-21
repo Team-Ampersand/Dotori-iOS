@@ -1,6 +1,7 @@
 import Moordinator
 import SigninFeatureInterface
 import SignupFeatureInterface
+import RenewalPasswordFeatureInterface
 import UIKit
 
 final class SigninMoordinator: Moordinator {
@@ -8,15 +9,18 @@ final class SigninMoordinator: Moordinator {
     let router: any Router
     private let signinViewController: SigninViewController
     private let signupFactory: any SignupFactory
+    private let renewalPasswordFactory: any RenewalPasswordFactory
 
     init(
         router: SigninRouter,
         signinViewController: SigninViewController,
-        signupFactory: any SignupFactory
+        signupFactory: any SignupFactory,
+        renewalPasswordFactory: any RenewalPasswordFactory
     ) {
         self.router = router
         self.signinViewController = signinViewController
         self.signupFactory = signupFactory
+        self.renewalPasswordFactory = renewalPasswordFactory
     }
 
     var root: Presentable {
@@ -31,6 +35,11 @@ final class SigninMoordinator: Moordinator {
 
         case .signup:
             let viewController = signupFactory.makeViewController(router: router)
+            rootVC.pushViewController(viewController, animated: true)
+            return .one(.contribute(viewController))
+
+        case .renewalPassword:
+            let viewController = renewalPasswordFactory.makeViewController(router: router)
             rootVC.pushViewController(viewController, animated: true)
             return .one(.contribute(viewController))
 
