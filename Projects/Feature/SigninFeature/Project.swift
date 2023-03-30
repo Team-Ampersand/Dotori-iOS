@@ -14,7 +14,6 @@ let project = Project.makeModule(
         .Domain.AuthDomainInterface
     ],
     interfaceDependencies: [
-        .Core.DesignSystem,
         .SPM.Moordinator
     ]
 )

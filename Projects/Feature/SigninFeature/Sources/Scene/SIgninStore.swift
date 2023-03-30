@@ -61,11 +61,7 @@ final class SigninStore: BaseStore, RouterProvidable {
         signinUseCase.execute(req: req)
             .sink(with: self, receiveCompletion: { owner, completion in
                 if case let .failure(err) = completion {
-                    let toastPath = SigninRoutePath.toast(
-                        text: err.localizedDescription,
-                        style: .error
-                    )
-                    owner.router.route.send(toastPath)
+                    DotoriToast.makeToast(text: err.errorDescription, style: .error)
                 }
             }, receiveValue: { owner, _ in
                 owner.router.route.send(SigninRoutePath.main)
