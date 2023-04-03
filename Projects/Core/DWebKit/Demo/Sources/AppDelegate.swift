@@ -11,7 +11,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
         let viewController = DWebViewController(
-            urlString: "https://dotori-v2.vercel.app",
+            urlString: "https://www.dotori-gsm.com",
             tokenDTO: .init(
                 accessToken: "",
                 refreshToken: "",
