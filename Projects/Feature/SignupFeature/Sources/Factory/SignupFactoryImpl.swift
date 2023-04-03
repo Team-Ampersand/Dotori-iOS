@@ -14,7 +14,7 @@ struct SignupFactoryImpl: SignupFactory {
 
     func makeViewController(router: any Router) -> UIViewController {
         let token = loadJwtTokenUseCase.execute()
-        let url = "https://dotori-v2.vercel.app/signup"
+        let url = "https://www.dotori-gsm.com/signup"
 
         let tokenDTO = LocalStorageTokenDTO(
             accessToken: token.accessToken,

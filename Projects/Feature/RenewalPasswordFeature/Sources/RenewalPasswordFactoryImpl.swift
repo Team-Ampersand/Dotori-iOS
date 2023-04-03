@@ -13,7 +13,7 @@ struct RenewalPasswordFactoryImpl: RenewalPasswordFactory {
 
     func makeViewController(router: Router) -> UIViewController {
         let token = loadJwtTokenUseCase.execute()
-        let url = "https://dotori-v2.vercel.app/changePasswd"
+        let url = "https://www.dotori-gsm.com/changePasswd"
 
         let tokenDTO = LocalStorageTokenDTO(
             accessToken: token.accessToken,
