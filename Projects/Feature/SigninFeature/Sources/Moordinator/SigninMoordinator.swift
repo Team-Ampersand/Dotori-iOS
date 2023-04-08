@@ -48,9 +48,6 @@ final class SigninMoordinator: Moordinator {
         case .main:
             return .one(.forwardToParent(with: RootRoutePath.main))
 
-        case let .toast(text, style, duration):
-            DotoriToast.makeToast(text: text, style: style, duration: duration)
-
         default:
             return .none
         }
