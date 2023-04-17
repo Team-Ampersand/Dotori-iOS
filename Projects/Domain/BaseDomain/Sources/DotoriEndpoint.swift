@@ -13,9 +13,7 @@ extension DotoriEndpoint {
         ) ?? URL(string: "https://www.google.com")!
     }
 
-    public var validationCode: ClosedRange<Int> {
-        200...300
-    }
+    public var validationCode: ClosedRange<Int> { 200...300 }
 
     public var headers: [String: String]? {
         switch self {
@@ -25,9 +23,7 @@ extension DotoriEndpoint {
         }
     }
 
-    public var timeout: TimeInterval {
-        60
-    }
+    public var timeout: TimeInterval { 60 }
 }
 
 private class BundleFinder {}
