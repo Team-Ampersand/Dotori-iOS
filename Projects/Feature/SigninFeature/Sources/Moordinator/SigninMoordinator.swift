@@ -1,3 +1,4 @@
+import BaseFeature
 import DesignSystem
 import Moordinator
 import RenewalPasswordFeatureInterface
@@ -30,7 +31,7 @@ final class SigninMoordinator: Moordinator {
     }
 
     func route(to path: RoutePath) -> MoordinatorContributors {
-        guard let path = path as? SigninRoutePath else { return .none }
+        guard let path = path.asDotori else { return .none }
         switch path {
         case .signin:
             rootVC.setViewControllers([signinViewController], animated: true)
@@ -46,7 +47,7 @@ final class SigninMoordinator: Moordinator {
             return .one(.contribute(viewController))
 
         case .main:
-            return .one(.forwardToParent(with: RootRoutePath.main))
+            return .one(.forwardToParent(with: DotoriRoutePath.main))
 
         default:
             return .none
