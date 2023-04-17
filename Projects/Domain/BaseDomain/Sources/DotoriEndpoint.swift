@@ -24,6 +24,10 @@ extension DotoriEndpoint {
             return ["Content-Type": "application/json"]
         }
     }
+
+    public var timeout: TimeInterval {
+        60
+    }
 }
 
 private class BundleFinder {}
