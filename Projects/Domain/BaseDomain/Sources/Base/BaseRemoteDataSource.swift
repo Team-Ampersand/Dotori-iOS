@@ -45,7 +45,7 @@ open class BaseRemoteDataSource<Endpoint: DotoriEndpoint> {
 
 private extension BaseRemoteDataSource {
     func performRequest(_ endpoint: Endpoint) -> AnyPublisher<DataResponse, Error> {
-        return client.requestPublisher(endpoint)
+        client.requestPublisher(endpoint)
             .retry(maxRetryCount)
             .timeout(RunLoop.SchedulerTimeType.Stride(endpoint.timeout), scheduler: RunLoop.main)
             .mapError {
