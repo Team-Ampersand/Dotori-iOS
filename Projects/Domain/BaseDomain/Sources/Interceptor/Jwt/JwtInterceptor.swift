@@ -23,9 +23,9 @@ public struct JwtInterceptor: InterceptorType {
         }
         var req = request
         let token = getToken(jwtTokenType: jwtTokenType)
-        req.addValue(jwtTokenType.rawValue, forHTTPHeaderField: token)
+        req.setValue(token, forHTTPHeaderField: jwtTokenType.rawValue)
         if checkTokenIsExpired() {
-            reissueToken(request, completion: completion)
+            reissueToken(req, jwtType: jwtTokenType, completion: completion)
         } else {
             completion(.success(request))
         }
@@ -75,6 +75,7 @@ private extension JwtInterceptor {
 
     func reissueToken(
         _ request: URLRequest,
+        jwtType: JwtTokenType,
         completion: @escaping (Result<URLRequest, EmdpointError>) -> Void
     ) {
         #if DEV || STAGE
@@ -85,8 +86,10 @@ private extension JwtInterceptor {
         client.request(.refresh) { result in
             switch result {
             case let .success(response):
+                var request = request
                 if let tokenDTO = try? JSONDecoder().decode(JwtTokenDTO.self, from: response.data) {
                     saveToken(tokenDTO: tokenDTO)
+                    request.setValue(getToken(jwtTokenType: jwtType), forHTTPHeaderField: jwtType.rawValue)
                 }
                 completion(.success(request))
 
