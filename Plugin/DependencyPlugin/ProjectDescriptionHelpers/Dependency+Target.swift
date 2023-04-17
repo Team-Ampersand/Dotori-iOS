@@ -33,10 +33,6 @@ public extension TargetDependency.Feature {
         target: ModulePaths.Feature.MainFeature.targetName(type: .sources),
         path: .relativeToFeature(ModulePaths.Feature.MainFeature.rawValue)
     )
-    static let RootFeatureInterface = TargetDependency.project(
-        target: ModulePaths.Feature.RootFeature.targetName(type: .interface),
-        path: .relativeToFeature(ModulePaths.Feature.RootFeature.rawValue)
-    )
     static let RootFeature = TargetDependency.project(
         target: ModulePaths.Feature.RootFeature.targetName(type: .sources),
         path: .relativeToFeature(ModulePaths.Feature.RootFeature.rawValue)

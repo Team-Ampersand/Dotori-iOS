@@ -1,7 +1,7 @@
+import BaseFeature
 import Combine
 import MainFeatureInterface
 import Moordinator
-import RootFeatureInterface
 import SigninFeatureInterface
 import UIKit
 
@@ -33,9 +33,9 @@ public final class RootMoordinator: Moordinator {
     }
 
     public func route(to path: RoutePath) -> MoordinatorContributors {
-        guard let path = path as? RootRoutePath else { return .none }
+        guard let path = path.asDotori else { return .none }
         switch path {
-        case .auth:
+        case .signin:
             let signinMoordinator = signinFactory.makeMoordinator()
             Moord.use(signinMoordinator) { root in
                 self.window.rootViewController = root
@@ -62,6 +62,9 @@ public final class RootMoordinator: Moordinator {
                 )
             }
             return .one(.contribute(mainMoordinator))
+
+        default:
+            return .none
         }
     }
 }

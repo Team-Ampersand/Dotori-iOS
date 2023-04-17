@@ -44,10 +44,10 @@ final class SigninStore: BaseStore, RouterProvidable {
             newState.password = password
 
         case .signupButtonDidTap:
-            router.route.send(SigninRoutePath.signup)
+            router.route.send(DotoriRoutePath.signup)
 
         case .renewalPasswordButtonDidTap:
-            router.route.send(SigninRoutePath.renewalPassword)
+            router.route.send(DotoriRoutePath.renewalPassword)
 
         case .signinButtonDidTap:
             signinButtonDidTap(email: newState.email, password: newState.password)
@@ -64,7 +64,7 @@ final class SigninStore: BaseStore, RouterProvidable {
                     DotoriToast.makeToast(text: err.errorDescription, style: .error)
                 }
             }, receiveValue: { owner, _ in
-                owner.router.route.send(SigninRoutePath.main)
+                owner.router.route.send(DotoriRoutePath.main)
             })
             .store(in: &bag)
     }
