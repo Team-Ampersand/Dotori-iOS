@@ -80,7 +80,7 @@ private extension JwtInterceptor {
         #if DEV || STAGE
         let client = EmdpointClient<RefreshEndpoint>(interceptors: [DotoriLoggingInterceptor()])
         #else
-        let client = EmdpointClient<RefreshEndpoint>(interceptors: [])
+        let client = EmdpointClient<RefreshEndpoint>()
         #endif
         client.request(.refresh) { result in
             switch result {
