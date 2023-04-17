@@ -1,3 +1,4 @@
+import DateUtility
 import Emdpoint
 import Foundation
 import JwtStoreInterface
@@ -12,7 +13,7 @@ public struct JwtInterceptor: InterceptorType {
     public func prepare(
         _ request: URLRequest,
         endpoint: EndpointType,
-        completion: (Result<URLRequest, EmdpointError>) -> Void
+        completion: @escaping (Result<URLRequest, EmdpointError>) -> Void
     ) {
         guard let jwtTokenType = (endpoint as? JwtAuthorizable)?.jwtTokenType,
               jwtTokenType != .none
@@ -22,8 +23,12 @@ public struct JwtInterceptor: InterceptorType {
         }
         var req = request
         let token = getToken(jwtTokenType: jwtTokenType)
-        req.addValue(jwtTokenType.rawValue, forHTTPHeaderField: token)
-        completion(.success(request))
+        req.setValue(token, forHTTPHeaderField: jwtTokenType.rawValue)
+        if checkTokenIsExpired() {
+            reissueToken(req, jwtType: jwtTokenType, completion: completion)
+        } else {
+            completion(.success(request))
+        }
     }
 
     public func didReceive(
@@ -60,5 +65,37 @@ private extension JwtInterceptor {
         jwtStore.save(property: .accessToken, value: tokenDTO.accessToken)
         jwtStore.save(property: .refreshToken, value: tokenDTO.refreshToken)
         jwtStore.save(property: .accessExpiresAt, value: tokenDTO.expiresAt)
+    }
+
+    func checkTokenIsExpired() -> Bool {
+        let expired = jwtStore.load(property: .accessExpiresAt)
+            .toDateWithCustomFormat("yyyy-MM-dd'T'HH:mm:ss")
+        return Date() > expired
+    }
+
+    func reissueToken(
+        _ request: URLRequest,
+        jwtType: JwtTokenType,
+        completion: @escaping (Result<URLRequest, EmdpointError>) -> Void
+    ) {
+        #if DEV || STAGE
+        let client = EmdpointClient<RefreshEndpoint>(interceptors: [DotoriLoggingInterceptor()])
+        #else
+        let client = EmdpointClient<RefreshEndpoint>()
+        #endif
+        client.request(.refresh) { result in
+            switch result {
+            case let .success(response):
+                var request = request
+                if let tokenDTO = try? JSONDecoder().decode(JwtTokenDTO.self, from: response.data) {
+                    saveToken(tokenDTO: tokenDTO)
+                    request.setValue(getToken(jwtTokenType: jwtType), forHTTPHeaderField: jwtType.rawValue)
+                }
+                completion(.success(request))
+
+            case let .failure(error):
+                completion(.failure(error))
+            }
+        }
     }
 }
