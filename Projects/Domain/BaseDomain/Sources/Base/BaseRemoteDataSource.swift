@@ -29,7 +29,7 @@ open class BaseRemoteDataSource<Endpoint: DotoriEndpoint> {
     }
 
     public func request<T: Decodable>(_ endpoint: Endpoint, dto: T.Type) -> AnyPublisher<T, Error> {
-        requestPublisher(endpoint)
+        performRequest(endpoint)
             .map(\.data)
             .decode(type: dto, decoder: decoder)
             .mapError { $0 as Error }
@@ -37,66 +37,24 @@ open class BaseRemoteDataSource<Endpoint: DotoriEndpoint> {
     }
 
     public func request(_ endpoint: Endpoint) -> AnyPublisher<Void, Error> {
-        requestPublisher(endpoint)
+        performRequest(endpoint)
             .map { _ in return }
             .eraseToAnyPublisher()
-    }
-
-    private func requestPublisher(_ endpoint: Endpoint) -> AnyPublisher<DataResponse, Error> {
-        return checkIsEndpointNeedsAuthorization(endpoint) ?
-        authorizedRequest(endpoint) :
-        defaultRequest(endpoint)
     }
 }
 
 private extension BaseRemoteDataSource {
-    func defaultRequest(_ endpoint: Endpoint) -> AnyPublisher<DataResponse, Error> {
-        client.requestPublisher(endpoint)
+    func performRequest(_ endpoint: Endpoint) -> AnyPublisher<DataResponse, Error> {
+        return client.requestPublisher(endpoint)
             .retry(maxRetryCount)
-            .timeout(45, scheduler: RunLoop.main)
+            .timeout(RunLoop.SchedulerTimeType.Stride(endpoint.timeout), scheduler: RunLoop.main)
             .mapError {
-                if case let .underlying(err) = $0,
-                   let emdpointError = err as? EmdpointError,
-                   case let .statusCode(response) = emdpointError,
+                if case let .statusCode(response) = $0,
                    let httpResponse = response.response as? HTTPURLResponse {
                     return endpoint.errorMapper?[httpResponse.statusCode] ?? $0 as Error
                 }
                 return $0 as Error
             }
-            .eraseToAnyPublisher()
-    }
-
-    func authorizedRequest(_ endpoint: Endpoint) -> AnyPublisher<DataResponse, Error> {
-        if checkTokenIsExpired() {
-            return reissueToken()
-                .retry(maxRetryCount)
-                .flatMap { self.defaultRequest(endpoint) }
-                .mapError { $0 as Error }
-                .eraseToAnyPublisher()
-        } else {
-            return defaultRequest(endpoint)
-                .retry(maxRetryCount)
-                .eraseToAnyPublisher()
-        }
-    }
-
-    func checkTokenIsExpired() -> Bool {
-        let expired = jwtStore.load(property: .accessExpiresAt)
-            .toDateWithCustomFormat("yyyy-MM-dd'T'HH:mm:ss")
-        return Date() > expired
-    }
-
-    func checkIsEndpointNeedsAuthorization(_ endpoint: Endpoint) -> Bool {
-        endpoint.jwtTokenType == .accessToken
-    }
-
-    func reissueToken() -> AnyPublisher<Void, Error> {
-        let client = EmdpointClient<RefreshEndpoint>(
-            interceptors: [JwtInterceptor(jwtStore: jwtStore)]
-        )
-        return client.requestPublisher(.refresh)
-            .map { _ in }
-            .mapError { $0 as Error }
             .eraseToAnyPublisher()
     }
 }
