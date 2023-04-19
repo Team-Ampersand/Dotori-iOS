@@ -2,7 +2,6 @@ import BaseFeature
 import DesignSystem
 import Moordinator
 import RenewalPasswordFeatureInterface
-import RootFeatureInterface
 import SigninFeatureInterface
 import SignupFeatureInterface
 import UIKit
