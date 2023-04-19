@@ -1,5 +1,4 @@
 import MainFeatureInterface
-import RootFeatureInterface
 import SigninFeatureInterface
 import Swinject
 

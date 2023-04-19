@@ -1,7 +1,6 @@
 import BaseFeature
 import Combine
 import Moordinator
-import RootFeatureInterface
 
 final class RootRouter: Router {
     let route: PassthroughSubject<any RoutePath, Never> = .init()
