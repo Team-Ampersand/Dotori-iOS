@@ -1,14 +1,15 @@
-import Then
 import UIKit
 
 public final class DotoriCheckBox: UIControl {
 
-    private let checkedView = UIImageView().then {
-        $0.image = UIImage.checkmark.withRenderingMode(.alwaysTemplate)
-        $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.isHidden = true
-        $0.tintColor = .dotori(.sub(.white))
-    }
+    private let checkedView: UIImageView = {
+        let view = UIImageView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.isHidden = true
+        view.image = UIImage.checkmark.withRenderingMode(.alwaysTemplate)
+        view.tintColor = .white
+        return view
+    }()
 
     private var isChecked: Bool = false {
         didSet {
