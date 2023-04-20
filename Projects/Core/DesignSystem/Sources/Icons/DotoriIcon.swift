@@ -31,4 +31,5 @@ public extension UIImage {
     static let women = DesignSystemAsset.DotoriIcon.women.image
     static let xmark = DesignSystemAsset.DotoriIcon.xmark.image
     static let xmarkCircle = DesignSystemAsset.DotoriIcon.xmarkCircle.image
+    static let checkMark = DesignSystemAsset.DotoriIcon.checkMark.image
 }
