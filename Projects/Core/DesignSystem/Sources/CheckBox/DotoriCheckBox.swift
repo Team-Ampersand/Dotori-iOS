@@ -3,64 +3,64 @@ import UIKit
 
 public final class DotoriCheckBox: UIControl {
 
-    let checkedView = UIImageView().then {
+    private let checkedView = UIImageView().then {
         $0.image = UIImage.checkmark.withRenderingMode(.alwaysTemplate)
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.isHidden = true
         $0.tintColor = .dotori(.sub(.white))
     }
 
-    var isChecked: Bool = false {
+    private var isChecked: Bool = false {
         didSet {
             updateState()
         }
     }
 
-    var hitRadiusOffset: CGFloat = 10
+    private var hitRadiusOffset: CGFloat = 10
 
-    var checkedViewInsets: UIEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5) {
+    private var checkedViewInsets: UIEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5) {
         didSet {
             layoutIfNeeded()
         }
     }
 
-    var checkedBackgroundColor: UIColor = .dotori(.primary(.p10)) {
+    private var checkedBackgroundColor: UIColor = .dotori(.primary(.p10)) {
         didSet {
             backgroundColor = isChecked ? checkedBackgroundColor : uncheckedBackgroundColor
         }
     }
 
-    var uncheckedBackgroundColor: UIColor = .white {
+    private var uncheckedBackgroundColor: UIColor = .white {
         didSet {
             backgroundColor = isChecked ? checkedBackgroundColor : uncheckedBackgroundColor
         }
     }
 
-    var checkedImage: UIImage? = UIImage.checkmark {
+    private var checkedImage: UIImage? = UIImage.checkmark {
         didSet {
             checkedView.image = checkedImage?.withRenderingMode(.alwaysTemplate)
         }
     }
 
-    var checkedBorderColor: UIColor = .dotori(.primary(.p10)) {
+    private var checkedBorderColor: UIColor = .dotori(.primary(.p10)) {
         didSet {
             layer.borderColor = isChecked ? checkedBorderColor.cgColor : uncheckedBorderColor.cgColor
         }
     }
 
-    var uncheckedBorderColor: UIColor = .dotori(.neutral(.n30)) {
+    private var uncheckedBorderColor: UIColor = .dotori(.neutral(.n30)) {
         didSet {
             layer.borderColor = isChecked ? checkedBorderColor.cgColor : uncheckedBorderColor.cgColor
         }
     }
 
-    var imageTint: UIColor? = .white {
+    private var imageTint: UIColor? = .white {
         didSet {
             checkedView.tintColor = imageTint
         }
     }
 
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
@@ -70,15 +70,15 @@ public final class DotoriCheckBox: UIControl {
         setup()
     }
 
-    func setup() {
-        backgroundColor = uncheckedBackgroundColor
+    private func setup() {
+        self.backgroundColor = uncheckedBackgroundColor
         layer.borderColor = uncheckedBorderColor.cgColor
         layer.borderWidth = 1
         layer.cornerRadius = 10
         addSubview(checkedView)
     }
 
-    func updateState() {
+    private func updateState() {
         backgroundColor = isChecked ? checkedBackgroundColor : uncheckedBackgroundColor
         layer.borderColor = isChecked ? checkedBorderColor.cgColor : uncheckedBorderColor.cgColor
         checkedView.isHidden = !isChecked
