@@ -19,7 +19,12 @@ public final class DotoriCheckBox: UIControl {
 
     private var hitRadiusOffset: CGFloat = 10
 
-    private var checkedViewInsets: UIEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5) {
+    private var checkedViewInsets: UIEdgeInsets = UIEdgeInsets(
+        top: 5,
+        left: 5,
+        bottom: 5,
+        right: 5
+    ) {
         didSet {
             layoutIfNeeded()
         }
@@ -94,8 +99,16 @@ public final class DotoriCheckBox: UIControl {
     }
 
     //MARK: - Increase hit area
-    public override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        return bounds.inset(by: UIEdgeInsets(top: -hitRadiusOffset, left: -hitRadiusOffset, bottom: -hitRadiusOffset, right: -hitRadiusOffset)).contains(point)
+    public override func point(
+        inside point: CGPoint,
+        with event: UIEvent?
+    ) -> Bool {
+        return bounds.inset(by: UIEdgeInsets(
+            top: -hitRadiusOffset,
+            left: -hitRadiusOffset,
+            bottom: -hitRadiusOffset,
+            right: -hitRadiusOffset)
+        ).contains(point)
     }
 
     public override func layoutSubviews() {
