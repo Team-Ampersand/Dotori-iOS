@@ -3,6 +3,7 @@ import UIKit
 public extension UIImage {
     static let arrowLeft = DesignSystemAsset.DotoriIcon.arrowLeft.image
     static let calendar = DesignSystemAsset.DotoriIcon.calendar.image
+    static let checkMark = DesignSystemAsset.DotoriIcon.checkMark.image
     static let chevronDown = DesignSystemAsset.DotoriIcon.chevronDown.image
     static let chevronLeft = DesignSystemAsset.DotoriIcon.chevronLeft.image
     static let chevronRight = DesignSystemAsset.DotoriIcon.chevronRight.image
