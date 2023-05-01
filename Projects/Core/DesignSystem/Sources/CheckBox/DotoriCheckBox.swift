@@ -10,13 +10,7 @@ public final class DotoriCheckBox: UIControl {
         view.tintColor = .white
         return view
     }()
-
-    public var isChecked: Bool = false {
-        didSet {
-            updateState()
-        }
-    }
-
+    
     private var hitRadiusOffset: CGFloat = 10
 
     private var checkedViewInsets: UIEdgeInsets = UIEdgeInsets(
@@ -27,6 +21,12 @@ public final class DotoriCheckBox: UIControl {
     ) {
         didSet {
             layoutIfNeeded()
+        }
+    }
+
+    public var isChecked: Bool = false {
+        didSet {
+            updateState()
         }
     }
 
