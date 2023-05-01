@@ -2,7 +2,7 @@ import UIKit
 
 public final class DotoriCheckBox: UIControl {
 
-    private let checkedView: UIImageView = {
+    private lazy var checkedView: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.isHidden = !isChecked
