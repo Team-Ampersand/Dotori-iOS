@@ -6,6 +6,7 @@ public extension TargetDependency {
     struct Domain {}
     struct Core {}
     struct Shared {}
+    struct UserInterface {}
 }
 
 public extension TargetDependency.Feature {
@@ -83,14 +84,6 @@ public extension TargetDependency.Core {
         target: ModulePaths.Core.JwtStore.targetName(type: .sources),
         path: .relativeToCore(ModulePaths.Core.JwtStore.rawValue)
     )
-    static let DWebKit = TargetDependency.project(
-        target: ModulePaths.Core.DWebKit.targetName(type: .sources),
-        path: .relativeToCore(ModulePaths.Core.DWebKit.rawValue)
-    )
-    static let DesignSystem = TargetDependency.project(
-        target: ModulePaths.Core.DesignSystem.targetName(type: .sources),
-        path: .relativeToCore(ModulePaths.Core.DesignSystem.rawValue)
-    )
 }
 
 public extension TargetDependency.Shared {
@@ -113,5 +106,16 @@ public extension TargetDependency.Shared {
     static let GlobalThirdPartyLibrary = TargetDependency.project(
         target: ModulePaths.Shared.GlobalThirdPartyLibrary.targetName(type: .sources),
         path: .relativeToShared(ModulePaths.Shared.GlobalThirdPartyLibrary.rawValue)
+    )
+}
+
+public extension TargetDependency.UserInterface {
+    static let DWebKit = TargetDependency.project(
+        target: ModulePaths.UserInterface.DWebKit.targetName(type: .sources),
+        path: .relativeToUserInterface(ModulePaths.UserInterface.DWebKit.rawValue)
+    )
+    static let DesignSystem = TargetDependency.project(
+        target: ModulePaths.UserInterface.DesignSystem.targetName(type: .sources),
+        path: .relativeToUserInterface(ModulePaths.UserInterface.DesignSystem.rawValue)
     )
 }
