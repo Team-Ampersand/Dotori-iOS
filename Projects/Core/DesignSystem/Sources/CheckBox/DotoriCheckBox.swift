@@ -11,7 +11,7 @@ public final class DotoriCheckBox: UIControl {
         return view
     }()
 
-    private var isChecked: Bool = false {
+    public var isChecked: Bool = false {
         didSet {
             updateState()
         }
@@ -77,20 +77,6 @@ public final class DotoriCheckBox: UIControl {
         setup()
     }
 
-    private func setup() {
-        backgroundColor = uncheckedBackgroundColor
-        layer.borderColor = uncheckedBorderColor.cgColor
-        layer.borderWidth = 1
-        layer.cornerRadius = 10
-        addSubview(checkedView)
-    }
-
-    private func updateState() {
-        backgroundColor = isChecked ? checkedBackgroundColor : uncheckedBackgroundColor
-        layer.borderColor = isChecked ? checkedBorderColor.cgColor : uncheckedBorderColor.cgColor
-        checkedView.isHidden = !isChecked
-    }
-
     //MARK: - handle touches
     public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
@@ -121,4 +107,20 @@ public final class DotoriCheckBox: UIControl {
         )
     }
     
+}
+
+private extension DotoriCheckBox {
+    private func setup() {
+        backgroundColor = uncheckedBackgroundColor
+        layer.borderColor = uncheckedBorderColor.cgColor
+        layer.borderWidth = 1
+        layer.cornerRadius = 10
+        addSubview(checkedView)
+    }
+
+    private func updateState() {
+        backgroundColor = isChecked ? checkedBackgroundColor : uncheckedBackgroundColor
+        layer.borderColor = isChecked ? checkedBorderColor.cgColor : uncheckedBorderColor.cgColor
+        checkedView.isHidden = !isChecked
+    }
 }
