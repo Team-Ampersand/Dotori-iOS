@@ -6,16 +6,10 @@ import Foundation
 
 let isCI = (ProcessInfo.processInfo.environment["TUIST_CI"] ?? "0") == "1" ? true : false
 
-let configurations: [Configuration] = isCI ?
-[
-  .debug(name: .dev),
-  .debug(name: .stage),
-  .release(name: .prod)
-] :
-[
-  .debug(name: .dev, xcconfig: .relativeToXCConfig(type: .dev, name: "App")),
-  .debug(name: .stage, xcconfig: .relativeToXCConfig(type: .stage, name: "App")),
-  .release(name: .prod, xcconfig: .relativeToXCConfig(type: .prod, name: "App"))
+let configurations: [Configuration] = [
+  .debug(name: .dev, xcconfig: .shared),
+  .debug(name: .stage, xcconfig: .shared),
+  .release(name: .prod, xcconfig: .shared)
 ]
 
 let settings: Settings =
