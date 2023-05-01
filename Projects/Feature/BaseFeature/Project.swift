@@ -11,7 +11,7 @@ let project = Project.makeModule(
         .SPM.Moordinator
     ],
     internalDependencies: [
-        .Core.DesignSystem,
+        .UserInterface.DesignSystem,
         .Shared.GlobalThirdPartyLibrary,
         .Shared.UtilityModule
     ]

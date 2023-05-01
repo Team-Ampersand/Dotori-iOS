@@ -3,7 +3,7 @@ import ProjectDescriptionHelpers
 import DependencyPlugin
 
 let project = Project.makeModule(
-    name: ModulePaths.Core.DWebKit.rawValue,
+    name: ModulePaths.UserInterface.DWebKit.rawValue,
     product: .framework,
     targets: [.unitTest, .demo],
     internalDependencies: []
