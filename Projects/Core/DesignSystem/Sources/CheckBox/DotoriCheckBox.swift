@@ -66,7 +66,7 @@ public final class DotoriCheckBox: UIControl {
         }
     }
 
-    public init(isChecked: Bool) {
+    public init(isChecked: Bool = false) {
         self.isChecked = isChecked
         super.init(frame: .zero)
         setup()
