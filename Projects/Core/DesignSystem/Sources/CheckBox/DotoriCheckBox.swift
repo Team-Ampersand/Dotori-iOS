@@ -5,7 +5,7 @@ public final class DotoriCheckBox: UIControl {
     private let checkedView: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.isHidden = true
+        view.isHidden = !isChecked
         view.image = UIImage.checkmark.withRenderingMode(.alwaysTemplate)
         view.tintColor = .white
         return view
