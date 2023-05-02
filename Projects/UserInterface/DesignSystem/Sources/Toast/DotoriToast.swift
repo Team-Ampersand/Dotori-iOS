@@ -1,3 +1,4 @@
+import Configure
 import UIKit
 
 public final class DotoriToast: UIView {
@@ -13,7 +14,7 @@ public final class DotoriToast: UIView {
     }
 
     private enum Dimension {
-        // swiftlint: disable nesting
+        // swiftlint: disable nesting blanket_disable_command
         enum Margin {
             static let horizontal: CGFloat = 16
             static let vertical: CGFloat = 66
@@ -27,12 +28,9 @@ public final class DotoriToast: UIView {
         static let viewSpacing: CGFloat = 12
     }
 
-    private let label: UILabel = {
-        let label = UILabel()
-        label.textColor = .dotori(.neutral(.n10))
-        label.numberOfLines = 0
-        return label
-    }()
+    private let label = UILabel()
+        .set(\.textColor, .dotori(.neutral(.n10)))
+        .set(\.numberOfLines, 0)
     private let iconView: DotoriIconView = DotoriIconView()
     private var text: String? {
         get { label.text }
