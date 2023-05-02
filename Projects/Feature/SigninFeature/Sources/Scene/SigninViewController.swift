@@ -3,7 +3,7 @@ import DesignSystem
 import CombineUtility
 import GlobalThirdPartyLibrary
 import MSGLayout
-import Then
+import Configure
 import UtilityModule
 import UIKit
 
