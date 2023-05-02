@@ -1,3 +1,4 @@
+import Configure
 import UIKit
 
 public final class DotoriIconTextField: UITextField {
@@ -17,8 +18,8 @@ public final class DotoriIconTextField: UITextField {
         icon: UIImage
     ) {
         let dotoriIconView = DotoriIconView()
-        dotoriIconView.image = icon.withRenderingMode(.alwaysTemplate)
-        dotoriIconView.tintColor = .dotori(.neutral(.n30))
+            .set(\.image, icon.withRenderingMode(.alwaysTemplate))
+            .set(\.tintColor, .dotori(.neutral(.n30)))
         self.iconView = dotoriIconView
         super.init(frame: .zero)
         setupTextField()

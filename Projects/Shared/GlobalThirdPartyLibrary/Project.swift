@@ -7,11 +7,11 @@ let project = Project.makeModule(
     product: .framework,
     targets: [],
     externalDependencies: [
-        .SPM.Swinject
+        .SPM.Swinject,
+        .SPM.Configure
     ],
     internalDependencies: [
         .Shared.CombineUtility,
-        .Shared.DateUtility,
-        .Shared.Then
+        .Shared.DateUtility
     ]
 )

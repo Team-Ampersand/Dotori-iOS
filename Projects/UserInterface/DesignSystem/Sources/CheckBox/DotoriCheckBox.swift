@@ -1,16 +1,13 @@
+import Configure
 import UIKit
 
 public final class DotoriCheckBox: UIControl {
+    private lazy var checkedView = UIImageView()
+        .set(\.translatesAutoresizingMaskIntoConstraints, false)
+        .set(\.isHidden, !isChecked)
+        .set(\.image, .checkMark.withRenderingMode(.alwaysTemplate))
+        .set(\.tintColor, .white)
 
-    private lazy var checkedView: UIImageView = {
-        let view = UIImageView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.isHidden = !isChecked
-        view.image = UIImage.checkmark.withRenderingMode(.alwaysTemplate)
-        view.tintColor = .white
-        return view
-    }()
-    
     private var hitRadiusOffset: CGFloat = 10
 
     private var checkedViewInsets: UIEdgeInsets = UIEdgeInsets(
@@ -106,7 +103,6 @@ public final class DotoriCheckBox: UIControl {
             height: frame.height - checkedViewInsets.top - checkedViewInsets.bottom
         )
     }
-    
 }
 
 private extension DotoriCheckBox {
