@@ -69,16 +69,17 @@ jobs:
       uses: sarisia/actions-status-discord@v1
       if: ${{ success() }}
       with: 
-        title: ✅ SMS iOS Test Success !
-        description: Success to test
+        title: "✅ SMS iOS Test Success !"
+        description: "Success to test 🧩"
         webhook: ${{ env.SMS_IOS_DISCORD_WEBHOOK }}
-        color: 8ae695
+        color: 0x8AE695
 
     - name: SMS iOS Test Failed Discord Notification
       uses: sarisia/actions-status-discord@v1
       if: ${{ failure() }}
       with: 
-        title: ❌ SMS iOS Test Failed ...
-        description: Failed to test
+        title: "❌ SMS iOS Test Failed .."
+        content: "@iOS"
+        description: "Failed to test 🥺"
         webhook: ${{ env.SMS_IOS_DISCORD_WEBHOOK }}
-        color: CB3F49
+        color: 0xCB3F49
