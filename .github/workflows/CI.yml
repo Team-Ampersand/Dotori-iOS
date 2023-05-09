@@ -71,7 +71,7 @@ jobs:
       with: 
         title: ✅ SMS iOS Test Success !
         description: Success to test
-        webhook: {{ env.SMS_IOS_DISCORD_WEBHOOK }}
+        webhook: ${{ env.SMS_IOS_DISCORD_WEBHOOK }}
         color: 8AE695
 
     - name: SMS iOS Test Failed Discord Notification
@@ -80,5 +80,5 @@ jobs:
       with: 
         title: ❌ SMS iOS Test Failed ...
         description: Failed to test
-        webhook: {{ env.SMS_IOS_DISCORD_WEBHOOK }}
+        webhook: ${{ env.SMS_IOS_DISCORD_WEBHOOK }}
         color: CB3F49
