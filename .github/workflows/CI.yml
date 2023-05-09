@@ -72,7 +72,7 @@ jobs:
         title: ✅ SMS iOS Test Success !
         description: Success to test
         webhook: ${{ env.SMS_IOS_DISCORD_WEBHOOK }}
-        color: 8AE695
+        color: 8ae695
 
     - name: SMS iOS Test Failed Discord Notification
       uses: sarisia/actions-status-discord@v1
