@@ -1,12 +1,10 @@
 name: Caching with Tuist Dependencies
 
 on:
-  pull_request:
-    branches:
-      - master
   push:
-    branches:
-      - master
+    branches: [ master ]
+  pull_request:
+    branches: [ * ]
 
 env:
   CACHED_DEPENDENCY_PATHS: ${{ github.workspace }}/Tuist/Dependencies
