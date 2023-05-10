@@ -79,7 +79,7 @@ jobs:
       if: ${{ failure() }}
       with: 
         title: "❌ SMS iOS Test Failed .."
-        content: "@iOS"
+        content: "< @iOS> "
         description: "Failed to test 🥺"
         webhook: ${{ env.SMS_IOS_DISCORD_WEBHOOK }}
         color: 0xBB3639
