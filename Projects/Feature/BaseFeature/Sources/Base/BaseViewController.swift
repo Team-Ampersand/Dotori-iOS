@@ -4,7 +4,6 @@ import UIKit
 
 open class BaseViewController<Store: BaseStore>:
     UIViewController,
-    BoundsProviable,
     HasCancellableBag,
     ViewControllable {
 
