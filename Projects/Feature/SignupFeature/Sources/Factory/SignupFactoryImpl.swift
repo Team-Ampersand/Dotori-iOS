@@ -1,8 +1,7 @@
 import AuthDomainInterface
+import BaseFeature
 import DesignSystem
 import DWebKit
-import SignupFeatureInterface
-import Moordinator
 import UIKit
 
 struct SignupFactoryImpl: SignupFactory {
@@ -12,7 +11,7 @@ struct SignupFactoryImpl: SignupFactory {
         self.loadJwtTokenUseCase = loadJwtTokenUseCase
     }
 
-    func makeViewController(router: any Router) -> UIViewController {
+    func makeViewController() -> UIViewController {
         let token = loadJwtTokenUseCase.execute()
         let url = "https://www.dotori-gsm.com/signup"
 

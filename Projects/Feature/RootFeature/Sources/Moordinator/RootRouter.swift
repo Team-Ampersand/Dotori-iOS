@@ -2,9 +2,10 @@ import BaseFeature
 import Combine
 import Moordinator
 
-final class RootRouter: Router {
-    let route: PassthroughSubject<any RoutePath, Never> = .init()
-    var initialPath: RoutePath {
+public final class RootRouter: Router {
+    public init() {}
+    public let route: PassthroughSubject<any RoutePath, Never> = .init()
+    public var initialPath: RoutePath {
         DotoriRoutePath.signin
     }
 }

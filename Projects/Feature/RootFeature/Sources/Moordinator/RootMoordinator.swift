@@ -1,8 +1,8 @@
 import BaseFeature
 import Combine
-import MainFeatureInterface
+import MainFeature
 import Moordinator
-import SigninFeatureInterface
+import SigninFeature
 import UIKit
 
 public final class RootMoordinator: Moordinator {
@@ -14,7 +14,6 @@ public final class RootMoordinator: Moordinator {
         viewController.view.backgroundColor = .white
         return viewController
     }()
-    public let router: any Router = RootRouter()
 
     public var root: Presentable {
         rootVC
@@ -33,6 +32,7 @@ public final class RootMoordinator: Moordinator {
     }
 
     public func route(to path: RoutePath) -> MoordinatorContributors {
+        print(path)
         guard let path = path.asDotori else { return .none }
         switch path {
         case .signin:
@@ -47,7 +47,12 @@ public final class RootMoordinator: Moordinator {
                     completion: nil
                 )
             }
-            return .one(.contribute(signinMoordinator))
+            return .one(
+                .contribute(
+                    withNextPresentable: signinMoordinator,
+                    withNextRouter: DisposableRouter(singlePath: DotoriRoutePath.signin)
+                )
+            )
 
         case .main:
             let mainMoordinator = mainFactory.makeMoordinator()
@@ -61,7 +66,12 @@ public final class RootMoordinator: Moordinator {
                     completion: nil
                 )
             }
-            return .one(.contribute(mainMoordinator))
+            return .one(
+                .contribute(
+                    withNextPresentable: mainMoordinator,
+                    withNextRouter: DisposableRouter(singlePath: DotoriRoutePath.main)
+                )
+            )
 
         default:
             return .none

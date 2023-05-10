@@ -5,14 +5,9 @@ import DependencyPlugin
 let project = Project.makeModule(
     name: ModulePaths.Feature.SigninFeature.rawValue,
     product: .staticLibrary,
-    targets: [.interface, .unitTest],
+    targets: [.unitTest],
     internalDependencies: [
         .Feature.BaseFeature,
-        .Feature.SignupFeatureInterface,
-        .Feature.RenewalPasswordFeatureInterface,
         .Domain.AuthDomainInterface
-    ],
-    interfaceDependencies: [
-        .SPM.Moordinator
     ]
 )

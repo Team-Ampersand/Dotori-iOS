@@ -1,4 +1,3 @@
-import MainFeatureInterface
 import Moordinator
 
 public struct MainFactoryImpl: MainFactory {

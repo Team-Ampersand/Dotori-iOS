@@ -2,19 +2,16 @@ import AuthDomainInterface
 import BaseFeature
 import Combine
 import DesignSystem
-import SigninFeatureInterface
 import Moordinator
 
-final class SigninStore: BaseStore, RouterProvidable {
+final class SigninStore: BaseStore {
     private let signinUseCase: any SigninUseCase
-    let router: any Router
+    let route: PassthroughSubject<RoutePath, Never> = .init()
     var bag: Set<AnyCancellable> = .init()
 
     init(
-        router: any Router,
         signinUseCase: any SigninUseCase
     ) {
-        self.router = router
         self.signinUseCase = signinUseCase
     }
 
@@ -44,10 +41,10 @@ final class SigninStore: BaseStore, RouterProvidable {
             newState.password = password
 
         case .signupButtonDidTap:
-            router.route.send(DotoriRoutePath.signup)
+            route.send(DotoriRoutePath.signup)
 
         case .renewalPasswordButtonDidTap:
-            router.route.send(DotoriRoutePath.renewalPassword)
+            route.send(DotoriRoutePath.renewalPassword)
 
         case .signinButtonDidTap:
             signinButtonDidTap(email: newState.email, password: newState.password)
@@ -59,12 +56,12 @@ final class SigninStore: BaseStore, RouterProvidable {
     func signinButtonDidTap(email: String, password: String) {
         let req = SigninRequestDTO(email: email, password: password)
         signinUseCase.execute(req: req)
-            .sink(with: self, receiveCompletion: { owner, completion in
+            .sink(with: self, receiveCompletion: { _, completion in
                 if case let .failure(err) = completion {
                     DotoriToast.makeToast(text: err.errorDescription, style: .error)
                 }
             }, receiveValue: { owner, _ in
-                owner.router.route.send(DotoriRoutePath.main)
+                owner.route.send(DotoriRoutePath.main)
             })
             .store(in: &bag)
     }

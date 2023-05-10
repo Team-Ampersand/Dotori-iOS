@@ -1,6 +1,5 @@
 import AuthDomainInterface
 import DWebKit
-import RenewalPasswordFeatureInterface
 import Moordinator
 import UIKit
 
@@ -11,7 +10,7 @@ struct RenewalPasswordFactoryImpl: RenewalPasswordFactory {
         self.loadJwtTokenUseCase = loadJwtTokenUseCase
     }
 
-    func makeViewController(router: Router) -> UIViewController {
+    func makeViewController() -> UIViewController {
         let token = loadJwtTokenUseCase.execute()
         let url = "https://www.dotori-gsm.com/changePasswd"
 

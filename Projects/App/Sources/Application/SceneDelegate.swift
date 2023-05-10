@@ -6,6 +6,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     private let moordinatorWorker = MoordinatorWorker()
+    private let rootRouter = RootRouter()
 
     func scene(
         _ scene: UIScene,
@@ -15,7 +16,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: scene)
         let rootMoordinator = AppDelegate.container.resolve(RootMoordinator.self, argument: window)!
-        moordinatorWorker.coordinate(moordinator: rootMoordinator)
+        moordinatorWorker.coordinate(moordinator: rootMoordinator, with: rootRouter)
         self.window = window
     }
 

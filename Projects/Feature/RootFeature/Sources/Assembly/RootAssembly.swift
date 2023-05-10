@@ -1,5 +1,5 @@
-import MainFeatureInterface
-import SigninFeatureInterface
+import MainFeature
+import SigninFeature
 import Swinject
 
 public final class RootAssembly: Assembly {

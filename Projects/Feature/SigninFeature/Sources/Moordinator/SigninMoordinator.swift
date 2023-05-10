@@ -1,25 +1,21 @@
 import BaseFeature
 import DesignSystem
 import Moordinator
-import RenewalPasswordFeatureInterface
-import SigninFeatureInterface
-import SignupFeatureInterface
+import RenewalPasswordFeature
+import SignupFeature
 import UIKit
 
 final class SigninMoordinator: Moordinator {
     private let rootVC = UINavigationController()
-    let router: any Router
     private let signinViewController: SigninViewController
     private let signupFactory: any SignupFactory
     private let renewalPasswordFactory: any RenewalPasswordFactory
 
     init(
-        router: SigninRouter,
         signinViewController: SigninViewController,
         signupFactory: any SignupFactory,
         renewalPasswordFactory: any RenewalPasswordFactory
     ) {
-        self.router = router
         self.signinViewController = signinViewController
         self.signupFactory = signupFactory
         self.renewalPasswordFactory = renewalPasswordFactory
@@ -34,16 +30,22 @@ final class SigninMoordinator: Moordinator {
         switch path {
         case .signin:
             rootVC.setViewControllers([signinViewController], animated: true)
+            return .one(
+                .contribute(
+                    withNextPresentable: signinViewController,
+                    withNextRouter: signinViewController.store
+                )
+            )
 
         case .signup:
-            let viewController = signupFactory.makeViewController(router: router)
+            let viewController = signupFactory.makeViewController()
             rootVC.pushViewController(viewController, animated: true)
-            return .one(.contribute(viewController))
+            return .one(.contribute(withNextPresentable: viewController))
 
         case .renewalPassword:
-            let viewController = renewalPasswordFactory.makeViewController(router: router)
+            let viewController = renewalPasswordFactory.makeViewController()
             rootVC.pushViewController(viewController, animated: true)
-            return .one(.contribute(viewController))
+            return .one(.contribute(withNextPresentable: viewController))
 
         case .main:
             return .one(.forwardToParent(with: DotoriRoutePath.main))
