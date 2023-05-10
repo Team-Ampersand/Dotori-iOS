@@ -8,6 +8,8 @@ let project = Project.makeModule(
     targets: [.unitTest],
     internalDependencies: [
         .Feature.BaseFeature,
+        .Feature.SignupFeature,
+        .Feature.RenewalPasswordFeature,
         .Domain.AuthDomainInterface
     ]
 )
