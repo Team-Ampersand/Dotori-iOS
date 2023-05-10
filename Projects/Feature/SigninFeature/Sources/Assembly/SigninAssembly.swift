@@ -1,7 +1,6 @@
 import AuthDomainInterface
-import SigninFeatureInterface
-import SignupFeatureInterface
-import RenewalPasswordFeatureInterface
+import SignupFeature
+import RenewalPasswordFeature
 import Swinject
 
 public final class SigninAssembly: Assembly {

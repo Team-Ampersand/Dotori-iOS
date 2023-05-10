@@ -10,25 +10,13 @@ public extension TargetDependency {
 }
 
 public extension TargetDependency.Feature {
-    static let RenewalPasswordFeatureInterface = TargetDependency.project(
-        target: ModulePaths.Feature.RenewalPasswordFeature.targetName(type: .interface),
-        path: .relativeToFeature(ModulePaths.Feature.RenewalPasswordFeature.rawValue)
-    )
     static let RenewalPasswordFeature = TargetDependency.project(
         target: ModulePaths.Feature.RenewalPasswordFeature.targetName(type: .sources),
         path: .relativeToFeature(ModulePaths.Feature.RenewalPasswordFeature.rawValue)
     )
-    static let SignupFeatureInterface = TargetDependency.project(
-        target: ModulePaths.Feature.SignupFeature.targetName(type: .interface),
-        path: .relativeToFeature(ModulePaths.Feature.SignupFeature.rawValue)
-    )
     static let SignupFeature = TargetDependency.project(
         target: ModulePaths.Feature.SignupFeature.targetName(type: .sources),
         path: .relativeToFeature(ModulePaths.Feature.SignupFeature.rawValue)
-    )
-    static let MainFeatureInterface = TargetDependency.project(
-        target: ModulePaths.Feature.MainFeature.targetName(type: .interface),
-        path: .relativeToFeature(ModulePaths.Feature.MainFeature.rawValue)
     )
     static let MainFeature = TargetDependency.project(
         target: ModulePaths.Feature.MainFeature.targetName(type: .sources),
@@ -37,10 +25,6 @@ public extension TargetDependency.Feature {
     static let RootFeature = TargetDependency.project(
         target: ModulePaths.Feature.RootFeature.targetName(type: .sources),
         path: .relativeToFeature(ModulePaths.Feature.RootFeature.rawValue)
-    )
-    static let SigninFeatureInterface = TargetDependency.project(
-        target: ModulePaths.Feature.SigninFeature.targetName(type: .interface),
-        path: .relativeToFeature(ModulePaths.Feature.SigninFeature.rawValue)
     )
     static let SigninFeature = TargetDependency.project(
         target: ModulePaths.Feature.SigninFeature.targetName(type: .sources),

@@ -1,4 +1,3 @@
-import MainFeatureInterface
 import Swinject
 
 public final class MainAssembly: Assembly {

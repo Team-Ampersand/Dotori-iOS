@@ -2,7 +2,10 @@ import Combine
 import DesignSystem
 import UIKit
 
-open class BaseViewController<Store: BaseStore>: UIViewController, BoundsProviable {
+open class BaseViewController<Store: BaseStore>:
+    UIViewController,
+    HasCancellableBag,
+    ViewControllable {
 
     // MARK: - Properties
 

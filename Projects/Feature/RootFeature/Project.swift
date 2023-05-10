@@ -7,11 +7,8 @@ let project = Project.makeModule(
     product: .staticLibrary,
     targets: [],
     internalDependencies: [
-        .Feature.SigninFeatureInterface,
-        .Feature.MainFeatureInterface,
+        .Feature.SigninFeature,
+        .Feature.MainFeature,
         .Feature.BaseFeature
-    ],
-    interfaceDependencies: [
-        .SPM.Moordinator
     ]
 )
