@@ -8,7 +8,7 @@ on:
 
 env:
   CACHED_DEPENDENCY_PATHS: ${{ github.workspace }}/Tuist/Dependencies
-  SMS_IOS_DISCORD_WEBHOOK: ${{ secrets.SMS_IOS_DISCORD_WEBHOOK }}
+  DOTORI_IOS_DISCORD_WEBHOOK: ${{ secrets.DOTORI_IOS_DISCORD_WEBHOOK }}
 
 jobs:
   prepare-dependency:
@@ -65,21 +65,21 @@ jobs:
     - name: Test with tuist
       run: TUIST_CI=1 tuist test
 
-    - name: SMS iOS Test Success Discord Notification
+    - name: Dotori iOS Test Success Discord Notification
       uses: sarisia/actions-status-discord@v1
       if: ${{ success() }}
       with: 
-        title: "✅ SMS iOS Test Success !"
+        title: "✅ 도토리 iOS Test Success !"
         description: "Success to test 🧩"
-        webhook: ${{ env.SMS_IOS_DISCORD_WEBHOOK }}
+        webhook: ${{ env.DOTORI_IOS_DISCORD_WEBHOOK }}
         color: 0x43962A
 
-    - name: SMS iOS Test Failed Discord Notification
+    - name: Dotori iOS Test Failed Discord Notification
       uses: sarisia/actions-status-discord@v1
       if: ${{ failure() }}
       with: 
-        title: "❌ SMS iOS Test Failed .."
+        title: "❌ 도토리 iOS Test Failed .."
         content: "< @iOS> "
         description: "Failed to test 🥺"
-        webhook: ${{ env.SMS_IOS_DISCORD_WEBHOOK }}
+        webhook: ${{ env.DOTORI_IOS_DISCORD_WEBHOOK }}
         color: 0xBB3639
