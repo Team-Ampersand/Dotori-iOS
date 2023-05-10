@@ -9,6 +9,7 @@ on:
 env:
   CACHED_DEPENDENCY_PATHS: ${{ github.workspace }}/Tuist/Dependencies
   DOTORI_IOS_DISCORD_WEBHOOK: ${{ secrets.DOTORI_IOS_DISCORD_WEBHOOK }}
+  DOTORI_IOS_ROLE: ${{ secrets.DOTORI_IOS_ROLE }}
 
 jobs:
   prepare-dependency:
@@ -79,7 +80,7 @@ jobs:
       if: ${{ failure() }}
       with: 
         title: "❌ 도토리 iOS Test Failed .."
-        content: "< @iOS> "
+        content: "<@${{ env.DOTORI_IOS_ROLE }}>"
         description: "Failed to test 🥺"
         webhook: ${{ env.DOTORI_IOS_DISCORD_WEBHOOK }}
         color: 0xBB3639
