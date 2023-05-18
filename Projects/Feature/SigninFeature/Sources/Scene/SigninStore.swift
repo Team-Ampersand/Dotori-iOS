@@ -3,15 +3,19 @@ import BaseFeature
 import Combine
 import DesignSystem
 import Moordinator
+import Store
 
 final class SigninStore: BaseStore {
     private let signinUseCase: any SigninUseCase
     let route: PassthroughSubject<RoutePath, Never> = .init()
     var bag: Set<AnyCancellable> = .init()
+    var initialState: State
+    var subscription: Set<AnyCancellable> = .init()
 
     init(
         signinUseCase: any SigninUseCase
     ) {
+        self.initialState = .init()
         self.signinUseCase = signinUseCase
     }
 
@@ -26,19 +30,20 @@ final class SigninStore: BaseStore {
         case renewalPasswordButtonDidTap
         case signinButtonDidTap
     }
+    enum Mutation {
+        case updateEmail(String)
+        case updatePassword(String)
+    }
 
     let stateSubject = CurrentValueSubject<State, Never>(State())
 
-    func process(_ action: Action) {
-        let currentState = stateSubject.value
-        var newState = currentState
-
+    func mutate(state: State, action: Action) -> SideEffect<Mutation, Never> {
         switch action {
         case let .updateEmail(email):
-            newState.email = email
+            return .just(.updateEmail(email))
 
         case let .updatePassword(password):
-            newState.password = password
+            return .just(.updatePassword(password))
 
         case .signupButtonDidTap:
             route.send(DotoriRoutePath.signup)
@@ -47,10 +52,24 @@ final class SigninStore: BaseStore {
             route.send(DotoriRoutePath.renewalPassword)
 
         case .signinButtonDidTap:
-            signinButtonDidTap(email: newState.email, password: newState.password)
-        }
+            signinButtonDidTap(email: state.email, password: state.password)
 
-        stateSubject.send(newState)
+        default:
+            return .none
+        }
+        return .none
+    }
+
+    func reduce(state: State, mutate: Mutation) -> State {
+        var newState = state
+        switch mutate {
+        case let .updateEmail(email):
+            newState.email = email
+
+        case let .updatePassword(password):
+            newState.password = password
+        }
+        return newState
     }
 
     func signinButtonDidTap(email: String, password: String) {
