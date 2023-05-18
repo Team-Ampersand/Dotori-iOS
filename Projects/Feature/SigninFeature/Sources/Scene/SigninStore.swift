@@ -8,7 +8,6 @@ import Store
 final class SigninStore: BaseStore {
     private let signinUseCase: any SigninUseCase
     let route: PassthroughSubject<RoutePath, Never> = .init()
-    var bag: Set<AnyCancellable> = .init()
     var initialState: State
     var subscription: Set<AnyCancellable> = .init()
 
@@ -82,6 +81,6 @@ final class SigninStore: BaseStore {
             }, receiveValue: { owner, _ in
                 owner.route.send(DotoriRoutePath.main)
             })
-            .store(in: &bag)
+            .store(in: &subscription)
     }
 }
