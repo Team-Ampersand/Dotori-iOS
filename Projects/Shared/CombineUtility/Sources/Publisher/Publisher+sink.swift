@@ -15,3 +15,13 @@ public extension Publisher {
         }
     }
 }
+
+public extension Publisher {
+    func sink(to subject: any Subject<Output, Failure>) -> AnyCancellable {
+        self.sink { completion in
+            subject.send(completion: completion)
+        } receiveValue: { output in
+            subject.send(output)
+        }
+    }
+}

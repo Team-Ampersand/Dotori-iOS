@@ -15,7 +15,7 @@ open class BaseViewController<Store: BaseStore>:
     private let viewWillDisappearSubject = PassthroughSubject<Void, Never>()
     private let viewDidDisappearSubject = PassthroughSubject<Void, Never>()
     public let store: Store
-    public var bag = Set<AnyCancellable>()
+    public var subscription = Set<AnyCancellable>()
 
     // MARK: - Init
 

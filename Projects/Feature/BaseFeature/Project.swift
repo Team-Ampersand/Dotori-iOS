@@ -8,7 +8,8 @@ let project = Project.makeModule(
     targets: [.unitTest],
     externalDependencies: [
         .SPM.MSGLayout,
-        .SPM.Moordinator
+        .SPM.Moordinator,
+        .SPM.Store
     ],
     internalDependencies: [
         .UserInterface.DesignSystem,

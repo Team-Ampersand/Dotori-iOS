@@ -85,33 +85,28 @@ final class SigninViewController: BaseViewController<SigninStore> {
 
     override func bindAction() {
         emailTextField.textPublisher
-            .sink(with: store, receiveValue: { store, email in
-                store.process(.updateEmail(email))
-            })
-            .store(in: &bag)
+            .map(Store.Action.updateEmail)
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
 
         passwordTextField.textPublisher
-            .sink(with: store, receiveValue: { store, password in
-                store.process(.updatePassword(password))
-            })
-            .store(in: &bag)
+            .map(Store.Action.updatePassword)
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
 
         signupButton.tapPublisher
-            .sink(with: store, receiveValue: { store, _ in
-                store.process(.signupButtonDidTap)
-            })
-            .store(in: &bag)
+            .map { Store.Action.signupButtonDidTap }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
 
         renewalPasswordButton.tapPublisher
-            .sink(with: store, receiveValue: { store, _ in
-                store.process(.renewalPasswordButtonDidTap)
-            })
-            .store(in: &bag)
+            .map { Store.Action.renewalPasswordButtonDidTap }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
 
         signinButton.tapPublisher
-            .sink(with: store, receiveValue: { store, _ in
-                store.process(.signinButtonDidTap)
-            })
-            .store(in: &bag)
+            .map { Store.Action.signinButtonDidTap }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
     }
 }
