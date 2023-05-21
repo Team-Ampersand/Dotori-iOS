@@ -7,9 +7,9 @@ let project = Project.makeModule(
     product: .staticLibrary,
     targets: [.unitTest],
     internalDependencies: [
-        .Feature.BaseFeature,
-        .Feature.SignupFeature,
-        .Feature.RenewalPasswordFeature,
-        .Domain.AuthDomainInterface
+        .feature(target: .BaseFeature),
+        .feature(target: .SignupFeature),
+        .feature(target: .RenewalPasswordFeature),
+        .domain(target: .AuthDomain, type: .interface)
     ]
 )

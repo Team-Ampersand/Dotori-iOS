@@ -26,15 +26,12 @@ func registerModuleDependency() {
     registerModulePaths()
     makeProjectDirectory()
     registerXCConfig()
-    registerMicroTarget(target: .sources)
     var targetString = "["
     if hasInterface {
-        registerMicroTarget(target: .interface)
         makeScaffold(target: .interface)
         targetString += ".\(MicroTargetType.interface), "
     }
-    if hasTesting {
-        registerMicroTarget(target: .testing)
+    if hasTesting { 
         makeScaffold(target: .testing)
         targetString += ".\(MicroTargetType.testing), "
     }
@@ -65,21 +62,6 @@ func registerModulePaths() {
         inserting: "        case \(moduleName)\n"
     )
     print("Register \(moduleName) to ModulePaths.swift")
-}
-
-func registerMicroTarget(target: MicroTargetType) {
-    let targetString = """
-    static let \(moduleName)\(target.rawValue) = TargetDependency.project(
-        target: ModulePaths.\(layer.rawValue).\(moduleName).targetName(type: .\(target)),
-        path: .relativeTo\(layer.rawValue)(ModulePaths.\(layer.rawValue).\(moduleName).rawValue)
-    )\n
-"""
-    updateFileContent(
-        filePath: currentPath + "Plugin/DependencyPlugin/ProjectDescriptionHelpers/Dependency+Target.swift",
-        finding: "public extension TargetDependency.\(layer.rawValue) {\n",
-        inserting: targetString
-    )
-    print("Register \(moduleName) \(target.rawValue) target to Dependency+Target.swift")
 }
 
 func registerXCConfig() {

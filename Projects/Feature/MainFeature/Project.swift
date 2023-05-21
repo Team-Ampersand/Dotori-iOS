@@ -7,6 +7,6 @@ let project = Project.makeModule(
     product: .staticLibrary,
     targets: [.unitTest],
     internalDependencies: [
-        .Feature.BaseFeature
+        .feature(target: .BaseFeature)
     ]
 )

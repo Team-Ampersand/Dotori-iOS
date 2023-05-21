@@ -1,4 +1,5 @@
 import Foundation
+import ProjectDescription
 
 // swiftlint: disable all
 public enum ModulePaths {

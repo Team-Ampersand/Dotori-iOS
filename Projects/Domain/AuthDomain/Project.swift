@@ -7,7 +7,7 @@ let project = Project.makeModule(
     product: .staticLibrary,
     targets: [.interface, .testing, .unitTest],
     internalDependencies: [
-        .Domain.BaseDomain
+        .domain(target: .BaseDomain)
     ],
     additionalPlistRows: [
         "BASE_URL": .string("$(BASE_URL)")

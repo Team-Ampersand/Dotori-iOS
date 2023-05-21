@@ -12,8 +12,8 @@ let project = Project.makeModule(
         .SPM.Store
     ],
     internalDependencies: [
-        .UserInterface.DesignSystem,
-        .Shared.GlobalThirdPartyLibrary,
-        .Shared.UtilityModule
+        .userInterface(target: .DesignSystem),
+        .shared(target: .GlobalThirdPartyLibrary),
+        .shared(target: .UtilityModule)
     ]
 )

@@ -7,8 +7,8 @@ let project = Project.makeModule(
     product: .framework,
     targets: [.demo],
     internalDependencies: [
-        .UserInterface.DWebKit,
-        .Shared.GlobalThirdPartyLibrary
+        .userInterface(target: .DWebKit),
+        .shared(target: .GlobalThirdPartyLibrary)
     ],
     resources: ["Resources/**"]
 )
