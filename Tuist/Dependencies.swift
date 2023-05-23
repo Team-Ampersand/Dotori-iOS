@@ -5,6 +5,7 @@ let dependencies = Dependencies(
     carthage: nil,
     swiftPackageManager: SwiftPackageManagerDependencies(
         [
+            .remote(url: "https://github.com/hackiftekhar/IQKeyboardManager.git", requirement: .exact("6.5.11")),
             .remote(url: "https://github.com/GSM-MSG/Store.git", requirement: .exact("1.0.0")),
             .remote(url: "https://github.com/GSM-MSG/Moordinator.git", requirement: .exact("2.0.0")),
             .remote(url: "https://github.com/GSM-MSG/Emdpoint.git", requirement: .exact("3.2.4")),
