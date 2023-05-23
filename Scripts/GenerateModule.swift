@@ -1,6 +1,12 @@
 #!/usr/bin/swift
 import Foundation
 
+func handleSIGINT(_ signal: Int32) -> Void {
+    exit(0)
+}
+
+signal(SIGINT, handleSIGINT)
+
 enum LayerType: String {
     case feature = "Feature"
     case domain = "Domain"

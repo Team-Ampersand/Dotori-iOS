@@ -1,6 +1,12 @@
 #!/usr/bin/swift
 import Foundation
 
+func handleSIGINT(_ signal: Int32) -> Void {
+    exit(0)
+}
+
+signal(SIGINT, handleSIGINT)
+
 func writeContentInFile(path: String, content: String) {
     let fileURL = URL(fileURLWithPath: path)
     let data = Data(content.utf8)
