@@ -1,12 +1,13 @@
 import AuthDomain
+import IQKeyboardManagerSwift
+import JwtStore
 import MainFeature
+import RenewalPasswordFeature
 import RootFeature
 import SigninFeature
 import SignupFeature
-import RenewalPasswordFeature
 import Swinject
 import UIKit
-import JwtStore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -26,6 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             RootAssembly(),
             AuthDomainAssembly()
         ], container: AppDelegate.container)
+        IQKeyboardManager.shared.enable = true
+        IQKeyboardManager.shared.enableAutoToolbar = true
+        IQKeyboardManager.shared.shouldResignOnTouchOutside = true
         return true
     }
 

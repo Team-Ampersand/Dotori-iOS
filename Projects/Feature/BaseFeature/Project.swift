@@ -9,7 +9,8 @@ let project = Project.makeModule(
     externalDependencies: [
         .SPM.MSGLayout,
         .SPM.Moordinator,
-        .SPM.Store
+        .SPM.Store,
+        .SPM.IQKeyboardManagerSwift
     ],
     internalDependencies: [
         .userInterface(target: .DesignSystem),
