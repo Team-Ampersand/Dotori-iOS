@@ -11,7 +11,7 @@ let project = Project.makeModule(
         .SPM.Configure
     ],
     internalDependencies: [
-        .Shared.CombineUtility,
-        .Shared.DateUtility
+        .shared(target: .CombineUtility),
+        .shared(target: .DateUtility)
     ]
 )

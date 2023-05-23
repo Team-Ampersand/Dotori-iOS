@@ -28,9 +28,9 @@ let project = Project.makeModule(
         .SPM.Emdpoint
     ],
     internalDependencies: [
-        .Core.JwtStoreInterface,
-        .Shared.GlobalThirdPartyLibrary,
-        .Shared.UtilityModule
+        .core(target: .JwtStore, type: .interface),
+        .shared(target: .GlobalThirdPartyLibrary),
+        .shared(target: .UtilityModule)
     ],
     additionalPlistRows: [
         "BASE_URL": .string("$(BASE_URL)")

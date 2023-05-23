@@ -31,13 +31,13 @@ let targets: [Target] = [
         resources: ["Resources/**"],
         scripts: scripts,
         dependencies: [
-            .Feature.RootFeature,
-            .Feature.SigninFeature,
-            .Feature.MainFeature,
-            .Feature.SignupFeature,
-            .Feature.RenewalPasswordFeature,
-            .Domain.AuthDomain,
-            .Core.JwtStore
+            .feature(target: .RootFeature),
+            .feature(target: .SigninFeature),
+            .feature(target: .MainFeature),
+            .feature(target: .SignupFeature),
+            .feature(target: .RenewalPasswordFeature),
+            .domain(target: .AuthDomain),
+            .core(target: .JwtStore),
         ],
         settings: .settings(base: env.baseSetting)
     )
