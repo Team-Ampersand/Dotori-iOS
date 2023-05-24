@@ -1,6 +1,6 @@
 import XCTest
 
-final class MainFeatureTests: XCTestCase {
+final class MainTabFeatureTests: XCTestCase {
     override func setUpWithError() throws {}
 
     override func tearDownWithError() throws {}
