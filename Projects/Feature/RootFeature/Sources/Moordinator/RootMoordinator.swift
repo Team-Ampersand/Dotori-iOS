@@ -1,6 +1,6 @@
 import BaseFeature
 import Combine
-import MainFeature
+import MainTabFeature
 import Moordinator
 import SigninFeature
 import UIKit

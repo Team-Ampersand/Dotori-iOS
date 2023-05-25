@@ -1,7 +1,7 @@
 import AuthDomain
 import IQKeyboardManagerSwift
 import JwtStore
-import MainFeature
+import MainTabFeature
 import RenewalPasswordFeature
 import RootFeature
 import SigninFeature

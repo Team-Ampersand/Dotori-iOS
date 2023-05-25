@@ -1,4 +1,4 @@
-import MainFeature
+import MainTabFeature
 import SigninFeature
 import Swinject
 
