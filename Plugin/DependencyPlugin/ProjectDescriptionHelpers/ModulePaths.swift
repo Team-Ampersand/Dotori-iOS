@@ -12,9 +12,9 @@ public enum ModulePaths {
 
 public extension ModulePaths {
     enum Feature: String {
+        case MainTabFeature
         case RenewalPasswordFeature
         case SignupFeature
-        case MainFeature
         case RootFeature
         case SigninFeature
         case BaseFeature

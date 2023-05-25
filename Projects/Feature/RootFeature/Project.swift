@@ -8,7 +8,7 @@ let project = Project.makeModule(
     targets: [],
     internalDependencies: [
         .feature(target: .SigninFeature),
-        .feature(target: .MainFeature),
+        .feature(target: .MainTabFeature),
         .feature(target: .BaseFeature)
     ]
 )
