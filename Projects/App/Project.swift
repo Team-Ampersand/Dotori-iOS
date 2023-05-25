@@ -1,5 +1,6 @@
 import ProjectDescriptionHelpers
 import ProjectDescription
+import ConfigurationPlugin
 import DependencyPlugin
 import EnvironmentPlugin
 import Foundation
@@ -33,7 +34,7 @@ let targets: [Target] = [
         dependencies: [
             .feature(target: .RootFeature),
             .feature(target: .SigninFeature),
-            .feature(target: .MainFeature),
+            .feature(target: .MainTabFeature),
             .feature(target: .SignupFeature),
             .feature(target: .RenewalPasswordFeature),
             .domain(target: .AuthDomain),
