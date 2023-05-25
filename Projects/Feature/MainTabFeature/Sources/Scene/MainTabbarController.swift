@@ -2,14 +2,14 @@ import BaseFeature
 import DesignSystem
 import UIKit
 
-final class MainTabbarViewController: UITabBarController {
+final class MainTabbarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewController()
     }
 }
 
-private extension MainTabbarViewController {
+private extension MainTabbarController {
     func configureViewController() {
         self.tabBar.tintColor = .dotori(.primary(.p10))
     }
