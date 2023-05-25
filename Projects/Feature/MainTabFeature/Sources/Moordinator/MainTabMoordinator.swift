@@ -1,7 +1,7 @@
 import UIKit
  import Moordinator
 
- final class MainMoordinator: Moordinator {
+ final class MainTabMoordinator: Moordinator {
      private let rootVC = UINavigationController()
 
      var root: Presentable {
