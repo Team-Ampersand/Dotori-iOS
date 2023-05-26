@@ -36,7 +36,7 @@ final class SigninViewController: BaseViewController<SigninStore> {
         $0.setAttributedTitle(signupString, for: .normal)
     }
 
-    override func addView() {
+    func addView() {
         view.addSubviews {
             dotoriLogoImageView
             emailTextField
@@ -47,7 +47,7 @@ final class SigninViewController: BaseViewController<SigninStore> {
         }
     }
 
-    override func setLayout() {
+    func setLayout() {
         MSGLayout.buildLayout {
             dotoriLogoImageView.layout
                 .centerX(.toSuperview())
@@ -79,11 +79,11 @@ final class SigninViewController: BaseViewController<SigninStore> {
         }
     }
 
-    override func configureNavigation() {
+    func configureNavigation() {
         self.navigationItem.title = "로그인"
     }
 
-    override func bindAction() {
+    func bindAction() {
         emailTextField.textPublisher
             .map(Store.Action.updateEmail)
             .sink(receiveValue: store.send(_:))
