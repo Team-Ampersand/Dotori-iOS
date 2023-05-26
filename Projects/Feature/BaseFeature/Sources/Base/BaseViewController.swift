@@ -66,6 +66,18 @@ open class BaseViewController<Store: BaseStore>:
         super.viewDidDisappear(animated)
         viewDidDisappearSubject.send(())
     }
+
+    open func addView() {}
+
+    open func setLayout() {}
+
+    open func configureViewController() {}
+
+    open func configureNavigation() {}
+
+    open func bindState() {}
+
+    open func bindAction() {}
 }
 
 // MARK: - LifeCyclePublishable
