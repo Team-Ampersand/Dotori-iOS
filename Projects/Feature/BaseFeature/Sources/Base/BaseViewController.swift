@@ -5,7 +5,7 @@ import UIKit
 open class BaseViewController<Store: BaseStore>:
     UIViewController,
     HasCancellableBag,
-    ViewControllable,
+    StoredViewControllable,
     AddViewable,
     SetLayoutable,
     ViewControllerConfigurable,
