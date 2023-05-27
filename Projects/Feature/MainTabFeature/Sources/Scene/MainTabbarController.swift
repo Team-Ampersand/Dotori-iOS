@@ -9,7 +9,7 @@ final class MainTabbarController: UITabBarController {
     }
 }
 
-private extension MainTabbarController {
+extension MainTabbarController: ViewControllerConfigurable {
     func configureViewController() {
         self.tabBar.tintColor = .dotori(.primary(.p10))
     }
