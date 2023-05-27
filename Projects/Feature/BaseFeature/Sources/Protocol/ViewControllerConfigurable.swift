@@ -3,5 +3,5 @@ public protocol ViewControllerConfigurable {
 }
 
 extension ViewControllerConfigurable {
-    func configureViewController()
+    func configureViewController() {}
 }
