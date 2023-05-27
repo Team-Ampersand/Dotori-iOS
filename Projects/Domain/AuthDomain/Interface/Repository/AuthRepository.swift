@@ -3,6 +3,6 @@ import Foundation
 import JwtStoreInterface
 
 public protocol AuthRepository {
-    func signin(req: SigninRequestDTO) -> AnyPublisher<Void, AuthDomainError>
+    func signin(req: SigninRequestDTO) async throws
     func loadJwtToken() -> JwtTokenEntity
 }

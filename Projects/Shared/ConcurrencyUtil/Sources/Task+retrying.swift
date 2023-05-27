@@ -1,6 +1,6 @@
 import Foundation
 
-private extension Task where Failure == Error {
+public extension Task where Failure == Error {
     @discardableResult
     static func retrying(
         priority: TaskPriority? = nil,

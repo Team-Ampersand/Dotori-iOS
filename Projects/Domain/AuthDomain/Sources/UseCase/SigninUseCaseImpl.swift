@@ -8,7 +8,7 @@ struct SigninUseCaseImpl: SigninUseCase {
         self.authRepository = authRepository
     }
 
-    func execute(req: SigninRequestDTO) -> AnyPublisher<Void, AuthDomainError> {
-        authRepository.signin(req: req)
+    func execute(req: SigninRequestDTO) async throws {
+        try await authRepository.signin(req: req)
     }
 }
