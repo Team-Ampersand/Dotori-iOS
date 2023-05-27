@@ -12,6 +12,7 @@ let project = Project.makeModule(
     ],
     internalDependencies: [
         .shared(target: .CombineUtility),
+        .shared(target: .ConcurrencyUtil),
         .shared(target: .DateUtility)
     ]
 )
