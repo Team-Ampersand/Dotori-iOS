@@ -1,6 +1,7 @@
 import AuthDomainInterface
 import BaseFeature
 import Combine
+import ConcurrencyUtil
 import DesignSystem
 import Moordinator
 import Store
@@ -74,17 +75,11 @@ final class SigninStore: BaseStore {
     func signinButtonDidTap(email: String, password: String) {
         let req = SigninRequestDTO(email: email, password: password)
 
-        Task {
-            do {
-                try await signinUseCase.execute(req: req)
-                await MainActor.run {
-                    self.route.send(DotoriRoutePath.main)
-                }
-            } catch {
-                await MainActor.run {
-                    DotoriToast.makeToast(text: error.localizedDescription, style: .error)
-                }
-            }
+        Task.catching {
+            try await self.signinUseCase.execute(req: req)
+            self.route.send(DotoriRoutePath.main)
+        } catch: { error in
+            await DotoriToast.makeToast(text: error.localizedDescription, style: .error)
         }
     }
 }
