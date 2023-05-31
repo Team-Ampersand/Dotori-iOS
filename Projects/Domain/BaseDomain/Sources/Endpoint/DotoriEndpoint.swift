@@ -3,13 +3,15 @@ import Foundation
 
 public protocol DotoriEndpoint: EndpointType, JwtAuthorizable {
     associatedtype ErrorType: Error
+    var domain: DotoriRestAPIDomain { get }
     var errorMapper: [Int: ErrorType]? { get }
 }
 
 extension DotoriEndpoint {
     public var baseURL: URL {
-        URL(
-            string: Bundle.module.object(forInfoDictionaryKey: "BASE_URL") as? String ?? ""
+        let baseURL = Bundle.module.object(forInfoDictionaryKey: "BASE_URL") as? String ?? ""
+        return URL(
+            string: "\(baseURL)/\(domain.rawValue)"
         ) ?? URL(string: "https://www.google.com")!
     }
 
