@@ -2,6 +2,7 @@ import AuthDomain
 import IQKeyboardManagerSwift
 import JwtStore
 import MainTabFeature
+import HomeFeature
 import RenewalPasswordFeature
 import RootFeature
 import SigninFeature
@@ -20,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         assembler = Assembler([
             JwtStoreAssembly(),
+            HomeAssembly(),
             MainAssembly(),
             SigninAssembly(),
             SignupAssembly(),
