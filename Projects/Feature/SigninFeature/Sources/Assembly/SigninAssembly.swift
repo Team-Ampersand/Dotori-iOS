@@ -4,7 +4,7 @@ import RenewalPasswordFeature
 import Swinject
 
 public final class SigninAssembly: Assembly {
-    public init() { }
+    public init() {}
     public func assemble(container: Container) {
         container.register(SigninFactory.self) { resolver in
             SigninFactoryImpl(

@@ -1,7 +1,7 @@
 import Moordinator
 
-public struct MainFactoryImpl: MainFactory {
-    public func makeMoordinator() -> Moordinator {
+struct MainFactoryImpl: MainFactory {
+    func makeMoordinator() -> Moordinator {
         MainTabMoordinator()
     }
 }

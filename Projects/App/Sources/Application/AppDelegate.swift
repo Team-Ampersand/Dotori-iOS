@@ -3,6 +3,8 @@ import IQKeyboardManagerSwift
 import JwtStore
 import MainTabFeature
 import HomeFeature
+import NoticeFeature
+import SelfStudyFeature
 import RenewalPasswordFeature
 import RootFeature
 import SigninFeature
@@ -22,6 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         assembler = Assembler([
             JwtStoreAssembly(),
             HomeAssembly(),
+            NoticeAssembly(),
+            SelfStudyAssembly(),
             MainAssembly(),
             SigninAssembly(),
             SignupAssembly(),
@@ -48,5 +52,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(
         _ application: UIApplication,
         didDiscardSceneSessions sceneSessions: Set<UISceneSession>
-    ) { }
+    ) {}
 }

@@ -3,7 +3,7 @@ import SigninFeature
 import Swinject
 
 public final class RootAssembly: Assembly {
-    public init() { }
+    public init() {}
     public func assemble(container: Container) {
         container.register(RootMoordinator.self) { resolver, window in
             RootMoordinator(
