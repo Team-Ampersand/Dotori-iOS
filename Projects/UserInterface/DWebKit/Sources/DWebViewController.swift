@@ -7,7 +7,7 @@ public final class DWebViewController: UIViewController, WKNavigationDelegate {
     private let wkWebView: WKWebView
 
     // MARK: - Init
-    public init(urlString: String, tokenDTO: LocalStorageTokenDTO) {
+    public init(urlString: String, tokenDTO: LocalStorageTokenDTO? = nil) {
         let preferences = WKPreferences()
         preferences.javaScriptCanOpenWindowsAutomatically = true
 
@@ -19,7 +19,9 @@ public final class DWebViewController: UIViewController, WKNavigationDelegate {
         self.wkWebView = wkWebView
         self.urlString = urlString
         super.init(nibName: nil, bundle: nil)
-        setAccessToken(tokenDTO: tokenDTO, configuration: wkWebView.configuration)
+        if let tokenDTO {
+            setAccessToken(tokenDTO: tokenDTO, configuration: wkWebView.configuration)
+        }
     }
 
     required init?(coder: NSCoder) {

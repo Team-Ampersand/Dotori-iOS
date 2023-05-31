@@ -1,12 +1,11 @@
 import AuthDomainInterface
-import BaseFeature
-import DesignSystem
 import DWebKit
+import Moordinator
 import UIKit
 
-struct SignupFactoryImpl: SignupFactory {
+struct RenewalPasswordFactoryImpl: RenewalPasswordFactory {
     func makeViewController() -> UIViewController {
-        let url = "https://www.dotori-gsm.com/signup"
+        let url = "https://www.dotori-gsm.com/changePasswd"
 
         return DWebViewController(
             urlString: url
