@@ -7,6 +7,11 @@ let project = Project.makeModule(
     product: .staticLibrary,
     targets: [.unitTest, .demo],
     internalDependencies: [
-        .feature(target: .BaseFeature)
+        .feature(target: .BaseFeature),
+        .feature(target: .HomeFeature),
+        .feature(target: .NoticeFeature),
+        .feature(target: .SelfStudyFeature),
+        .feature(target: .MassageFeature),
+        .feature(target: .MusicFeature)
     ]
 )
