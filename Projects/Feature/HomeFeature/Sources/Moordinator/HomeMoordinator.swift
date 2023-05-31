@@ -1,9 +1,10 @@
 import BaseFeature
+import DWebKit
 import Moordinator
 import UIKit
 
 final class HomeMoordinator: Moordinator {
-    private let rootVC = UIViewController()
+    private let rootVC = UINavigationController()
 
     var root: Presentable {
         rootVC
@@ -24,6 +25,8 @@ final class HomeMoordinator: Moordinator {
 
 private extension HomeMoordinator {
     func coordinateToHome() -> MoordinatorContributors {
+        let homeWebViewController = DWebViewController(urlString: "https://dotori-gsm.com/home")
+        self.rootVC.setViewControllers([homeWebViewController], animated: true)
         return .none
     }
 }
