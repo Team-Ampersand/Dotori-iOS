@@ -13,7 +13,7 @@ final class HomeMoordinator: Moordinator {
     func route(to path: RoutePath) -> MoordinatorContributors {
         guard let path = path.asDotori else { return .none }
         switch path {
-        case .main:
+        case .home:
             return coordinateToHome()
 
         default:
