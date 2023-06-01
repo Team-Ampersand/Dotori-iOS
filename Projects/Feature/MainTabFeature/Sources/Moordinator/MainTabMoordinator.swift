@@ -47,6 +47,7 @@ final class MainTabMoordinator: Moordinator {
 }
 
 private extension MainTabMoordinator {
+    // swiftlint: disable function_body_length
     func coordinateToMainTab() -> MoordinatorContributors {
         let homeMoordinator = homeFactory.makeMoordinator()
         let noticeMoordinator = noticeFactory.makeMoordinator()
@@ -61,8 +62,63 @@ private extension MainTabMoordinator {
             massageMoordinator,
             musicMoordinator
         ) { root1, root2, root3, root4, root5 in
-            
+            let homeTabbarItem = UITabBarItem(
+                image: .Tabbar.homeIcon,
+                selectedImage: .Tabbar.selectedHomeIcon
+            )
+            let noticeTabbarItem = UITabBarItem(
+                image: .Tabbar.noticeIcon,
+                selectedImage: .Tabbar.selectedNoticeIcon
+            )
+            let selfStudyTabbarItem = UITabBarItem(
+                image: .Tabbar.selfStudyIcon,
+                selectedImage: .Tabbar.selectedSelfStudyIcon
+            )
+            let massageTabbarItem = UITabBarItem(
+                image: .Tabbar.massageIcon,
+                selectedImage: .Tabbar.selectedMassageIcon
+            )
+            let musicTabbarItem = UITabBarItem(
+                image: .Tabbar.musicIcon,
+                selectedImage: .Tabbar.selectedMusicIcon
+            )
+
+            root1.tabBarItem = homeTabbarItem
+            root2.tabBarItem = noticeTabbarItem
+            root3.tabBarItem = selfStudyTabbarItem
+            root4.tabBarItem = massageTabbarItem
+            root5.tabBarItem = musicTabbarItem
+
+            self.rootVC.setViewControllers([root1, root2, root3, root4, root5], animated: true)
         }
-        return .none
+        return .multiple([
+            .contribute(
+                withNextPresentable: homeMoordinator,
+                withNextRouter: DisposableRouter(singlePath: DotoriRoutePath.home)
+            ),
+            .contribute(
+                withNextPresentable: noticeMoordinator,
+                withNextRouter: DisposableRouter(singlePath: DotoriRoutePath.notice)
+            ),
+            .contribute(
+                withNextPresentable: selfStuyMoordinator,
+                withNextRouter: DisposableRouter(singlePath: DotoriRoutePath.selfStudy)
+            ),
+            .contribute(
+                withNextPresentable: massageMoordinator,
+                withNextRouter: DisposableRouter(singlePath: DotoriRoutePath.massage)
+            ),
+            .contribute(
+                withNextPresentable: musicMoordinator,
+                withNextRouter: DisposableRouter(singlePath: DotoriRoutePath.music)
+            )
+        ])
+    }
+    // swiftlint: enable function_body_length
+}
+
+private extension UITabBarItem {
+    convenience init(image: UIImage?, selectedImage: UIImage?) {
+        self.init(title: nil, image: image, selectedImage: selectedImage)
     }
 }
