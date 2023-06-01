@@ -6,5 +6,7 @@ let project = Project.makeModule(
     name: ModulePaths.Feature.MassageFeature.rawValue,
     product: .staticLibrary,
     targets: [.unitTest],
-    internalDependencies: []
+    internalDependencies: [
+        .domain(target: .AuthDomain, type: .interface)
+    ]
 )
