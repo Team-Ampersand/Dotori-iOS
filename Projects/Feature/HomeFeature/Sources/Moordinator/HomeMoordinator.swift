@@ -1,3 +1,4 @@
+import AuthDomainInterface
 import BaseFeature
 import DWebKit
 import Moordinator
@@ -5,6 +6,11 @@ import UIKit
 
 final class HomeMoordinator: Moordinator {
     private let rootVC = UINavigationController()
+    private let loadJwtTokenUseCase: any LoadJwtTokenUseCase
+
+    init(loadJwtTokenUseCase: any LoadJwtTokenUseCase) {
+        self.loadJwtTokenUseCase = loadJwtTokenUseCase
+    }
 
     var root: Presentable {
         rootVC
@@ -25,7 +31,15 @@ final class HomeMoordinator: Moordinator {
 
 private extension HomeMoordinator {
     func coordinateToHome() -> MoordinatorContributors {
-        let homeWebViewController = DWebViewController(urlString: "https://dotori-gsm.com/home")
+        let jwtToken = loadJwtTokenUseCase.execute()
+        let homeWebViewController = DWebViewController(
+            urlString: "https://dotori-gsm.com/home",
+            tokenDTO: LocalStorageTokenDTO(
+                accessToken: jwtToken.accessToken,
+                refreshToken: jwtToken.refreshToken,
+                expiresAt: jwtToken.expiresAt
+            )
+        )
         self.rootVC.setViewControllers([homeWebViewController], animated: true)
         return .none
     }
