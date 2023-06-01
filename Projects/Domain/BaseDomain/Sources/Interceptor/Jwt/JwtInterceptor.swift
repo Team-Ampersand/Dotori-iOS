@@ -27,7 +27,7 @@ public struct JwtInterceptor: InterceptorType {
         if checkTokenIsExpired() {
             reissueToken(req, jwtType: jwtTokenType, completion: completion)
         } else {
-            completion(.success(request))
+            completion(.success(req))
         }
     }
 
