@@ -1,12 +1,13 @@
 import AuthDomain
+import HomeFeature
 import IQKeyboardManagerSwift
 import JwtStore
 import MainTabFeature
-import HomeFeature
+import MassageFeature
 import NoticeFeature
-import SelfStudyFeature
 import RenewalPasswordFeature
 import RootFeature
+import SelfStudyFeature
 import SigninFeature
 import SignupFeature
 import Swinject
@@ -26,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             HomeAssembly(),
             NoticeAssembly(),
             SelfStudyAssembly(),
+            MassageAssembly(),
             MainAssembly(),
             SigninAssembly(),
             SignupAssembly(),
