@@ -1,7 +1,7 @@
 import Moordinator
 
-public struct HomeFactoryImpl: HomeFactory {
-    public func makeMoordinator() -> Moordinator {
+struct HomeFactoryImpl: HomeFactory {
+    func makeMoordinator() -> Moordinator {
         HomeMoordinator()
     }
 }
