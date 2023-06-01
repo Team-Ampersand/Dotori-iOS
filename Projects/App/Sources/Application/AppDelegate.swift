@@ -4,6 +4,7 @@ import IQKeyboardManagerSwift
 import JwtStore
 import MainTabFeature
 import MassageFeature
+import MusicFeature
 import NoticeFeature
 import RenewalPasswordFeature
 import RootFeature
@@ -28,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NoticeAssembly(),
             SelfStudyAssembly(),
             MassageAssembly(),
+            MusicAssembly(),
             MainAssembly(),
             SigninAssembly(),
             SignupAssembly(),
