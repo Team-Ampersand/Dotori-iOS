@@ -9,13 +9,13 @@ import UIKit
 
 final class SigninViewController: BaseViewController<SigninStore> {
     private let dotoriLogoImageView = UIImageView()
-        .set(\.image, .dotoriSigninLogo
+        .set(\.image, .Dotori.dotoriSigninLogo
             .withRenderingMode(.alwaysTemplate)
             .withTintColor(.dotori(.primary(.p10)))
             .resize(width: 182, height: 41)
         )
-    private let emailTextField = DotoriIconTextField(placeholder: "이메일", icon: .person)
-    private let passwordTextField = DotoriIconTextField(placeholder: "비밀번호", icon: .lock)
+    private let emailTextField = DotoriIconTextField(placeholder: "이메일", icon: .Dotori.person)
+    private let passwordTextField = DotoriIconTextField(placeholder: "비밀번호", icon: .Dotori.lock)
         .set(\.isSecureTextEntry, true)
     private let renewalPasswordButton = DotoriTextButton(
         text: "비밀번호 찾기",

@@ -5,7 +5,7 @@ public final class DotoriCheckBox: UIControl {
     private lazy var checkedView = UIImageView()
         .set(\.translatesAutoresizingMaskIntoConstraints, false)
         .set(\.isHidden, !isChecked)
-        .set(\.image, .checkMark.withRenderingMode(.alwaysTemplate))
+        .set(\.image, .Dotori.checkMark.withRenderingMode(.alwaysTemplate))
         .set(\.tintColor, .white)
 
     private var hitRadiusOffset: CGFloat = 10
