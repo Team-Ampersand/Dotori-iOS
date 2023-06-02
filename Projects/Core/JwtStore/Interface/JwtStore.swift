@@ -9,3 +9,7 @@ public protocol JwtStore {
     func load(property: JwtStoreProperties) -> String
     func delete(property: JwtStoreProperties)
 }
+
+public protocol HasJwtStore {
+    var jwtStore: any JwtStore { get }
+}

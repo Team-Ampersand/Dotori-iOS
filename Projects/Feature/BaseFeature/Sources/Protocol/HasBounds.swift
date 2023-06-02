@@ -1,11 +1,11 @@
 import Foundation
 import UIKit
 
-public protocol BoundsProviable {
+public protocol HasBounds {
     var bounds: CGRect { get }
 }
 
-public extension BoundsProviable where Self: UIViewController {
+public extension HasBounds where Self: UIViewController {
     var bounds: CGRect {
         screenBounds()
     }
