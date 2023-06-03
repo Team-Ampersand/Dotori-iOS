@@ -5,7 +5,12 @@ import UIKit
 open class BaseViewController<Store: BaseStore>:
     UIViewController,
     HasCancellableBag,
-    ViewControllable {
+    StoredViewControllable,
+    AddViewable,
+    SetLayoutable,
+    ViewControllerConfigurable,
+    NavigationConfigurable,
+    StoreBindable {
 
     // MARK: - Properties
 
@@ -38,7 +43,7 @@ open class BaseViewController<Store: BaseStore>:
         configureViewController()
         configureNavigation()
         bindAction()
-        bind()
+        bindState()
         viewDidLoadSubject.send(())
     }
 
@@ -62,8 +67,6 @@ open class BaseViewController<Store: BaseStore>:
         viewDidDisappearSubject.send(())
     }
 
-    // MARK: - UI
-
     open func addView() {}
 
     open func setLayout() {}
@@ -72,9 +75,9 @@ open class BaseViewController<Store: BaseStore>:
 
     open func configureNavigation() {}
 
-    open func bindAction() {}
+    open func bindState() {}
 
-    open func bind() {}
+    open func bindAction() {}
 }
 
 // MARK: - LifeCyclePublishable

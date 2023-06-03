@@ -7,8 +7,12 @@ enum RefreshEndpoint {
 extension RefreshEndpoint: DotoriEndpoint {
     typealias ErrorType = RefreshError
 
+    var domain: DotoriRestAPIDomain {
+        .auth
+    }
+
     var route: Route {
-        .patch("/auth")
+        .patch("")
     }
 
     var task: HTTPTask {

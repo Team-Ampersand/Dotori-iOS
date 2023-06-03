@@ -10,13 +10,17 @@ enum AuthEndpoint {
 extension AuthEndpoint: DotoriEndpoint {
     typealias ErrorType = AuthDomainError
 
+    var domain: DotoriRestAPIDomain {
+        .auth
+    }
+
     var route: Route {
         switch self {
         case .signin:
-            return .post("/auth")
+            return .post("")
 
         case .refresh:
-            return .patch("/auth")
+            return .patch("")
         }
     }
 

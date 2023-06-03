@@ -32,20 +32,18 @@ public final class RootMoordinator: Moordinator {
     }
 
     public func route(to path: RoutePath) -> MoordinatorContributors {
-        print(path)
         guard let path = path.asDotori else { return .none }
         switch path {
         case .signin:
             let signinMoordinator = signinFactory.makeMoordinator()
             Moord.use(signinMoordinator) { root in
-                self.window.rootViewController = root
                 UIView.transition(
                     with: self.window,
                     duration: 0.3,
-                    options: .transitionCrossDissolve,
-                    animations: nil,
-                    completion: nil
-                )
+                    options: .transitionCrossDissolve
+                ) {
+                    self.window.rootViewController = root
+                }
             }
             return .one(
                 .contribute(
@@ -57,14 +55,13 @@ public final class RootMoordinator: Moordinator {
         case .main:
             let mainMoordinator = mainFactory.makeMoordinator()
             Moord.use(mainMoordinator) { root in
-                self.window.rootViewController = root
                 UIView.transition(
                     with: self.window,
                     duration: 0.3,
-                    options: .transitionCrossDissolve,
-                    animations: nil,
-                    completion: nil
-                )
+                    options: .transitionCrossDissolve
+                ) {
+                    self.window.rootViewController = root
+                }
             }
             return .one(
                 .contribute(
