@@ -16,9 +16,6 @@ public final class DWebViewController: UIViewController, WKNavigationDelegate {
 
         let wkWebView = WKWebView(frame: .zero, configuration: webConfiguration)
         wkWebView.translatesAutoresizingMaskIntoConstraints = false
-        if #available(iOS 16.4, *) {
-            wkWebView.isInspectable = true
-        }
         self.wkWebView = wkWebView
         self.urlString = urlString
         super.init(nibName: nil, bundle: nil)
