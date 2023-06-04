@@ -51,14 +51,14 @@ private extension MainTabMoordinator {
     func coordinateToMainTab() -> MoordinatorContributors {
         let homeMoordinator = homeFactory.makeMoordinator()
         let noticeMoordinator = noticeFactory.makeMoordinator()
-        let selfStuyMoordinator = selfStudyFactory.makeMoordinator()
+        let selfStudyMoordinator = selfStudyFactory.makeMoordinator()
         let massageMoordinator = massageFactory.makeMoordinator()
         let musicMoordinator = musicFactory.makeMoordinator()
 
         Moord.use(
             homeMoordinator,
             noticeMoordinator,
-            selfStuyMoordinator,
+            selfStudyMoordinator,
             massageMoordinator,
             musicMoordinator
         ) { root1, root2, root3, root4, root5 in
@@ -101,7 +101,7 @@ private extension MainTabMoordinator {
                 withNextRouter: DisposableRouter(singlePath: DotoriRoutePath.notice)
             ),
             .contribute(
-                withNextPresentable: selfStuyMoordinator,
+                withNextPresentable: selfStudyMoordinator,
                 withNextRouter: DisposableRouter(singlePath: DotoriRoutePath.selfStudy)
             ),
             .contribute(
