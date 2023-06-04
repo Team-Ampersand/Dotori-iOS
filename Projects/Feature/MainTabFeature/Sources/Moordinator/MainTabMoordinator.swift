@@ -64,23 +64,23 @@ private extension MainTabMoordinator {
         ) { root1, root2, root3, root4, root5 in
             let homeTabbarItem = UITabBarItem(
                 image: .Tabbar.homeIcon,
-                selectedImage: .Tabbar.selectedHomeIcon
+                selectedImage: .Tabbar.selectedHomeIcon.withRenderingMode(.alwaysOriginal)
             )
             let noticeTabbarItem = UITabBarItem(
                 image: .Tabbar.noticeIcon,
-                selectedImage: .Tabbar.selectedNoticeIcon
+                selectedImage: .Tabbar.selectedNoticeIcon.withRenderingMode(.alwaysOriginal)
             )
             let selfStudyTabbarItem = UITabBarItem(
                 image: .Tabbar.selfStudyIcon,
-                selectedImage: .Tabbar.selectedSelfStudyIcon
+                selectedImage: .Tabbar.selectedSelfStudyIcon.withRenderingMode(.alwaysOriginal)
             )
             let massageTabbarItem = UITabBarItem(
                 image: .Tabbar.massageIcon,
-                selectedImage: .Tabbar.selectedMassageIcon
+                selectedImage: .Tabbar.selectedMassageIcon.withRenderingMode(.alwaysOriginal)
             )
             let musicTabbarItem = UITabBarItem(
                 image: .Tabbar.musicIcon,
-                selectedImage: .Tabbar.selectedMusicIcon
+                selectedImage: .Tabbar.selectedMusicIcon.withRenderingMode(.alwaysOriginal)
             )
 
             root1.tabBarItem = homeTabbarItem

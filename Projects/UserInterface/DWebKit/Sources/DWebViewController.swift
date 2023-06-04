@@ -16,6 +16,9 @@ public final class DWebViewController: UIViewController, WKNavigationDelegate {
 
         let wkWebView = WKWebView(frame: .zero, configuration: webConfiguration)
         wkWebView.translatesAutoresizingMaskIntoConstraints = false
+        if #available(iOS 16.4, *) {
+            wkWebView.isInspectable = true
+        }
         self.wkWebView = wkWebView
         self.urlString = urlString
         super.init(nibName: nil, bundle: nil)
@@ -52,16 +55,16 @@ public final class DWebViewController: UIViewController, WKNavigationDelegate {
 
 private extension DWebViewController {
     func setAccessToken(tokenDTO: LocalStorageTokenDTO, configuration: WKWebViewConfiguration) {
-        let dataStore = WKWebsiteDataStore.nonPersistent()
+        let dataStore = WKWebsiteDataStore.default()
         let accessCookie = makeCookie(
             key: "Authorization",
-            value: tokenDTO.accessToken,
+            value: "Bearer%20\(tokenDTO.accessToken)",
             age: "10800"
         )
         dataStore.httpCookieStore.setCookie(accessCookie)
         let refreshCookie = makeCookie(
             key: "RefreshToken",
-            value: tokenDTO.refreshToken,
+            value: "Bearer%20\(tokenDTO.refreshToken)",
             age: "604800"
         )
         dataStore.httpCookieStore.setCookie(refreshCookie)
@@ -70,11 +73,10 @@ private extension DWebViewController {
 
     func makeCookie(key: String, value: String, age: String) -> HTTPCookie {
         HTTPCookie(properties: [
-            .domain: ".",
+            .domain: "www.dotori-gsm.com",
             .path: "/",
             .name: key,
             .value: value,
-            .secure: "TRUE",
             .maximumAge: age
         ]) ?? .init()
     }
