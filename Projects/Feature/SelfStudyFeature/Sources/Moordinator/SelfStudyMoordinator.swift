@@ -14,7 +14,7 @@ final class SelfStudyMoordinator: Moordinator {
         guard let path = path.asDotori else { return .none }
         switch path {
         case .selfStudy:
-            return coordinateToNotice()
+            return coordinateToSelfStudy()
 
         default:
             return .none
@@ -24,7 +24,7 @@ final class SelfStudyMoordinator: Moordinator {
 }
 
 private extension SelfStudyMoordinator {
-    func coordinateToNotice() -> MoordinatorContributors {
+    func coordinateToSelfStudy() -> MoordinatorContributors {
         let selfStudyWebViewController = DWebViewController(urlString: "https://www.dotori-gsm.com/selfstudy")
         self.rootVC.setViewControllers([selfStudyWebViewController], animated: true)
         return .none
