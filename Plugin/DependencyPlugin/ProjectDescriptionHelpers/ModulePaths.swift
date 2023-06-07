@@ -67,6 +67,7 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum UserInterface: String {
+        case Localization
         case DWebKit
         case DesignSystem
 
