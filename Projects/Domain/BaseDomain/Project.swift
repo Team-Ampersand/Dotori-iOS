@@ -28,6 +28,7 @@ let project = Project.makeModule(
         .SPM.Emdpoint
     ],
     internalDependencies: [
+        .userInterface(target: .Localization),
         .core(target: .JwtStore, type: .interface),
         .shared(target: .GlobalThirdPartyLibrary),
         .shared(target: .UtilityModule)

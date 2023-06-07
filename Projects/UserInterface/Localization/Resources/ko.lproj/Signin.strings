@@ -1,0 +1,15 @@
+/* 
+  SigninL.strings
+  Localization
+
+  Created by 최형우 on 2023/06/07.
+  Copyright © 2023 com.msg. All rights reserved.
+*/
+
+"login_navigation_title" = "로그인";
+"login_button_title" = "로그인";
+"email_placeholder" = "이메일";
+"password_placeholder" = "비밀번호";
+"signup_title" = "회원가입";
+"signup_button_title" = "Dotori가 처음이라면? 회원가입";
+"find_password_button_title" = "비밀번호 찾기";
