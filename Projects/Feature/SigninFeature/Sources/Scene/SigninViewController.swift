@@ -22,7 +22,8 @@ final class SigninViewController: BaseViewController<SigninStore> {
     private let passwordTextField = DotoriIconTextField(
         placeholder: L10n.Signin.passwordPlaceholder,
         icon: .Dotori.lock
-    ).set(\.isSecureTextEntry, true)
+    )
+    .set(\.isSecureTextEntry, true)
     private let renewalPasswordButton = DotoriTextButton(
         text: L10n.Signin.findPasswordButtonTitle,
         color: .dotori(.neutral(.n20)),
