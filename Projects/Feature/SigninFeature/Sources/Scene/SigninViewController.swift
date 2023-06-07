@@ -1,11 +1,12 @@
 import BaseFeature
-import DesignSystem
 import CombineUtility
-import GlobalThirdPartyLibrary
-import MSGLayout
 import Configure
-import UtilityModule
+import DesignSystem
+import GlobalThirdPartyLibrary
+import Localization
+import MSGLayout
 import UIKit
+import UtilityModule
 
 final class SigninViewController: BaseViewController<SigninStore> {
     private let dotoriLogoImageView = UIImageView()
@@ -14,23 +15,28 @@ final class SigninViewController: BaseViewController<SigninStore> {
             .withTintColor(.dotori(.primary(.p10)))
             .resize(width: 182, height: 41)
         )
-    private let emailTextField = DotoriIconTextField(placeholder: "이메일", icon: .Dotori.person)
-    private let passwordTextField = DotoriIconTextField(placeholder: "비밀번호", icon: .Dotori.lock)
-        .set(\.isSecureTextEntry, true)
+    private let emailTextField = DotoriIconTextField(
+        placeholder: L10n.Signin.emailPlaceholder,
+        icon: .Dotori.person
+    )
+    private let passwordTextField = DotoriIconTextField(
+        placeholder: L10n.Signin.passwordPlaceholder,
+        icon: .Dotori.lock
+    ).set(\.isSecureTextEntry, true)
     private let renewalPasswordButton = DotoriTextButton(
-        text: "비밀번호 찾기",
+        text: L10n.Signin.findPasswordButtonTitle,
         color: .dotori(.neutral(.n20)),
         font: .dotori(.body2)
     )
-    private let signinButton = DotoriButton(text: "로그인")
+    private let signinButton = DotoriButton(text: L10n.Signin.loginButtonTitle)
     private let signupButton = DotoriTextButton(
-        text: "Dotori가 처음이라면? 회원가입",
+        text: L10n.Signin.signupButtonTitle,
         color: .dotori(.neutral(.n20)),
         font: .dotori(.body2)
     ).then {
         let signupString = NSMutableAttributedString(string: $0.titleLabel?.text ?? "")
         signupString.setColorForText(
-            textToFind: "회원가입",
+            textToFind: L10n.Signin.signupTitle,
             withColor: .dotori(.primary(.p10))
         )
         $0.setAttributedTitle(signupString, for: .normal)
@@ -80,7 +86,7 @@ final class SigninViewController: BaseViewController<SigninStore> {
     }
 
     override func configureNavigation() {
-        self.navigationItem.title = "로그인"
+        self.navigationItem.title = L10n.Signin.loginNavigationTitle
     }
 
     override func bindAction() {
