@@ -1,9 +1,14 @@
 import AuthDomain
+import HomeFeature
 import IQKeyboardManagerSwift
 import JwtStore
 import MainTabFeature
+import MassageFeature
+import MusicFeature
+import NoticeFeature
 import RenewalPasswordFeature
 import RootFeature
+import SelfStudyFeature
 import SigninFeature
 import SignupFeature
 import Swinject
@@ -20,6 +25,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         assembler = Assembler([
             JwtStoreAssembly(),
+            HomeAssembly(),
+            NoticeAssembly(),
+            SelfStudyAssembly(),
+            MassageAssembly(),
+            MusicAssembly(),
             MainAssembly(),
             SigninAssembly(),
             SignupAssembly(),
@@ -46,5 +56,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(
         _ application: UIApplication,
         didDiscardSceneSessions sceneSessions: Set<UISceneSession>
-    ) { }
+    ) {}
 }

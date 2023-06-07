@@ -7,7 +7,7 @@ public final class DWebViewController: UIViewController, WKNavigationDelegate {
     private let wkWebView: WKWebView
 
     // MARK: - Init
-    public init(urlString: String, tokenDTO: LocalStorageTokenDTO) {
+    public init(urlString: String, tokenDTO: LocalStorageTokenDTO? = nil) {
         let preferences = WKPreferences()
         preferences.javaScriptCanOpenWindowsAutomatically = true
 
@@ -19,7 +19,9 @@ public final class DWebViewController: UIViewController, WKNavigationDelegate {
         self.wkWebView = wkWebView
         self.urlString = urlString
         super.init(nibName: nil, bundle: nil)
-        setAccessToken(tokenDTO: tokenDTO, configuration: wkWebView.configuration)
+        if let tokenDTO {
+            setAccessToken(tokenDTO: tokenDTO, configuration: wkWebView.configuration)
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -50,16 +52,16 @@ public final class DWebViewController: UIViewController, WKNavigationDelegate {
 
 private extension DWebViewController {
     func setAccessToken(tokenDTO: LocalStorageTokenDTO, configuration: WKWebViewConfiguration) {
-        let dataStore = WKWebsiteDataStore.nonPersistent()
+        let dataStore = WKWebsiteDataStore.default()
         let accessCookie = makeCookie(
             key: "Authorization",
-            value: tokenDTO.accessToken,
+            value: "Bearer%20\(tokenDTO.accessToken)",
             age: "10800"
         )
         dataStore.httpCookieStore.setCookie(accessCookie)
         let refreshCookie = makeCookie(
             key: "RefreshToken",
-            value: tokenDTO.refreshToken,
+            value: "Bearer%20\(tokenDTO.refreshToken)",
             age: "604800"
         )
         dataStore.httpCookieStore.setCookie(refreshCookie)
@@ -68,11 +70,10 @@ private extension DWebViewController {
 
     func makeCookie(key: String, value: String, age: String) -> HTTPCookie {
         HTTPCookie(properties: [
-            .domain: ".",
+            .domain: "www.dotori-gsm.com",
             .path: "/",
             .name: key,
             .value: value,
-            .secure: "TRUE",
             .maximumAge: age
         ]) ?? .init()
     }

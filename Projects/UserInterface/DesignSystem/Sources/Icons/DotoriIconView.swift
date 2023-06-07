@@ -9,9 +9,10 @@ public final class DotoriIconView: UIImageView {
 
     @Invalidating(.layout) public var size: IconSize = .small
 
-    public init(size: IconSize = .small) {
+    public init(size: IconSize = .small, image: UIImage? = nil) {
         self.size = size
         super.init(frame: .zero)
+        self.image = image
         setIconSize()
     }
 
