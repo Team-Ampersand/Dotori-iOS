@@ -7,7 +7,7 @@ public struct TargetSpec {
     public let platform: Platform
     public let product: Product
     public let productName: String?
-    public let bundleId: String
+    public let bundleId: String?
     public let deploymentTarget: DeploymentTarget?
     public let infoPlist: InfoPlist?
     public let sources: SourceFilesList?
@@ -30,7 +30,7 @@ public struct TargetSpec {
         product: Product = .staticLibrary,
         productName: String? = nil,
         bundleId: String? = nil,
-        deploymentTarget: DeploymentTarget? = nil,
+        deploymentTarget: DeploymentTarget? = env.deploymentTarget,
         infoPlist: InfoPlist = .default,
         sources: SourceFilesList? = .sources,
         resources: ResourceFileElements? = nil,
@@ -50,7 +50,7 @@ public struct TargetSpec {
         self.platform = platform
         self.product = product
         self.productName = productName
-        self.bundleId = bundleId ?? "\(env.organizationName).\(name)"
+        self.bundleId = bundleId
         self.deploymentTarget = deploymentTarget
         self.infoPlist = infoPlist
         self.sources = sources
@@ -78,7 +78,7 @@ public struct TargetSpec {
             platform: platform,
             product: product ?? self.product,
             productName: productName,
-            bundleId: bundleId,
+            bundleId: bundleId ?? "\(env.organizationName).\(name)",
             deploymentTarget: deploymentTarget,
             infoPlist: infoPlist,
             sources: sources,
@@ -92,11 +92,7 @@ public struct TargetSpec {
                 base: env.baseSetting
                     .merging(.codeSign)
                     .merging((product ?? self.product) == .framework ? .allLoadLDFlages : .ldFlages),
-                configurations: [
-                    .debug(name: .dev, xcconfig: .shared),
-                    .debug(name: .stage, xcconfig: .shared),
-                    .release(name: .prod, xcconfig: .shared)
-                ],
+                configurations: .default,
                 defaultSettings: .recommended
             ),
             coreDataModels: coreDataModels,

@@ -7,12 +7,11 @@ public extension Project {
         name: String,
         options: Options = .options(),
         packages: [Package] = [],
-        settings: Settings? = nil,
+        settings: Settings = .settings(configurations: .default),
         targets: [Target],
         fileHeaderTemplate: FileHeaderTemplate? = nil,
         additionalFiles: [FileElement] = [],
-        resourceSynthesizers: [ResourceSynthesizer] = .default,
-        hasDemo: Bool = false
+        resourceSynthesizers: [ResourceSynthesizer] = .default
     ) -> Project {
         return Project(
             name: name,
@@ -21,9 +20,9 @@ public extension Project {
             packages: packages,
             settings: settings,
             targets: targets,
-            schemes: hasDemo ?
-                [.makeScheme(target: .dev, name: name)] :
-                [.makeScheme(target: .dev, name: name), .makeDemoScheme(target: .dev, name: name)],
+            schemes: targets.contains { $0.product == .app } ?
+                [.makeScheme(target: .dev, name: name), .makeDemoScheme(target: .dev, name: name)] :
+                [.makeScheme(target: .dev, name: name)],
             fileHeaderTemplate: fileHeaderTemplate,
             additionalFiles: additionalFiles,
             resourceSynthesizers: resourceSynthesizers

@@ -42,11 +42,7 @@ public extension Project {
 
         var configurations = configurations
         if configurations.isEmpty {
-            configurations = [
-                .debug(name: .dev, xcconfig: .shared),
-                .debug(name: .stage, xcconfig: .shared),
-                .release(name: .prod, xcconfig: .shared)
-            ]
+            configurations = .default
         }
 
         let settings: Settings = .settings(
@@ -116,7 +112,7 @@ public extension Project {
 
         var testTargetDependencies = [
             targets.contains(.demo) ?
-                TargetDependency.target(name: "\(name)DemoApp") :
+                TargetDependency.target(name: "\(name)Demo") :
                 TargetDependency.target(name: name)
         ]
         if targets.contains(.testing) {
@@ -165,10 +161,10 @@ public extension Project {
             }
             allTargets.append(
                 Target(
-                    name: "\(name)DemoApp",
+                    name: "\(name)Demo",
                     platform: platform,
                     product: .app,
-                    bundleId: "\(env.organizationName).\(name)DemoApp",
+                    bundleId: "\(env.organizationName).\(name)Demo",
                     deploymentTarget: env.deploymentTarget,
                     infoPlist: .extendingDefault(with: [
                         "UIMainStoryboardFile": "",
@@ -219,11 +215,11 @@ extension Scheme {
         return Scheme(
             name: name,
             shared: true,
-            buildAction: .buildAction(targets: ["\(name)DemoApp"]),
+            buildAction: .buildAction(targets: ["\(name)Demo"]),
             testAction: .targets(
                 ["\(name)Tests"],
                 configuration: target,
-                options: .options(coverage: true, codeCoverageTargets: ["\(name)DemoApp"])
+                options: .options(coverage: true, codeCoverageTargets: ["\(name)Demo"])
             ),
             runAction: .runAction(configuration: target),
             archiveAction: .archiveAction(configuration: target),

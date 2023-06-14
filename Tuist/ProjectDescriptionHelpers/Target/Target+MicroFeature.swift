@@ -115,11 +115,11 @@ public extension Target {
     }
 
     static func demo(name: String, spec: TargetSpec) -> Target {
-        spec.toTarget(with: "\(name)DemoApp", product: .app)
+        spec.toTarget(with: "\(name)Demo", product: .app)
     }
 
     static func demo(name: String, dependencies: [TargetDependency] = []) -> Target {
         TargetSpec(dependencies: dependencies)
-            .toTarget(with: "\(name)DemoApp", product: .app)
+            .toTarget(with: "\(name)Demo", product: .app)
     }
 }
