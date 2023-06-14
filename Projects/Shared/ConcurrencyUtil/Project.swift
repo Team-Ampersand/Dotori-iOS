@@ -7,7 +7,7 @@ let project = Project.module(
     targets: [
         .implements(module: .shared(.ConcurrencyUtil)),
         .tests(module: .shared(.ConcurrencyUtil), dependencies: [
-            .shared(.ConcurrencyUtil)
+            .shared(target: .ConcurrencyUtil)
         ])
     ]
 )

@@ -7,7 +7,7 @@ let project = Project.module(
     targets: [
         .implements(module: .shared(.DateUtility)),
         .tests(module: .shared(.DateUtility), dependencies: [
-            .shared(.DateUtility)
+            .shared(target: .DateUtility)
         ])
     ]
 )
