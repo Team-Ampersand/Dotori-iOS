@@ -1,8 +1,9 @@
-import ProjectDescription
-import ProjectDescriptionHelpers
 import ConfigurationPlugin
 import DependencyPlugin
+import EnvironmentPlugin
 import Foundation
+import ProjectDescription
+import ProjectDescriptionHelpers
 
 let name = ModulePaths.Domain.BaseDomain.rawValue
 
@@ -20,20 +21,35 @@ let configurations: [Configuration] = isCI ?
     .release(name: .prod, xcconfig: .relativeToXCConfig(type: .prod, name: name))
 ]
 
-let project = Project.makeModule(
-    name: name,
-    product: .framework,
-    targets: [.unitTest],
-    externalDependencies: [
-        .SPM.Emdpoint
-    ],
-    internalDependencies: [
-        .core(target: .JwtStore, type: .interface),
-        .shared(target: .GlobalThirdPartyLibrary),
-        .shared(target: .UtilityModule)
-    ],
-    additionalPlistRows: [
-        "BASE_URL": .string("$(BASE_URL)")
-    ],
-    configurations: configurations
+let project = Project.module(
+    name: ModulePaths.Domain.BaseDomain.rawValue,
+    targets: [
+        .implements(
+            module: .domain(.BaseDomain),
+            product: .framework,
+            spec: TargetSpec(
+                infoPlist: .extendingDefault(
+                    with: [
+                        "BASE_URL": .string("$(BASE_URL)")
+                    ]
+                ),
+                dependencies: [
+                    .SPM.Emdpoint,
+                    .core(target: .JwtStore, type: .interface),
+                    .shared(target: .GlobalThirdPartyLibrary),
+                    .shared(target: .UtilityModule)
+                ],
+                settings: .settings(
+                    base: env.baseSetting
+                        .merging(.codeSign)
+                        .merging(.allLoadLDFlages),
+                    configurations: configurations,
+                    defaultSettings: .recommended
+                )
+            )
+        ),
+        .tests(module: .domain(.BaseDomain), dependencies: [
+            .domain(target: .BaseDomain)
+        ])
+    ]
 )

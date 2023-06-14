@@ -1,3 +1,4 @@
+import ConfigurationPlugin
 import EnvironmentPlugin
 import ProjectDescription
 
@@ -59,17 +60,7 @@ public struct TargetSpec {
         self.entitlements = entitlements
         self.scripts = scripts
         self.dependencies = dependencies
-        self.settings = settings ?? .settings(
-            base: env.baseSetting
-                .merging(.codeSign)
-                .merging(product == .framework ? .allLoadLDFlages : .ldFlages),
-            configurations: [
-                .debug(name: .dev, xcconfig: .shared),
-                .debug(name: .stage, xcconfig: .shared),
-                .release(name: .prod, xcconfig: .shared)
-            ],
-            defaultSettings: .recommended
-        )
+        self.settings = settings
         self.coreDataModels = coreDataModels
         self.environment = environment
         self.launchArguments = launchArguments
@@ -97,7 +88,17 @@ public struct TargetSpec {
             entitlements: entitlements,
             scripts: scripts,
             dependencies: dependencies,
-            settings: settings,
+            settings: settings ?? .settings(
+                base: env.baseSetting
+                    .merging(.codeSign)
+                    .merging((product ?? self.product) == .framework ? .allLoadLDFlages : .ldFlages),
+                configurations: [
+                    .debug(name: .dev, xcconfig: .shared),
+                    .debug(name: .stage, xcconfig: .shared),
+                    .release(name: .prod, xcconfig: .shared)
+                ],
+                defaultSettings: .recommended
+            ),
             coreDataModels: coreDataModels,
             environment: environment,
             launchArguments: launchArguments,

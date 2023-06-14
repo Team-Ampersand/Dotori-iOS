@@ -2,9 +2,12 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 import DependencyPlugin
 
-let project = Project.makeModule(
+let project = Project.module(
     name: ModulePaths.Shared.CombineUtility.rawValue,
-    product: .staticLibrary,
-    targets: [.unitTest],
-    internalDependencies: []
+    targets: [
+        .implements(module: .shared(.CombineUtility)),
+        .tests(module: .shared(.CombineUtility), dependencies: [
+            .shared(.CombineUtility)
+        ])
+    ]
 )

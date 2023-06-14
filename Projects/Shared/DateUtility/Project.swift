@@ -2,9 +2,12 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 import DependencyPlugin
 
-let project = Project.makeModule(
+let project = Project.module(
     name: ModulePaths.Shared.DateUtility.rawValue,
-    product: .staticLibrary,
-    targets: [.unitTest],
-    internalDependencies: []
+    targets: [
+        .implements(module: .shared(.DateUtility)),
+        .tests(module: .shared(.DateUtility), dependencies: [
+            .shared(.DateUtility)
+        ])
+    ]
 )
