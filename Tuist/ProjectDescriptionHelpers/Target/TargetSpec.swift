@@ -2,27 +2,27 @@ import ConfigurationPlugin
 import EnvironmentPlugin
 import ProjectDescription
 
-public struct TargetSpec {
-    public let name: String
-    public let platform: Platform
-    public let product: Product
-    public let productName: String?
-    public let bundleId: String?
-    public let deploymentTarget: DeploymentTarget?
-    public let infoPlist: InfoPlist?
-    public let sources: SourceFilesList?
-    public let resources: ResourceFileElements?
-    public let copyFiles: [CopyFilesAction]?
-    public let headers: Headers?
-    public let entitlements: Path?
-    public let scripts: [TargetScript]
-    public let dependencies: [TargetDependency]
-    public let settings: Settings?
-    public let coreDataModels: [CoreDataModel]
-    public let environment: [String : String]
-    public let launchArguments: [LaunchArgument]
-    public let additionalFiles: [FileElement]
-    public let buildRules: [BuildRule]
+public struct TargetSpec: Configurable {
+    public var name: String
+    public var platform: Platform
+    public var product: Product
+    public var productName: String?
+    public var bundleId: String?
+    public var deploymentTarget: DeploymentTarget?
+    public var infoPlist: InfoPlist?
+    public var sources: SourceFilesList?
+    public var resources: ResourceFileElements?
+    public var copyFiles: [CopyFilesAction]?
+    public var headers: Headers?
+    public var entitlements: Path?
+    public var scripts: [TargetScript]
+    public var dependencies: [TargetDependency]
+    public var settings: Settings?
+    public var coreDataModels: [CoreDataModel]
+    public var environment: [String : String]
+    public var launchArguments: [LaunchArgument]
+    public var additionalFiles: [FileElement]
+    public var buildRules: [BuildRule]
 
     public init(
         name: String = "",
