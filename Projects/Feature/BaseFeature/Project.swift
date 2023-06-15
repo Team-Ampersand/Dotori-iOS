@@ -14,6 +14,7 @@ let project = Project.makeModule(
     ],
     internalDependencies: [
         .userInterface(target: .DesignSystem),
+        .userInterface(target: .Localization),
         .shared(target: .GlobalThirdPartyLibrary),
         .shared(target: .UtilityModule)
     ]
