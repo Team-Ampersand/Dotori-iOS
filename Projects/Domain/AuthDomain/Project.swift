@@ -2,14 +2,19 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 import DependencyPlugin
 
-let project = Project.makeModule(
+let project = Project.module(
     name: ModulePaths.Domain.AuthDomain.rawValue,
-    product: .staticLibrary,
-    targets: [.interface, .testing, .unitTest],
-    internalDependencies: [
-        .domain(target: .BaseDomain)
-    ],
-    additionalPlistRows: [
-        "BASE_URL": .string("$(BASE_URL)")
+    targets: [
+        .interface(module: .domain(.AuthDomain)),
+        .implements(module: .domain(.AuthDomain), dependencies: [
+            .domain(target: .AuthDomain, type: .interface),
+            .domain(target: .BaseDomain)
+        ]),
+        .testing(module: .domain(.AuthDomain), dependencies: [
+            .domain(target: .AuthDomain)
+        ]),
+        .tests(module: .domain(.AuthDomain), dependencies: [
+            .domain(target: .AuthDomain)
+        ])
     ]
 )

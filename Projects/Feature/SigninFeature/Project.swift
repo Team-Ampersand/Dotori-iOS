@@ -2,14 +2,17 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 import DependencyPlugin
 
-let project = Project.makeModule(
+let project = Project.module(
     name: ModulePaths.Feature.SigninFeature.rawValue,
-    product: .staticLibrary,
-    targets: [.unitTest],
-    internalDependencies: [
-        .feature(target: .BaseFeature),
-        .feature(target: .SignupFeature),
-        .feature(target: .RenewalPasswordFeature),
-        .domain(target: .AuthDomain, type: .interface)
+    targets: [
+        .implements(module: .feature(.SigninFeature), dependencies: [
+            .feature(target: .BaseFeature),
+            .feature(target: .SignupFeature),
+            .feature(target: .RenewalPasswordFeature),
+            .domain(target: .AuthDomain, type: .interface)
+        ]),
+        .tests(module: .feature(.SigninFeature), dependencies: [
+            .feature(target: .SigninFeature)
+        ])
     ]
 )

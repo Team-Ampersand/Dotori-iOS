@@ -2,12 +2,21 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 import DependencyPlugin
 
-let project = Project.makeModule(
+let project = Project.module(
     name: ModulePaths.Feature.HomeFeature.rawValue,
-    product: .staticLibrary,
-    targets: [.unitTest],
-    internalDependencies: [
-        .feature(target: .BaseFeature),
-        .domain(target: .AuthDomain, type: .interface)
+    targets: [
+        .implements(
+            module: .feature(.HomeFeature),
+            dependencies: [
+                .feature(target: .BaseFeature),
+                .domain(target: .AuthDomain, type: .interface)
+            ]
+        ),
+        .tests(
+            module: .feature(.HomeFeature),
+            dependencies: [
+                .feature(target: .HomeFeature)
+            ]
+        )
     ]
 )

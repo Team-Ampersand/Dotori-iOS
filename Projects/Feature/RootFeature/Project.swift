@@ -2,13 +2,13 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 import DependencyPlugin
 
-let project = Project.makeModule(
+let project = Project.module(
     name: ModulePaths.Feature.RootFeature.rawValue,
-    product: .staticLibrary,
-    targets: [],
-    internalDependencies: [
-        .feature(target: .SigninFeature),
-        .feature(target: .MainTabFeature),
-        .feature(target: .BaseFeature)
+    targets: [
+        .implements(module: .feature(.RootFeature), dependencies: [
+            .feature(target: .SigninFeature),
+            .feature(target: .MainTabFeature),
+            .feature(target: .BaseFeature)
+        ])
     ]
 )

@@ -2,17 +2,15 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 import DependencyPlugin
 
-let project = Project.makeModule(
+let project = Project.module(
     name: ModulePaths.Shared.GlobalThirdPartyLibrary.rawValue,
-    product: .framework,
-    targets: [],
-    externalDependencies: [
-        .SPM.Swinject,
-        .SPM.Configure
-    ],
-    internalDependencies: [
-        .shared(target: .CombineUtility),
-        .shared(target: .ConcurrencyUtil),
-        .shared(target: .DateUtility)
+    targets: [
+        .implements(module: .shared(.GlobalThirdPartyLibrary), product: .framework, dependencies: [
+            .SPM.Swinject,
+            .SPM.Configure,
+            .shared(target: .CombineUtility),
+            .shared(target: .ConcurrencyUtil),
+            .shared(target: .DateUtility)
+        ])
     ]
 )

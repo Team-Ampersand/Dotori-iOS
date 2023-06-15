@@ -2,20 +2,21 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 import DependencyPlugin
 
-let project = Project.makeModule(
+let project = Project.module(
     name: ModulePaths.Feature.BaseFeature.rawValue,
-    product: .framework,
-    targets: [.unitTest],
-    externalDependencies: [
-        .SPM.MSGLayout,
-        .SPM.Moordinator,
-        .SPM.Store,
-        .SPM.IQKeyboardManagerSwift
-    ],
-    internalDependencies: [
-        .userInterface(target: .DesignSystem),
-        .userInterface(target: .Localization),
-        .shared(target: .GlobalThirdPartyLibrary),
-        .shared(target: .UtilityModule)
+    targets: [
+        .implements(module: .feature(.BaseFeature), product: .framework, dependencies: [
+            .SPM.MSGLayout,
+            .SPM.Moordinator,
+            .SPM.Store,
+            .SPM.IQKeyboardManagerSwift,
+            .userInterface(target: .DesignSystem),
+            .userInterface(target: .Localization),
+            .shared(target: .GlobalThirdPartyLibrary),
+            .shared(target: .UtilityModule)
+        ]),
+        .tests(module: .feature(.BaseFeature), dependencies: [
+            .feature(target: .BaseFeature)
+        ])
     ]
 )

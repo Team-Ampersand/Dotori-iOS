@@ -2,16 +2,19 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 import DependencyPlugin
 
-let project = Project.makeModule(
+let project = Project.module(
     name: ModulePaths.Feature.MainTabFeature.rawValue,
-    product: .staticLibrary,
-    targets: [.unitTest, .demo],
-    internalDependencies: [
-        .feature(target: .BaseFeature),
-        .feature(target: .HomeFeature),
-        .feature(target: .NoticeFeature),
-        .feature(target: .SelfStudyFeature),
-        .feature(target: .MassageFeature),
-        .feature(target: .MusicFeature)
+    targets: [
+        .implements(module: .feature(.MainTabFeature), dependencies: [
+            .feature(target: .BaseFeature),
+            .feature(target: .HomeFeature),
+            .feature(target: .NoticeFeature),
+            .feature(target: .SelfStudyFeature),
+            .feature(target: .MassageFeature),
+            .feature(target: .MusicFeature)
+        ]),
+        .tests(module: .feature(.MainTabFeature), dependencies: [
+            .feature(target: .MainTabFeature)
+        ])
     ]
 )

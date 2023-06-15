@@ -2,8 +2,12 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 import DependencyPlugin
 
-let project = Project.makeModule(
+let project = Project.module(
     name: ModulePaths.Shared.UtilityModule.rawValue,
-    product: .framework,
-    targets: [.unitTest]
+    targets: [
+        .implements(module: .shared(.UtilityModule), product: .framework),
+        .tests(module: .shared(.UtilityModule), dependencies: [
+            .shared(target: .UtilityModule)
+        ])
+    ]
 )
