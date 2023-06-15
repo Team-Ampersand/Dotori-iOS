@@ -11,6 +11,7 @@ let project = Project.module(
             .SPM.Store,
             .SPM.IQKeyboardManagerSwift,
             .userInterface(target: .DesignSystem),
+            .userInterface(target: .Localization),
             .shared(target: .GlobalThirdPartyLibrary),
             .shared(target: .UtilityModule)
         ]),

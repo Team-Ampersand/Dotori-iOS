@@ -1,0 +1,9 @@
+/* 
+  Global.strings
+  Localization
+
+  Created by 최형우 on 2023/06/07.
+  Copyright © 2023 com.msg. All rights reserved.
+*/
+
+"unknown_error" = "알 수 없는 오류가 발생했습니다. 지속될 시 문의해주세요.";

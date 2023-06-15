@@ -64,6 +64,7 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum UserInterface: String, MicroTargetPathConvertable {
+        case Localization
         case DWebKit
         case DesignSystem
     }
