@@ -26,6 +26,7 @@ let targets: [Target] = [
         infoPlist: .file(path: "Support/Info.plist"),
         sources: ["Sources/**"],
         resources: ["Resources/**"],
+        entitlements: "Support/Dotori.entitlements",
         scripts: scripts,
         dependencies: [
             .feature(target: .RootFeature),

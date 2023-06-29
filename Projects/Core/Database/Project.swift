@@ -2,9 +2,20 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 import DependencyPlugin
 
-let project = Project.makeModule(
+let project = Project.module(
     name: ModulePaths.Core.Database.rawValue,
-    product: .staticLibrary,
-    targets: [.interface, .testing, .unitTest],
-    internalDependencies: []
+    targets: [
+        .interface(module: .core(.Database), dependencies: [
+            .SPM.GRDB
+        ]),
+        .implements(module: .core(.Database), dependencies: [
+            .core(target: .Database, type: .interface),
+        ]),
+        .testing(module: .core(.Database), dependencies: [
+            .core(target: .Database, type: .interface)
+        ]),
+        .tests(module: .core(.Database), dependencies: [
+            .core(target: .Database)
+        ])
+    ]
 )
