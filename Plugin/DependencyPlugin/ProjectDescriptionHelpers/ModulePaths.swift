@@ -48,6 +48,8 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum Core: String, MicroTargetPathConvertable {
+        case Database
+        case KeyValueStore
         case JwtStore
     }
 }

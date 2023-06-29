@@ -64,7 +64,7 @@ func registerModuleDependency() {
 func registerModulePaths() {
     updateFileContent(
         filePath: currentPath + "Plugin/DependencyPlugin/ProjectDescriptionHelpers/ModulePaths.swift",
-        finding: "enum \(layer.rawValue): String {\n",
+        finding: "enum \(layer.rawValue): String, MicroTargetPathConvertable {\n",
         inserting: "        case \(moduleName)\n"
     )
     print("Register \(moduleName) to ModulePaths.swift")
