@@ -132,24 +132,52 @@ public extension Target {
     static func demo(module: ModulePaths, spec: TargetSpec) -> Target {
         spec.with {
             $0.sources = .demoSources
+            $0.settings = .settings(
+                base: (spec.settings?.base ?? [:])
+                    .merging(["OTHER_LDFLAGS": "$(inherited) -Xlinker -interposable"]),
+                configurations: .default,
+                defaultSettings: spec.settings?.defaultSettings ?? .recommended
+            )
+            $0.dependencies = spec.dependencies + [.SPM.Inject]
         }
         .toTarget(with: module.targetName(type: .demo), product: .app)
     }
 
     static func demo(module: ModulePaths, dependencies: [TargetDependency] = []) -> Target {
-        TargetSpec(sources: .demoSources, dependencies: dependencies)
-            .toTarget(with: module.targetName(type: .demo), product: .app)
+        TargetSpec(
+            sources: .demoSources,
+            dependencies: dependencies + [.SPM.Inject],
+            settings: .settings(
+                base: ["OTHER_LDFLAGS": "$(inherited) -Xlinker -interposable"],
+                configurations: .default
+            )
+        )
+        .toTarget(with: module.targetName(type: .demo), product: .app)
     }
 
     static func demo(name: String, spec: TargetSpec) -> Target {
         spec.with {
             $0.sources = .demoSources
+            $0.settings = .settings(
+                base: (spec.settings?.base ?? [:])
+                    .merging(["OTHER_LDFLAGS": "$(inherited) -Xlinker -interposable"]),
+                configurations: .default,
+                defaultSettings: spec.settings?.defaultSettings ?? .recommended
+            )
+            $0.dependencies = spec.dependencies + [.SPM.Inject]
         }
         .toTarget(with: "\(name)Demo", product: .app)
     }
 
     static func demo(name: String, dependencies: [TargetDependency] = []) -> Target {
-        TargetSpec(sources: .demoSources, dependencies: dependencies)
-            .toTarget(with: "\(name)Demo", product: .app)
+        TargetSpec(
+            sources: .demoSources,
+            dependencies: dependencies + [.SPM.Inject],
+            settings: .settings(
+                base: ["OTHER_LDFLAGS": "$(inherited) -Xlinker -interposable"],
+                configurations: .default
+            )
+        )
+        .toTarget(with: "\(name)Demo", product: .app)
     }
 }
