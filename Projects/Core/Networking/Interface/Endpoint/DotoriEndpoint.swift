@@ -2,9 +2,8 @@ import Emdpoint
 import Foundation
 
 public protocol DotoriEndpoint: EndpointType, JwtAuthorizable {
-    associatedtype ErrorType: Error
     var domain: DotoriRestAPIDomain { get }
-    var errorMapper: [Int: ErrorType]? { get }
+    var errorMapper: [Int: NetworkingError]? { get }
 }
 
 extension DotoriEndpoint {

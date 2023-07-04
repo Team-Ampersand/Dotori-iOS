@@ -5,7 +5,7 @@ import Foundation
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let name = ModulePaths.Domain.BaseDomain.rawValue
+let name = ModulePaths.Core.Networking.rawValue
 
 let isCI = (ProcessInfo.processInfo.environment["TUIST_CI"] ?? "0") == "1" ? true : false
 
@@ -20,10 +20,8 @@ let configurations: [Configuration] = isCI ?
 let project = Project.module(
     name: name,
     targets: [
-        .interface(module: .core(.Networking)),
-        .implements(
+        .interface(
             module: .core(.Networking),
-            product: .staticFramework,
             spec: .init(
                 infoPlist: .extendingDefault(
                     with: [
@@ -31,20 +29,25 @@ let project = Project.module(
                     ]
                 ),
                 dependencies: [
-                    .SPM.Emdpoint,
-                    .core(target: .Networking, type: .interface),
-                    .core(target: .JwtStore, type: .interface),
-                    .core(target: .KeyValueStore, type: .interface),
-                    .shared(target: .GlobalThirdPartyLibrary)
+                    .SPM.Emdpoint
                 ],
                 settings: .settings(
                     base: env.baseSetting
-                        .merging(.codeSign)
                         .merging(.allLoadLDFlages),
                     configurations: configurations,
                     defaultSettings: .recommended
                 )
             )
+        ),
+        .implements(
+            module: .core(.Networking),
+            product: .staticLibrary,
+            dependencies: [
+                .core(target: .Networking, type: .interface),
+                .core(target: .JwtStore, type: .interface),
+                .core(target: .KeyValueStore, type: .interface),
+                .shared(target: .GlobalThirdPartyLibrary)
+            ]
         ),
         .testing(module: .core(.Networking), dependencies: [
             .core(target: .Networking, type: .interface)
