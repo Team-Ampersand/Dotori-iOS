@@ -1,7 +1,7 @@
 import Foundation
 
-public enum UserRoleType: Decodable {
-    case member
-    case councillor
-    case developer
+public enum UserRoleType: String, Decodable {
+    case member = "ROLE_MEMBER"
+    case councillor = "ROLE_COUNCILLOR"
+    case developer = "ROLE_DEVELOPER"
 }
