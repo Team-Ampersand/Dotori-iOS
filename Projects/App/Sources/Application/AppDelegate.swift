@@ -2,6 +2,7 @@ import AuthDomain
 import HomeFeature
 import IQKeyboardManagerSwift
 import JwtStore
+import KeyValueStore
 import MainTabFeature
 import MassageFeature
 import MusicFeature
@@ -25,6 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         assembler = Assembler([
             JwtStoreAssembly(),
+            KeyValueStoreAssembly(),
             HomeAssembly(),
             NoticeAssembly(),
             SelfStudyAssembly(),

@@ -1,4 +1,5 @@
 import Foundation
+import KeyValueStoreInterface
 
 final class DictionaryKeyValueStore: KeyValueStore {
     private var dictionary: [String: Any] = [:]

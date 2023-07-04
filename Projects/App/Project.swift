@@ -36,6 +36,7 @@ let targets: [Target] = [
             .feature(target: .RenewalPasswordFeature),
             .domain(target: .AuthDomain),
             .core(target: .JwtStore),
+            .core(target: .KeyValueStore)
         ],
         settings: .settings(base: env.baseSetting)
     )
