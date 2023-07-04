@@ -3,7 +3,6 @@ import Foundation
 
 public protocol DotoriEndpoint: EndpointType, JwtAuthorizable {
     var domain: DotoriRestAPIDomain { get }
-    var errorMapper: [Int: NetworkingError]? { get }
 }
 
 extension DotoriEndpoint {

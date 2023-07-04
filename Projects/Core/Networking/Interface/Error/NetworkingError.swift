@@ -8,7 +8,7 @@ public enum NetworkingError: Error {
     case conflict
     case tooManyRequest
 
-    init(statusCode: Int) {
+    public init(statusCode: Int) {
         switch statusCode {
         case 400:
             self = .badRequest
