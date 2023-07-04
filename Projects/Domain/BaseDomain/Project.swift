@@ -32,6 +32,7 @@ let project = Project.module(
                 dependencies: [
                     .SPM.Emdpoint,
                     .core(target: .JwtStore, type: .interface),
+                    .core(target: .KeyValueStore, type: .interface),
                     .userInterface(target: .Localization),
                     .shared(target: .GlobalThirdPartyLibrary),
                     .shared(target: .UtilityModule)

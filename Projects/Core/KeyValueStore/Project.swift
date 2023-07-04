@@ -7,7 +7,8 @@ let project = Project.module(
     targets: [
         .interface(module: .core(.KeyValueStore)),
         .implements(module: .core(.KeyValueStore), dependencies: [
-            .core(target: .KeyValueStore, type: .interface)
+            .core(target: .KeyValueStore, type: .interface),
+            .shared(target: .GlobalThirdPartyLibrary)
         ]),
         .testing(module: .core(.KeyValueStore), dependencies: [
             .core(target: .KeyValueStore, type: .interface)

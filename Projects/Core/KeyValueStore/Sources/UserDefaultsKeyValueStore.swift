@@ -8,6 +8,22 @@ final class UserDefaultsKeyValueStore: KeyValueStore {
         self.userDefaults = userDefaults
     }
 
+    func save(key: StorableKeys, value: Any) {
+        userDefaults.setValue(value, forKey: key.rawValue)
+    }
+
+    func load(key: StorableKeys) -> Any? {
+        userDefaults.value(forKey: key.rawValue)
+    }
+
+    func load<T>(key: StorableKeys) -> T? {
+        userDefaults.value(forKey: key.rawValue) as? T
+    }
+
+    func delete(key: StorableKeys) {
+        userDefaults.removeObject(forKey: key.rawValue)
+    }
+
     func save(key: String, value: Any) {
         userDefaults.setValue(value, forKey: key)
     }

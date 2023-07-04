@@ -2,13 +2,17 @@ import AuthDomainInterface
 import BaseDomain
 import Swinject
 import JwtStoreInterface
+import KeyValueStoreInterface
 
 public final class AuthDomainAssembly: Assembly {
     public init() {}
     public func assemble(container: Container) {
         // MARK: - DataSource
         container.register(RemoteAuthDataSource.self) { resolver in
-            RemoteAuthDataSourceImpl(jwtStore: resolver.resolve(JwtStore.self)!)
+            RemoteAuthDataSourceImpl(
+                jwtStore: resolver.resolve(JwtStore.self)!,
+                keyValueStore: resolver.resolve(KeyValueStore.self)!
+            )
         }
 
         container.register(LocalAuthDataSource.self) { resolver in

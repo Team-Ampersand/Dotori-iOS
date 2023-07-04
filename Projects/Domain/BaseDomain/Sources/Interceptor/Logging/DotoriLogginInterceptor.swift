@@ -65,5 +65,5 @@ public struct DotoriLoggingInterceptor: InterceptorType {
         print(log)
     }
 }
-
+// swiftlint: enable line_length
 #endif

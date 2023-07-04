@@ -10,6 +10,7 @@ let project = Project.module(
         ]),
         .implements(module: .core(.Database), dependencies: [
             .core(target: .Database, type: .interface),
+            .shared(target: .GlobalThirdPartyLibrary)
         ]),
         .testing(module: .core(.Database), dependencies: [
             .core(target: .Database, type: .interface)
