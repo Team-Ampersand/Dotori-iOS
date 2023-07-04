@@ -14,6 +14,7 @@ import SigninFeature
 import SignupFeature
 import Swinject
 import UIKit
+import UserDomain
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -37,7 +38,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             SignupAssembly(),
             RenewalPasswordAssembly(),
             RootAssembly(),
-            AuthDomainAssembly()
+            AuthDomainAssembly(),
+            UserDomainAssembly()
         ], container: AppDelegate.container)
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.enableAutoToolbar = true
