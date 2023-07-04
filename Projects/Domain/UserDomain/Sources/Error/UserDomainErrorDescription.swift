@@ -1,5 +1,6 @@
 import Foundation
 import Localization
+import UserDomainInterface
 
 extension UserDomainError: LocalizedError {
     public var errorDescription: String? {

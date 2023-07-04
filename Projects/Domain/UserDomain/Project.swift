@@ -15,7 +15,9 @@ let project = Project.module(
             .domain(target: .UserDomain, type: .interface)
         ]),
         .tests(module: .domain(.UserDomain), dependencies: [
-            .domain(target: .UserDomain)
+            .domain(target: .UserDomain),
+            .domain(target: .UserDomain, type: .testing),
+            .core(target: .KeyValueStore, type: .testing)
         ])
     ]
 )

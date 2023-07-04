@@ -74,14 +74,14 @@ public final class DotoriCheckBox: UIControl {
         setup()
     }
 
-    //MARK: - handle touches
+    // MARK: - handle touches
     public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         sendActions(for: .valueChanged)
         isChecked.toggle()
     }
 
-    //MARK: - Increase hit area
+    // MARK: - Increase hit area
     public override func point(
         inside point: CGPoint,
         with event: UIEvent?
