@@ -19,4 +19,20 @@ final class DictionaryKeyValueStore: KeyValueStore {
     func delete(key: StorableKeys) {
         dictionary.removeValue(forKey: key.rawValue)
     }
+
+    func save(key: String, value: Any) {
+        dictionary[key] = value
+    }
+
+    func load(key: String) -> Any? {
+        dictionary[key]
+    }
+
+    func load<T>(key: String) -> T? {
+        dictionary[key] as? T
+    }
+
+    func delete(key: String) {
+        dictionary.removeValue(forKey: key)
+    }
 }
