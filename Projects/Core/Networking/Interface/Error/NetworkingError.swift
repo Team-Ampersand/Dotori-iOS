@@ -7,6 +7,7 @@ public enum NetworkingError: Error {
     case notFound
     case conflict
     case tooManyRequest
+    case internalServerError
 
     public init(statusCode: Int) {
         switch statusCode {
@@ -27,6 +28,9 @@ public enum NetworkingError: Error {
 
         case 429:
             self = .tooManyRequest
+
+        case 500:
+            self = .internalServerError
 
         default:
             self = .badRequest
