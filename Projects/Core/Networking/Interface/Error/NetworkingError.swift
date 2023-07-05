@@ -33,7 +33,7 @@ public enum NetworkingError: Error {
             self = .internalServerError
 
         default:
-            self = .badRequest
+            self = .internalServerError
         }
     }
 }
