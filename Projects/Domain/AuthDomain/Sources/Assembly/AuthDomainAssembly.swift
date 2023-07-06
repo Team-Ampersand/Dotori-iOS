@@ -14,10 +14,12 @@ public final class AuthDomainAssembly: Assembly {
                 keyValueStore: resolver.resolve(KeyValueStore.self)!
             )
         }
+        .inObjectScope(.container)
 
         container.register(LocalAuthDataSource.self) { resolver in
             LocalAuthDataSourceImpl(jwtStore: resolver.resolve(JwtStore.self)!)
         }
+        .inObjectScope(.container)
 
         // MARK: - Repository
         container.register(AuthRepository.self) { resolver in
@@ -26,6 +28,7 @@ public final class AuthDomainAssembly: Assembly {
                 localAuthDataSource: resolver.resolve(LocalAuthDataSource.self)!
             )
         }
+        .inObjectScope(.container)
 
         // MARK: - UseCase
         container.register(SigninUseCase.self) { resolver in

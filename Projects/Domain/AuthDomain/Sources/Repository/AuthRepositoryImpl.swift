@@ -1,7 +1,7 @@
 import AuthDomainInterface
 import Combine
 
-struct AuthRepositoryImpl: AuthRepository {
+final class AuthRepositoryImpl: AuthRepository {
     private let remoteAuthDataSource: any RemoteAuthDataSource
     private let localAuthDataSource: any LocalAuthDataSource
 

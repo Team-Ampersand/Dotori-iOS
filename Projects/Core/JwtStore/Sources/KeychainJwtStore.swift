@@ -1,7 +1,7 @@
 import Foundation
 import JwtStoreInterface
 
-struct KeychainJwtStore: JwtStore {
+final class KeychainJwtStore: JwtStore {
     func save(property: JwtStoreProperties, value: String) {
         let query: NSDictionary = [
             kSecClass: kSecClassGenericPassword,
