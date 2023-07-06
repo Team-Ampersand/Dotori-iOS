@@ -2,7 +2,7 @@ import AuthDomainInterface
 import Combine
 import JwtStoreInterface
 
-struct LocalAuthDataSourceImpl: LocalAuthDataSource {
+final class LocalAuthDataSourceImpl: LocalAuthDataSource {
     private let jwtStore: any JwtStore
 
     init(jwtStore: any JwtStore) {
