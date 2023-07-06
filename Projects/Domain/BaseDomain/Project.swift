@@ -22,30 +22,14 @@ let project = Project.module(
     targets: [
         .implements(
             module: .domain(.BaseDomain),
-            product: .framework,
-            spec: TargetSpec(
-                infoPlist: .extendingDefault(
-                    with: [
-                        "BASE_URL": .string("$(BASE_URL)")
-                    ]
-                ),
-                dependencies: [
-                    .SPM.Emdpoint,
-                    .core(target: .JwtStore, type: .interface),
-                    .core(target: .Networking, type: .interface),
-                    .core(target: .KeyValueStore, type: .interface),
-                    .userInterface(target: .Localization),
-                    .shared(target: .GlobalThirdPartyLibrary),
-                    .shared(target: .UtilityModule)
-                ],
-                settings: .settings(
-                    base: env.baseSetting
-                        .merging(.codeSign)
-                        .merging(.allLoadLDFlages),
-                    configurations: configurations,
-                    defaultSettings: .recommended
-                )
-            )
+            dependencies: [
+                .core(target: .JwtStore, type: .interface),
+                .core(target: .Networking, type: .interface),
+                .core(target: .KeyValueStore, type: .interface),
+                .userInterface(target: .Localization),
+                .shared(target: .GlobalThirdPartyLibrary),
+                .shared(target: .UtilityModule)
+            ]
         ),
         .tests(module: .domain(.BaseDomain), dependencies: [
             .domain(target: .BaseDomain)

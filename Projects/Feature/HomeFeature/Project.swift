@@ -17,6 +17,12 @@ let project = Project.module(
             dependencies: [
                 .feature(target: .HomeFeature)
             ]
+        ),
+        .demo(
+            module: .feature(.HomeFeature),
+            dependencies: [
+                .feature(target: .HomeFeature)
+            ]
         )
     ]
 )
