@@ -7,6 +7,7 @@ public final class KeyValueStoreAssembly: Assembly {
     public func assemble(container: Container) {
         container.register(KeyValueStore.self) { _ in
             UserDefaultsKeyValueStore(userDefaults: .standard)
-        }.inObjectScope(.container)
+        }
+        .inObjectScope(.container)
     }
 }

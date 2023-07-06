@@ -6,6 +6,7 @@ public final class JwtStoreAssembly: Assembly {
     public func assemble(container: Container) {
         container.register(JwtStore.self) { _ in
             KeychainJwtStore()
-        }.inObjectScope(.container)
+        }
+        .inObjectScope(.container)
     }
 }
