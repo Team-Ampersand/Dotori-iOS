@@ -1,5 +1,6 @@
-import Foundation
+import ConfigurationPlugin
 import EnvironmentPlugin
+import Foundation
 import ProjectDescription
 
 public extension Project {

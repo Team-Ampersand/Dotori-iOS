@@ -5,7 +5,7 @@ import Foundation
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let name = ModulePaths.Domain.BaseDomain.rawValue
+let name = ModulePaths.Core.Networking.rawValue
 
 let isCI = (ProcessInfo.processInfo.environment["TUIST_CI"] ?? "0") == "1" ? true : false
 
@@ -18,37 +18,42 @@ let configurations: [Configuration] = isCI ?
 ]
 
 let project = Project.module(
-    name: ModulePaths.Domain.BaseDomain.rawValue,
+    name: name,
     targets: [
-        .implements(
-            module: .domain(.BaseDomain),
-            product: .framework,
-            spec: TargetSpec(
+        .interface(
+            module: .core(.Networking),
+            spec: .init(
                 infoPlist: .extendingDefault(
                     with: [
                         "BASE_URL": .string("$(BASE_URL)")
                     ]
                 ),
                 dependencies: [
-                    .SPM.Emdpoint,
-                    .core(target: .JwtStore, type: .interface),
-                    .core(target: .Networking, type: .interface),
-                    .core(target: .KeyValueStore, type: .interface),
-                    .userInterface(target: .Localization),
-                    .shared(target: .GlobalThirdPartyLibrary),
-                    .shared(target: .UtilityModule)
+                    .SPM.Emdpoint
                 ],
                 settings: .settings(
                     base: env.baseSetting
-                        .merging(.codeSign)
                         .merging(.allLoadLDFlages),
                     configurations: configurations,
                     defaultSettings: .recommended
                 )
             )
         ),
-        .tests(module: .domain(.BaseDomain), dependencies: [
-            .domain(target: .BaseDomain)
+        .implements(
+            module: .core(.Networking),
+            product: .staticLibrary,
+            dependencies: [
+                .core(target: .Networking, type: .interface),
+                .core(target: .JwtStore, type: .interface),
+                .core(target: .KeyValueStore, type: .interface),
+                .shared(target: .GlobalThirdPartyLibrary)
+            ]
+        ),
+        .testing(module: .core(.Networking), dependencies: [
+            .core(target: .Networking, type: .interface)
+        ]),
+        .tests(module: .core(.Networking), dependencies: [
+            .core(target: .Networking)
         ])
     ]
 )

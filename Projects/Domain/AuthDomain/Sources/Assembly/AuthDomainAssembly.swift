@@ -1,8 +1,9 @@
 import AuthDomainInterface
 import BaseDomain
-import Swinject
 import JwtStoreInterface
 import KeyValueStoreInterface
+import NetworkingInterface
+import Swinject
 
 public final class AuthDomainAssembly: Assembly {
     public init() {}
@@ -10,8 +11,7 @@ public final class AuthDomainAssembly: Assembly {
         // MARK: - DataSource
         container.register(RemoteAuthDataSource.self) { resolver in
             RemoteAuthDataSourceImpl(
-                jwtStore: resolver.resolve(JwtStore.self)!,
-                keyValueStore: resolver.resolve(KeyValueStore.self)!
+                authNetworking: resolver.resolve((any Networking<AuthEndpoint>).self)!
             )
         }
         .inObjectScope(.container)

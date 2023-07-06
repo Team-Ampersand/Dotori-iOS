@@ -1,7 +1,8 @@
 import Emdpoint
+import NetworkingInterface
 
 enum RefreshEndpoint {
-    case refresh
+    case refresh(refreshToken: String)
 }
 
 extension RefreshEndpoint: DotoriEndpoint {
@@ -21,6 +22,13 @@ extension RefreshEndpoint: DotoriEndpoint {
 
     var jwtTokenType: JwtTokenType {
         .refreshToken
+    }
+
+    var headers: [String : String]? {
+        switch self {
+        case let .refresh(refreshToken):
+            return ["refreshToken": refreshToken]
+        }
     }
 
     var errorMapper: [Int: ErrorType]? {

@@ -1,5 +1,5 @@
-import Foundation
 import Emdpoint
+import Foundation
 
 #if DEV || STAGE
 // swiftlint: disable line_length

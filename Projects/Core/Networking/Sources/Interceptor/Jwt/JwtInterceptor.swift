@@ -2,6 +2,7 @@ import DateUtility
 import Emdpoint
 import Foundation
 import JwtStoreInterface
+import NetworkingInterface
 
 public struct JwtInterceptor: InterceptorType {
     private let jwtStore: any JwtStore
@@ -83,7 +84,8 @@ private extension JwtInterceptor {
         #else
         let client = EmdpointClient<RefreshEndpoint>()
         #endif
-        client.request(.refresh) { result in
+        let refreshToken = jwtStore.load(property: .refreshToken)
+        client.request(.refresh(refreshToken: refreshToken)) { result in
             switch result {
             case let .success(response):
                 var request = request

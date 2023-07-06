@@ -1,3 +1,5 @@
+import Foundation
+
 public enum JwtTokenType: String {
     case accessToken = "Authorization"
     case refreshToken = "refreshToken"
