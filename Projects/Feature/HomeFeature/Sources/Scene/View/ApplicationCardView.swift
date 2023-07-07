@@ -71,12 +71,12 @@ final class ApplicationCardView: BaseView {
                 .centerX(.toSuperview())
                 .height(20)
                 .top(.to(applicationStatusLabel).bottom, .equal(16))
-                .horizontal(.toSuperview(), .equal(20))
+                .horizontal(.toSuperview(), .equal(24))
 
             applyButton.layout
                 .centerX(.toSuperview())
                 .top(.to(applicationProgressView).bottom, .equal(16))
-                .horizontal(.toSuperview(), .equal(20))
+                .horizontal(.toSuperview(), .equal(24))
                 .bottom(.toSuperview(), .equal(-24))
         }
     }
