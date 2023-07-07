@@ -22,7 +22,7 @@ final class ApplicationCardView: BaseView {
             $0.setTitle(">", for: .normal)
         }
     private let applicationStatusLabel = UILabel()
-        .set(\.text, "10/50")
+        .set(\.text, "0/0")
         .set(\.font, .dotori(.h2))
         .set(\.textColor, .dotori(.neutral(.n10)))
     private let applicationProgressView = UIProgressView()

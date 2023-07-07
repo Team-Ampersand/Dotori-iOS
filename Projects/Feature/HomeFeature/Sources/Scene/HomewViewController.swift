@@ -20,7 +20,7 @@ final class HomeViewController: BaseViewController<HomeStore> {
     private let massageApplicationCardView = ApplicationCardView(
         title: L10n.Home.massageApplyTitle,
         applyText: L10n.Home.massageApplyButtonTitle,
-        maxApplyCount: 50
+        maxApplyCount: 5
     )
 
     override func addView() {
