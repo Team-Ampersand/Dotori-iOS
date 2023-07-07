@@ -8,6 +8,7 @@ import UIKit
 final class HomeViewController: BaseViewController<HomeStore> {
     private enum Metric {
         static let horizontalPadding: CGFloat = 20
+        static let spacing: CGFloat = 12
     }
     private let dotoriLabel = DotoriLabel(
         "DOTORI",
@@ -28,12 +29,14 @@ final class HomeViewController: BaseViewController<HomeStore> {
         applyText: L10n.Home.massageApplyButtonTitle,
         maxApplyCount: 5
     )
+    private let mealCardView = MealCardView()
 
     override func addView() {
         view.addSubviews {
             timeHeaderView
             selfStudyApplicationCardView
             massageApplicationCardView
+            mealCardView
         }
     }
 
@@ -46,12 +49,17 @@ final class HomeViewController: BaseViewController<HomeStore> {
 
             selfStudyApplicationCardView.layout
                 .centerX(.toSuperview())
-                .top(.to(timeHeaderView).bottom, .equal(12))
+                .top(.to(timeHeaderView).bottom, .equal(Metric.spacing))
                 .horizontal(.toSuperview(), .equal(Metric.horizontalPadding))
 
             massageApplicationCardView.layout
                 .centerX(.toSuperview())
-                .top(.to(selfStudyApplicationCardView).bottom, .equal(12))
+                .top(.to(selfStudyApplicationCardView).bottom, .equal(Metric.spacing))
+                .horizontal(.toSuperview(), .equal(Metric.horizontalPadding))
+
+            mealCardView.layout
+                .centerX(.toSuperview())
+                .top(.to(massageApplicationCardView).bottom, .equal(Metric.spacing))
                 .horizontal(.toSuperview(), .equal(Metric.horizontalPadding))
         }
     }
