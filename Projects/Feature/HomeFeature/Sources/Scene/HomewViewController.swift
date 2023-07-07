@@ -1,8 +1,9 @@
 import BaseFeature
 import Configure
 import DesignSystem
-import UIKit
+import Localization
 import MSGLayout
+import UIKit
 
 final class HomeViewController: BaseViewController<HomeStore> {
     private let dotoriLabel = UILabel()
@@ -12,8 +13,8 @@ final class HomeViewController: BaseViewController<HomeStore> {
     private lazy var dotoriBarButtonItem = UIBarButtonItem(customView: dotoriLabel)
     private let timeHeaderView = TimeHeaderView()
     private let selfStudyApplicationCardView = ApplicationCardView(
-        title: "자습신청",
-        applyText: "자습신청",
+        title: L10n.Home.selfStudyApplyTitle,
+        applyText: L10n.Home.selfStudyApplyButtonTitle,
         maxApplyCount: 50
     )
 
