@@ -1,5 +1,6 @@
 import BaseFeature
 import Combine
+import CombineUtility
 import Configure
 import DesignSystem
 import Localization
@@ -12,6 +13,10 @@ protocol ApplicationCardViewActionProtocol {
 }
 
 final class ApplicationCardView: BaseView {
+    private enum Metric {
+        static let padding: CGFloat = 16
+        static let spacing: CGFloat = 16
+    }
     private let titleLabel = UILabel()
         .set(\.font, .dotori(.subtitle2))
         .set(\.textColor, .dotori(.neutral(.n10)))
@@ -56,28 +61,28 @@ final class ApplicationCardView: BaseView {
     override func setLayout() {
         MSGLayout.buildLayout {
             titleLabel.layout
-                .top(.toSuperview(), .equal(24))
-                .leading(.toSuperview(), .equal(24))
+                .top(.toSuperview(), .equal(Metric.padding))
+                .leading(.toSuperview(), .equal(Metric.padding))
 
             chevronRightButton.layout
-                .top(.toSuperview(), .equal(24))
-                .trailing(.toSuperview(), .equal(-24))
+                .top(.toSuperview(), .equal(Metric.padding))
+                .trailing(.toSuperview(), .equal(-Metric.padding))
 
             applicationStatusLabel.layout
                 .centerX(.toSuperview())
-                .top(.to(titleLabel).bottom, .equal(16))
+                .top(.to(titleLabel).bottom, .equal(Metric.spacing))
 
             applicationProgressView.layout
                 .centerX(.toSuperview())
                 .height(20)
-                .top(.to(applicationStatusLabel).bottom, .equal(16))
-                .horizontal(.toSuperview(), .equal(24))
+                .top(.to(applicationStatusLabel).bottom, .equal(Metric.spacing))
+                .horizontal(.toSuperview(), .equal(Metric.padding))
 
             applyButton.layout
                 .centerX(.toSuperview())
-                .top(.to(applicationProgressView).bottom, .equal(16))
-                .horizontal(.toSuperview(), .equal(24))
-                .bottom(.toSuperview(), .equal(-24))
+                .top(.to(applicationProgressView).bottom, .equal(Metric.spacing))
+                .horizontal(.toSuperview(), .equal(Metric.padding))
+                .bottom(.toSuperview(), .equal(-Metric.padding))
         }
     }
 
@@ -90,6 +95,16 @@ final class ApplicationCardView: BaseView {
     override func layoutSubviews() {
         super.layoutSubviews()
         configProgressViewCornerRadius()
+    }
+}
+
+extension ApplicationCardView: ApplicationCardViewActionProtocol {
+    var applyButtonDidTapPublisher: AnyPublisher<Void, Never> {
+        applyButton.tapPublisher
+    }
+
+    var detailButtonDidTapPublisher: AnyPublisher<Void, Never> {
+        chevronRightButton.tapPublisher
     }
 }
 

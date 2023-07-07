@@ -6,6 +6,9 @@ import MSGLayout
 import UIKit
 
 final class TimeHeaderView: BaseView {
+    private enum Metric {
+        static let padding: CGFloat = 24
+    }
     private let currentTimeLabel = UILabel()
         .set(\.text, L10n.Home.currentTimeTitle)
         .set(\.font, .dotori(.caption))
@@ -28,17 +31,17 @@ final class TimeHeaderView: BaseView {
     override func setLayout() {
         MSGLayout.buildLayout {
             currentTimeLabel.layout
-                .top(.toSuperview(), .equal(24))
-                .leading(.toSuperview(), .equal(24))
+                .top(.toSuperview(), .equal(Metric.padding))
+                .leading(.toSuperview(), .equal(Metric.padding))
 
             timerLabel.layout
                 .top(.to(currentTimeLabel).bottom, .equal(4))
                 .leading(.to(currentTimeLabel).leading)
-                .bottom(.toSuperview(), .equal(-24))
+                .bottom(.toSuperview(), .equal(-Metric.padding))
 
             dotoriHomeIcon.layout
                 .top(.toSuperview(), .equal(3))
-                .trailing(.toSuperview(), .equal(24))
+                .trailing(.toSuperview(), .equal(Metric.padding))
         }
     }
 

@@ -6,6 +6,9 @@ import MSGLayout
 import UIKit
 
 final class HomeViewController: BaseViewController<HomeStore> {
+    private enum Metric {
+        static let horizontalPadding: CGFloat = 20
+    }
     private let dotoriLabel = UILabel()
         .set(\.text, "DOTORI")
         .set(\.textColor, .dotori(.primary(.p10)))
@@ -36,17 +39,17 @@ final class HomeViewController: BaseViewController<HomeStore> {
             timeHeaderView.layout
                 .centerX(.toSuperview())
                 .top(.to(view.safeAreaLayoutGuide).top, .equal(8))
-                .horizontal(.toSuperview(), .equal(20))
+                .horizontal(.toSuperview(), .equal(Metric.horizontalPadding))
 
             selfStudyApplicationCardView.layout
                 .centerX(.toSuperview())
                 .top(.to(timeHeaderView).bottom, .equal(12))
-                .horizontal(.toSuperview(), .equal(20))
+                .horizontal(.toSuperview(), .equal(Metric.horizontalPadding))
 
             massageApplicationCardView.layout
                 .centerX(.toSuperview())
                 .top(.to(selfStudyApplicationCardView).bottom, .equal(12))
-                .horizontal(.toSuperview(), .equal(20))
+                .horizontal(.toSuperview(), .equal(Metric.horizontalPadding))
         }
     }
 
