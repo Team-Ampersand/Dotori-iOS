@@ -37,7 +37,6 @@ final class HomeViewController: BaseViewController<HomeStore> {
                 .centerX(.toSuperview())
                 .top(.to(view.safeAreaLayoutGuide).top, .equal(8))
                 .horizontal(.toSuperview(), .equal(20))
-                .height(100)
 
             selfStudyApplicationCardView.layout
                 .centerX(.toSuperview())

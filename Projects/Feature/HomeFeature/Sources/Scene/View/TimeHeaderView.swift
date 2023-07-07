@@ -34,6 +34,7 @@ final class TimeHeaderView: BaseView {
             timerLabel.layout
                 .top(.to(currentTimeLabel).bottom, .equal(4))
                 .leading(.to(currentTimeLabel).leading)
+                .bottom(.toSuperview(), .equal(-24))
 
             dotoriHomeIcon.layout
                 .top(.toSuperview(), .equal(3))
