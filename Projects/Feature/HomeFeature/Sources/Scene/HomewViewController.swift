@@ -28,6 +28,10 @@ final class HomeViewController: BaseViewController<HomeStore> {
         }
     }
 
+    override func configureViewController() {
+        view.backgroundColor = .dotori(.background(.bg))
+    }
+
     override func configureNavigation() {
         self.navigationItem.setLeftBarButton(dotoriBarButtonItem, animated: true)
     }
