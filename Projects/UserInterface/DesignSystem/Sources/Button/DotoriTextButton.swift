@@ -2,14 +2,14 @@ import UIKit
 
 public final class DotoriTextButton: UIButton {
     public init(
-        text: String,
-        color: UIColor,
-        font: UIFont
+        _ text: String = "",
+        textColor: UIColor.DotoriColorSystem = .neutral(.n10),
+        font: UIFont.DotoriFontSystem = .subtitle2
     ) {
         super.init(frame: .zero)
         self.setTitle(text, for: .normal)
-        self.setTitleColor(color, for: .normal)
-        self.titleLabel?.font = font
+        self.setTitleColor(.dotori(textColor), for: .normal)
+        self.titleLabel?.font = .dotori(font)
     }
 
     required init?(coder: NSCoder) {

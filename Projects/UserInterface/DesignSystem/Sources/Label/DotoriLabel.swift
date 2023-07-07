@@ -2,9 +2,9 @@ import UIKit
 
 public final class DotoriLabel: UILabel {
     public init(
-        _ title: String,
-        font: UIFont.DotoriFontSystem = .subtitle2,
-        textColor: UIColor.DotoriColorSystem = .neutral(.n10)
+        _ title: String = "",
+        textColor: UIColor.DotoriColorSystem = .neutral(.n10),
+        font: UIFont.DotoriFontSystem = .subtitle2
     ) {
         super.init(frame: .zero)
         self.text = title

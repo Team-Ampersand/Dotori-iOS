@@ -3,6 +3,7 @@ import Combine
 import CombineUtility
 import Configure
 import DesignSystem
+import GlobalThirdPartyLibrary
 import Localization
 import MSGLayout
 import UIKit
@@ -17,19 +18,13 @@ final class ApplicationCardView: BaseView {
         static let padding: CGFloat = 16
         static let spacing: CGFloat = 16
     }
-    private let titleLabel = UILabel()
-        .set(\.font, .dotori(.subtitle2))
-        .set(\.textColor, .dotori(.neutral(.n10)))
-    private let chevronRightButton = UIButton()
-        .then {
-            $0.titleLabel?.font = .dotori(.caption)
-            $0.setTitleColor(.dotori(.neutral(.n20)), for: .normal)
-            $0.setTitle(">", for: .normal)
-        }
-    private let applicationStatusLabel = UILabel()
-        .set(\.text, "0/0")
-        .set(\.font, .dotori(.h2))
-        .set(\.textColor, .dotori(.neutral(.n10)))
+    private let titleLabel = DotoriLabel()
+    private let chevronRightButton = DotoriTextButton(
+        ">",
+        textColor: .neutral(.n20),
+        font: .caption
+    )
+    private let applicationStatusLabel = DotoriLabel("0/0", font: .h2)
     private let applicationProgressView = UIProgressView()
     private let applyButton = DotoriButton()
 

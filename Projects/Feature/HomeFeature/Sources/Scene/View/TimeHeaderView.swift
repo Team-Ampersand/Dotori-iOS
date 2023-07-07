@@ -9,16 +9,16 @@ final class TimeHeaderView: BaseView {
     private enum Metric {
         static let padding: CGFloat = 24
     }
-    private let currentTimeLabel = UILabel()
-        .set(\.text, L10n.Home.currentTimeTitle)
-        .set(\.font, .dotori(.caption))
-        .set(\.textColor, .dotori(.sub(.white)))
-    private let dotoriHomeIcon = DotoriIconView(size: .custom(.init(width: 110, height: 110)))
-        .set(\.image, .Dotori.dotoriHomeLogo)
-    private let timerLabel = UILabel()
-        .set(\.text, "AM 12: 59: 59")
-        .set(\.font, .dotori(.h3))
-        .set(\.textColor, .dotori(.sub(.white)))
+    private let currentTimeLabel = DotoriLabel(
+        L10n.Home.currentTimeTitle,
+        textColor: .sub(.white),
+        font: .caption
+    )
+    private let dotoriHomeIcon = DotoriIconView(
+        size: .custom(.init(width: 110, height: 110)),
+        image: .Dotori.dotoriHomeLogo
+    )
+    private let timerLabel = DotoriLabel("AM 12: 59: 59", textColor: .sub(.white), font: .h3)
 
     override func addView() {
         self.addSubviews {
@@ -57,18 +57,19 @@ final class TimeHeaderView: BaseView {
 
 private extension TimeHeaderView {
     func configureGradient() {
-        let gradient = CAGradientLayer()
-        gradient.type = .radial
-        gradient.colors = [
+        let gradientColors = [
             UIColor(red: 0.34, green: 0.4, blue: 0.91, alpha: 1).cgColor,
             UIColor(red: 0.62, green: 0.35, blue: 0.96, alpha: 1).cgColor,
             UIColor(red: 0.78, green: 0.33, blue: 1, alpha: 1).cgColor
         ]
-        gradient.startPoint = CGPoint(x: 0, y: 0)
         let endY = 0.5 + self.frame.size.width / self.frame.size.height / 2
-        gradient.locations = [0.6, 0.95, 1]
-        gradient.endPoint = CGPoint(x: 1, y: endY)
-        gradient.frame = self.bounds
+        let gradient = CAGradientLayer()
+            .set(\.type, .radial)
+            .set(\.colors, gradientColors)
+            .set(\.startPoint, CGPoint(x: 0, y: 0))
+            .set(\.locations, [0.6, 0.95, 1.0])
+            .set(\.endPoint, CGPoint(x: 1, y: endY))
+            .set(\.frame, self.bounds)
         self.layer.insertSublayer(gradient, at: 0)
         self.layer.cornerRadius = 16
         self.clipsToBounds = true

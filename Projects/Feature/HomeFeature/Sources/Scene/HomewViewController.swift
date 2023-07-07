@@ -9,11 +9,14 @@ final class HomeViewController: BaseViewController<HomeStore> {
     private enum Metric {
         static let horizontalPadding: CGFloat = 20
     }
-    private let dotoriLabel = UILabel()
-        .set(\.text, "DOTORI")
-        .set(\.textColor, .dotori(.primary(.p10)))
-        .set(\.font, .dotori(.h3))
-    private lazy var dotoriBarButtonItem = UIBarButtonItem(customView: dotoriLabel)
+    private let dotoriLabel = DotoriLabel(
+        "DOTORI",
+        textColor: .primary(.p10),
+        font: .h3
+    )
+    private lazy var dotoriBarButtonItem = UIBarButtonItem(
+        customView: dotoriLabel
+    )
     private let timeHeaderView = TimeHeaderView()
     private let selfStudyApplicationCardView = ApplicationCardView(
         title: L10n.Home.selfStudyApplyTitle,

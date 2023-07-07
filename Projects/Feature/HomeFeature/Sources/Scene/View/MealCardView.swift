@@ -1,9 +1,15 @@
-//
-//  MealCardView.swift
-//  HomeFeature
-//
-//  Created by 최형우 on 2023/07/07.
-//  Copyright © 2023 com.msg. All rights reserved.
-//
+import BaseFeature
+import Combine
+import CombineUtility
+import Configure
+import DesignSystem
+import Localization
+import MSGLayout
+import UIKit
 
-import Foundation
+final class MealCardView: BaseView {
+    private enum Metric {
+        static let padding: CGFloat = 16
+    }
+    private let mealTitleLabel = DotoriLabel("급식")
+}
