@@ -139,12 +139,22 @@ public extension Target {
                 defaultSettings: spec.settings?.defaultSettings ?? .recommended
             )
             $0.dependencies = spec.dependencies + [.SPM.Inject]
+            $0.infoPlist = spec.infoPlist ?? .extendingDefault(with: [
+                "UIMainStoryboardFile": "",
+                "UILaunchStoryboardName": "LaunchScreen",
+                "ENABLE_TESTS": .boolean(true),
+            ])
         }
         .toTarget(with: module.targetName(type: .demo), product: .app)
     }
 
     static func demo(module: ModulePaths, dependencies: [TargetDependency] = []) -> Target {
         TargetSpec(
+            infoPlist: .extendingDefault(with: [
+                "UIMainStoryboardFile": "",
+                "UILaunchStoryboardName": "LaunchScreen",
+                "ENABLE_TESTS": .boolean(true),
+            ]),
             sources: .demoSources,
             dependencies: dependencies + [.SPM.Inject],
             settings: .settings(
@@ -165,12 +175,22 @@ public extension Target {
                 defaultSettings: spec.settings?.defaultSettings ?? .recommended
             )
             $0.dependencies = spec.dependencies + [.SPM.Inject]
+            $0.infoPlist = spec.infoPlist ?? .extendingDefault(with: [
+                "UIMainStoryboardFile": "",
+                "UILaunchStoryboardName": "LaunchScreen",
+                "ENABLE_TESTS": .boolean(true),
+            ])
         }
         .toTarget(with: "\(name)Demo", product: .app)
     }
 
     static func demo(name: String, dependencies: [TargetDependency] = []) -> Target {
         TargetSpec(
+            infoPlist: .extendingDefault(with: [
+                "UIMainStoryboardFile": "",
+                "UILaunchStoryboardName": "LaunchScreen",
+                "ENABLE_TESTS": .boolean(true),
+            ]),
             sources: .demoSources,
             dependencies: dependencies + [.SPM.Inject],
             settings: .settings(
