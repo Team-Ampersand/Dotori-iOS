@@ -17,11 +17,17 @@ final class HomeViewController: BaseViewController<HomeStore> {
         applyText: L10n.Home.selfStudyApplyButtonTitle,
         maxApplyCount: 50
     )
+    private let massageApplicationCardView = ApplicationCardView(
+        title: L10n.Home.massageApplyTitle,
+        applyText: L10n.Home.massageApplyButtonTitle,
+        maxApplyCount: 50
+    )
 
     override func addView() {
         view.addSubviews {
             timeHeaderView
             selfStudyApplicationCardView
+            massageApplicationCardView
         }
     }
 
@@ -36,6 +42,11 @@ final class HomeViewController: BaseViewController<HomeStore> {
             selfStudyApplicationCardView.layout
                 .centerX(.toSuperview())
                 .top(.to(timeHeaderView).bottom, .equal(12))
+                .horizontal(.toSuperview(), .equal(20))
+
+            massageApplicationCardView.layout
+                .centerX(.toSuperview())
+                .top(.to(selfStudyApplicationCardView).bottom, .equal(12))
                 .horizontal(.toSuperview(), .equal(20))
         }
     }

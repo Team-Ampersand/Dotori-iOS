@@ -13,7 +13,7 @@ final class TimeHeaderView: BaseView {
     private let dotoriHomeIcon = DotoriIconView(size: .custom(.init(width: 110, height: 110)))
         .set(\.image, .Dotori.dotoriHomeLogo)
     private let timerLabel = UILabel()
-        .set(\.text, "오전 12: 59: 59")
+        .set(\.text, "AM 12: 59: 59")
         .set(\.font, .dotori(.h3))
         .set(\.textColor, .dotori(.sub(.white)))
 
