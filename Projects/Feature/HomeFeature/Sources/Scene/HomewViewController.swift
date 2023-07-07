@@ -11,10 +11,16 @@ final class HomeViewController: BaseViewController<HomeStore> {
         .set(\.font, .dotori(.h3))
     private lazy var dotoriBarButtonItem = UIBarButtonItem(customView: dotoriLabel)
     private let timeHeaderView = TimeHeaderView()
+    private let selfStudyApplicationCardView = ApplicationCardView(
+        title: "자습신청",
+        applyText: "자습신청",
+        maxApplyCount: 50
+    )
 
     override func addView() {
         view.addSubviews {
             timeHeaderView
+            selfStudyApplicationCardView
         }
     }
 
@@ -25,6 +31,11 @@ final class HomeViewController: BaseViewController<HomeStore> {
                 .top(.to(view.safeAreaLayoutGuide).top, .equal(8))
                 .horizontal(.toSuperview(), .equal(20))
                 .height(100)
+
+            selfStudyApplicationCardView.layout
+                .centerX(.toSuperview())
+                .top(.to(timeHeaderView).bottom, .equal(12))
+                .horizontal(.toSuperview(), .equal(20))
         }
     }
 
