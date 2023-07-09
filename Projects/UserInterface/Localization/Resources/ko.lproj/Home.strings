@@ -11,3 +11,7 @@
 "self_study_apply_button_title" = "자습신청";
 "massage_apply_title" = "안마의자";
 "massage_apply_button_title" = "안마신청";
+"breakfast" = "아침";
+"lunch" = "점심";
+"dinner" = "저녁";
+"meal_title" = "급식";

@@ -11,7 +11,7 @@ final class MealCardView: BaseView {
     private enum Metric {
         static let padding: CGFloat = 24
     }
-    private let mealTitleLabel = DotoriLabel("급식")
+    private let mealTitleLabel = DotoriLabel(L10n.Home.mealTitle)
     private let prevDateButton = DotoriIconButton(image: .Dotori.chevronLeft)
         .set(\.backgroundColor, .dotori(.neutral(.n50)))
         .then {
@@ -32,7 +32,7 @@ final class MealCardView: BaseView {
         currentDateLabel
         nextDateButton
     }
-    private let mealPartTimeSegmentedControl = MealPartTimeSegmentedControl(items: ["조식", "중식", "석식"])
+    private let mealPartTimeSegmentedControl = MealPartTimeSegmentedControl(items: MealPartTime.allCases.map(\.display))
         .set(\.selectedSegmentIndex, 0)
 
     override func addView() {

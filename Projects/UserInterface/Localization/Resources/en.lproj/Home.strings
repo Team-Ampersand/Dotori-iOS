@@ -11,3 +11,7 @@
 "self_study_apply_button_title" = "Apply SelfStudy";
 "massage_apply_title" = "Massage";
 "massage_apply_button_title" = "Apply Massage";
+"breakfast" = "breakfast";
+"lunch" = "lunch";
+"dinner" = "dinner";
+"meal_title" = "Meal";
