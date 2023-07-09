@@ -32,41 +32,20 @@ final class HomeViewController: BaseViewController<HomeStore> {
     )
     private let mealCardView = MealCardView()
 
-    override func addView() {
-        view.addSubviews(scrollView)
-        scrollView.addSubviews {
-            timeHeaderView
-            selfStudyApplicationCardView
-            massageApplicationCardView
-            mealCardView
-        }
-    }
-
     override func setLayout() {
-        MSGLayout.buildLayout {
-            scrollView.layout
-                .edges(.toSuperview())
+        MSGLayout.stackedScrollLayout(view) {
+            VStackView(spacing: 16) {
+                SpacerView(height: 8)
 
-            timeHeaderView.layout
-                .centerX(.toSuperview())
-                .top(.toSuperview(), .equal(8))
-                .horizontal(.toSuperview(), .equal(Metric.horizontalPadding))
+                timeHeaderView
 
-            selfStudyApplicationCardView.layout
-                .centerX(.toSuperview())
-                .top(.to(timeHeaderView).bottom, .equal(Metric.spacing))
-                .horizontal(.toSuperview(), .equal(Metric.horizontalPadding))
+                selfStudyApplicationCardView
 
-            massageApplicationCardView.layout
-                .centerX(.toSuperview())
-                .top(.to(selfStudyApplicationCardView).bottom, .equal(Metric.spacing))
-                .horizontal(.toSuperview(), .equal(Metric.horizontalPadding))
+                massageApplicationCardView
 
-            mealCardView.layout
-                .centerX(.toSuperview())
-                .top(.to(massageApplicationCardView).bottom, .equal(Metric.spacing))
-                .horizontal(.toSuperview(), .equal(Metric.horizontalPadding))
-                .bottom(.toSuperview(), .equal(-32))
+                mealCardView
+            }
+            .margin(.horizontal(20))
         }
     }
 
