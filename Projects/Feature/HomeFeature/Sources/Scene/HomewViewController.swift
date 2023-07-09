@@ -10,6 +10,7 @@ final class HomeViewController: BaseViewController<HomeStore> {
         static let horizontalPadding: CGFloat = 20
         static let spacing: CGFloat = 12
     }
+    private let scrollView = UIScrollView()
     private let dotoriLabel = DotoriLabel(
         "DOTORI",
         textColor: .primary(.p10),
@@ -32,7 +33,8 @@ final class HomeViewController: BaseViewController<HomeStore> {
     private let mealCardView = MealCardView()
 
     override func addView() {
-        view.addSubviews {
+        view.addSubviews(scrollView)
+        scrollView.addSubviews {
             timeHeaderView
             selfStudyApplicationCardView
             massageApplicationCardView
@@ -42,6 +44,9 @@ final class HomeViewController: BaseViewController<HomeStore> {
 
     override func setLayout() {
         MSGLayout.buildLayout {
+            scrollView.layout
+                .edges(.toSuperview())
+
             timeHeaderView.layout
                 .centerX(.toSuperview())
                 .top(.to(view.safeAreaLayoutGuide).top, .equal(8))
@@ -60,7 +65,9 @@ final class HomeViewController: BaseViewController<HomeStore> {
             mealCardView.layout
                 .centerX(.toSuperview())
                 .top(.to(massageApplicationCardView).bottom, .equal(Metric.spacing))
+                .height(250)
                 .horizontal(.toSuperview(), .equal(Metric.horizontalPadding))
+                .bottom(.toSuperview(), .equal(-32))
         }
     }
 

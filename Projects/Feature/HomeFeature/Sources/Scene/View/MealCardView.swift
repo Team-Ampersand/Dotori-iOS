@@ -32,7 +32,7 @@ final class MealCardView: BaseView {
         currentDateLabel
         nextDateButton
     }
-    private let mealPartTimeSegmentedControl = UISegmentedControl(items: ["조식", "중식", "석식"])
+    private let mealPartTimeSegmentedControl = MealPartTimeSegmentedControl(items: ["조식", "중식", "석식"])
         .set(\.selectedSegmentIndex, 0)
 
     override func addView() {
@@ -49,11 +49,8 @@ final class MealCardView: BaseView {
                 .top(.toSuperview(), .equal(Metric.padding))
                 .leading(.toSuperview(), .equal(Metric.padding))
 
-            prevDateButton.layout
-                .size(28)
-
-            nextDateButton.layout
-                .size(28)
+            [prevDateButton, nextDateButton]
+                .map { $0.layout.size(28) }
 
             dateStackView.layout
                 .top(.toSuperview(), .equal(Metric.padding))
