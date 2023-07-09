@@ -14,9 +14,7 @@ final class MealCardView: BaseView {
     private let mealTitleLabel = DotoriLabel(L10n.Home.mealTitle)
     private let prevDateButton = DotoriIconButton(image: .Dotori.chevronLeft)
         .set(\.backgroundColor, .dotori(.neutral(.n50)))
-        .then {
-            $0.layer.cornerRadius = 11
-        }
+        .set(\.cornerRadius, 11)
     private let currentDateLabel = DotoriLabel(
         "2021.08.25 (목)",
         textColor: .neutral(.n20),
