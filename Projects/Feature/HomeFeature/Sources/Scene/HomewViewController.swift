@@ -65,7 +65,6 @@ final class HomeViewController: BaseViewController<HomeStore> {
             mealCardView.layout
                 .centerX(.toSuperview())
                 .top(.to(massageApplicationCardView).bottom, .equal(Metric.spacing))
-                .height(250)
                 .horizontal(.toSuperview(), .equal(Metric.horizontalPadding))
                 .bottom(.toSuperview(), .equal(-32))
         }

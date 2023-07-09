@@ -24,9 +24,7 @@ final class MealCardView: BaseView {
     )
     private let nextDateButton = DotoriIconButton(image: .Dotori.chevronRight)
         .set(\.backgroundColor, .dotori(.neutral(.n50)))
-        .then {
-            $0.layer.cornerRadius = 11
-        }
+        .set(\.cornerRadius, 11)
     private lazy var dateStackView = HStackView(spacing: 8) {
         prevDateButton
         currentDateLabel
@@ -34,12 +32,16 @@ final class MealCardView: BaseView {
     }
     private let mealPartTimeSegmentedControl = MealPartTimeSegmentedControl(items: MealPartTime.allCases.map(\.display))
         .set(\.selectedSegmentIndex, 0)
+    private let mealContentContainer = UIView()
+        .set(\.backgroundColor, .dotori(.neutral(.n50)))
+        .set(\.cornerRadius, 16)
 
     override func addView() {
         self.addSubviews {
             mealTitleLabel
             dateStackView
             mealPartTimeSegmentedControl
+            mealContentContainer
         }
     }
 
@@ -60,6 +62,12 @@ final class MealCardView: BaseView {
                 .top(.to(dateStackView).bottom, .equal(16))
                 .height(55)
                 .horizontal(.toSuperview(), .equal(Metric.padding))
+
+            mealContentContainer.layout
+                .top(.to(mealPartTimeSegmentedControl).bottom, .equal(16))
+                .horizontal(.toSuperview(), .equal(Metric.padding))
+                .height(400)
+                .bottom(.toSuperview(), .equal(-Metric.padding))
         }
     }
 
