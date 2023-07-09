@@ -32,16 +32,14 @@ final class MealCardView: BaseView {
     }
     private let mealPartTimeSegmentedControl = MealPartTimeSegmentedControl(items: MealPartTime.allCases.map(\.display))
         .set(\.selectedSegmentIndex, 0)
-    private let mealContentContainer = UIView()
-        .set(\.backgroundColor, .dotori(.neutral(.n50)))
-        .set(\.cornerRadius, 16)
+    private let mealContentStackView = MealContentStackView()
 
     override func addView() {
         self.addSubviews {
             mealTitleLabel
             dateStackView
             mealPartTimeSegmentedControl
-            mealContentContainer
+            mealContentStackView
         }
     }
 
@@ -63,7 +61,7 @@ final class MealCardView: BaseView {
                 .height(55)
                 .horizontal(.toSuperview(), .equal(Metric.padding))
 
-            mealContentContainer.layout
+            mealContentStackView.layout
                 .top(.to(mealPartTimeSegmentedControl).bottom, .equal(16))
                 .horizontal(.toSuperview(), .equal(Metric.padding))
                 .height(400)
@@ -74,5 +72,9 @@ final class MealCardView: BaseView {
     override func configure() {
         self.backgroundColor = .dotori(.background(.card))
         self.layer.cornerRadius = 16
+    }
+
+    public func updateContent(meals: [String]) {
+        self.mealContentStackView.updateContent(meals: meals)
     }
 }
