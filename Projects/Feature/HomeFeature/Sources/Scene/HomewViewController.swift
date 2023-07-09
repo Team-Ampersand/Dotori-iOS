@@ -49,7 +49,7 @@ final class HomeViewController: BaseViewController<HomeStore> {
 
             timeHeaderView.layout
                 .centerX(.toSuperview())
-                .top(.to(view.safeAreaLayoutGuide).top, .equal(8))
+                .top(.toSuperview(), .equal(8))
                 .horizontal(.toSuperview(), .equal(Metric.horizontalPadding))
 
             selfStudyApplicationCardView.layout
