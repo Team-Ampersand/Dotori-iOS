@@ -19,6 +19,8 @@ final class HomeViewController: BaseViewController<HomeStore> {
     private lazy var dotoriBarButtonItem = UIBarButtonItem(
         customView: dotoriLabel
     )
+    private lazy var myInfoImageView = UIImageView(image: .Dotori.personCircle)
+    private lazy var myInfoBarButtonItem = UIBarButtonItem(customView: myInfoImageView)
     private let timeHeaderView = TimeHeaderView()
     private let selfStudyApplicationCardView = ApplicationCardView(
         title: L10n.Home.selfStudyApplyTitle,
@@ -51,5 +53,6 @@ final class HomeViewController: BaseViewController<HomeStore> {
 
     override func configureNavigation() {
         self.navigationItem.setLeftBarButton(dotoriBarButtonItem, animated: true)
+        self.navigationItem.setRightBarButton(myInfoBarButtonItem, animated: true)
     }
 }
