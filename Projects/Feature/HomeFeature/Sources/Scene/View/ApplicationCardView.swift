@@ -24,7 +24,8 @@ final class ApplicationCardView: BaseView {
         textColor: .neutral(.n20),
         font: .caption
     )
-    private let applicationStatusLabel = DotoriLabel("0/0", font: .h2)
+//    private let applicationStatusLabel = DotoriLabel(font: .h2)
+    private let applicationStatusLabel = DotoriLabel(font: .h2)
     private let applicationProgressView = UIProgressView()
     private let applyButton = DotoriButton()
 
@@ -91,6 +92,11 @@ final class ApplicationCardView: BaseView {
         super.layoutSubviews()
         configProgressViewCornerRadius()
     }
+
+    func updateApplyCount(current: Int, max: Int) {
+        self.applicationStatusLabel.pushTransition(0.4)
+        self.applicationStatusLabel.text = "\(current)/\(max)"
+    }
 }
 
 extension ApplicationCardView: ApplicationCardViewActionProtocol {
@@ -110,5 +116,16 @@ private extension ApplicationCardView {
         maskLayer.frame = applicationProgressView.bounds
         maskLayer.path = maskLayerPath.cgPath
         applicationProgressView.layer.mask = maskLayer
+    }
+}
+
+private extension UILabel {
+    func pushTransition(_ duration: CFTimeInterval) {
+        let animation: CATransition = CATransition()
+        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        animation.type = .push
+        animation.subtype = .fromTop
+        animation.duration = duration
+        self.layer.add(animation, forKey: kCATransition)
     }
 }
