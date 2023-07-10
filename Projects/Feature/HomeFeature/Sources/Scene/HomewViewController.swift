@@ -1,4 +1,5 @@
 import BaseFeature
+import CombineUtility
 import Configure
 import DesignSystem
 import Localization
@@ -54,5 +55,12 @@ final class HomeViewController: BaseViewController<HomeStore> {
     override func configureNavigation() {
         self.navigationItem.setLeftBarButton(dotoriBarButtonItem, animated: true)
         self.navigationItem.setRightBarButton(myInfoBarButtonItem, animated: true)
+    }
+
+    override func bindAction() {
+        myInfoImageView.tapGesturePublisher()
+            .map { _ in Store.Action.myInfoBarButtonDidTap }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
     }
 }
