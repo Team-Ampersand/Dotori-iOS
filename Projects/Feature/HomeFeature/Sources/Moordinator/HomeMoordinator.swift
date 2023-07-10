@@ -32,7 +32,7 @@ private extension HomeMoordinator {
         let homeStore = HomeStore()
         let homeViewController = HomeViewController(store: homeStore)
         self.rootVC.setViewControllers([homeViewController], animated: true)
-        return .none
+        return .one(.contribute(withNextPresentable: homeViewController, withNextRouter: homeStore))
     }
 
     func presentToAlert(
@@ -41,7 +41,7 @@ private extension HomeMoordinator {
         style: UIAlertController.Style,
         actions: [UIAlertAction]
     ) -> MoordinatorContributors {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: style)
         if !actions.isEmpty {
             actions.forEach(alert.addAction(_:))
         } else {
@@ -51,3 +51,4 @@ private extension HomeMoordinator {
         return .none
     }
 }
+

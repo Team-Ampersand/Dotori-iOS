@@ -48,7 +48,7 @@ final class HomeViewController: BaseViewController<HomeStore> {
 
                 mealCardView
             }
-            .margin(.horizontal(20))
+            .margin(.insets(top: 0, left: 20, bottom: 32, right: 20))
         }
     }
 

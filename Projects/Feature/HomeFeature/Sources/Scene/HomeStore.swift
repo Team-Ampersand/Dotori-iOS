@@ -46,7 +46,8 @@ private extension HomeStore {
             .init(title: "프로필 수정", style: .default) { _ in },
             .init(title: "규정위반 내역", style: .default) { _ in },
             .init(title: "비밀번호 변경", style: .default) { _ in },
-            .init(title: "로그아웃", style: .default) { _ in }
+            .init(title: "로그아웃", style: .default) { _ in },
+            .init(title: "취소", style: .cancel)
         ])
         self.route.send(alertPath)
         return .none

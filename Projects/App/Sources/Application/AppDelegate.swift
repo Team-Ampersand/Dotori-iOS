@@ -6,6 +6,7 @@ import KeyValueStore
 import MainTabFeature
 import MassageFeature
 import MusicFeature
+import Networking
 import NoticeFeature
 import RenewalPasswordFeature
 import RootFeature
@@ -28,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         assembler = Assembler([
             JwtStoreAssembly(),
             KeyValueStoreAssembly(),
+            NetworkingAssembly(),
             HomeAssembly(),
             NoticeAssembly(),
             SelfStudyAssembly(),
