@@ -47,8 +47,10 @@ final class HomeViewController: BaseViewController<HomeStore> {
                 massageApplicationCardView
 
                 mealCardView
+
+                SpacerView(height: 32)
             }
-            .margin(.insets(top: 0, left: 20, bottom: 32, right: 20))
+            .margin(.horizontal(20))
         }
     }
 
