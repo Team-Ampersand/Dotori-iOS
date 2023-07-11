@@ -12,14 +12,14 @@ final class HomeViewController: BaseViewController<HomeStore> {
         static let spacing: CGFloat = 12
     }
     private let scrollView = UIScrollView()
-    private let dotoriLabel = DotoriLabel(
-        "DOTORI",
-        textColor: .primary(.p10),
-        font: .h3
-    )
-    private lazy var dotoriBarButtonItem = UIBarButtonItem(
-        customView: dotoriLabel
-    )
+    private lazy var dotoriBarButtonItem = UIBarButtonItem(title: "DOTORI", style: .done, target: nil, action: nil)
+        .set(\.isEnabled, false)
+        .then {
+            $0.setTitleTextAttributes([
+                .font: UIFont.dotori(.h3),
+                .foregroundColor: UIColor.dotori(.primary(.p10))
+            ], for: .disabled)
+        }
     private lazy var myInfoImageView = UIImageView(image: .Dotori.personCircle)
     private lazy var myInfoBarButtonItem = UIBarButtonItem(customView: myInfoImageView)
     private let timeHeaderView = TimeHeaderView()
