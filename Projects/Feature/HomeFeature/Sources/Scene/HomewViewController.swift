@@ -61,7 +61,7 @@ final class HomeViewController: BaseViewController<HomeStore> {
 
     override func bindAction() {
         myInfoImageView.tapGesturePublisher()
-            .map { _ in Store.Action.myInfoBarButtonDidTap }
+            .map { _ in Store.Action.myInfoButtonDidTap }
             .sink(receiveValue: store.send(_:))
             .store(in: &subscription)
     }

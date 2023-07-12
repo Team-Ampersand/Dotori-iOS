@@ -16,7 +16,7 @@ final class HomeStore: BaseStore {
 
     struct State: Equatable {}
     enum Action: Equatable {
-        case myInfoBarButtonDidTap
+        case myInfoButtonDidTap
     }
     enum Mutation {}
 }
@@ -24,8 +24,8 @@ final class HomeStore: BaseStore {
 extension HomeStore {
     func mutate(state: State, action: Action) -> SideEffect<Mutation, Never> {
         switch action {
-        case .myInfoBarButtonDidTap:
-            return myInfoBarButtonDidTap()
+        case .myInfoButtonDidTap:
+            return myInfoButtonDidTap()
 
         default:
             return .none
@@ -41,7 +41,7 @@ extension HomeStore {
 }
 
 private extension HomeStore {
-    func myInfoBarButtonDidTap() -> SideEffect<Mutation, Never> {
+    func myInfoButtonDidTap() -> SideEffect<Mutation, Never> {
         let alertPath = DotoriRoutePath.alert(style: .actionSheet, actions: [
             .init(title: "프로필 수정", style: .default) { _ in },
             .init(title: "규정위반 내역", style: .default) { _ in },
