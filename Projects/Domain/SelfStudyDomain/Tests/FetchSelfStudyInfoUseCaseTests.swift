@@ -17,7 +17,7 @@ final class FetchSelfStudyInfoUseCaseTests: XCTestCase {
     }
 
     func testFetchSelfStudyInfo() async throws {
-        let expected = SelfStudyInfoEntity(count: 10, limit: 50, selfStudyStatus: .can)
+        let expected = SelfStudyInfoModel(count: 10, limit: 50, selfStudyStatus: .can)
         selfStudyRepository.fetchSelfStudyInfoReturn = expected
 
         let actual = try await sut()
