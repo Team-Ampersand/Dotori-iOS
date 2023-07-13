@@ -14,7 +14,8 @@ let project = Project.module(
             .domain(target: .MassageDomain, type: .interface)
         ]),
         .tests(module: .domain(.MassageDomain), dependencies: [
-            .domain(target: .MassageDomain)
+            .domain(target: .MassageDomain),
+            .domain(target: .MassageDomain, type: .testing)
         ])
     ]
 )

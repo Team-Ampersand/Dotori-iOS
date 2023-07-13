@@ -14,7 +14,8 @@ let project = Project.module(
             .domain(target: .SelfStudyDomain, type: .interface)
         ]),
         .tests(module: .domain(.SelfStudyDomain), dependencies: [
-            .domain(target: .SelfStudyDomain)
+            .domain(target: .SelfStudyDomain),
+            .domain(target: .SelfStudyDomain, type: .testing)
         ])
     ]
 )

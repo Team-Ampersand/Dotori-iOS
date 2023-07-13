@@ -1,9 +1,11 @@
+import MassageDomainInterface
 import XCTest
-@testable import MassageDomainInterface
+@testable import MassageDomain
+@testable import MassageDomainTesting
 
 final class MassageRepositoryTests: XCTestCase {
     var remoteMassageDataSource: RemoteMassageDataSourceSpy!
-    var sut: MassageRepositoryImpl
+    var sut: MassageRepositoryImpl!
 
     override func setUp() {
         remoteMassageDataSource = .init()
@@ -19,7 +21,7 @@ final class MassageRepositoryTests: XCTestCase {
         let expected = MassageInfoModel(count: 10, limit: 50, massageStatus: .can)
         remoteMassageDataSource.fetchMassageInfoReturn = expected
 
-        let actual = try await sut()
+        let actual = try await sut.fetchMassageInfo()
 
         XCTAssertEqual(remoteMassageDataSource.fetchMassageInfoCallCount, 1)
         XCTAssertEqual(actual, expected)

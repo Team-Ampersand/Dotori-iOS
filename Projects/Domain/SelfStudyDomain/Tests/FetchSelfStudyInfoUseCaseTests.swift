@@ -1,5 +1,6 @@
 import SelfStudyDomainInterface
 import XCTest
+@testable import SelfStudyDomainTesting
 @testable import SelfStudyDomain
 
 final class FetchSelfStudyInfoUseCaseTests: XCTestCase {

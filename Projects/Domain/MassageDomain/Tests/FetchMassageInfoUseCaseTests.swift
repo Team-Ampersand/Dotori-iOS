@@ -1,6 +1,7 @@
 import MassageDomainInterface
 import XCTest
 @testable import MassageDomain
+@testable import MassageDomainTesting
 
 final class FetchMassageInfoUseCaseTests: XCTestCase {
     var massageRepository: MassageRepositorySpy!
