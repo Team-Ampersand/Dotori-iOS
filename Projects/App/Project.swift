@@ -37,6 +37,7 @@ let targets: [Target] = [
             .domain(target: .AuthDomain),
             .domain(target: .UserDomain),
             .domain(target: .SelfStudyDomain),
+            .domain(target: .MassageDomain),
             .core(target: .JwtStore),
             .core(target: .KeyValueStore),
             .core(target: .Networking),
