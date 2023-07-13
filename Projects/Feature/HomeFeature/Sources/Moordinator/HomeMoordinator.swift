@@ -2,10 +2,16 @@ import AuthDomainInterface
 import BaseFeature
 import DWebKit
 import Moordinator
+import TimerInterface
 import UIKit
 
 final class HomeMoordinator: Moordinator {
     private let rootVC = UINavigationController()
+    private let repeatableTimer: any RepeatableTimer
+
+    init(repeatableTimer: any RepeatableTimer) {
+        self.repeatableTimer = repeatableTimer
+    }
 
     var root: Presentable {
         rootVC
@@ -29,7 +35,7 @@ final class HomeMoordinator: Moordinator {
 
 private extension HomeMoordinator {
     func coordinateToHome() -> MoordinatorContributors {
-        let homeStore = HomeStore()
+        let homeStore = HomeStore(repeatableTimer: repeatableTimer)
         let homeViewController = HomeViewController(store: homeStore)
         self.rootVC.setViewControllers([homeViewController], animated: true)
         return .one(.contribute(withNextPresentable: homeViewController, withNextRouter: homeStore))

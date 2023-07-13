@@ -22,7 +22,8 @@ let project = Project.module(
         .demo(
             module: .feature(.HomeFeature),
             dependencies: [
-                .feature(target: .HomeFeature)
+                .feature(target: .HomeFeature),
+                .core(target: .Timer, type: .testing)
             ]
         )
     ]

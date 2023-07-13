@@ -1,5 +1,6 @@
 import BaseFeature
 import Configure
+import DateUtility
 import DesignSystem
 import Localization
 import MSGLayout
@@ -18,7 +19,7 @@ final class TimeHeaderView: BaseView {
         size: .custom(.init(width: 110, height: 110)),
         image: .Dotori.dotoriHomeLogo
     )
-    private let timerLabel = DotoriLabel("AM 12: 59: 59", textColor: .sub(.white), font: .h3)
+    private let timerLabel = DotoriLabel("AM 00: 00: 00", textColor: .sub(.white), font: .h3)
 
     override func addView() {
         self.addSubviews {
@@ -52,6 +53,10 @@ final class TimeHeaderView: BaseView {
     override func layoutSubviews() {
         super.layoutSubviews()
         configureGradient()
+    }
+
+    public func updateTime(time: Date) {
+        timerLabel.text = time.toStringWithCustomFormat("a HH:mm:ss")
     }
 }
 

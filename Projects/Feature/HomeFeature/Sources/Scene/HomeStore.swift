@@ -3,16 +3,19 @@ import Combine
 import Foundation
 import Moordinator
 import Store
+import TimerInterface
 
 final class HomeStore: BaseStore {
     var route: PassthroughSubject<RoutePath, Never> = .init()
     var subscription: Set<AnyCancellable> = .init()
     var initialState: State
     var stateSubject: CurrentValueSubject<State, Never>
+    private let repeatableTimer: any RepeatableTimer
 
-    init() {
+    init(repeatableTimer: any RepeatableTimer) {
         self.initialState = .init()
         self.stateSubject = .init(initialState)
+        self.repeatableTimer = repeatableTimer
     }
 
     struct State: Equatable {
@@ -31,8 +34,7 @@ extension HomeStore {
     func mutate(state: State, action: Action) -> SideEffect<Mutation, Never> {
         switch action {
         case .viewDidLoad:
-            return Timer.publish(every: 1, on: .main, in: .common)
-                .autoconnect()
+            return repeatableTimer.repeatPublisher(every: 1)
                 .map { Mutation.updateCurrentTime($0) }
                 .eraseToSideEffect()
 

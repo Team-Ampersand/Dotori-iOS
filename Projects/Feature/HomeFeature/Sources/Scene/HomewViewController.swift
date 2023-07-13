@@ -60,9 +60,23 @@ final class HomeViewController: BaseViewController<HomeStore> {
     }
 
     override func bindAction() {
+        viewDidLoadPublisher
+            .map { Store.Action.viewDidLoad }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+
         myInfoImageView.tapGesturePublisher()
             .map { _ in Store.Action.myInfoButtonDidTap }
             .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+    }
+
+    override func bindState() {
+        let sharedState = store.state.share()
+
+        sharedState.receive(on: DispatchQueue.main)
+            .map(\.currentTime)
+            .sink(receiveValue: timeHeaderView.updateTime(time:))
             .store(in: &subscription)
     }
 }

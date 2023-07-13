@@ -5,7 +5,7 @@ import TimerInterface
 public final class TimerAssembly: Assembly {
     public init() {}
     public func assemble(container: Container) {
-        container.register((any RepeatableTimer).self) { _ in
+        container.register(RepeatableTimer.self) { _ in
             RepeatableTimerImpl()
         }
     }
