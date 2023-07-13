@@ -2,7 +2,7 @@ import Combine
 import Foundation
 import TimerInterface
 
-struct RepeatableTimerImpl: RepeatableTimer {
+final class RepeatableTimerImpl: RepeatableTimer {
     func repeatPublisher(
         every interval: TimeInterval,
         on runLoop: RunLoop,

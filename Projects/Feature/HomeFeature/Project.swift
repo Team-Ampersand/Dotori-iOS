@@ -16,7 +16,8 @@ let project = Project.module(
         .tests(
             module: .feature(.HomeFeature),
             dependencies: [
-                .feature(target: .HomeFeature)
+                .feature(target: .HomeFeature),
+                .core(target: .Timer, type: .testing)
             ]
         ),
         .demo(
