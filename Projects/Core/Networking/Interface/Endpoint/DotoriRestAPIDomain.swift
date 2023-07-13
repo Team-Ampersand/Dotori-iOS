@@ -6,4 +6,5 @@ import Foundation
  */
 public enum DotoriRestAPIDomain: String {
     case auth
+    case selfStudy = "<role>/self-study"
 }

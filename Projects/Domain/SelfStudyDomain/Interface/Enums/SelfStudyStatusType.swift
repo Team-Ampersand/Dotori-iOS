@@ -1,6 +1,6 @@
 import Foundation
 
-public enum SelfStudyStatusType: String {
+public enum SelfStudyStatusType: String, Codable {
     case can = "CAN"
     case applied = "APPLIED"
     case cant = "CANT"

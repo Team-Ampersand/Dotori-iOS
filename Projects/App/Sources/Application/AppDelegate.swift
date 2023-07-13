@@ -43,7 +43,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             RenewalPasswordAssembly(),
             RootAssembly(),
             AuthDomainAssembly(),
-            UserDomainAssembly()
+            UserDomainAssembly(),
+            SelfStudyAssembly()
         ], container: AppDelegate.container)
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.enableAutoToolbar = true
