@@ -36,6 +36,7 @@ let targets: [Target] = [
             .feature(target: .RenewalPasswordFeature),
             .domain(target: .AuthDomain),
             .domain(target: .UserDomain),
+            .domain(target: .SelfStudyDomain),
             .core(target: .JwtStore),
             .core(target: .KeyValueStore),
             .core(target: .Networking),

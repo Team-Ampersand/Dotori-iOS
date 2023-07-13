@@ -2,9 +2,19 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 import DependencyPlugin
 
-let project = Project.makeModule(
+let project = Project.module(
     name: ModulePaths.Domain.SelfStudyDomain.rawValue,
-    product: .staticLibrary,
-    targets: [.interface, .testing, .unitTest],
-    internalDependencies: []
+    targets: [
+        .interface(module: .domain(.SelfStudyDomain)),
+        .implements(module: .domain(.SelfStudyDomain), dependencies: [
+            .domain(target: .SelfStudyDomain, type: .interface),
+            .domain(target: .BaseDomain)
+        ]),
+        .testing(module: .domain(.SelfStudyDomain), dependencies: [
+            .domain(target: .SelfStudyDomain, type: .interface)
+        ]),
+        .tests(module: .domain(.SelfStudyDomain), dependencies: [
+            .domain(target: .SelfStudyDomain)
+        ])
+    ]
 )
