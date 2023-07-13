@@ -41,6 +41,7 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum Domain: String, MicroTargetPathConvertable {
+        case SelfStudyDomain
         case UserDomain
         case AuthDomain
         case BaseDomain
