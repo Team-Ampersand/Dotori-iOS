@@ -14,6 +14,7 @@ import SelfStudyFeature
 import SigninFeature
 import SignupFeature
 import Swinject
+import Timer
 import UIKit
 import UserDomain
 
@@ -30,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             JwtStoreAssembly(),
             KeyValueStoreAssembly(),
             NetworkingAssembly(),
+            TimerAssembly(),
             HomeAssembly(),
             NoticeAssembly(),
             SelfStudyAssembly(),
