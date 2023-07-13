@@ -22,8 +22,8 @@ public final class NetworkingAssembly: Assembly {
             DotoriRoleInterceptor(keyValueStore: resolver.resolve(KeyValueStore.self)!)
         }
 
-        container.register((any Networking<AuthEndpoint>).self) { [weak self] resolver in
-            let client = EmdpointClient<AuthEndpoint>(
+        container.register(Networking.self) { [weak self] resolver in
+            let client = EmdpointClient<AnyEndpoint>(
                 interceptors: self?.makeInterceptors(container: container, resolver: resolver) ?? []
             )
             return NetworkingImpl(client: client)
