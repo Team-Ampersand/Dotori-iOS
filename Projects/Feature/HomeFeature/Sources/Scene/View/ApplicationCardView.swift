@@ -24,9 +24,10 @@ final class ApplicationCardView: BaseView {
         textColor: .neutral(.n20),
         font: .caption
     )
-//    private let applicationStatusLabel = DotoriLabel(font: .h2)
     private let applicationStatusLabel = DotoriLabel(font: .h2)
     private let applicationProgressView = UIProgressView()
+        .set(\.cornerRadius, 8)
+        .set(\.clipsToBounds, true)
     private let applyButton = DotoriButton()
 
     init(
@@ -90,11 +91,16 @@ final class ApplicationCardView: BaseView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        configProgressViewCornerRadius()
     }
 
     func updateApplyCount(current: Int, max: Int) {
-        self.applicationStatusLabel.pushTransition(0.4)
+        let newProgress = Float(current) / Float(max)
+
+        UIView.animate(withDuration: 0.4) {
+            self.applicationProgressView.setProgress(newProgress, animated: true)
+            self.applicationProgressView.progressTintColor = self.toBarColor(current: current, max: max)
+        }
+
         self.applicationStatusLabel.text = "\(current)/\(max)"
     }
 }
@@ -110,22 +116,14 @@ extension ApplicationCardView: ApplicationCardViewActionProtocol {
 }
 
 private extension ApplicationCardView {
-    func configProgressViewCornerRadius() {
-        let maskLayerPath = UIBezierPath(roundedRect: applicationProgressView.bounds, cornerRadius: 4)
-        let maskLayer = CAShapeLayer()
-        maskLayer.frame = applicationProgressView.bounds
-        maskLayer.path = maskLayerPath.cgPath
-        applicationProgressView.layer.mask = maskLayer
-    }
-}
-
-private extension UILabel {
-    func pushTransition(_ duration: CFTimeInterval) {
-        let animation: CATransition = CATransition()
-        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        animation.type = .push
-        animation.subtype = .fromTop
-        animation.duration = duration
-        self.layer.add(animation, forKey: kCATransition)
+    func toBarColor(current: Int, max: Int) -> UIColor {
+        let progress = Float(current) / Float(max)
+        if progress < 0.5 {
+            return .dotori(.sub(.green))
+        } else if progress < 0.8 {
+            return .dotori(.sub(.yellow))
+        } else {
+            return .dotori(.sub(.red))
+        }
     }
 }
