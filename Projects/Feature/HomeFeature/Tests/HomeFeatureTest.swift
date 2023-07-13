@@ -4,18 +4,22 @@ import XCTest
 @testable import HomeFeature
 
 final class HomeFeatureTests: XCTestCase {
-    var store: HomeStore!
-    var subscription: Set<AnyCancellable> = []
+    var sut: HomeStore!
+    var subscription: Set<AnyCancellable>!
 
     override func setUp() {
-        store = .init()
+        sut = .init()
+        subscription = .init()
     }
 
-    override func tearDown() {}
+    override func tearDown() {
+        sut = nil
+        subscription = nil
+    }
 
     func testMyInfoBarButtonDidTap() {
         let expectation = XCTestExpectation(description: "Route set to alert")
-        store.route.sink { route in
+        sut.route.sink { route in
             guard case DotoriRoutePath.alert = route else {
                 XCTFail("route not sent 'alert'")
                 return
@@ -24,7 +28,7 @@ final class HomeFeatureTests: XCTestCase {
         }
         .store(in: &subscription)
 
-        store.send(.myInfoButtonDidTap)
+        sut.send(.myInfoButtonDidTap)
 
         wait(for: [expectation], timeout: 1)
     }

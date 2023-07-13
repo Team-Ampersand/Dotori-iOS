@@ -1,7 +1,8 @@
 import BaseFeature
 import Combine
-import Store
+import Foundation
 import Moordinator
+import Store
 
 final class HomeStore: BaseStore {
     var route: PassthroughSubject<RoutePath, Never> = .init()
@@ -14,16 +15,27 @@ final class HomeStore: BaseStore {
         self.stateSubject = .init(initialState)
     }
 
-    struct State: Equatable {}
+    struct State: Equatable {
+        var currentTime: Date = .init()
+    }
     enum Action: Equatable {
+        case viewDidLoad
         case myInfoButtonDidTap
     }
-    enum Mutation {}
+    enum Mutation {
+        case updateCurrentTime(Date)
+    }
 }
 
 extension HomeStore {
     func mutate(state: State, action: Action) -> SideEffect<Mutation, Never> {
         switch action {
+        case .viewDidLoad:
+            return Timer.publish(every: 1, on: .main, in: .common)
+                .autoconnect()
+                .map { Mutation.updateCurrentTime($0) }
+                .eraseToSideEffect()
+
         case .myInfoButtonDidTap:
             return myInfoButtonDidTap()
 
@@ -36,6 +48,12 @@ extension HomeStore {
 extension HomeStore {
     func reduce(state: State, mutate: Mutation) -> State {
         var newState = state
+
+        switch mutate {
+        case let .updateCurrentTime(date):
+            newState.currentTime = date
+        }
+
         return newState
     }
 }
