@@ -4,12 +4,14 @@ import IQKeyboardManagerSwift
 import JwtStore
 import KeyValueStore
 import MainTabFeature
+import MassageDomain
 import MassageFeature
 import MusicFeature
 import Networking
 import NoticeFeature
 import RenewalPasswordFeature
 import RootFeature
+import SelfStudyDomain
 import SelfStudyFeature
 import SigninFeature
 import SignupFeature
@@ -44,7 +46,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             RootAssembly(),
             AuthDomainAssembly(),
             UserDomainAssembly(),
-            SelfStudyAssembly()
+            SelfStudyDomainAssembly(),
+            MassageDomainAssembly()
         ], container: AppDelegate.container)
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.enableAutoToolbar = true
