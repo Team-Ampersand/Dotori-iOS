@@ -49,6 +49,7 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum Core: String, MicroTargetPathConvertable {
+        case Timer
         case Networking
         case Database
         case KeyValueStore
