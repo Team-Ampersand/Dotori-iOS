@@ -5,6 +5,7 @@ let dependencies = Dependencies(
     carthage: nil,
     swiftPackageManager: SwiftPackageManagerDependencies(
         [
+            .remote(url: "https://github.com/baekteun/NeiSwift.git", requirement: .exact("2.0.0")),
             .remote(url: "https://github.com/krzysztofzablocki/Inject.git", requirement: .exact("1.2.3")),
             .remote(url: "https://github.com/groue/GRDB.swift.git", requirement: .exact("6.15.1")),
             .remote(url: "https://github.com/hackiftekhar/IQKeyboardManager.git", requirement: .exact("6.5.11")),
