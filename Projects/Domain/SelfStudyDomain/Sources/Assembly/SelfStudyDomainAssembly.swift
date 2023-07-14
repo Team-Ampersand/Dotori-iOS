@@ -2,7 +2,7 @@ import NetworkingInterface
 import SelfStudyDomainInterface
 import Swinject
 
-public final class SelfStudyAssembly: Assembly {
+public final class SelfStudyDomainAssembly: Assembly {
     public init() {}
     public func assemble(container: Container) {
         container.register(RemoteSelfStudyDataSource.self) { resolver in

@@ -1,6 +1,7 @@
 import SelfStudyDomainInterface
 import XCTest
 @testable import SelfStudyDomain
+@testable import SelfStudyDomainTesting
 
 final class SelfStudyRepositoryTests: XCTestCase {
     var remoteSelfStudyDataSource: RemoteSelfStudyDataSourceSpy!
