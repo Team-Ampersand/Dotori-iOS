@@ -1,3 +1,4 @@
+import CombineMiniature
 import Foundation
 import MealDomainInterface
 
@@ -8,7 +9,7 @@ struct FetchMealInfoUseCaseImpl: FetchMealInfoUseCase {
         self.mealRepository = mealRepository
     }
 
-    func callAsFunction(date: Date) async throws -> [MealInfoModel] {
-        try await mealRepository.fetchMealInfo(date: date)
+    func callAsFunction(date: Date) -> CombineMiniature<[MealInfoModel]> {
+        mealRepository.fetchMealInfo(date: date)
     }
 }

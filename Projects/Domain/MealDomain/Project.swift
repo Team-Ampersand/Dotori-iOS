@@ -27,6 +27,9 @@ let project = Project.module(
                         "NEIS_API_KEY": .string("$(NEIS_API_KEY)")
                     ]
                 ),
+                dependencies: [
+                    .SPM.CombineMiniature
+                ],
                 settings: .settings(
                     base: env.baseSetting
                         .merging(.allLoadLDFlages),
@@ -38,9 +41,10 @@ let project = Project.module(
         .implements(
             module: .domain(.MealDomain),
             dependencies: [
-                .SPM.NeiSwift,
+                .SPM.AsyncNeiSwift,
                 .domain(target: .MealDomain, type: .interface),
-                .domain(target: .BaseDomain)
+                .domain(target: .BaseDomain),
+                .core(target: .Database, type: .interface)
             ]
         ),
         .testing(module: .domain(.MealDomain), dependencies: [
