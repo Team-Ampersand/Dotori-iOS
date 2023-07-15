@@ -1,4 +1,5 @@
 import AuthDomain
+import Database
 import HomeFeature
 import IQKeyboardManagerSwift
 import JwtStore
@@ -6,6 +7,7 @@ import KeyValueStore
 import MainTabFeature
 import MassageDomain
 import MassageFeature
+import MealDomain
 import MusicFeature
 import Networking
 import NoticeFeature
@@ -34,6 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             KeyValueStoreAssembly(),
             NetworkingAssembly(),
             TimerAssembly(),
+            DatabaseAssembly(),
             HomeAssembly(),
             NoticeAssembly(),
             SelfStudyAssembly(),
@@ -47,7 +50,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             AuthDomainAssembly(),
             UserDomainAssembly(),
             SelfStudyDomainAssembly(),
-            MassageDomainAssembly()
+            MassageDomainAssembly(),
+            MealDomainAssembly()
         ], container: AppDelegate.container)
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.enableAutoToolbar = true

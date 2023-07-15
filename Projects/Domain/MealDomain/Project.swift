@@ -1,11 +1,10 @@
-import ConfigurationPlugin
 import DependencyPlugin
 import EnvironmentPlugin
 import Foundation
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let name = ModulePaths.Core.Networking.rawValue
+let name = ModulePaths.Domain.MealDomain.rawValue
 
 let isCI = (ProcessInfo.processInfo.environment["TUIST_CI"] ?? "0") == "1" ? true : false
 
@@ -21,15 +20,15 @@ let project = Project.module(
     name: name,
     targets: [
         .interface(
-            module: .core(.Networking),
+            module: .domain(.MealDomain),
             spec: .init(
                 infoPlist: .extendingDefault(
                     with: [
-                        "BASE_URL": .string("$(BASE_URL)")
+                        "NEIS_API_KEY": .string("$(NEIS_API_KEY)")
                     ]
                 ),
                 dependencies: [
-                    .SPM.Emdpoint
+                    .SPM.CombineMiniature
                 ],
                 settings: .settings(
                     base: env.baseSetting
@@ -40,19 +39,20 @@ let project = Project.module(
             )
         ),
         .implements(
-            module: .core(.Networking),
+            module: .domain(.MealDomain),
             dependencies: [
-                .core(target: .Networking, type: .interface),
-                .core(target: .JwtStore, type: .interface),
-                .core(target: .KeyValueStore, type: .interface),
-                .shared(target: .GlobalThirdPartyLibrary)
+                .SPM.AsyncNeiSwift,
+                .domain(target: .MealDomain, type: .interface),
+                .domain(target: .BaseDomain),
+                .core(target: .Database, type: .interface)
             ]
         ),
-        .testing(module: .core(.Networking), dependencies: [
-            .core(target: .Networking, type: .interface)
+        .testing(module: .domain(.MealDomain), dependencies: [
+            .domain(target: .MealDomain, type: .interface)
         ]),
-        .tests(module: .core(.Networking), dependencies: [
-            .core(target: .Networking)
+        .tests(module: .domain(.MealDomain), dependencies: [
+            .domain(target: .MealDomain),
+            .domain(target: .MealDomain, type: .testing)
         ])
     ]
 )
