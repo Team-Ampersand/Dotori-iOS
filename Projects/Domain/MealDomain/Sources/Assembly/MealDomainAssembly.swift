@@ -31,6 +31,5 @@ public final class MealDomainAssembly: Assembly {
         container.register(FetchMealInfoUseCase.self) { resolver in
             FetchMealInfoUseCaseImpl(mealRepository: resolver.resolve(MealRepository.self)!)
         }
-        .inObjectScope(.container)
     }
 }
