@@ -22,9 +22,26 @@ final class FetchMealInfoUseCaseTests: XCTestCase {
         let expected = [MealInfoEntity(meals: ["밥"], mealType: .breakfast)]
         mealRepository.fetchMealInfoReturn = expected
 
-        let actual = try await fetchMealInfoUseCase(date: .init())
+        let fetchMealInfoMiniature = fetchMealInfoUseCase(date: .init())
+
+        var publishCount = 0
+        for try await status in fetchMealInfoMiniature.toAnyPublisher().values {
+            switch status {
+            case let .loading(local):
+                XCTAssertEqual(local, nil)
+                XCTAssertEqual(publishCount, 0)
+                publishCount += 1
+
+            case let .completed(remote):
+                XCTAssertEqual(remote, expected)
+                XCTAssertEqual(publishCount, 1)
+                publishCount += 1
+
+            default:
+                XCTFail("Unexpected enum")
+            }
+        }
 
         XCTAssertEqual(mealRepository.fetchMealInfoCallCount, 1)
-        XCTAssertEqual(actual, expected)
     }
 }
