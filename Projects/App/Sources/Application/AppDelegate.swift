@@ -1,4 +1,5 @@
 import AuthDomain
+import Database
 import HomeFeature
 import IQKeyboardManagerSwift
 import JwtStore
@@ -35,6 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             KeyValueStoreAssembly(),
             NetworkingAssembly(),
             TimerAssembly(),
+            DatabaseAssembly(),
             HomeAssembly(),
             NoticeAssembly(),
             SelfStudyAssembly(),

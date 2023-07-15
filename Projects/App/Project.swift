@@ -42,6 +42,7 @@ let targets: [Target] = [
             .core(target: .JwtStore),
             .core(target: .KeyValueStore),
             .core(target: .Networking),
+            .core(target: .Database),
             .core(target: .Timer)
         ],
         settings: .settings(base: env.baseSetting)
