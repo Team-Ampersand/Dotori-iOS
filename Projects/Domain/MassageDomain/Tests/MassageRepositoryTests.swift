@@ -18,7 +18,8 @@ final class MassageRepositoryTests: XCTestCase {
     }
 
     func testFetchMassageInfo() async throws {
-        let expected = MassageInfoModel(count: 10, limit: 50, massageStatus: .can)
+        XCTAssertEqual(remoteMassageDataSource.fetchMassageInfoCallCount, 0)
+        let expected = MassageInfoEntity(count: 10, limit: 50, massageStatus: .can)
         remoteMassageDataSource.fetchMassageInfoReturn = expected
 
         let actual = try await sut.fetchMassageInfo()

@@ -1,4 +1,7 @@
+import MealDomainInterface
 import XCTest
+@testable import MealDomainTesting
+@testable import MealDomain
 
 final class MealRepositoryTests: XCTestCase {
     var remoteMealDataSourceSpy: RemoteMealDataSourceSpy!
@@ -6,7 +9,7 @@ final class MealRepositoryTests: XCTestCase {
 
     override func setUp() {
         remoteMealDataSourceSpy = .init()
-        sut = .init(remoteMealDataSourceSpy: remoteMealDataSourceSpy)
+        sut = .init(remoteMealDataSource: remoteMealDataSourceSpy)
     }
 
     override func tearDown() {
@@ -18,7 +21,7 @@ final class MealRepositoryTests: XCTestCase {
         let expected = [MealInfoEntity(meals: ["밥"], mealType: .breakfast)]
         remoteMealDataSourceSpy.fetchMealInfoReturn = expected
 
-        let actual = try await sut.fetchMealInfo()
+        let actual = try await sut.fetchMealInfo(date: .init())
 
         XCTAssertEqual(actual, expected)
     }

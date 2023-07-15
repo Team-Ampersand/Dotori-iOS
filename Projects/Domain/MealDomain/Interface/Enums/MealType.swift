@@ -1,9 +1,7 @@
-//
-//  MealType.swift
-//  MealDomainTests
-//
-//  Created by 최형우 on 2023/07/15.
-//  Copyright © 2023 com.msg. All rights reserved.
-//
-
 import Foundation
+
+public enum MealType: String, Codable {
+    case breakfast = "조식"
+    case lunch = "중식"
+    case dinner = "석식"
+}
