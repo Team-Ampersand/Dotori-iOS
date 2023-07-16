@@ -85,6 +85,16 @@ final class HomeViewController: BaseViewController<HomeStore> {
             .map(Store.Action.mealTypeDidChanged)
             .sink(receiveValue: store.send(_:))
             .store(in: &subscription)
+
+        selfStudyApplicationCardView.detailButtonDidTapPublisher
+            .map { Store.Action.selfStudyDetailButtonDidTap }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+
+        massageApplicationCardView.detailButtonDidTapPublisher
+            .map { Store.Action.massageDetailButtonDidTap }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
     }
 
     override func bindState() {

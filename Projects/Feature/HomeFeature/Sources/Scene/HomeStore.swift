@@ -53,6 +53,8 @@ final class HomeStore: BaseStore {
         case prevDateButtonDidTap
         case nextDateButtonDidTap
         case mealTypeDidChanged(MealType)
+        case selfStudyDetailButtonDidTap
+        case massageDetailButtonDidTap
     }
     enum Mutation {
         case updateCurrentTime(Date)
@@ -92,9 +94,13 @@ extension HomeStore {
         case let .mealTypeDidChanged(type):
             return .just(.updateSelectedMealType(type))
 
-        default:
-            return .none
+        case .selfStudyDetailButtonDidTap:
+            route.send(DotoriRoutePath.selfStudy)
+
+        case .massageDetailButtonDidTap:
+            route.send(DotoriRoutePath.massage)
         }
+        return .none
     }
 }
 

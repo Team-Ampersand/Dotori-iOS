@@ -26,6 +26,12 @@ final class HomeMoordinator: Moordinator {
         case let .alert(title, message, style, actions):
             return presentToAlert(title: title, message: message, style: style, actions: actions)
 
+        case .selfStudy:
+            return .one(.forwardToParent(with: DotoriRoutePath.selfStudy))
+
+        case .massage:
+            return .one(.forwardToParent(with: DotoriRoutePath.massage))
+
         default:
             return .none
         }

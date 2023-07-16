@@ -4,20 +4,37 @@ import Moordinator
 import XCTest
 @testable import HomeFeature
 @testable import TimerTesting
+@testable import SelfStudyDomainTesting
+@testable import MassageDomainTesting
+@testable import MealDomainTesting
 
 final class HomeFeatureTests: XCTestCase {
     var repeatableTimer: RepeatableTimerStub!
+    var fetchSelfStudyInfoUseCase: FetchSelfStudyInfoUseCaseSpy!
+    var fetchMassageInfoUseCase: FetchMassageInfoUseCaseSpy!
+    var fetchMealInfoUseCase: FetchMealInfoUseCaseSpy!
     var sut: HomeStore!
     var subscription: Set<AnyCancellable>!
 
     override func setUp() {
         repeatableTimer = .init()
-        sut = .init(repeatableTimer: repeatableTimer)
+        fetchSelfStudyInfoUseCase = .init()
+        fetchMassageInfoUseCase = .init()
+        fetchMealInfoUseCase = .init()
+        sut = .init(
+            repeatableTimer: repeatableTimer,
+            fetchSelfStudyInfoUseCase: fetchSelfStudyInfoUseCase,
+            fetchMassageInfoUseCase: fetchMassageInfoUseCase,
+            fetchMealInfoUseCase: fetchMealInfoUseCase
+        )
         subscription = .init()
     }
 
     override func tearDown() {
         repeatableTimer = nil
+        fetchSelfStudyInfoUseCase = nil
+        fetchMassageInfoUseCase = nil
+        fetchMealInfoUseCase = nil
         sut = nil
         subscription = nil
     }

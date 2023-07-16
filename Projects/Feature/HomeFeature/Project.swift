@@ -26,6 +26,9 @@ let project = Project.module(
             module: .feature(.HomeFeature),
             dependencies: [
                 .feature(target: .HomeFeature),
+                .domain(target: .SelfStudyDomain, type: .testing),
+                .domain(target: .MassageDomain, type: .testing),
+                .domain(target: .MealDomain, type: .testing),
                 .core(target: .Timer, type: .testing)
             ]
         )
