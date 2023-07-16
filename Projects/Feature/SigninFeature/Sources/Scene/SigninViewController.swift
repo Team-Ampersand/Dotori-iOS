@@ -86,6 +86,10 @@ final class SigninViewController: BaseViewController<SigninStore> {
         }
     }
 
+    override func configureViewController() {
+        self.view.backgroundColor = .dotori(.background(.card))
+    }
+
     override func configureNavigation() {
         self.navigationItem.title = L10n.Signin.loginNavigationTitle
     }

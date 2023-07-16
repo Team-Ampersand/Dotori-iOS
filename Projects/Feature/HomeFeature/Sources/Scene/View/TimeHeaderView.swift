@@ -41,8 +41,8 @@ final class TimeHeaderView: BaseView {
                 .bottom(.toSuperview(), .equal(-Metric.padding))
 
             dotoriHomeIcon.layout
-                .top(.toSuperview(), .equal(3))
-                .trailing(.toSuperview(), .equal(Metric.padding))
+                .top(.toSuperview(), .equal(7))
+                .trailing(.toSuperview(), .equal(24))
         }
     }
 
