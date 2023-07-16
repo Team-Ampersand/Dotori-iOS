@@ -69,10 +69,27 @@ final class HomeViewController: BaseViewController<HomeStore> {
             .map { _ in Store.Action.myInfoButtonDidTap }
             .sink(receiveValue: store.send(_:))
             .store(in: &subscription)
+
+        mealCardView.prevDateButtonDidTapPublisher
+            .map { Store.Action.prevDateButtonDidTap }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+
+        mealCardView.nextDateButtonDidTapPublisher
+            .map { Store.Action.nextDateButtonDidTap }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+
+        mealCardView.mealPartDidChanged
+            .map(\.toMealType)
+            .map(Store.Action.mealTypeDidChanged)
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
     }
 
     override func bindState() {
-        let sharedState = store.state.share().receive(on: DispatchQueue.main)
+        let sharedState = store.state.share()
+            .subscribe(on: DispatchQueue.main)
 
         sharedState
             .map(\.currentTime)
@@ -80,12 +97,20 @@ final class HomeViewController: BaseViewController<HomeStore> {
             .store(in: &subscription)
 
         sharedState
-            .compactMap { state in
-                state.mealInfo.filter { $0.mealType == state.selectedMealType }.first
+            .map { state in
+                state.mealInfo
+                    .filter { $0.mealType == state.selectedMealType }
+                    .first?
+                    .meals ?? []
             }
-            .map(\.meals)
+            .removeDuplicates()
             .sink(receiveValue: mealCardView.updateContent(meals:))
             .store(in: &subscription)
-            
+
+        sharedState
+            .map(\.selectedMealDate)
+            .removeDuplicates()
+            .sink(receiveValue: mealCardView.updateSelectedDate(date:))
+            .store(in: &subscription)
     }
 }

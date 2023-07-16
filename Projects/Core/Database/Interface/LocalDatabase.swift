@@ -8,13 +8,18 @@ public protocol LocalDatabase {
 
     func readRecords<Record: FetchableRecord & PersistableRecord>(
         as record: Record.Type,
-        filter: [String: any DatabaseValueConvertible],
         ordered: [any SQLOrderingTerm]
     ) throws -> [Record]
 
     func readRecords<Record: FetchableRecord & PersistableRecord>(
         as record: Record.Type,
-        filter: [String: any DatabaseValueConvertible],
+        filter: SQLSpecificExpressible,
+        ordered: [any SQLOrderingTerm]
+    ) throws -> [Record]
+
+    func readRecords<Record: FetchableRecord & PersistableRecord>(
+        as record: Record.Type,
+        filter: SQLSpecificExpressible,
         ordered: [any SQLOrderingTerm],
         limit: Int,
         offset: Int?
@@ -48,7 +53,14 @@ public protocol LocalDatabase {
 public extension LocalDatabase {
     func readRecords<Record: FetchableRecord & PersistableRecord>(
         as record: Record.Type,
-        filter: [String: any DatabaseValueConvertible] = [:],
+        ordered: [any SQLOrderingTerm] = []
+    ) throws -> [Record] {
+        try self.readRecords(as: record, ordered: ordered)
+    }
+
+    func readRecords<Record: FetchableRecord & PersistableRecord>(
+        as record: Record.Type,
+        filter: SQLSpecificExpressible,
         ordered: [any SQLOrderingTerm] = [],
         limit: Int,
         offset: Int?
@@ -64,7 +76,7 @@ public extension LocalDatabase {
 
     func readRecords<Record: FetchableRecord & PersistableRecord>(
         as record: Record.Type,
-        filter: [String: any DatabaseValueConvertible] = [:],
+        filter: SQLSpecificExpressible,
         ordered: [any SQLOrderingTerm] = []
     ) throws -> [Record] {
         try self.readRecords(

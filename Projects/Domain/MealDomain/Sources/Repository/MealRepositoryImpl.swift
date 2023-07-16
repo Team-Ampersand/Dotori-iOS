@@ -22,6 +22,7 @@ final class MealRepositoryImpl: MealRepository {
             onRemotePublisher(date)
         } refreshLocal: { [localMealDataSource] newValue in
             try? localMealDataSource.deleteMealInfoByNotNearToday()
+            try? localMealDataSource.deleteMealInfoByDate(date: date)
             try? localMealDataSource.saveMealInfoList(date: date, mealInfoList: newValue)
         }
     }

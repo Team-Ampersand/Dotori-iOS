@@ -2,10 +2,17 @@ import BaseFeature
 import Combine
 import CombineUtility
 import Configure
+import DateUtility
 import DesignSystem
 import Localization
 import MSGLayout
 import UIKit
+
+protocol MealCardViewActionProtocol {
+    var mealPartDidChanged: AnyPublisher<MealPartTime, Never> { get }
+    var prevDateButtonDidTapPublisher: AnyPublisher<Void, Never> { get }
+    var nextDateButtonDidTapPublisher: AnyPublisher<Void, Never> { get }
+}
 
 final class MealCardView: BaseView {
     private enum Metric {
@@ -16,7 +23,7 @@ final class MealCardView: BaseView {
         .set(\.backgroundColor, .dotori(.neutral(.n50)))
         .set(\.cornerRadius, 11)
     private let currentDateLabel = DotoriLabel(
-        "2021.08.25 (목)",
+        Date().toStringWithCustomFormat("yyyy.MM.dd (EEEEE)"),
         textColor: .neutral(.n20),
         font: .body2
     )
@@ -74,5 +81,27 @@ final class MealCardView: BaseView {
 
     public func updateContent(meals: [String]) {
         self.mealContentStackView.updateContent(meals: meals)
+    }
+
+    public func updateSelectedDate(date: Date) {
+        self.currentDateLabel.text = date.toStringWithCustomFormat("yyyy.MM.dd (EEEEE)")
+    }
+}
+
+extension MealCardView: MealCardViewActionProtocol {
+    var mealPartDidChanged: AnyPublisher<MealPartTime, Never> {
+        mealPartTimeSegmentedControl.controlPublisher(for: .valueChanged)
+            .compactMap { $0 as? UISegmentedControl }
+            .map(\.selectedSegmentIndex)
+            .compactMap { MealPartTime(rawValue: $0) }
+            .eraseToAnyPublisher()
+    }
+
+    var prevDateButtonDidTapPublisher: AnyPublisher<Void, Never> {
+        prevDateButton.tapPublisher
+    }
+
+    var nextDateButtonDidTapPublisher: AnyPublisher<Void, Never> {
+        nextDateButton.tapPublisher
     }
 }

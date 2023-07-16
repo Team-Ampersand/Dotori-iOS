@@ -1,8 +1,9 @@
 import Foundation
 import Localization
+import MealDomainInterface
 
-enum MealPartTime: CaseIterable {
-    case breakfast
+enum MealPartTime: Int, CaseIterable {
+    case breakfast = 0
     case lunch
     case dinner
 }
@@ -18,6 +19,14 @@ extension MealPartTime {
 
         case .dinner:
             return L10n.Home.dinner
+        }
+    }
+
+    var toMealType: MealType {
+        switch self {
+        case .breakfast: return .breakfast
+        case .lunch: return .lunch
+        case .dinner: return .dinner
         }
     }
 }

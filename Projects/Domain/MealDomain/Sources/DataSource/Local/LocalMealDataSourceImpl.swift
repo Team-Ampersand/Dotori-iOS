@@ -1,5 +1,6 @@
 import DatabaseInterface
 import Foundation
+import GRDB
 import MealDomainInterface
 
 final class LocalMealDataSourceImpl: LocalMealDataSource {
@@ -10,10 +11,25 @@ final class LocalMealDataSourceImpl: LocalMealDataSource {
     }
 
     func loadMealInfo(date: Date) throws -> [MealInfoEntity] {
-        try database.readRecords(
+        guard
+            let dateStart = Calendar.current.date(
+                bySettingHour: 0,
+                minute: 0,
+                second: 0,
+                of: date
+            ),
+            let dateEnd = Calendar.current.date(
+                bySettingHour: 0,
+                minute: 0,
+                second: 0,
+                of: date.addingTimeInterval(86400)
+            )
+        else {
+            return []
+        }
+        return try database.readRecords(
             as: MealInfoLocalEntity.self,
-            filter: ["date": date],
-            ordered: []
+            filter: (dateStart...dateEnd).contains(Column("date"))
         )
         .map { $0.toDomainEntity() }
     }
@@ -25,13 +41,34 @@ final class LocalMealDataSourceImpl: LocalMealDataSource {
     }
 
     func deleteMealInfoByDate(date: Date) throws {
-        try database.delete(as: MealInfoLocalEntity.self, key: date)
+        guard
+            let dateStart = Calendar.current.date(
+                bySettingHour: 0,
+                minute: 0,
+                second: 0,
+                of: date
+            ),
+            let dateEnd = Calendar.current.date(
+                bySettingHour: 0,
+                minute: 0,
+                second: 0,
+                of: date.addingTimeInterval(86400)
+            )
+        else {
+            return
+        }
+
+        try database.readRecords(
+            as: MealInfoLocalEntity.self,
+            filter: (dateStart...dateEnd).contains(Column("date"))
+        )
+        .forEach { try database.delete(as: MealInfoLocalEntity.self, key: $0.id) }
     }
 
     func deleteMealInfoByNotNearToday() throws {
         try database.readRecords(as: MealInfoLocalEntity.self)
             .filter { $0.date.isNearToday() == false }
-            .forEach { try database.delete(as: MealInfoLocalEntity.self, key: $0.date) }
+            .forEach { try database.delete(as: MealInfoLocalEntity.self, key: $0.id) }
     }
 }
 

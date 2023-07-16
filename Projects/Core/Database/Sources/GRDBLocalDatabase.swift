@@ -72,12 +72,10 @@ final class GRDBLocalDatabase: LocalDatabase {
 
     func readRecords<Record: FetchableRecord & PersistableRecord>(
         as record: Record.Type,
-        filter: [String: any DatabaseValueConvertible],
         ordered: [any SQLOrderingTerm]
     ) throws -> [Record] {
         try self.dbQueue.read { db in
             try record
-                .filter(key: filter)
                 .order(ordered)
                 .fetchAll(db)
         }
@@ -85,14 +83,27 @@ final class GRDBLocalDatabase: LocalDatabase {
 
     func readRecords<Record: FetchableRecord & PersistableRecord>(
         as record: Record.Type,
-        filter: [String: any DatabaseValueConvertible],
+        filter: SQLSpecificExpressible,
+        ordered: [any SQLOrderingTerm]
+    ) throws -> [Record] {
+        try self.dbQueue.read { db in
+            try record
+                .filter(filter)
+                .order(ordered)
+                .fetchAll(db)
+        }
+    }
+
+    func readRecords<Record: FetchableRecord & PersistableRecord>(
+        as record: Record.Type,
+        filter: SQLSpecificExpressible,
         ordered: [any SQLOrderingTerm],
         limit: Int,
         offset: Int?
     ) throws -> [Record] {
         try self.dbQueue.read { db in
             try record
-                .filter(key: filter)
+                .filter(filter)
                 .order(ordered)
                 .limit(limit, offset: offset)
                 .fetchAll(db)

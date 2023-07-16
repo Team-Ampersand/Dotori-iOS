@@ -43,6 +43,9 @@ final class HomeStore: BaseStore {
     enum Action: Equatable {
         case viewDidLoad
         case myInfoButtonDidTap
+        case prevDateButtonDidTap
+        case nextDateButtonDidTap
+        case mealTypeDidChanged(MealType)
     }
     enum Mutation {
         case updateCurrentTime(Date)
@@ -62,6 +65,23 @@ extension HomeStore {
 
         case .myInfoButtonDidTap:
             return myInfoButtonDidTap()
+
+        case .prevDateButtonDidTap:
+            let prevDate = currentState.selectedMealDate.addingTimeInterval(-86400)
+            return .merge(
+                .just(.updateSelectedMealDate(prevDate)),
+                self.fetchMealPublisher(date: prevDate)
+            )
+
+        case .nextDateButtonDidTap:
+            let nextDate = currentState.selectedMealDate.addingTimeInterval(86400)
+            return .merge(
+                .just(.updateSelectedMealDate(nextDate)),
+                self.fetchMealPublisher(date: nextDate)
+            )
+
+        case let .mealTypeDidChanged(type):
+            return .just(.updateSelectedMealType(type))
 
         default:
             return .none
@@ -112,21 +132,7 @@ private extension HomeStore {
             .map { Mutation.updateMassageInfo(($0.count, $0.limit)) }
             .catchToNever()
 
-        let mealPublisher = self.fetchMealInfoUseCase(date: currentState.selectedMealDate)
-            .toAnyPublisher()
-            .compactMap { status in
-                switch status {
-                case let .loading(mealInfo):
-                    return Mutation.updateMealInfo(mealInfo ?? [])
-
-                case let .completed(mealInfo):
-                    return Mutation.updateMealInfo(mealInfo)
-
-                default:
-                    return nil
-                }
-            }
-            .eraseToSideEffect()
+        let mealPublisher = self.fetchMealPublisher(date: currentState.selectedMealDate)
 
         return .merge(
             timerPublisher,
@@ -146,5 +152,23 @@ private extension HomeStore {
         ])
         self.route.send(alertPath)
         return .none
+    }
+
+    func fetchMealPublisher(date: Date) -> SideEffect<Mutation, Never> {
+        return self.fetchMealInfoUseCase(date: date)
+            .toAnyPublisher()
+            .compactMap { status in
+                switch status {
+                case let .loading(mealInfo):
+                    return Mutation.updateMealInfo(mealInfo ?? [])
+
+                case let .completed(mealInfo):
+                    return Mutation.updateMealInfo(mealInfo)
+
+                default:
+                    return nil
+                }
+            }
+            .eraseToSideEffect()
     }
 }
