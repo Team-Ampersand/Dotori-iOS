@@ -18,7 +18,7 @@ protocol ApplicationCardViewActionProtocol {
 
 final class ApplicationCardView: BaseView {
     private enum Metric {
-        static let padding: CGFloat = 16
+        static let padding: CGFloat = 24
         static let spacing: CGFloat = 16
     }
     private let titleLabel = DotoriLabel()
