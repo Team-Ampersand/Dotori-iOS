@@ -15,7 +15,7 @@ public struct DotoriRoleInterceptor: InterceptorType {
         completion: @escaping (Result<URLRequest, EmdpointError>) -> Void
     ) {
         guard let requestURLString = request.url?.absoluteString,
-              requestURLString.contains("<role>"),
+              requestURLString.contains("dotori-role"),
               let currentUserRole = keyValueStore.load(key: .userRole) as? String
         else {
             completion(.success(request))
@@ -23,7 +23,7 @@ public struct DotoriRoleInterceptor: InterceptorType {
         }
         var newRequest = request
         let newRequestURLString = requestURLString
-            .replacingOccurrences(of: "<role>", with: currentUserRole)
+            .replacingOccurrences(of: "dotori-role", with: currentUserRole)
         newRequest.url = URL(string: newRequestURLString)
 
         completion(.success(newRequest))
@@ -37,11 +37,32 @@ public struct DotoriRoleInterceptor: InterceptorType {
         case let .success(res):
             if let roleDTO = try? JSONDecoder().decode(DotoriRoleDTO.self, from: res.data) {
                 guard let userRole = roleDTO.roles.first else { return }
-                keyValueStore.save(key: .userRole, value: userRole)
+                keyValueStore.save(key: .userRole, value: userRole.toAPIRoleString)
             }
 
         default:
             break
+        }
+    }
+}
+
+private extension String {
+    var toAPIRoleString: String {
+        switch self {
+        case "ROLE_ADMIN":
+            return "admin"
+
+        case "ROLE_COUNCILLOR":
+            return "councillor"
+
+        case "ROLE_DEVELOPER":
+            return "developer"
+
+        case "ROLE_MEMBER":
+            return "member"
+
+        default:
+            return ""
         }
     }
 }

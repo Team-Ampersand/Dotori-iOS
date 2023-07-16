@@ -72,11 +72,20 @@ final class HomeViewController: BaseViewController<HomeStore> {
     }
 
     override func bindState() {
-        let sharedState = store.state.share()
+        let sharedState = store.state.share().receive(on: DispatchQueue.main)
 
-        sharedState.receive(on: DispatchQueue.main)
+        sharedState
             .map(\.currentTime)
             .sink(receiveValue: timeHeaderView.updateTime(time:))
             .store(in: &subscription)
+
+        sharedState
+            .compactMap { state in
+                state.mealInfo.filter { $0.mealType == state.selectedMealType }.first
+            }
+            .map(\.meals)
+            .sink(receiveValue: mealCardView.updateContent(meals:))
+            .store(in: &subscription)
+            
     }
 }

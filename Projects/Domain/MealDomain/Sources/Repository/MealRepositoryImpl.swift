@@ -44,7 +44,7 @@ private extension MealRepositoryImpl {
                     subject.send(completion: .failure(error))
                 }
             }
-            
+
             return subject.handleEvents(receiveCancel: task.cancel)
         }
         .eraseToAnyPublisher()

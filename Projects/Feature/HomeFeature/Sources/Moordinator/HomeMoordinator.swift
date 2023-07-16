@@ -7,10 +7,10 @@ import UIKit
 
 final class HomeMoordinator: Moordinator {
     private let rootVC = UINavigationController()
-    private let repeatableTimer: any RepeatableTimer
+    private let homeViewController: any StoredViewControllable
 
-    init(repeatableTimer: any RepeatableTimer) {
-        self.repeatableTimer = repeatableTimer
+    init(homeViewController: any StoredViewControllable) {
+        self.homeViewController = homeViewController
     }
 
     var root: Presentable {
@@ -35,10 +35,11 @@ final class HomeMoordinator: Moordinator {
 
 private extension HomeMoordinator {
     func coordinateToHome() -> MoordinatorContributors {
-        let homeStore = HomeStore(repeatableTimer: repeatableTimer)
-        let homeViewController = HomeViewController(store: homeStore)
-        self.rootVC.setViewControllers([homeViewController], animated: true)
-        return .one(.contribute(withNextPresentable: homeViewController, withNextRouter: homeStore))
+        self.rootVC.setViewControllers([self.homeViewController], animated: true)
+        return .one(.contribute(
+            withNextPresentable: self.homeViewController,
+            withNextRouter: self.homeViewController.store
+        ))
     }
 
     func presentToAlert(

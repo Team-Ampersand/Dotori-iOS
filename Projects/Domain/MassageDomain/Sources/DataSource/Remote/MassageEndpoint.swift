@@ -1,4 +1,5 @@
 import Emdpoint
+import Foundation
 import NetworkingInterface
 
 public enum MassageEndpoint {

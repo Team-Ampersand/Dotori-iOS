@@ -12,7 +12,7 @@ final class LocalMealDataSourceImpl: LocalMealDataSource {
     func loadMealInfo(date: Date) throws -> [MealInfoEntity] {
         try database.readRecords(
             as: MealInfoLocalEntity.self,
-            filter: ["date": "A", "dsa": 2],
+            filter: ["date": date],
             ordered: []
         )
         .map { $0.toDomainEntity() }
