@@ -15,3 +15,7 @@
 "lunch" = "점심";
 "dinner" = "저녁";
 "meal_title" = "급식";
+"profile_edit_button_title" = "프로필 수정";
+"violation_history_button_title" = "규정위반 내역";
+"change_password_button_title" = "비밀번호 수정";
+"logout_button_title" = "로그아웃";

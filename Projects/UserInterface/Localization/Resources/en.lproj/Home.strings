@@ -1,4 +1,4 @@
-/* 
+/*
   Home.strings
   Localization
 
@@ -15,3 +15,7 @@
 "lunch" = "lunch";
 "dinner" = "dinner";
 "meal_title" = "Meal";
+"profile_edit_button_title" = "Edit Profile";
+"violation_history_button_title" = "Violation History";
+"change_password_button_title" = "Change Password";
+"logout_button_title" = "Logout";
