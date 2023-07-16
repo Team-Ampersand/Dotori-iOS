@@ -8,6 +8,9 @@ import Localization
 import MSGLayout
 import UIKit
 
+protocol ApplicationCardViewStateProtocol {
+    var isLoading: Bool { get }
+}
 protocol ApplicationCardViewActionProtocol {
     var applyButtonDidTapPublisher: AnyPublisher<Void, Never> { get }
     var detailButtonDidTapPublisher: AnyPublisher<Void, Never> { get }
@@ -19,11 +22,18 @@ final class ApplicationCardView: BaseView {
         static let spacing: CGFloat = 16
     }
     private let titleLabel = DotoriLabel()
+    private let loadingIndicatorView = UIActivityIndicatorView(style: .medium)
     private let chevronRightButton = DotoriTextButton(
         ">",
         textColor: .neutral(.n20),
         font: .caption
     )
+    private lazy var headerStackView = HStackView(spacing: 8) {
+        titleLabel
+        loadingIndicatorView
+        SpacerView()
+        chevronRightButton
+    }
     private let applicationStatusLabel = DotoriLabel(font: .h2)
     private let applicationProgressView = UIProgressView()
         .set(\.cornerRadius, 8)
@@ -47,8 +57,7 @@ final class ApplicationCardView: BaseView {
 
     override func addView() {
         self.addSubviews {
-            titleLabel
-            chevronRightButton
+            headerStackView
             applicationStatusLabel
             applicationProgressView
             applyButton
@@ -57,13 +66,9 @@ final class ApplicationCardView: BaseView {
 
     override func setLayout() {
         MSGLayout.buildLayout {
-            titleLabel.layout
+            headerStackView.layout
                 .top(.toSuperview(), .equal(Metric.padding))
-                .leading(.toSuperview(), .equal(Metric.padding))
-
-            chevronRightButton.layout
-                .top(.toSuperview(), .equal(Metric.padding))
-                .trailing(.toSuperview(), .equal(-Metric.padding))
+                .horizontal(.toSuperview(), .equal(Metric.padding))
 
             applicationStatusLabel.layout
                 .centerX(.toSuperview())
@@ -102,6 +107,17 @@ final class ApplicationCardView: BaseView {
         }
 
         self.applicationStatusLabel.text = "\(current)/\(max)"
+    }
+}
+
+extension ApplicationCardView: ApplicationCardViewStateProtocol {
+    var isLoading: Bool {
+        get { loadingIndicatorView.isAnimating }
+        set {
+            newValue ?
+            loadingIndicatorView.startAnimating() :
+            loadingIndicatorView.stopAnimating()
+        }
     }
 }
 

@@ -89,11 +89,25 @@ final class HomeViewController: BaseViewController<HomeStore> {
 
     override func bindState() {
         let sharedState = store.state.share()
-            .subscribe(on: DispatchQueue.main)
+            .receive(on: DispatchQueue.main)
 
         sharedState
             .map(\.currentTime)
             .sink(receiveValue: timeHeaderView.updateTime(time:))
+            .store(in: &subscription)
+
+        sharedState
+            .map(\.loadingState)
+            .removeDuplicates()
+            .map { $0.contains(.selfStudy) }
+            .assign(to: \.isLoading, on: selfStudyApplicationCardView)
+            .store(in: &subscription)
+
+        sharedState
+            .map(\.loadingState)
+            .removeDuplicates()
+            .map { $0.contains(.massage) }
+            .assign(to: \.isLoading, on: massageApplicationCardView)
             .store(in: &subscription)
 
         sharedState

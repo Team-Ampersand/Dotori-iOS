@@ -8,6 +8,11 @@ import SelfStudyDomainInterface
 import Store
 import TimerInterface
 
+enum HomeLoadingState {
+    case selfStudy
+    case massage
+}
+
 final class HomeStore: BaseStore {
     var route: PassthroughSubject<RoutePath, Never> = .init()
     var subscription: Set<AnyCancellable> = .init()
@@ -39,6 +44,7 @@ final class HomeStore: BaseStore {
         var selectedMealDate: Date = Date()
         var selectedMealType: MealType = .breakfast
         var mealInfo: [MealInfoModel] = []
+        var loadingState: Set<HomeLoadingState> = []
     }
     enum Action: Equatable {
         case viewDidLoad
@@ -54,6 +60,8 @@ final class HomeStore: BaseStore {
         case updateSelectedMealDate(Date)
         case updateSelectedMealType(MealType)
         case updateMealInfo([MealInfoModel])
+        case insertLoadingState(HomeLoadingState)
+        case removeLoadingState(HomeLoadingState)
     }
 }
 
@@ -106,6 +114,10 @@ extension HomeStore {
             newState.selectedMealType = type
         case let .updateMealInfo(mealInfo):
             newState.mealInfo = mealInfo
+        case let .insertLoadingState(loadingState):
+            newState.loadingState.insert(loadingState)
+        case let .removeLoadingState(loadingState):
+            newState.loadingState.remove(loadingState)
         }
 
         return newState
@@ -118,19 +130,9 @@ private extension HomeStore {
             .map(Mutation.updateCurrentTime)
             .eraseToSideEffect()
 
-        let selfStudyPublisher = SideEffect<SelfStudyInfoModel, Never>
-            .tryAsync {
-                try await self.fetchSelfStudyInfoUseCase()
-            }
-            .map { Mutation.updateSelfStudyInfo(($0.count, $0.limit)) }
-            .catchToNever()
+        let selfStudyPublisher = self.fetchSelfStudyPublisher()
 
-        let massagePublisher = SideEffect<MassageInfoModel, Never>
-            .tryAsync {
-                try await self.fetchMassageInfoUseCase()
-            }
-            .map { Mutation.updateMassageInfo(($0.count, $0.limit)) }
-            .catchToNever()
+        let massagePublisher = self.fetchMassagePublisher()
 
         let mealPublisher = self.fetchMealPublisher(date: currentState.selectedMealDate)
 
@@ -140,6 +142,8 @@ private extension HomeStore {
             massagePublisher,
             mealPublisher
         )
+        .subscribe(on: DispatchQueue.global())
+        .eraseToSideEffect()
     }
 
     func myInfoButtonDidTap() -> SideEffect<Mutation, Never> {
@@ -152,6 +156,28 @@ private extension HomeStore {
         ])
         self.route.send(alertPath)
         return .none
+    }
+
+    func fetchSelfStudyPublisher() -> SideEffect<Mutation, Never> {
+        let selfStudyPublisher = SideEffect<SelfStudyInfoModel, Never>
+            .tryAsync {
+                try await self.fetchSelfStudyInfoUseCase()
+            }
+            .map { Mutation.updateSelfStudyInfo(($0.count, $0.limit)) }
+            .eraseToSideEffect()
+            .catchToNever()
+        return makeLoadingSideEffect(selfStudyPublisher, loadingState: .selfStudy)
+    }
+
+    func fetchMassagePublisher() -> SideEffect<Mutation, Never> {
+        let massagePublisher = SideEffect<MassageInfoModel, Never>
+            .tryAsync {
+                try await self.fetchMassageInfoUseCase()
+            }
+            .map { Mutation.updateMassageInfo(($0.count, $0.limit)) }
+            .eraseToSideEffect()
+            .catchToNever()
+        return makeLoadingSideEffect(massagePublisher, loadingState: .massage)
     }
 
     func fetchMealPublisher(date: Date) -> SideEffect<Mutation, Never> {
@@ -169,6 +195,20 @@ private extension HomeStore {
                     return nil
                 }
             }
+            .eraseToSideEffect()
+    }
+
+    func makeLoadingSideEffect(
+        _ publisher: SideEffect<Mutation, Never>,
+        loadingState: HomeLoadingState
+    ) -> SideEffect<Mutation, Never> {
+        let startLoadingPublisher = SideEffect<Mutation, Never>
+            .just(Mutation.insertLoadingState(loadingState))
+        let endLoadingPublisher = SideEffect<Mutation, Never>
+            .just(Mutation.removeLoadingState(loadingState))
+        return startLoadingPublisher
+            .append(publisher)
+            .append(endLoadingPublisher)
             .eraseToSideEffect()
     }
 }
