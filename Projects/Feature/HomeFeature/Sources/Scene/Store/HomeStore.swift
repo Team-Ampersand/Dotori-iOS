@@ -50,24 +50,6 @@ final class HomeStore: BaseStore {
         self.applyMassageUseCase = applyMassageUseCase
     }
 
-    struct State {
-        var currentTime: Date = .init()
-        var currentUserRole: UserRoleType = .member
-        var selfStudyInfo: (Int, Int) = (0, 0)
-        var massageInfo: (Int, Int) = (0, 0)
-        var selectedMealDate: Date = Date()
-        var selectedMealType: MealType = .breakfast
-        var mealInfo: [MealInfoModel] = []
-        var loadingState: Set<HomeLoadingState> = []
-        var selfStudyStatus: SelfStudyStatusType = .cant
-        var massageStatus: MassageStatusType = .cant
-        var selfStudyButtonTitle: String = L10n.Home.cantApplyButtonTitle
-        var massageButtonTitle: String = L10n.Home.cantApplyButtonTitle
-        var selfStudyButtonIsEnabled: Bool = false
-        var massageButtonIsEnabled: Bool = false
-        var selfStudyRefreshDate: Date = Date()
-        var massageRefreshDate: Date = Date()
-    }
     enum Action: Equatable {
         case viewDidLoad
         case myInfoButtonDidTap
@@ -81,24 +63,10 @@ final class HomeStore: BaseStore {
         case refreshSelfStudyButtonDidTap
         case refreshMassageButtonDidTap
     }
-    enum Mutation {
-        case updateCurrentTime(Date)
-        case updateCurrentUserRole(UserRoleType)
-        case updateSelfStudyInfo((Int, Int))
-        case updateMassageInfo((Int, Int))
-        case updateSelectedMealDate(Date)
-        case updateSelectedMealType(MealType)
-        case updateMealInfo([MealInfoModel])
-        case insertLoadingState(HomeLoadingState)
-        case removeLoadingState(HomeLoadingState)
-        case updateSelfStudyStatus(SelfStudyStatusType)
-        case updateMassageStatus(MassageStatusType)
-        case updateSelfStudyRefreshDate(Date)
-        case updateMassageRefreshDate(Date)
-    }
 }
 
 extension HomeStore {
+    // swiftlint: disable cyclomatic_complexity
     func mutate(state: State, action: Action) -> SideEffect<Mutation, Never> {
         switch action {
         case .viewDidLoad:
@@ -111,14 +79,14 @@ extension HomeStore {
             let prevDate = currentState.selectedMealDate.addingTimeInterval(-86400)
             return .merge(
                 .just(.updateSelectedMealDate(prevDate)),
-                self.fetchMealPublisher(date: prevDate)
+                self.fetchMealSideEffect(date: prevDate)
             )
 
         case .nextDateButtonDidTap:
             let nextDate = currentState.selectedMealDate.addingTimeInterval(86400)
             return .merge(
                 .just(.updateSelectedMealDate(nextDate)),
-                self.fetchMealPublisher(date: nextDate)
+                self.fetchMealSideEffect(date: nextDate)
             )
 
         case let .mealTypeDidChanged(type):
@@ -137,61 +105,16 @@ extension HomeStore {
             applyMassageButtonDidTap()
 
         case .refreshSelfStudyButtonDidTap:
-            return fetchSelfStudyInfoPublisher()
+            return fetchSelfStudyInfoSideEffect()
 
         case .refreshMassageButtonDidTap:
-            return fetchMassageInfoPublisher()
+            return fetchMassageInfoSideEffect()
         }
         return .none
-    }
-}
-
-extension HomeStore {
-    // swiftlint: disable cyclomatic_complexity
-    func reduce(state: State, mutate: Mutation) -> State {
-        var newState = state
-
-        switch mutate {
-        case let .updateCurrentTime(date):
-            newState.currentTime = date
-        case let .updateCurrentUserRole(userRole):
-            newState.currentUserRole = userRole
-        case let .updateSelfStudyInfo(selfStudyInfo):
-            newState.selfStudyInfo = selfStudyInfo
-        case let .updateMassageInfo(massageInfo):
-            newState.massageInfo = massageInfo
-        case let .updateSelectedMealDate(date):
-            newState.selectedMealDate = date
-        case let .updateSelectedMealType(type):
-            newState.selectedMealType = type
-        case let .updateMealInfo(mealInfo):
-            newState.mealInfo = mealInfo
-        case let .insertLoadingState(loadingState):
-            newState.loadingState.insert(loadingState)
-        case let .removeLoadingState(loadingState):
-            newState.loadingState.remove(loadingState)
-        case let .updateSelfStudyStatus(status):
-            newState.selfStudyStatus = status
-            let userRole = currentState.currentUserRole
-            newState.selfStudyButtonTitle = status.buttonDisplay(userRole: userRole)
-            newState.selfStudyButtonIsEnabled = status.buttonIsEnabled(userRole: userRole)
-        case let .updateMassageStatus(status):
-            newState.massageStatus = status
-            let userRole = currentState.currentUserRole
-            newState.massageButtonTitle = status.buttonDisplay(userRole: userRole)
-            newState.massageButtonIsEnabled = status.buttonIsEnabled(userRole: userRole)
-        case let .updateSelfStudyRefreshDate(date):
-            newState.selfStudyRefreshDate = date
-        case let .updateMassageRefreshDate(date):
-            newState.massageRefreshDate = date
-        }
-
-        return newState
     }
     // swiftlint: enable cyclomatic_complexity
 }
 
-// MARK: - Mutate
 private extension HomeStore {
     func viewDidLoad() -> SideEffect<Mutation, Never> {
         let timerPublisher = repeatableTimer.repeatPublisher(every: 1.0)
@@ -205,11 +128,11 @@ private extension HomeStore {
             .map(Mutation.updateCurrentUserRole)
             .eraseToSideEffect()
 
-        let selfStudyPublisher = self.fetchSelfStudyInfoPublisher()
+        let selfStudyPublisher = self.fetchSelfStudyInfoSideEffect()
 
-        let massagePublisher = self.fetchMassageInfoPublisher()
+        let massagePublisher = self.fetchMassageInfoSideEffect()
 
-        let mealPublisher = self.fetchMealPublisher(date: currentState.selectedMealDate)
+        let mealPublisher = self.fetchMealSideEffect(date: currentState.selectedMealDate)
 
         return .merge(
             timerPublisher,
@@ -259,9 +182,8 @@ private extension HomeStore {
     }
 }
 
-// MARK: - Reusable
-extension HomeStore {
-    func fetchSelfStudyInfoPublisher() -> SideEffect<Mutation, Never> {
+private extension HomeStore {
+    func fetchSelfStudyInfoSideEffect() -> SideEffect<Mutation, Never> {
         let selfStudyPublisher = SideEffect<SelfStudyInfoModel, Never>
             .tryAsync {
                 try await self.fetchSelfStudyInfoUseCase()
@@ -279,7 +201,7 @@ extension HomeStore {
         return makeLoadingSideEffect(selfStudyPublisher, loadingState: .selfStudy)
     }
 
-    func fetchMassageInfoPublisher() -> SideEffect<Mutation, Never> {
+    func fetchMassageInfoSideEffect() -> SideEffect<Mutation, Never> {
         let massagePublisher = SideEffect<MassageInfoModel, Never>
             .tryAsync {
                 try await self.fetchMassageInfoUseCase()
@@ -297,7 +219,7 @@ extension HomeStore {
         return makeLoadingSideEffect(massagePublisher, loadingState: .massage)
     }
 
-    func fetchMealPublisher(date: Date) -> SideEffect<Mutation, Never> {
+    func fetchMealSideEffect(date: Date) -> SideEffect<Mutation, Never> {
         return self.fetchMealInfoUseCase(date: date)
             .toAnyPublisher()
             .compactMap { status in
