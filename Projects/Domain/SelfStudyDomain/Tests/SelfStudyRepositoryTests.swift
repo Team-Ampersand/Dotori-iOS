@@ -18,6 +18,7 @@ final class SelfStudyRepositoryTests: XCTestCase {
     }
 
     func testFetchSelfStudyInfo() async throws {
+        XCTAssertEqual(remoteSelfStudyDataSource.fetchSelfStudyInfoCallCount, 0)
         let expected = SelfStudyInfoEntity(count: 10, limit: 50, selfStudyStatus: .can)
         remoteSelfStudyDataSource.fetchSelfStudyInfoReturn = expected
 
@@ -25,5 +26,12 @@ final class SelfStudyRepositoryTests: XCTestCase {
 
         XCTAssertEqual(remoteSelfStudyDataSource.fetchSelfStudyInfoCallCount, 1)
         XCTAssertEqual(actual, expected)
+    }
+
+    func applySelfStudy() async throws {
+        XCTAssertEqual(remoteSelfStudyDataSource.applySelfStudyCallCount, 0)
+        try await sut.applySelfStudy()
+
+        XCTAssertEqual(remoteSelfStudyDataSource.applySelfStudyCallCount, 1)
     }
 }
