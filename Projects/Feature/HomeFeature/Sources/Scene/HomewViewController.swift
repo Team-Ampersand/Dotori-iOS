@@ -1,6 +1,7 @@
 import BaseFeature
 import CombineUtility
 import Configure
+import DateUtility
 import DesignSystem
 import Localization
 import MSGLayout
@@ -100,6 +101,16 @@ final class HomeViewController: BaseViewController<HomeStore> {
             .map { Store.Action.massageDetailButtonDidTap }
             .sink(receiveValue: store.send(_:))
             .store(in: &subscription)
+
+        selfStudyApplicationCardView.refreshButtonDidTapPublisher
+            .map { Store.Action.refreshSelfStudyButtonDidTap }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+
+        massageApplicationCardView.refreshButtonDidTapPublisher
+            .map { Store.Action.refreshMassageButtonDidTap }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
     }
 
     override func bindState() {
@@ -125,6 +136,14 @@ final class HomeViewController: BaseViewController<HomeStore> {
         sharedState
             .map(\.currentTime)
             .sink(receiveValue: timeHeaderView.updateTime(time:))
+            .store(in: &subscription)
+
+        sharedState
+            .map(\.currentTime)
+            .filter { $0.hour == 20 && $0.minute == 0 && $0.second == 0 }
+            .sink(with: store, receiveValue: { store, _ in
+                store.send(.refreshSelfStudyButtonDidTap)
+            })
             .store(in: &subscription)
 
         sharedState
@@ -180,6 +199,18 @@ final class HomeViewController: BaseViewController<HomeStore> {
             .map(\.massageButtonIsEnabled)
             .removeDuplicates()
             .assign(to: \.buttonIsEnabled, on: massageApplicationCardView)
+            .store(in: &subscription)
+
+        sharedState
+            .map(\.selfStudyRefreshDate)
+            .removeDuplicates()
+            .sink(receiveValue: selfStudyApplicationCardView.updateRecentRefresh(date:))
+            .store(in: &subscription)
+
+        sharedState
+            .map(\.massageRefreshDate)
+            .removeDuplicates()
+            .sink(receiveValue: massageApplicationCardView.updateRecentRefresh(date:))
             .store(in: &subscription)
     }
 }

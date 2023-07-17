@@ -12,10 +12,13 @@ protocol ApplicationCardViewStateProtocol {
     var isLoading: Bool { get }
     var buttonTitle: String { get }
     var buttonIsEnabled: Bool { get }
+    func updateApplyCount(current: Int, max: Int)
+    func updateRecentRefresh(date: Date)
 }
 protocol ApplicationCardViewActionProtocol {
     var applyButtonDidTapPublisher: AnyPublisher<Void, Never> { get }
     var detailButtonDidTapPublisher: AnyPublisher<Void, Never> { get }
+    var refreshButtonDidTapPublisher: AnyPublisher<Void, Never> { get }
 }
 
 final class ApplicationCardView: BaseView {
@@ -24,9 +27,9 @@ final class ApplicationCardView: BaseView {
         static let spacing: CGFloat = 16
     }
     private let titleButton = DotoriTextButton().then {
-        $0.setImage(.init(systemName: "arrow.clockwise"), for: .normal)
+        $0.setImage(.init(systemName: "arrow.clockwise")?.resize(to: 16), for: .normal)
     }
-    private let loadingLabel = DotoriLabel("최근 새로고침 : 00:00:00", textColor: .neutral(.n30), font: .caption)
+    private let recentRefreshLabel = DotoriLabel("최근 새로고침 : 00:00:00", textColor: .neutral(.n30), font: .caption)
     private let loadingIndicatorView = UIActivityIndicatorView(style: .medium)
     private let chevronRightButton = DotoriTextButton(
         ">",
@@ -63,7 +66,7 @@ final class ApplicationCardView: BaseView {
     override func addView() {
         self.addSubviews {
             headerStackView
-            loadingLabel
+            recentRefreshLabel
             applicationStatusLabel
             applicationProgressView
             applyButton
@@ -76,13 +79,13 @@ final class ApplicationCardView: BaseView {
                 .top(.toSuperview(), .equal(Metric.padding))
                 .horizontal(.toSuperview(), .equal(Metric.padding))
 
-            loadingLabel.layout
+            recentRefreshLabel.layout
                 .top(.to(headerStackView).bottom, .equal(2))
                 .leading(.to(headerStackView).leading, .equal(4))
 
             applicationStatusLabel.layout
                 .centerX(.toSuperview())
-                .top(.to(loadingLabel).bottom, .equal(Metric.spacing))
+                .top(.to(recentRefreshLabel).bottom, .equal(Metric.spacing))
 
             applicationProgressView.layout
                 .centerX(.toSuperview())
@@ -102,21 +105,6 @@ final class ApplicationCardView: BaseView {
         self.backgroundColor = .dotori(.background(.card))
         self.layer.cornerRadius = 16
         DotoriShadow.cardShadow(card: self)
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-    }
-
-    public func updateApplyCount(current: Int, max: Int) {
-        let newProgress = Float(current) / Float(max)
-
-        UIView.animate(withDuration: 0.4) {
-            self.applicationProgressView.setProgress(newProgress, animated: true)
-            self.applicationProgressView.progressTintColor = self.toBarColor(current: current, max: max)
-        }
-
-        self.applicationStatusLabel.text = "\(current)/\(max)"
     }
 }
 
@@ -139,6 +127,21 @@ extension ApplicationCardView: ApplicationCardViewStateProtocol {
         get { applyButton.isEnabled }
         set { applyButton.isEnabled = newValue }
     }
+
+    func updateApplyCount(current: Int, max: Int) {
+        let newProgress = Float(current) / Float(max)
+
+        UIView.animate(withDuration: 0.4) {
+            self.applicationProgressView.setProgress(newProgress, animated: true)
+            self.applicationProgressView.progressTintColor = self.toBarColor(current: current, max: max)
+        }
+
+        self.applicationStatusLabel.text = "\(current)/\(max)"
+    }
+
+    func updateRecentRefresh(date: Date) {
+        self.recentRefreshLabel.text = "최근 새로고침 : \(date.toStringWithCustomFormat("HH:mm:ss"))"
+    }
 }
 
 extension ApplicationCardView: ApplicationCardViewActionProtocol {
@@ -148,6 +151,10 @@ extension ApplicationCardView: ApplicationCardViewActionProtocol {
 
     var detailButtonDidTapPublisher: AnyPublisher<Void, Never> {
         chevronRightButton.tapPublisher
+    }
+
+    var refreshButtonDidTapPublisher: AnyPublisher<Void, Never> {
+        titleButton.tapPublisher
     }
 }
 

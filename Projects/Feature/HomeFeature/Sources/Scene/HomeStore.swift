@@ -65,6 +65,8 @@ final class HomeStore: BaseStore {
         var massageButtonTitle: String = L10n.Home.cantApplyButtonTitle
         var selfStudyButtonIsEnabled: Bool = false
         var massageButtonIsEnabled: Bool = false
+        var selfStudyRefreshDate: Date = Date()
+        var massageRefreshDate: Date = Date()
     }
     enum Action: Equatable {
         case viewDidLoad
@@ -76,6 +78,8 @@ final class HomeStore: BaseStore {
         case massageDetailButtonDidTap
         case applySelfStudyButtonDidTap
         case applyMassageButtonDidTap
+        case refreshSelfStudyButtonDidTap
+        case refreshMassageButtonDidTap
     }
     enum Mutation {
         case updateCurrentTime(Date)
@@ -89,6 +93,8 @@ final class HomeStore: BaseStore {
         case removeLoadingState(HomeLoadingState)
         case updateSelfStudyStatus(SelfStudyStatusType)
         case updateMassageStatus(MassageStatusType)
+        case updateSelfStudyRefreshDate(Date)
+        case updateMassageRefreshDate(Date)
     }
 }
 
@@ -129,6 +135,12 @@ extension HomeStore {
 
         case .applyMassageButtonDidTap:
             applyMassageButtonDidTap()
+
+        case .refreshSelfStudyButtonDidTap:
+            return fetchSelfStudyInfoPublisher()
+
+        case .refreshMassageButtonDidTap:
+            return fetchMassageInfoPublisher()
         }
         return .none
     }
@@ -168,6 +180,10 @@ extension HomeStore {
             let userRole = currentState.currentUserRole
             newState.massageButtonTitle = status.buttonDisplay(userRole: userRole)
             newState.massageButtonIsEnabled = status.buttonIsEnabled(userRole: userRole)
+        case let .updateSelfStudyRefreshDate(date):
+            newState.selfStudyRefreshDate = date
+        case let .updateMassageRefreshDate(date):
+            newState.massageRefreshDate = date
         }
 
         return newState
@@ -253,7 +269,8 @@ extension HomeStore {
             .flatMap {
                 SideEffect.merge(
                     .just(Mutation.updateSelfStudyInfo(($0.count, $0.limit))),
-                    .just(Mutation.updateSelfStudyStatus($0.selfStudyStatus))
+                    .just(Mutation.updateSelfStudyStatus($0.selfStudyStatus)),
+                    .just(Mutation.updateSelfStudyRefreshDate(Date()))
                 )
                 .setFailureType(to: Never.self)
             }
@@ -270,7 +287,8 @@ extension HomeStore {
             .flatMap {
                 SideEffect.merge(
                     .just(Mutation.updateMassageInfo(($0.count, $0.limit))),
-                    .just(Mutation.updateMassageStatus($0.massageStatus))
+                    .just(Mutation.updateMassageStatus($0.massageStatus)),
+                    .just(Mutation.updateMassageRefreshDate(Date()))
                 )
                 .setFailureType(to: Never.self)
             }
