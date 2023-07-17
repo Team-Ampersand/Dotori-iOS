@@ -19,3 +19,10 @@
 "violation_history_button_title" = "Violation History";
 "change_password_button_title" = "Change Password";
 "logout_button_title" = "Logout";
+"can_self_study_button_title" = "Apply SelfStudy";
+"can_massage_button_title" = "Apply Massage";
+"cant_apply_button_title" = "Can't Apply";
+"impossible_self_study_button_title" = "Apply Ban";
+"applied_self_study_button_title" = "Cancel SelfStudy";
+"applied_massage_button_title" = "Cancel Massage";
+"modify_limit_button_title" = "Modify Limit";

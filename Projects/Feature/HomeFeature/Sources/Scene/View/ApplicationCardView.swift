@@ -10,6 +10,8 @@ import UIKit
 
 protocol ApplicationCardViewStateProtocol {
     var isLoading: Bool { get }
+    var buttonTitle: String { get }
+    var buttonIsEnabled: Bool { get }
 }
 protocol ApplicationCardViewActionProtocol {
     var applyButtonDidTapPublisher: AnyPublisher<Void, Never> { get }
@@ -98,7 +100,7 @@ final class ApplicationCardView: BaseView {
         super.layoutSubviews()
     }
 
-    func updateApplyCount(current: Int, max: Int) {
+    public func updateApplyCount(current: Int, max: Int) {
         let newProgress = Float(current) / Float(max)
 
         UIView.animate(withDuration: 0.4) {
@@ -118,6 +120,16 @@ extension ApplicationCardView: ApplicationCardViewStateProtocol {
             loadingIndicatorView.startAnimating() :
             loadingIndicatorView.stopAnimating()
         }
+    }
+
+    var buttonTitle: String {
+        get { applyButton.titleLabel?.text ?? "" }
+        set { applyButton.setTitle(newValue, for: .normal) }
+    }
+
+    var buttonIsEnabled: Bool {
+        get { applyButton.isEnabled }
+        set { applyButton.isEnabled = newValue }
     }
 }
 

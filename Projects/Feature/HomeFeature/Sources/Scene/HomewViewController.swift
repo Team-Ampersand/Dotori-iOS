@@ -136,5 +136,29 @@ final class HomeViewController: BaseViewController<HomeStore> {
             .removeDuplicates()
             .sink(receiveValue: mealCardView.updateSelectedDate(date:))
             .store(in: &subscription)
+
+        sharedState
+            .map(\.selfStudyButtonTitle)
+            .removeDuplicates()
+            .assign(to: \.buttonTitle, on: selfStudyApplicationCardView)
+            .store(in: &subscription)
+
+        sharedState
+            .map(\.selfStudyButtonIsEnabled)
+            .removeDuplicates()
+            .assign(to: \.buttonIsEnabled, on: selfStudyApplicationCardView)
+            .store(in: &subscription)
+
+        sharedState
+            .map(\.massageButtonTitle)
+            .removeDuplicates()
+            .assign(to: \.buttonTitle, on: massageApplicationCardView)
+            .store(in: &subscription)
+
+        sharedState
+            .map(\.massageButtonIsEnabled)
+            .removeDuplicates()
+            .assign(to: \.buttonIsEnabled, on: massageApplicationCardView)
+            .store(in: &subscription)
     }
 }

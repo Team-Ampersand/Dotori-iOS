@@ -12,6 +12,7 @@ let project = Project.module(
                 .domain(target: .SelfStudyDomain, type: .interface),
                 .domain(target: .MassageDomain, type: .interface),
                 .domain(target: .MealDomain, type: .interface),
+                .domain(target: .UserDomain, type: .interface),
                 .core(target: .Timer, type: .interface)
             ]
         ),

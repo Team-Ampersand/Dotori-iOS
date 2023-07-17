@@ -4,6 +4,7 @@ import Moordinator
 import SelfStudyDomainInterface
 import Swinject
 import TimerInterface
+import UserDomainInterface
 
 public final class HomeAssembly: Assembly {
     public init() {}
@@ -13,7 +14,8 @@ public final class HomeAssembly: Assembly {
                 repeatableTimer: resolver.resolve(RepeatableTimer.self)!,
                 fetchSelfStudyInfoUseCase: resolver.resolve(FetchSelfStudyInfoUseCase.self)!,
                 fetchMassageInfoUseCase: resolver.resolve(FetchMassageInfoUseCase.self)!,
-                fetchMealInfoUseCase: resolver.resolve(FetchMealInfoUseCase.self)!
+                fetchMealInfoUseCase: resolver.resolve(FetchMealInfoUseCase.self)!,
+                loadCurrentUserRoleUseCase: resolver.resolve(LoadCurrentUserRoleUseCase.self)!
             )
         }
     }

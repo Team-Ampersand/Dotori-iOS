@@ -8,6 +8,7 @@ import Moordinator
 import SelfStudyDomainInterface
 import Store
 import TimerInterface
+import UserDomainInterface
 
 enum HomeLoadingState {
     case selfStudy
@@ -23,12 +24,14 @@ final class HomeStore: BaseStore {
     private let fetchSelfStudyInfoUseCase: any FetchSelfStudyInfoUseCase
     private let fetchMassageInfoUseCase: any FetchMassageInfoUseCase
     private let fetchMealInfoUseCase: any FetchMealInfoUseCase
+    private let loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase
 
     init(
         repeatableTimer: any RepeatableTimer,
         fetchSelfStudyInfoUseCase: any FetchSelfStudyInfoUseCase,
         fetchMassageInfoUseCase: any FetchMassageInfoUseCase,
-        fetchMealInfoUseCase: any FetchMealInfoUseCase
+        fetchMealInfoUseCase: any FetchMealInfoUseCase,
+        loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase
     ) {
         self.initialState = .init()
         self.stateSubject = .init(initialState)
@@ -36,10 +39,12 @@ final class HomeStore: BaseStore {
         self.fetchSelfStudyInfoUseCase = fetchSelfStudyInfoUseCase
         self.fetchMassageInfoUseCase = fetchMassageInfoUseCase
         self.fetchMealInfoUseCase = fetchMealInfoUseCase
+        self.loadCurrentUserRoleUseCase = loadCurrentUserRoleUseCase
     }
 
     struct State {
         var currentTime: Date = .init()
+        var currentUserRole: UserRoleType = .member
         var selfStudyInfo: (Int, Int) = (0, 0)
         var massageInfo: (Int, Int) = (0, 0)
         var selectedMealDate: Date = Date()
@@ -48,6 +53,10 @@ final class HomeStore: BaseStore {
         var loadingState: Set<HomeLoadingState> = []
         var selfStudyStatus: SelfStudyStatusType = .cant
         var massageStatus: MassageStatusType = .cant
+        var selfStudyButtonTitle: String = L10n.Home.cantApplyButtonTitle
+        var massageButtonTitle: String = L10n.Home.cantApplyButtonTitle
+        var selfStudyButtonIsEnabled: Bool = false
+        var massageButtonIsEnabled: Bool = false
     }
     enum Action: Equatable {
         case viewDidLoad
@@ -60,6 +69,7 @@ final class HomeStore: BaseStore {
     }
     enum Mutation {
         case updateCurrentTime(Date)
+        case updateCurrentUserRole(UserRoleType)
         case updateSelfStudyInfo((Int, Int))
         case updateMassageInfo((Int, Int))
         case updateSelectedMealDate(Date)
@@ -115,6 +125,8 @@ extension HomeStore {
         switch mutate {
         case let .updateCurrentTime(date):
             newState.currentTime = date
+        case let .updateCurrentUserRole(userRole):
+            newState.currentUserRole = userRole
         case let .updateSelfStudyInfo(selfStudyInfo):
             newState.selfStudyInfo = selfStudyInfo
         case let .updateMassageInfo(massageInfo):
@@ -131,8 +143,14 @@ extension HomeStore {
             newState.loadingState.remove(loadingState)
         case let .updateSelfStudyStatus(status):
             newState.selfStudyStatus = status
+            let userRole = currentState.currentUserRole
+            newState.selfStudyButtonTitle = status.buttonDisplay(userRole: userRole)
+            newState.selfStudyButtonIsEnabled = status.buttonIsEnabled(userRole: userRole)
         case let .updateMassageStatus(status):
             newState.massageStatus = status
+            let userRole = currentState.currentUserRole
+            newState.massageButtonTitle = status.buttonDisplay(userRole: userRole)
+            newState.massageButtonIsEnabled = status.buttonIsEnabled(userRole: userRole)
         }
 
         return newState
@@ -145,6 +163,13 @@ private extension HomeStore {
             .map(Mutation.updateCurrentTime)
             .eraseToSideEffect()
 
+        let userRolePublisher = SideEffect
+            .just(try? loadCurrentUserRoleUseCase())
+            .replaceNil(with: .member)
+            .setFailureType(to: Never.self)
+            .map(Mutation.updateCurrentUserRole)
+            .eraseToSideEffect()
+
         let selfStudyPublisher = self.fetchSelfStudyInfoPublisher()
 
         let massagePublisher = self.fetchMassageInfoPublisher()
@@ -153,6 +178,7 @@ private extension HomeStore {
 
         return .merge(
             timerPublisher,
+            userRolePublisher,
             selfStudyPublisher,
             massagePublisher,
             mealPublisher
@@ -237,5 +263,52 @@ private extension HomeStore {
             .append(publisher)
             .append(endLoadingPublisher)
             .eraseToSideEffect()
+    }
+}
+
+extension SelfStudyStatusType {
+    func buttonDisplay(userRole: UserRoleType) -> String {
+        guard userRole == .member else {
+            return L10n.Home.modifyLimitButtonTitle
+        }
+        switch self {
+        case .can: return L10n.Home.canSelfStudyButtonTitle
+        case .applied: return L10n.Home.appliedSelfStudyButtonTitle
+        case .cant: return L10n.Home.cantApplyButtonTitle
+        case .impossible: return L10n.Home.impossibleSelfStudyButtonTitle
+        }
+    }
+
+    func buttonIsEnabled(userRole: UserRoleType) -> Bool {
+        guard userRole == .member else {
+            return true
+        }
+        switch self {
+        case .can, .applied: return true
+        case .cant, .impossible: return false
+        }
+    }
+}
+
+extension MassageStatusType {
+    func buttonDisplay(userRole: UserRoleType) -> String {
+        guard userRole == .member else {
+            return L10n.Home.modifyLimitButtonTitle
+        }
+        switch self {
+        case .can: return L10n.Home.canMassageButtonTitle
+        case .cant: return L10n.Home.cantApplyButtonTitle
+        case .applied: return L10n.Home.appliedMassageButtonTitle
+        }
+    }
+
+    func buttonIsEnabled(userRole: UserRoleType) -> Bool {
+        guard userRole == .member else {
+            return true
+        }
+        switch self {
+        case .can, .applied: return true
+        case .cant: return false
+        }
     }
 }
