@@ -107,6 +107,22 @@ final class HomeViewController: BaseViewController<HomeStore> {
             .receive(on: DispatchQueue.main)
 
         sharedState
+            .map(\.selfStudyInfo)
+            .removeDuplicates { lhs, rhs in lhs.0 == rhs.0 && lhs.1 == rhs.1 }
+            .sink(with: selfStudyApplicationCardView, receiveValue: {
+                $0.updateApplyCount(current: $1.0, max: $1.1)
+            })
+            .store(in: &subscription)
+
+        sharedState
+            .map(\.massageInfo)
+            .removeDuplicates { lhs, rhs in lhs.0 == rhs.0 && lhs.1 == rhs.1 }
+            .sink(with: massageApplicationCardView, receiveValue: {
+                $0.updateApplyCount(current: $1.0, max: $1.1)
+            })
+            .store(in: &subscription)
+
+        sharedState
             .map(\.currentTime)
             .sink(receiveValue: timeHeaderView.updateTime(time:))
             .store(in: &subscription)

@@ -23,15 +23,18 @@ final class ApplicationCardView: BaseView {
         static let padding: CGFloat = 24
         static let spacing: CGFloat = 16
     }
-    private let titleLabel = DotoriLabel()
+    private let titleButton = DotoriTextButton().then {
+        $0.setImage(.init(systemName: "arrow.clockwise"), for: .normal)
+    }
+    private let loadingLabel = DotoriLabel("최근 새로고침 : 00:00:00", textColor: .neutral(.n30), font: .caption)
     private let loadingIndicatorView = UIActivityIndicatorView(style: .medium)
     private let chevronRightButton = DotoriTextButton(
         ">",
         textColor: .neutral(.n20),
         font: .caption
     )
-    private lazy var headerStackView = HStackView(spacing: 8) {
-        titleLabel
+    private lazy var headerStackView = HStackView(spacing: 4) {
+        titleButton
         loadingIndicatorView
         SpacerView()
         chevronRightButton
@@ -48,7 +51,7 @@ final class ApplicationCardView: BaseView {
         maxApplyCount: Int
     ) {
         super.init()
-        self.titleLabel.text = title
+        self.titleButton.setTitle(title, for: .normal)
         self.applyButton.setTitle(applyText, for: .normal)
         self.applicationStatusLabel.text = "0/\(maxApplyCount)"
     }
@@ -60,6 +63,7 @@ final class ApplicationCardView: BaseView {
     override func addView() {
         self.addSubviews {
             headerStackView
+            loadingLabel
             applicationStatusLabel
             applicationProgressView
             applyButton
@@ -72,9 +76,13 @@ final class ApplicationCardView: BaseView {
                 .top(.toSuperview(), .equal(Metric.padding))
                 .horizontal(.toSuperview(), .equal(Metric.padding))
 
+            loadingLabel.layout
+                .top(.to(headerStackView).bottom, .equal(2))
+                .leading(.to(headerStackView).leading, .equal(4))
+
             applicationStatusLabel.layout
                 .centerX(.toSuperview())
-                .top(.to(titleLabel).bottom, .equal(Metric.spacing))
+                .top(.to(loadingLabel).bottom, .equal(Metric.spacing))
 
             applicationProgressView.layout
                 .centerX(.toSuperview())

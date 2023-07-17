@@ -135,6 +135,7 @@ extension HomeStore {
 }
 
 extension HomeStore {
+    // swiftlint: disable cyclomatic_complexity
     func reduce(state: State, mutate: Mutation) -> State {
         var newState = state
 
@@ -171,6 +172,7 @@ extension HomeStore {
 
         return newState
     }
+    // swiftlint: enable cyclomatic_complexity
 }
 
 // MARK: - Mutate

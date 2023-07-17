@@ -39,7 +39,8 @@ struct HomeFactoryImpl: HomeFactory {
             fetchMassageInfoUseCase: fetchMassageInfoUseCase,
             fetchMealInfoUseCase: fetchMealInfoUseCase,
             loadCurrentUserRoleUseCase: loadCurrentUserRoleUseCase,
-            applySelfStudyUseCase: applySelfStudyUseCase
+            applySelfStudyUseCase: applySelfStudyUseCase,
+            applyMassageUseCase: applyMassageUseCase
         )
         let homeViewController = HomeViewController(store: homeStore)
         return HomeMoordinator(homeViewController: homeViewController)
