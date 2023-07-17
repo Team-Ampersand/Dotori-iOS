@@ -75,7 +75,7 @@ final class HomeStore: BaseStore {
         case selfStudyDetailButtonDidTap
         case massageDetailButtonDidTap
         case applySelfStudyButtonDidTap
-        case applyMassageButtonDidTap§
+        case applyMassageButtonDidTap
     }
     enum Mutation {
         case updateCurrentTime(Date)
@@ -126,6 +126,9 @@ extension HomeStore {
 
         case .applySelfStudyButtonDidTap:
             applySelfStudyButtonDidTap()
+
+        case .applyMassageButtonDidTap:
+            applyMassageButtonDidTap()
         }
         return .none
     }
@@ -215,7 +218,7 @@ private extension HomeStore {
 
     func applySelfStudyButtonDidTap() {
         guard currentState.currentUserRole == .member else {
-            #warning("인원 수정 로직 추가")
+            #warning("자습 인원 수정 로직 추가")
             return
         }
         Task.catching {
@@ -227,7 +230,7 @@ private extension HomeStore {
 
     func applyMassageButtonDidTap() {
         guard currentState.currentUserRole == .member else {
-            #warning("인원 수정 로직 추가")
+            #warning("안마 인원 수정 로직 추가")
             return
         }
         Task.catching {
