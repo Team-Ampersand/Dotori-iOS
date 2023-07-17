@@ -3,6 +3,10 @@ import Inject
 import UIKit
 @testable import HomeFeature
 @testable import TimerTesting
+@testable import SelfStudyDomainTesting
+@testable import MassageDomainTesting
+@testable import MealDomainTesting
+@testable import UserDomainTesting
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,12 +23,23 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
                 .autoconnect()
                 .eraseToAnyPublisher()
         }
+        let fetchSelfStudyInfoUseCase: FetchSelfStudyInfoUseCaseSpy = .init()
+        let fetchMassageInfoUseCase: FetchMassageInfoUseCaseSpy = .init()
+        let fetchMealInfoUseCase: FetchMealInfoUseCaseSpy = .init()
+        let loadCurrentUserRoleUseCase: LoadCurrentUserRoleUseCaseSpy = .init()
+        let applySelfStudyUseCase: ApplySelfStudyUseCaseSpy = .init()
+        let applyMassageUseCase: ApplyMassageUseCaseSpy = .init()
+        let store = HomeStore(
+            repeatableTimer: repeatableTimerStub,
+            fetchSelfStudyInfoUseCase: fetchSelfStudyInfoUseCase,
+            fetchMassageInfoUseCase: fetchMassageInfoUseCase,
+            fetchMealInfoUseCase: fetchMealInfoUseCase,
+            loadCurrentUserRoleUseCase: loadCurrentUserRoleUseCase,
+            applySelfStudyUseCase: applySelfStudyUseCase,
+            applyMassageUseCase: applyMassageUseCase
+        )
         let viewController = Inject.ViewControllerHost(
-            UINavigationController(
-                rootViewController: HomeViewController(
-                    store: .init(repeatableTimer: repeatableTimerStub)
-                )
-            )
+            UINavigationController(rootViewController: HomeViewController(store: store))
         )
         window?.rootViewController = viewController
         window?.makeKeyAndVisible()
