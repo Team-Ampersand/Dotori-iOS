@@ -1,5 +1,7 @@
 import BaseFeature
 import Combine
+import ConcurrencyUtil
+import DesignSystem
 import Foundation
 import Localization
 import MassageDomainInterface
@@ -25,13 +27,15 @@ final class HomeStore: BaseStore {
     private let fetchMassageInfoUseCase: any FetchMassageInfoUseCase
     private let fetchMealInfoUseCase: any FetchMealInfoUseCase
     private let loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase
+    private let applySelfStudyUseCase: any ApplySelfStudyUseCase
 
     init(
         repeatableTimer: any RepeatableTimer,
         fetchSelfStudyInfoUseCase: any FetchSelfStudyInfoUseCase,
         fetchMassageInfoUseCase: any FetchMassageInfoUseCase,
         fetchMealInfoUseCase: any FetchMealInfoUseCase,
-        loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase
+        loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase,
+        applySelfStudyUseCase: any ApplySelfStudyUseCase
     ) {
         self.initialState = .init()
         self.stateSubject = .init(initialState)
@@ -40,6 +44,7 @@ final class HomeStore: BaseStore {
         self.fetchMassageInfoUseCase = fetchMassageInfoUseCase
         self.fetchMealInfoUseCase = fetchMealInfoUseCase
         self.loadCurrentUserRoleUseCase = loadCurrentUserRoleUseCase
+        self.applySelfStudyUseCase = applySelfStudyUseCase
     }
 
     struct State {
@@ -66,6 +71,7 @@ final class HomeStore: BaseStore {
         case mealTypeDidChanged(MealType)
         case selfStudyDetailButtonDidTap
         case massageDetailButtonDidTap
+        case applySelfStudyButtonDidTap
     }
     enum Mutation {
         case updateCurrentTime(Date)
@@ -113,6 +119,9 @@ extension HomeStore {
 
         case .massageDetailButtonDidTap:
             route.send(DotoriRoutePath.massage)
+
+        case .applySelfStudyButtonDidTap:
+            applySelfStudyButtonDidTap()
         }
         return .none
     }
@@ -157,6 +166,7 @@ extension HomeStore {
     }
 }
 
+// MARK: - Mutate
 private extension HomeStore {
     func viewDidLoad() -> SideEffect<Mutation, Never> {
         let timerPublisher = repeatableTimer.repeatPublisher(every: 1.0)
@@ -199,6 +209,21 @@ private extension HomeStore {
         return .none
     }
 
+    func applySelfStudyButtonDidTap() {
+        guard currentState.currentUserRole == .member else {
+            #warning("인원 수정 로직 추가")
+            return
+        }
+        Task.catching {
+            try await self.applySelfStudyUseCase()
+        } catch: { @MainActor error in
+            DotoriToast.makeToast(text: error.localizedDescription, style: .error)
+        }
+    }
+}
+
+// MARK: - Reusable
+extension HomeStore {
     func fetchSelfStudyInfoPublisher() -> SideEffect<Mutation, Never> {
         let selfStudyPublisher = SideEffect<SelfStudyInfoModel, Never>
             .tryAsync {

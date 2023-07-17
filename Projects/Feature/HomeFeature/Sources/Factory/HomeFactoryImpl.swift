@@ -11,19 +11,22 @@ struct HomeFactoryImpl: HomeFactory {
     private let fetchMassageInfoUseCase: any FetchMassageInfoUseCase
     private let fetchMealInfoUseCase: any FetchMealInfoUseCase
     private let loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase
+    private let applySelfStudyUseCase: any ApplySelfStudyUseCase
 
     init(
         repeatableTimer: any RepeatableTimer,
         fetchSelfStudyInfoUseCase: any FetchSelfStudyInfoUseCase,
         fetchMassageInfoUseCase: any FetchMassageInfoUseCase,
         fetchMealInfoUseCase: any FetchMealInfoUseCase,
-        loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase
+        loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase,
+        applySelfStudyUseCase: any ApplySelfStudyUseCase
     ) {
         self.repeatableTimer = repeatableTimer
         self.fetchSelfStudyInfoUseCase = fetchSelfStudyInfoUseCase
         self.fetchMassageInfoUseCase = fetchMassageInfoUseCase
         self.fetchMealInfoUseCase = fetchMealInfoUseCase
         self.loadCurrentUserRoleUseCase = loadCurrentUserRoleUseCase
+        self.applySelfStudyUseCase = applySelfStudyUseCase
     }
 
     func makeMoordinator() -> Moordinator {
@@ -32,7 +35,8 @@ struct HomeFactoryImpl: HomeFactory {
             fetchSelfStudyInfoUseCase: fetchSelfStudyInfoUseCase,
             fetchMassageInfoUseCase: fetchMassageInfoUseCase,
             fetchMealInfoUseCase: fetchMealInfoUseCase,
-            loadCurrentUserRoleUseCase: loadCurrentUserRoleUseCase
+            loadCurrentUserRoleUseCase: loadCurrentUserRoleUseCase,
+            applySelfStudyUseCase: applySelfStudyUseCase
         )
         let homeViewController = HomeViewController(store: homeStore)
         return HomeMoordinator(homeViewController: homeViewController)
