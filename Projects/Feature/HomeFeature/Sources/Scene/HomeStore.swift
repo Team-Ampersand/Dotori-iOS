@@ -28,6 +28,7 @@ final class HomeStore: BaseStore {
     private let fetchMealInfoUseCase: any FetchMealInfoUseCase
     private let loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase
     private let applySelfStudyUseCase: any ApplySelfStudyUseCase
+    private let applyMassageUseCase: any ApplyMassageUseCase
 
     init(
         repeatableTimer: any RepeatableTimer,
@@ -35,7 +36,8 @@ final class HomeStore: BaseStore {
         fetchMassageInfoUseCase: any FetchMassageInfoUseCase,
         fetchMealInfoUseCase: any FetchMealInfoUseCase,
         loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase,
-        applySelfStudyUseCase: any ApplySelfStudyUseCase
+        applySelfStudyUseCase: any ApplySelfStudyUseCase,
+        applyMassageUseCase: any ApplyMassageUseCase
     ) {
         self.initialState = .init()
         self.stateSubject = .init(initialState)
@@ -45,6 +47,7 @@ final class HomeStore: BaseStore {
         self.fetchMealInfoUseCase = fetchMealInfoUseCase
         self.loadCurrentUserRoleUseCase = loadCurrentUserRoleUseCase
         self.applySelfStudyUseCase = applySelfStudyUseCase
+        self.applyMassageUseCase = applyMassageUseCase
     }
 
     struct State {
@@ -72,6 +75,7 @@ final class HomeStore: BaseStore {
         case selfStudyDetailButtonDidTap
         case massageDetailButtonDidTap
         case applySelfStudyButtonDidTap
+        case applyMassageButtonDidTap§
     }
     enum Mutation {
         case updateCurrentTime(Date)
@@ -216,6 +220,18 @@ private extension HomeStore {
         }
         Task.catching {
             try await self.applySelfStudyUseCase()
+        } catch: { @MainActor error in
+            DotoriToast.makeToast(text: error.localizedDescription, style: .error)
+        }
+    }
+
+    func applyMassageButtonDidTap() {
+        guard currentState.currentUserRole == .member else {
+            #warning("인원 수정 로직 추가")
+            return
+        }
+        Task.catching {
+            try await self.applyMassageUseCase()
         } catch: { @MainActor error in
             DotoriToast.makeToast(text: error.localizedDescription, style: .error)
         }

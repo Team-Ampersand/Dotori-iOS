@@ -1,5 +1,6 @@
 import Emdpoint
 import NetworkingInterface
+import SelfStudyDomainInterface
 
 public enum SelfStudyEndpoint {
     case fetchSelfStudyInfo
@@ -30,5 +31,17 @@ extension SelfStudyEndpoint: DotoriEndpoint {
 
     public var jwtTokenType: JwtTokenType {
         .accessToken
+    }
+
+    public var errorMap: [Int : Error] {
+        switch self {
+        case .applySelfStudy:
+            return [
+                409: SelfStudyDomainError.selfStudyLimitExceeded
+            ]
+
+        default:
+            return [:]
+        }
     }
 }

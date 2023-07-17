@@ -3,6 +3,7 @@ import Foundation
 
 public protocol DotoriEndpoint: EndpointType, JwtAuthorizable {
     var domain: DotoriRestAPIDomain { get }
+    var errorMap: [Int: Error] { get }
 }
 
 extension DotoriEndpoint {
@@ -24,6 +25,8 @@ extension DotoriEndpoint {
     }
 
     public var timeout: TimeInterval { 60 }
+
+    public var errorMap: [Int: Error] { [:] }
 }
 
 private class BundleFinder {}

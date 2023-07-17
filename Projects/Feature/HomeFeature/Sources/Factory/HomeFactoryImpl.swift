@@ -12,6 +12,7 @@ struct HomeFactoryImpl: HomeFactory {
     private let fetchMealInfoUseCase: any FetchMealInfoUseCase
     private let loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase
     private let applySelfStudyUseCase: any ApplySelfStudyUseCase
+    private let applyMassageUseCase: any ApplyMassageUseCase
 
     init(
         repeatableTimer: any RepeatableTimer,
@@ -19,7 +20,8 @@ struct HomeFactoryImpl: HomeFactory {
         fetchMassageInfoUseCase: any FetchMassageInfoUseCase,
         fetchMealInfoUseCase: any FetchMealInfoUseCase,
         loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase,
-        applySelfStudyUseCase: any ApplySelfStudyUseCase
+        applySelfStudyUseCase: any ApplySelfStudyUseCase,
+        applyMassageUseCase: any ApplyMassageUseCase
     ) {
         self.repeatableTimer = repeatableTimer
         self.fetchSelfStudyInfoUseCase = fetchSelfStudyInfoUseCase
@@ -27,6 +29,7 @@ struct HomeFactoryImpl: HomeFactory {
         self.fetchMealInfoUseCase = fetchMealInfoUseCase
         self.loadCurrentUserRoleUseCase = loadCurrentUserRoleUseCase
         self.applySelfStudyUseCase = applySelfStudyUseCase
+        self.applyMassageUseCase = applyMassageUseCase
     }
 
     func makeMoordinator() -> Moordinator {

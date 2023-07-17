@@ -30,11 +30,12 @@ private extension NetworkingImpl {
         } catch {
             guard
                 case let EmdpointError.statusCode(response) = error,
-                let httpResponse = response.response as? HTTPURLResponse
+                let httpResponse = response.response as? HTTPURLResponse,
+                let dotoriEndpoint = endpoint.endpoint as? DotoriEndpoint
             else {
                 throw error
             }
-            throw NetworkingError(statusCode: httpResponse.statusCode)
+            throw dotoriEndpoint.errorMap[httpResponse.statusCode] ?? NetworkingError(statusCode: httpResponse.statusCode)
         }
     }
 }
