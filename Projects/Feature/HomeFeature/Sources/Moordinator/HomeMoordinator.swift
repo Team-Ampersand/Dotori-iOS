@@ -1,4 +1,3 @@
-import AuthDomainInterface
 import BaseFeature
 import DWebKit
 import Moordinator
@@ -64,4 +63,3 @@ private extension HomeMoordinator {
         return .none
     }
 }
-
