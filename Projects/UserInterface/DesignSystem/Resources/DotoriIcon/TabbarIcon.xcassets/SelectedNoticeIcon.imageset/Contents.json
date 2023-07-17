@@ -2,18 +2,7 @@
   "images" : [
     {
       "filename" : "SelectedNoticeIcon.svg",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "SelectedNoticeIcon 1.svg",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "SelectedNoticeIcon 2.svg",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "idiom" : "universal"
     }
   ],
   "info" : {
