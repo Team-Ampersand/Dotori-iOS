@@ -18,5 +18,9 @@ public final class SelfStudyDomainAssembly: Assembly {
         container.register(FetchSelfStudyInfoUseCase.self) { resolver in
             FetchSelfStudyInfoUseCaseImpl(selfStudyRepository: resolver.resolve(SelfStudyRepository.self)!)
         }
+
+        container.register(ApplySelfStudyUseCase.self) { resolver in
+            ApplySelfStudyUseCaseImpl(selfStudyRepository: resolver.resolve(SelfStudyRepository.self)!)
+        }
     }
 }

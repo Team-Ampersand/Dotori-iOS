@@ -15,4 +15,8 @@ final class RemoteSelfStudyDataSourceImpl: RemoteSelfStudyDataSource {
         )
         .toEntity()
     }
+
+    func applySelfStudy() async throws {
+        try await networking.request(SelfStudyEndpoint.applySelfStudy)
+    }
 }

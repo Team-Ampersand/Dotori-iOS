@@ -10,4 +10,8 @@ final class SelfStudyRepositoryImpl: SelfStudyRepository {
     func fetchSelfStudyInfo() async throws -> SelfStudyInfoEntity {
         try await remoteSelfStudyDataSource.fetchSelfStudyInfo()
     }
+
+    func applySelfStudy() async throws {
+        try await remoteSelfStudyDataSource.applySelfStudy()
+    }
 }

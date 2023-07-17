@@ -3,6 +3,7 @@ import NetworkingInterface
 
 public enum SelfStudyEndpoint {
     case fetchSelfStudyInfo
+    case applySelfStudy
 }
 
 extension SelfStudyEndpoint: DotoriEndpoint {
@@ -14,6 +15,9 @@ extension SelfStudyEndpoint: DotoriEndpoint {
         switch self {
         case .fetchSelfStudyInfo:
             return .get("/info")
+
+        case .applySelfStudy:
+            return .post("")
         }
     }
 
