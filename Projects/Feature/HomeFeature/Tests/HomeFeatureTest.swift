@@ -59,14 +59,17 @@ final class HomeFeatureTests: XCTestCase {
                 .eraseToAnyPublisher()
         }
 
+        let expectation = XCTestExpectation(description: "Asd")
         var testTargetDate: Date?
 
         sut.state.map(\.currentTime).sink {
             testTargetDate = $0
+            expectation.fulfill()
         }
         .store(in: &subscription)
 
         sut.send(.viewDidLoad)
+        wait(for: [expectation], timeout: 2)
 
         XCTAssertEqual(checkDate, testTargetDate)
     }

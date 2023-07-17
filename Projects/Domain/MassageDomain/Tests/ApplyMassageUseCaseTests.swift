@@ -21,6 +21,6 @@ final class ApplyMassageUseCaseTests: XCTestCase {
         XCTAssertEqual(massageRepository.applyMassageCallCount, 0)
         try await sut()
 
-        XCTAssertEqual(massageRepository.fetchMassageInfoCallCount, 1)
+        XCTAssertEqual(massageRepository.applyMassageCallCount, 1)
     }
 }
