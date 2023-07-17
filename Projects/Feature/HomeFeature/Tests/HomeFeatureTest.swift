@@ -7,12 +7,16 @@ import XCTest
 @testable import SelfStudyDomainTesting
 @testable import MassageDomainTesting
 @testable import MealDomainTesting
+@testable import UserDomainTesting
 
 final class HomeFeatureTests: XCTestCase {
     var repeatableTimer: RepeatableTimerStub!
     var fetchSelfStudyInfoUseCase: FetchSelfStudyInfoUseCaseSpy!
     var fetchMassageInfoUseCase: FetchMassageInfoUseCaseSpy!
     var fetchMealInfoUseCase: FetchMealInfoUseCaseSpy!
+    var loadCurrentUserRoleUseCase: LoadCurrentUserRoleUseCaseSpy!
+    var applySelfStudyUseCase: ApplySelfStudyUseCaseSpy!
+    var applyMassageUseCase: ApplyMassageUseCaseSpy!
     var sut: HomeStore!
     var subscription: Set<AnyCancellable>!
 
@@ -21,11 +25,17 @@ final class HomeFeatureTests: XCTestCase {
         fetchSelfStudyInfoUseCase = .init()
         fetchMassageInfoUseCase = .init()
         fetchMealInfoUseCase = .init()
+        loadCurrentUserRoleUseCase = .init()
+        applySelfStudyUseCase = .init()
+        applyMassageUseCase = .init()
         sut = .init(
             repeatableTimer: repeatableTimer,
             fetchSelfStudyInfoUseCase: fetchSelfStudyInfoUseCase,
             fetchMassageInfoUseCase: fetchMassageInfoUseCase,
-            fetchMealInfoUseCase: fetchMealInfoUseCase
+            fetchMealInfoUseCase: fetchMealInfoUseCase,
+            loadCurrentUserRoleUseCase: loadCurrentUserRoleUseCase,
+            applySelfStudyUseCase: applySelfStudyUseCase,
+            applyMassageUseCase: applyMassageUseCase
         )
         subscription = .init()
     }
@@ -35,6 +45,9 @@ final class HomeFeatureTests: XCTestCase {
         fetchSelfStudyInfoUseCase = nil
         fetchMassageInfoUseCase = nil
         fetchMealInfoUseCase = nil
+        loadCurrentUserRoleUseCase = nil
+        applySelfStudyUseCase = nil
+        applyMassageUseCase = nil
         sut = nil
         subscription = nil
     }
