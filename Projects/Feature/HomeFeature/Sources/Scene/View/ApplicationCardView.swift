@@ -29,7 +29,7 @@ final class ApplicationCardView: BaseView {
     private let titleButton = DotoriTextButton().then {
         $0.setImage(.init(systemName: "arrow.clockwise")?.resize(to: 16), for: .normal)
     }
-    private let recentRefreshLabel = DotoriLabel("최근 새로고침 : 00:00:00", textColor: .neutral(.n30), font: .caption)
+    private let recentRefreshLabel = DotoriLabel(textColor: .neutral(.n30), font: .caption)
     private let loadingIndicatorView = UIActivityIndicatorView(style: .medium)
     private let chevronRightButton = DotoriTextButton(
         ">",
@@ -140,7 +140,7 @@ extension ApplicationCardView: ApplicationCardViewStateProtocol {
     }
 
     func updateRecentRefresh(date: Date) {
-        self.recentRefreshLabel.text = "최근 새로고침 : \(date.toStringWithCustomFormat("HH:mm:ss"))"
+        self.recentRefreshLabel.text = L10n.Home.recentRefreshDate(date.toStringWithCustomFormat("HH:mm:ss"))
     }
 }
 

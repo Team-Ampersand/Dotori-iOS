@@ -26,3 +26,4 @@
 "applied_self_study_button_title" = "신청 취소";
 "applied_massage_button_title" = "신청 취소";
 "modify_limit_button_title" = "인원 수정";
+"recent_refresh_date" = "최근 새로고침 : %@";

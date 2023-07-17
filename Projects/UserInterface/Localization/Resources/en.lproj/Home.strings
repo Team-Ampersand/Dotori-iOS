@@ -26,3 +26,4 @@
 "applied_self_study_button_title" = "Cancel SelfStudy";
 "applied_massage_button_title" = "Cancel Massage";
 "modify_limit_button_title" = "Modify Limit";
+"recent_refresh_date" = "Recent Refresh : %@";
