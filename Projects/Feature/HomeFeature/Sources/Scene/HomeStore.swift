@@ -46,6 +46,8 @@ final class HomeStore: BaseStore {
         var selectedMealType: MealType = .breakfast
         var mealInfo: [MealInfoModel] = []
         var loadingState: Set<HomeLoadingState> = []
+        var selfStudyStatus: SelfStudyStatusType = .cant
+        var massageStatus: MassageStatusType = .cant
     }
     enum Action: Equatable {
         case viewDidLoad
@@ -65,6 +67,8 @@ final class HomeStore: BaseStore {
         case updateMealInfo([MealInfoModel])
         case insertLoadingState(HomeLoadingState)
         case removeLoadingState(HomeLoadingState)
+        case updateSelfStudyStatus(SelfStudyStatusType)
+        case updateMassageStatus(MassageStatusType)
     }
 }
 
@@ -125,6 +129,10 @@ extension HomeStore {
             newState.loadingState.insert(loadingState)
         case let .removeLoadingState(loadingState):
             newState.loadingState.remove(loadingState)
+        case let .updateSelfStudyStatus(status):
+            newState.selfStudyStatus = status
+        case let .updateMassageStatus(status):
+            newState.massageStatus = status
         }
 
         return newState
@@ -137,9 +145,9 @@ private extension HomeStore {
             .map(Mutation.updateCurrentTime)
             .eraseToSideEffect()
 
-        let selfStudyPublisher = self.fetchSelfStudyPublisher()
+        let selfStudyPublisher = self.fetchSelfStudyInfoPublisher()
 
-        let massagePublisher = self.fetchMassagePublisher()
+        let massagePublisher = self.fetchMassageInfoPublisher()
 
         let mealPublisher = self.fetchMealPublisher(date: currentState.selectedMealDate)
 
@@ -165,23 +173,35 @@ private extension HomeStore {
         return .none
     }
 
-    func fetchSelfStudyPublisher() -> SideEffect<Mutation, Never> {
+    func fetchSelfStudyInfoPublisher() -> SideEffect<Mutation, Never> {
         let selfStudyPublisher = SideEffect<SelfStudyInfoModel, Never>
             .tryAsync {
                 try await self.fetchSelfStudyInfoUseCase()
             }
-            .map { Mutation.updateSelfStudyInfo(($0.count, $0.limit)) }
+            .flatMap {
+                SideEffect.merge(
+                    .just(Mutation.updateSelfStudyInfo(($0.count, $0.limit))),
+                    .just(Mutation.updateSelfStudyStatus($0.selfStudyStatus))
+                )
+                .setFailureType(to: Never.self)
+            }
             .eraseToSideEffect()
             .catchToNever()
         return makeLoadingSideEffect(selfStudyPublisher, loadingState: .selfStudy)
     }
 
-    func fetchMassagePublisher() -> SideEffect<Mutation, Never> {
+    func fetchMassageInfoPublisher() -> SideEffect<Mutation, Never> {
         let massagePublisher = SideEffect<MassageInfoModel, Never>
             .tryAsync {
                 try await self.fetchMassageInfoUseCase()
             }
-            .map { Mutation.updateMassageInfo(($0.count, $0.limit)) }
+            .flatMap {
+                SideEffect.merge(
+                    .just(Mutation.updateMassageInfo(($0.count, $0.limit))),
+                    .just(Mutation.updateMassageStatus($0.massageStatus))
+                )
+                .setFailureType(to: Never.self)
+            }
             .eraseToSideEffect()
             .catchToNever()
         return makeLoadingSideEffect(massagePublisher, loadingState: .massage)
