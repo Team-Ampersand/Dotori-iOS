@@ -10,4 +10,8 @@ final class MassageRepositoryImpl: MassageRepository {
     func fetchMassageInfo() async throws -> MassageInfoEntity {
         try await remoteMassageDataSource.fetchMassageInfo()
     }
+
+    func applyMassage() async throws {
+        try await remoteMassageDataSource.applyMassage()
+    }
 }

@@ -7,4 +7,9 @@ final class RemoteMassageDataSourceSpy: RemoteMassageDataSource {
         fetchMassageInfoCallCount += 1
         return fetchMassageInfoReturn
     }
+
+    var applyMassageCallCount = 0
+    func applyMassage() async throws {
+        applyMassageCallCount += 1
+    }
 }

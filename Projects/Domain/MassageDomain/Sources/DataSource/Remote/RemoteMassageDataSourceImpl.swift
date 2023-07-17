@@ -15,4 +15,8 @@ final class RemoteMassageDataSourceImpl: RemoteMassageDataSource {
         )
         .toEntity()
     }
+
+    func applyMassage() async throws {
+        try await networking.request(MassageEndpoint.applyMassage)
+    }
 }

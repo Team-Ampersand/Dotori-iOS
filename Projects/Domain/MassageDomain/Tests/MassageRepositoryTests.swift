@@ -27,4 +27,11 @@ final class MassageRepositoryTests: XCTestCase {
         XCTAssertEqual(remoteMassageDataSource.fetchMassageInfoCallCount, 1)
         XCTAssertEqual(actual, expected)
     }
+
+    func testApplyMassage() async throws {
+        XCTAssertEqual(remoteMassageDataSource.applyMassageCallCount, 0)
+        try await sut.applyMassage()
+
+        XCTAssertEqual(remoteMassageDataSource.applyMassageCallCount, 1)
+    }
 }

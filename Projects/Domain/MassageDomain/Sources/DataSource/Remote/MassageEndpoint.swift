@@ -4,6 +4,7 @@ import NetworkingInterface
 
 public enum MassageEndpoint {
     case fetchMassageInfo
+    case applyMassage
 }
 
 extension MassageEndpoint: DotoriEndpoint {
@@ -15,20 +16,20 @@ extension MassageEndpoint: DotoriEndpoint {
         switch self {
         case .fetchMassageInfo:
             return .get("")
+
+        case .applyMassage:
+            return .post("")
         }
     }
 
     public var task: HTTPTask {
         switch self {
-        case .fetchMassageInfo:
+        default:
             return .requestPlain
         }
     }
 
     public var jwtTokenType: JwtTokenType {
-        switch self {
-        case .fetchMassageInfo:
-            return .accessToken
-        }
+        .accessToken
     }
 }
