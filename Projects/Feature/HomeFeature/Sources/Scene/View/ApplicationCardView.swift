@@ -27,7 +27,7 @@ final class ApplicationCardView: BaseView {
         static let spacing: CGFloat = 16
     }
     private let titleButton = DotoriTextButton().then {
-        $0.setImage(.init(systemName: "arrow.clockwise")?.resize(to: 16), for: .normal)
+        $0.setImage(.init(systemName: "arrow.clockwise")?.resize(to: 16).withRenderingMode(.alwaysTemplate), for: .normal)
     }
     private let recentRefreshLabel = DotoriLabel(textColor: .neutral(.n30), font: .caption)
     private let loadingIndicatorView = UIActivityIndicatorView(style: .medium)
