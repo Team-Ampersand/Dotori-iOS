@@ -11,6 +11,9 @@ let project = Project.module(
         ]),
         .tests(module: .feature(.NoticeFeature), dependencies: [
             .feature(target: .NoticeFeature)
+        ]),
+        .demo(module: .feature(.NoticeFeature), dependencies: [
+            .feature(target: .NoticeFeature)
         ])
     ]
 )
