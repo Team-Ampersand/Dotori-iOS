@@ -2,21 +2,23 @@ import Emdpoint
 import Foundation
 import NetworkingInterface
 
-final class NetworkingImpl<Endpoint: DotoriEndpoint>: Networking {
-    typealias Endpoint = Endpoint
+final class NetworkingImpl: Networking {
+    typealias Endpoint = AnyEndpoint
     private let client: EmdpointClient<Endpoint>
 
     init(client: EmdpointClient<Endpoint>) {
         self.client = client
     }
 
-    func request<T: Decodable>(_ endpoint: Endpoint, dto: T.Type) async throws -> T {
-        let response = try await performRequest(endpoint)
+    func request<T: Decodable>(_ endpoint: any EndpointType, dto: T.Type) async throws -> T {
+        let newEndpoint = AnyEndpoint.endpoint(endpoint)
+        let response = try await performRequest(newEndpoint)
         return try JSONDecoder().decode(dto, from: response.data)
     }
 
-    func request(_ endpoint: Endpoint) async throws {
-        try await performRequest(endpoint)
+    func request(_ endpoint: any EndpointType) async throws {
+        let newEndpoint = AnyEndpoint.endpoint(endpoint)
+        try await performRequest(newEndpoint)
     }
 }
 
@@ -28,11 +30,12 @@ private extension NetworkingImpl {
         } catch {
             guard
                 case let EmdpointError.statusCode(response) = error,
-                let httpResponse = response.response as? HTTPURLResponse
+                let httpResponse = response.response as? HTTPURLResponse,
+                let dotoriEndpoint = endpoint.endpoint as? DotoriEndpoint
             else {
                 throw error
             }
-            throw NetworkingError(statusCode: httpResponse.statusCode)
+            throw dotoriEndpoint.errorMap[httpResponse.statusCode] ?? NetworkingError(statusCode: httpResponse.statusCode)
         }
     }
 }

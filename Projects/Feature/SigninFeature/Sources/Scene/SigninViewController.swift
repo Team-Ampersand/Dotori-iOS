@@ -25,15 +25,15 @@ final class SigninViewController: BaseViewController<SigninStore> {
     )
     .set(\.isSecureTextEntry, true)
     private let renewalPasswordButton = DotoriTextButton(
-        text: L10n.Signin.findPasswordButtonTitle,
-        color: .dotori(.neutral(.n20)),
-        font: .dotori(.body2)
+        L10n.Signin.findPasswordButtonTitle,
+        textColor: .neutral(.n20),
+        font: .body2
     )
     private let signinButton = DotoriButton(text: L10n.Signin.loginButtonTitle)
     private let signupButton = DotoriTextButton(
-        text: L10n.Signin.signupButtonTitle,
-        color: .dotori(.neutral(.n20)),
-        font: .dotori(.body2)
+        L10n.Signin.signupButtonTitle,
+        textColor: .neutral(.n20),
+        font: .body2
     ).then {
         let signupString = NSMutableAttributedString(string: $0.titleLabel?.text ?? "")
         signupString.setColorForText(
@@ -84,6 +84,10 @@ final class SigninViewController: BaseViewController<SigninStore> {
                 .centerX(.toSuperview())
                 .top(.to(signinButton).bottom, .equal(16))
         }
+    }
+
+    override func configureViewController() {
+        self.view.backgroundColor = .dotori(.background(.card))
     }
 
     override func configureNavigation() {

@@ -11,7 +11,7 @@ public final class AuthDomainAssembly: Assembly {
         // MARK: - DataSource
         container.register(RemoteAuthDataSource.self) { resolver in
             RemoteAuthDataSourceImpl(
-                authNetworking: resolver.resolve((any Networking<AuthEndpoint>).self)!
+                networking: resolver.resolve(Networking.self)!
             )
         }
         .inObjectScope(.container)

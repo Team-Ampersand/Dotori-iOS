@@ -41,6 +41,9 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum Domain: String, MicroTargetPathConvertable {
+        case MealDomain
+        case MassageDomain
+        case SelfStudyDomain
         case UserDomain
         case AuthDomain
         case BaseDomain
@@ -49,6 +52,7 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum Core: String, MicroTargetPathConvertable {
+        case Timer
         case Networking
         case Database
         case KeyValueStore

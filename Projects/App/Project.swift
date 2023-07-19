@@ -36,9 +36,14 @@ let targets: [Target] = [
             .feature(target: .RenewalPasswordFeature),
             .domain(target: .AuthDomain),
             .domain(target: .UserDomain),
+            .domain(target: .SelfStudyDomain),
+            .domain(target: .MassageDomain),
+            .domain(target: .MealDomain),
             .core(target: .JwtStore),
             .core(target: .KeyValueStore),
-            .core(target: .Networking)
+            .core(target: .Networking),
+            .core(target: .Database),
+            .core(target: .Timer)
         ],
         settings: .settings(base: env.baseSetting)
     )

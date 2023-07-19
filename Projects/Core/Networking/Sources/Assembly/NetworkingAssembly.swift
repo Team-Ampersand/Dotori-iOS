@@ -22,26 +22,26 @@ public final class NetworkingAssembly: Assembly {
             DotoriRoleInterceptor(keyValueStore: resolver.resolve(KeyValueStore.self)!)
         }
 
-        container.register((any Networking<AuthEndpoint>).self) { [weak self] resolver in
-            let client = EmdpointClient<AuthEndpoint>(
-                interceptors: self?.makeInterceptors(container: container, resolver: resolver) ?? []
+        container.register([any InterceptorType].self) { resolver in
+            #if DEV || STAGE
+            return [
+                resolver.resolve(JwtInterceptor.self)!,
+                resolver.resolve(DotoriRoleInterceptor.self)!,
+                resolver.resolve(DotoriLoggingInterceptor.self)!
+            ]
+            #else
+            return [
+                resolver.resolve(JwtInterceptor.self)!,
+                resolver.resolve(DotoriRoleInterceptor.self)!
+            ]
+            #endif
+        }
+
+        container.register(Networking.self) { resolver in
+            let client = EmdpointClient<AnyEndpoint>(
+                interceptors: resolver.resolve([any InterceptorType].self)!
             )
             return NetworkingImpl(client: client)
         }
-    }
-
-    func makeInterceptors(container: Container, resolver: Resolver) -> [any InterceptorType] {
-        #if DEV || STAGE
-        return [
-            resolver.resolve(JwtInterceptor.self)!,
-            resolver.resolve(DotoriLoggingInterceptor.self)!,
-            resolver.resolve(DotoriRoleInterceptor.self)!
-        ]
-        #else
-        return [
-            resolver.resolve(JwtInterceptor.self)!,
-            resolver.resolve(DotoriRoleInterceptor.self)!
-        ]
-        #endif
     }
 }

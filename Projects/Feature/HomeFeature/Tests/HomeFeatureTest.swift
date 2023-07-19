@@ -1,11 +1,91 @@
+import BaseFeature
+import Combine
+import Moordinator
 import XCTest
+@testable import HomeFeature
+@testable import TimerTesting
+@testable import SelfStudyDomainTesting
+@testable import MassageDomainTesting
+@testable import MealDomainTesting
+@testable import UserDomainTesting
 
 final class HomeFeatureTests: XCTestCase {
-    override func setUpWithError() throws {}
+    var repeatableTimer: RepeatableTimerStub!
+    var fetchSelfStudyInfoUseCase: FetchSelfStudyInfoUseCaseSpy!
+    var fetchMassageInfoUseCase: FetchMassageInfoUseCaseSpy!
+    var fetchMealInfoUseCase: FetchMealInfoUseCaseSpy!
+    var loadCurrentUserRoleUseCase: LoadCurrentUserRoleUseCaseSpy!
+    var applySelfStudyUseCase: ApplySelfStudyUseCaseSpy!
+    var applyMassageUseCase: ApplyMassageUseCaseSpy!
+    var sut: HomeStore!
+    var subscription: Set<AnyCancellable>!
 
-    override func tearDownWithError() throws {}
+    override func setUp() {
+        repeatableTimer = .init()
+        fetchSelfStudyInfoUseCase = .init()
+        fetchMassageInfoUseCase = .init()
+        fetchMealInfoUseCase = .init()
+        loadCurrentUserRoleUseCase = .init()
+        applySelfStudyUseCase = .init()
+        applyMassageUseCase = .init()
+        sut = .init(
+            repeatableTimer: repeatableTimer,
+            fetchSelfStudyInfoUseCase: fetchSelfStudyInfoUseCase,
+            fetchMassageInfoUseCase: fetchMassageInfoUseCase,
+            fetchMealInfoUseCase: fetchMealInfoUseCase,
+            loadCurrentUserRoleUseCase: loadCurrentUserRoleUseCase,
+            applySelfStudyUseCase: applySelfStudyUseCase,
+            applyMassageUseCase: applyMassageUseCase
+        )
+        subscription = .init()
+    }
 
-    func testExample() {
-        XCTAssertEqual(1, 1)
+    override func tearDown() {
+        repeatableTimer = nil
+        fetchSelfStudyInfoUseCase = nil
+        fetchMassageInfoUseCase = nil
+        fetchMealInfoUseCase = nil
+        loadCurrentUserRoleUseCase = nil
+        applySelfStudyUseCase = nil
+        applyMassageUseCase = nil
+        sut = nil
+        subscription = nil
+    }
+
+    func testViewDidLoad() {
+        let checkDate = Date()
+        repeatableTimer.repeatPublisherClosure = { _, _, _ in
+            Just(checkDate)
+                .eraseToAnyPublisher()
+        }
+
+        let expectation = XCTestExpectation(description: "Asd")
+        var testTargetDate: Date?
+
+        sut.state.map(\.currentTime).sink {
+            testTargetDate = $0
+            expectation.fulfill()
+        }
+        .store(in: &subscription)
+
+        sut.send(.viewDidLoad)
+        wait(for: [expectation], timeout: 2)
+
+        XCTAssertEqual(checkDate, testTargetDate)
+    }
+
+    func testMyInfoBarButtonDidTap() {
+        var route: RoutePath = DotoriRoutePath.main
+        sut.route.sink {
+            route = $0
+        }
+        .store(in: &subscription)
+
+        sut.send(.myInfoButtonDidTap)
+
+        guard case DotoriRoutePath.alert = route else {
+            XCTFail("route not sent 'alert'")
+            return
+        }
     }
 }

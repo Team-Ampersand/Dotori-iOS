@@ -41,7 +41,6 @@ let project = Project.module(
         ),
         .implements(
             module: .core(.Networking),
-            product: .staticLibrary,
             dependencies: [
                 .core(target: .Networking, type: .interface),
                 .core(target: .JwtStore, type: .interface),

@@ -20,4 +20,8 @@ public extension Date {
     var minute: Int {
         return Calendar.current.component(.minute, from: self)
     }
+
+    var second: Int {
+        return Calendar.current.component(.second, from: self)
+    }
 }

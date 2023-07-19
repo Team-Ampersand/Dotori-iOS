@@ -72,12 +72,10 @@ final class GRDBLocalDatabase: LocalDatabase {
 
     func readRecords<Record: FetchableRecord & PersistableRecord>(
         as record: Record.Type,
-        filter: [String: some DatabaseValueConvertible],
-        ordered: [some SQLOrderingTerm]
+        ordered: [any SQLOrderingTerm]
     ) throws -> [Record] {
         try self.dbQueue.read { db in
             try record
-                .filter(key: filter)
                 .order(ordered)
                 .fetchAll(db)
         }
@@ -85,14 +83,27 @@ final class GRDBLocalDatabase: LocalDatabase {
 
     func readRecords<Record: FetchableRecord & PersistableRecord>(
         as record: Record.Type,
-        filter: [String: some DatabaseValueConvertible],
-        ordered: [some SQLOrderingTerm],
+        filter: SQLSpecificExpressible,
+        ordered: [any SQLOrderingTerm]
+    ) throws -> [Record] {
+        try self.dbQueue.read { db in
+            try record
+                .filter(filter)
+                .order(ordered)
+                .fetchAll(db)
+        }
+    }
+
+    func readRecords<Record: FetchableRecord & PersistableRecord>(
+        as record: Record.Type,
+        filter: SQLSpecificExpressible,
+        ordered: [any SQLOrderingTerm],
         limit: Int,
         offset: Int?
     ) throws -> [Record] {
         try self.dbQueue.read { db in
             try record
-                .filter(key: filter)
+                .filter(filter)
                 .order(ordered)
                 .limit(limit, offset: offset)
                 .fetchAll(db)
@@ -101,7 +112,7 @@ final class GRDBLocalDatabase: LocalDatabase {
 
     func readRecord<Record: FetchableRecord & PersistableRecord>(
         as record: Record.Type,
-        at key: some DatabaseValueConvertible
+        at key: any DatabaseValueConvertible
     ) throws -> Record? {
         try dbQueue.read { db in
             try record.fetchOne(db, key: key)
@@ -110,7 +121,7 @@ final class GRDBLocalDatabase: LocalDatabase {
 
     func updateRecord<Record: FetchableRecord & PersistableRecord>(
         as record: Record.Type,
-        at key: some DatabaseValueConvertible,
+        at key: any DatabaseValueConvertible,
         transform: (inout Record) -> Void
     ) throws {
         try dbQueue.write { db in
@@ -130,7 +141,7 @@ final class GRDBLocalDatabase: LocalDatabase {
 
     func delete<Record: FetchableRecord & PersistableRecord>(
         as record: Record.Type,
-        key: some DatabaseValueConvertible
+        key: any DatabaseValueConvertible
     ) throws {
         try dbQueue.write { db in
             _ = try record.deleteOne(db, key: key)

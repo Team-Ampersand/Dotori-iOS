@@ -4,13 +4,13 @@ import Combine
 import NetworkingInterface
 
 final class RemoteAuthDataSourceImpl: RemoteAuthDataSource {
-    private let authNetworking: any Networking<AuthEndpoint>
+    private let networking: any Networking
 
-    init(authNetworking: any Networking<AuthEndpoint>) {
-        self.authNetworking = authNetworking
+    init(networking: any Networking) {
+        self.networking = networking
     }
 
     func signin(req: SigninRequestDTO) async throws {
-        try await authNetworking.request(.signin(email: req.email, password: req.password))
+        try await networking.request(AuthEndpoint.signin(email: req.email, password: req.password))
     }
 }

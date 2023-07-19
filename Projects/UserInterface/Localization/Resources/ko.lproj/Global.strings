@@ -7,3 +7,4 @@
 */
 
 "unknown_error" = "알 수 없는 오류가 발생했습니다. 지속될 시 문의해주세요.";
+"cancel_button_title" = "취소";

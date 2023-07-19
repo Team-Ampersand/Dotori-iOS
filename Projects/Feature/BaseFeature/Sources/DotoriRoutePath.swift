@@ -1,6 +1,16 @@
 import Moordinator
+import UIKit
 
 public enum DotoriRoutePath: RoutePath {
+    // MARK: Global
+    case alert(
+        title: String? = nil,
+        message: String? = nil,
+        style: UIAlertController.Style = .alert,
+        actions: [UIAlertAction] = []
+    )
+
+    // MARK: Auth
     case splash
     case signin
     case signup
@@ -10,6 +20,7 @@ public enum DotoriRoutePath: RoutePath {
 
     // MARK: Home
     case home
+    case myInfoActionSheet
 
     // MARK: Notice
     case notice

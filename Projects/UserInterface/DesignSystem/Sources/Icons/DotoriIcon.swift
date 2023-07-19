@@ -9,6 +9,7 @@ public extension UIImage {
         public static let chevronLeft = DesignSystemAsset.DotoriIcon.chevronLeft.image
         public static let chevronRight = DesignSystemAsset.DotoriIcon.chevronRight.image
         public static let dotoriSigninLogo = DesignSystemAsset.DotoriIcon.dotoriSigninLogo.image
+        public static let dotoriHomeLogo = DesignSystemAsset.DotoriIcon.dotoriHomeLogo.image
         public static let download = DesignSystemAsset.DotoriIcon.download.image
         public static let exclamationMark = DesignSystemAsset.DotoriIcon.exclamationMark.image
         public static let eye = DesignSystemAsset.DotoriIcon.eye.image
@@ -22,6 +23,7 @@ public extension UIImage {
         public static let men = DesignSystemAsset.DotoriIcon.men.image
         public static let pen = DesignSystemAsset.DotoriIcon.pen.image
         public static let person = DesignSystemAsset.DotoriIcon.person.image
+        public static let personCircle = DesignSystemAsset.DotoriIcon.personCircle.image
         public static let plus = DesignSystemAsset.DotoriIcon.plus.image
         public static let search = DesignSystemAsset.DotoriIcon.search.image
         public static let shortcut = DesignSystemAsset.DotoriIcon.shortcut.image

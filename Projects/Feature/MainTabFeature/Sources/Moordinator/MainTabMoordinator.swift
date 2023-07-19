@@ -39,6 +39,12 @@ final class MainTabMoordinator: Moordinator {
         case .main:
             return coordinateToMainTab()
 
+        case .selfStudy:
+            rootVC.selectedIndex = 2
+
+        case .massage:
+            rootVC.selectedIndex = 3
+
         default:
             return .none
         }

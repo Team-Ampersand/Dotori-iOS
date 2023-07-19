@@ -1,7 +1,7 @@
 import DatabaseInterface
 import GRDB
 
-final class MockLocalDatabase: LocalDatabase {
+final class LocalDatabaseMock: LocalDatabase {
     var saveCallCount = 0
     func save(record: some FetchableRecord & PersistableRecord) throws {
         saveCallCount += 1
@@ -15,8 +15,8 @@ final class MockLocalDatabase: LocalDatabase {
     var readRecordsCallCount = 0
     func readRecords<Record: FetchableRecord & PersistableRecord>(
         as record: Record.Type,
-        filter: [String: some DatabaseValueConvertible],
-        ordered: [some SQLOrderingTerm]
+        filter: [String: any DatabaseValueConvertible],
+        ordered: [any SQLOrderingTerm]
     ) throws -> [Record] {
         readRecordsCallCount += 1
         return []
@@ -25,8 +25,8 @@ final class MockLocalDatabase: LocalDatabase {
     var readRecordsWithLimitCallCount = 0
     func readRecords<Record: FetchableRecord & PersistableRecord>(
         as record: Record.Type,
-        filter: [String: some DatabaseValueConvertible],
-        ordered: [some SQLOrderingTerm],
+        filter: [String: any DatabaseValueConvertible],
+        ordered: [any SQLOrderingTerm],
         limit: Int,
         offset: Int?
     ) throws -> [Record] {
@@ -37,7 +37,7 @@ final class MockLocalDatabase: LocalDatabase {
     var readRecordCallCount = 0
     func readRecord<Record: FetchableRecord & PersistableRecord>(
         as record: Record.Type,
-        at key: some DatabaseValueConvertible
+        at key: any DatabaseValueConvertible
     ) throws -> Record? {
         readRecordCallCount += 1
         return nil
@@ -46,7 +46,7 @@ final class MockLocalDatabase: LocalDatabase {
     var updateRecordCallCount = 0
     func updateRecord<Record: FetchableRecord & PersistableRecord>(
         as record: Record.Type,
-        at key: some DatabaseValueConvertible,
+        at key: any DatabaseValueConvertible,
         transform: (inout Record) -> Void
     ) throws {
         updateRecordCallCount += 1
@@ -62,7 +62,7 @@ final class MockLocalDatabase: LocalDatabase {
     var deleteKeyCallCount = 0
     func delete<Record: FetchableRecord & PersistableRecord>(
         as record: Record.Type,
-        key: some DatabaseValueConvertible
+        key: any DatabaseValueConvertible
     ) throws {
         deleteKeyCallCount += 1
     }

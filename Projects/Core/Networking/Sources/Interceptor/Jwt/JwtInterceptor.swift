@@ -16,7 +16,8 @@ public struct JwtInterceptor: InterceptorType {
         endpoint: EndpointType,
         completion: @escaping (Result<URLRequest, EmdpointError>) -> Void
     ) {
-        guard let jwtTokenType = (endpoint as? JwtAuthorizable)?.jwtTokenType,
+        let newEndpoint = (endpoint as? AnyEndpoint)?.endpoint ?? endpoint
+        guard let jwtTokenType = (newEndpoint as? JwtAuthorizable)?.jwtTokenType,
               jwtTokenType != .none
         else {
             completion(.success(request))

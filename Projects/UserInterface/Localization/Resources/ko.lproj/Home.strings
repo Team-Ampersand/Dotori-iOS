@@ -5,3 +5,25 @@
   Created by 최형우 on 2023/06/07.
   Copyright © 2023 com.msg. All rights reserved.
 */
+
+"current_time_title" = "현재시간";
+"self_study_apply_title" = "자습신청";
+"self_study_apply_button_title" = "자습신청";
+"massage_apply_title" = "안마의자";
+"massage_apply_button_title" = "안마신청";
+"breakfast" = "아침";
+"lunch" = "점심";
+"dinner" = "저녁";
+"meal_title" = "급식";
+"profile_edit_button_title" = "프로필 수정";
+"violation_history_button_title" = "규정위반 내역";
+"change_password_button_title" = "비밀번호 수정";
+"logout_button_title" = "로그아웃";
+"can_self_study_button_title" = "자습 신청";
+"can_massage_button_title" = "안마 신청";
+"cant_apply_button_title" = "신청 불가";
+"impossible_self_study_button_title" = "신청 정지";
+"applied_self_study_button_title" = "신청 취소";
+"applied_massage_button_title" = "신청 취소";
+"modify_limit_button_title" = "인원 수정";
+"recent_refresh_date" = "최근 새로고침 : %@";
