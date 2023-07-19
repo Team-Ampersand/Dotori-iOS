@@ -5,9 +5,13 @@ import Moordinator
 
 final class NoticeMoordinator: Moordinator {
     private let rootVC = UINavigationController()
-
+    private let noticeViewController: any StoredViewControllable
     var root: Presentable {
         rootVC
+    }
+
+    init(noticeViewController: any StoredViewControllable) {
+        self.noticeViewController = noticeViewController
     }
 
     func route(to path: RoutePath) -> MoordinatorContributors {
@@ -25,8 +29,7 @@ final class NoticeMoordinator: Moordinator {
 
 private extension NoticeMoordinator {
     func coordinateToNotice() -> MoordinatorContributors {
-        let noticeWebViewController = DWebViewController(urlString: "https://www.dotori-gsm.com/notice")
-        self.rootVC.setViewControllers([noticeWebViewController], animated: true)
-        return .none
+        self.rootVC.setViewControllers([self.noticeViewController], animated: true)
+        return .one(.contribute(withNextPresentable: self.noticeViewController, withNextRouter: self.noticeViewController.store))
     }
 }

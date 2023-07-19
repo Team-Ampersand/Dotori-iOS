@@ -2,6 +2,8 @@ import Moordinator
 
 struct NoticeFactoryImpl: NoticeFactory {
     func makeMoordinator() -> Moordinator {
-        NoticeMoordinator()
+        let noticeStore = NoticeStore()
+        let noticeViewController = NoticeViewController(store: noticeStore)
+        return NoticeMoordinator(noticeViewController: noticeViewController)
     }
 }
