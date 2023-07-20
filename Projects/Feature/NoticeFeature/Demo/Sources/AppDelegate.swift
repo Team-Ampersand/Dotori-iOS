@@ -1,3 +1,4 @@
+import Inject
 import UIKit
 @testable import NoticeFeature
 
@@ -12,7 +13,9 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         let store = NoticeStore()
         let viewController = NoticeViewController(store: store)
-        window?.rootViewController = viewController
+        window?.rootViewController = Inject.ViewControllerHost(
+            UINavigationController(rootViewController: viewController)
+        )
         window?.makeKeyAndVisible()
 
         return true

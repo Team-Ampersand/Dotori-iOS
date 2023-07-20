@@ -1,8 +1,9 @@
 import UIKit
 
 public final class DotoriBarButtonItem: UIBarButtonItem {
-    public convenience override init() {
-        self.init(title: "DOTORI", style: .done, target: nil, action: nil)
+    public override init() {
+        super.init()
+        self.title = "DOTORI"
         self.isEnabled = false
         self.setTitleTextAttributes([
             .font: UIFont.dotori(.h3),
