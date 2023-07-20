@@ -13,7 +13,8 @@ let project = Project.module(
             .userInterface(target: .DesignSystem),
             .userInterface(target: .Localization),
             .shared(target: .GlobalThirdPartyLibrary),
-            .shared(target: .UtilityModule)
+            .shared(target: .UtilityModule),
+            .shared(target: .UIKitUtil)
         ]),
         .tests(module: .feature(.BaseFeature), dependencies: [
             .feature(target: .BaseFeature)

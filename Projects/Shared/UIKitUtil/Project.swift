@@ -1,10 +1,10 @@
+import DependencyPlugin
 import ProjectDescription
 import ProjectDescriptionHelpers
-import DependencyPlugin
 
-let project = Project.makeModule(
+let project = Project.module(
     name: ModulePaths.Shared.UIKitUtil.rawValue,
-    product: .staticLibrary,
-    targets: [.unitTest],
-    internalDependencies: []
+    targets: [
+        .implements(module: .shared(.UIKitUtil), product: .framework)
+    ]
 )
