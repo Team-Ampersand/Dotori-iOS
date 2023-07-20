@@ -25,7 +25,7 @@ where Cell: UITableViewCell, Cell: AdaptableCell, Model == Cell.Model {
     private func makeCells() -> [Cell] {
         return models.map {
             let cell = Cell()
-            cell.adapt(mode: $0)
+            cell.adapt(model: $0)
             return cell
         }
     }
