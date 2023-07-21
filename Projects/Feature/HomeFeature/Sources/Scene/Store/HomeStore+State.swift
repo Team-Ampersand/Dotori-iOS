@@ -1,3 +1,4 @@
+import BaseDomainInterface
 import Foundation
 import Localization
 import MassageDomainInterface

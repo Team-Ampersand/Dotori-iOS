@@ -8,6 +8,7 @@ import ProjectDescriptionHelpers
 let project = Project.module(
     name: ModulePaths.Domain.BaseDomain.rawValue,
     targets: [
+        .interface(module: .domain(.BaseDomain)),
         .implements(
             module: .domain(.BaseDomain),
             dependencies: [
