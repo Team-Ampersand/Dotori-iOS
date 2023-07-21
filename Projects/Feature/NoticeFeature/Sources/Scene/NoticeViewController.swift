@@ -52,9 +52,7 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
     override func bindState() {
         Just([(), (), ()])
             .map { [GenericTableViewSectionModel<Void, NoticeCell>(models: $0)] }
-            .sink(receiveValue: { [noticeTableAdapter] sectionModels in
-                noticeTableAdapter.updateSections(sections: sectionModels)
-            })
+            .sink(receiveValue: noticeTableAdapter.updateSections(sections:))
             .store(in: &subscription)
     }
 }

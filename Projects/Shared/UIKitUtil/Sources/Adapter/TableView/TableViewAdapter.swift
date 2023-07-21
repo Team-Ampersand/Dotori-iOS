@@ -29,6 +29,20 @@ extension TableViewAdapter: UITableViewDelegate, UITableViewDataSource {
 
     public func tableView(
         _ tableView: UITableView,
+        viewForHeaderInSection section: Int
+    ) -> UIView? {
+        return sections[section].viewForHeaderInSection(tableView, section)
+    }
+
+    public func tableView(
+        _ tableView: UITableView,
+        viewForFooterInSection section: Int
+    ) -> UIView? {
+        return sections[section].viewForFooterInSection(tableView, section)
+    }
+
+    public func tableView(
+        _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
         return sections[indexPath.section].cell(at: indexPath.row)
