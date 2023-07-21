@@ -3,6 +3,8 @@ import UIKit
 public final class TableViewAdapter: NSObject {
     private let tableView: UITableView
     private var sections: [any TableViewSectionModel]
+    public var viewForHeaderInSection: (UITableView, Int) -> UIView? = { _, _ in nil }
+    public var viewForFooterInSection: (UITableView, Int) -> UIView? = { _, _ in nil }
 
     public init(tableView: UITableView, sections: [any TableViewSectionModel] = []) {
         self.tableView = tableView
@@ -31,14 +33,14 @@ extension TableViewAdapter: UITableViewDelegate, UITableViewDataSource {
         _ tableView: UITableView,
         viewForHeaderInSection section: Int
     ) -> UIView? {
-        return sections[section].viewForHeaderInSection(tableView, section)
+        return self.viewForHeaderInSection(tableView, section)
     }
 
     public func tableView(
         _ tableView: UITableView,
         viewForFooterInSection section: Int
     ) -> UIView? {
-        return sections[section].viewForFooterInSection(tableView, section)
+        return self.viewForFooterInSection(tableView, section)
     }
 
     public func tableView(

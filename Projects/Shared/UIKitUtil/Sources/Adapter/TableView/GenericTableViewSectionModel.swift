@@ -5,8 +5,6 @@ public final class GenericTableViewSectionModel<Model, Cell>:
 where Cell: UITableViewCell, Cell: AdaptableCell, Model == Cell.Model {
     private let models: [Model]
     private lazy var cells: [Cell] = makeCells()
-    public var viewForHeaderInSection: (UITableView, Int) -> UIView? = { _, _ in nil }
-    public var viewForFooterInSection: (UITableView, Int) -> UIView? = { _, _ in nil }
 
     public init(models: [Model]) {
         self.models = models
