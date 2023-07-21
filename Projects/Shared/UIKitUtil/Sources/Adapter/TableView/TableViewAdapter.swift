@@ -1,9 +1,9 @@
 import UIKit
 
 public final class TableViewAdapter: NSObject {
-    private var sections: [any TableViewSectionModel] = []
+    private var sections: [any TableViewSectionModel]
 
-    public init(sections: [any TableViewSectionModel]) {
+    public init(sections: [any TableViewSectionModel] = []) {
         self.sections = sections
     }
 

@@ -6,7 +6,7 @@ where Cell: UITableViewCell, Cell: AdaptableCell, Model == Cell.Model {
     private let models: [Model]
     private lazy var cells: [Cell] = makeCells()
 
-    init(models: [Model]) {
+    public init(models: [Model]) {
         self.models = models
     }
 

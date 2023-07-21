@@ -36,13 +36,14 @@ final class NoticeCell: BaseTableViewCell<Void> {
                 }
             }
             .margin(.init(top: 12, left: 16, bottom: 12, right: 16))
+            .set(\.backgroundColor, .dotori(.neutral(.n50)))
+            .set(\.cornerRadius, 8)
         }
+        .margin(.vertical(6))
     }
 
     override func configureView() {
         self.backgroundColor = .clear
-        self.backgroundColor = .dotori(.neutral(.n50))
-        self.cornerRadius = 8
-        self.clipsToBounds = true
+        self.selectionStyle = .none
     }
 }

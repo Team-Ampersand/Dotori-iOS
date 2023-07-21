@@ -1,5 +1,8 @@
 import BaseFeature
+import Combine
+import CombineUtility
 import DesignSystem
+import GlobalThirdPartyLibrary
 import Localization
 import MSGLayout
 import UIKit
@@ -18,6 +21,7 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
         .then {
             $0.register(cellType: NoticeCell.self)
         }
+    private let noticeTableAdapter = TableViewAdapter()
 
     override func addView() {
         view.addSubviews {
@@ -37,24 +41,19 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
                 .horizontal(.toSuperview(), .equal(Metric.horizontalPadding))
                 .bottom(.toSuperview())
         }
-        noticeTableView.dataSource = self
     }
 
     override func configureNavigation() {
         self.navigationItem.setLeftBarButton(dotoriBarButton, animated: true)
     }
-}
 
-extension NoticeViewController: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        1
-    }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(for: indexPath, cellType: NoticeCell.self)
-        return cell
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+    override func bindState() {
+        Just([(), (), ()])
+            .map { GenericTableViewSectionModel<Void, NoticeCell>(models: $0) }
+            .sink(receiveValue: { [noticeTableView, noticeTableAdapter] sectionModel in
+                noticeTableAdapter.updateSections(sections: [sectionModel])
+                noticeTableView.setAdapter(adapter: noticeTableAdapter)
+            })
+            .store(in: &subscription)
     }
 }
