@@ -22,6 +22,10 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
             $0.register(cellType: NoticeCell.self)
         }
     private lazy var noticeTableAdapter = TableViewAdapter(tableView: noticeTableView).then {
+        $0.viewForHeaderInSection = { _, _ in
+            return DotoriLabel("2023년 7월")
+                .set(\.textAlignment, .center)
+        }
         noticeTableView.setAdapter(adapter: $0)
     }
 
