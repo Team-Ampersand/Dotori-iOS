@@ -5,6 +5,7 @@ import DesignSystem
 import GlobalThirdPartyLibrary
 import Localization
 import MSGLayout
+import NoticeDomainInterface
 import UIKit
 import UIKitUtil
 
@@ -54,9 +55,20 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
         self.view.backgroundColor = .dotori(.background(.card))
     }
 
+    override func bindAction() {
+        viewDidLoadPublisher
+            .map { Store.Action.viewDidLoad }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+    }
+
     override func bindState() {
-        Just([(), (), ()])
-            .map { [GenericTableViewSectionModel<Void, NoticeCell>(models: $0)] }
+        let sharedState = store.state.share()
+            .receive(on: DispatchQueue.main)
+
+        sharedState
+            .map(\.noticeList)
+            .map { [GenericTableViewSectionModel<NoticeModel, NoticeCell>(models: $0)] }
             .sink(receiveValue: noticeTableAdapter.updateSections(sections:))
             .store(in: &subscription)
     }
