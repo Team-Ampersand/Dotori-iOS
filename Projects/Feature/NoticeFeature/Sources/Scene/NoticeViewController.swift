@@ -21,7 +21,9 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
         .then {
             $0.register(cellType: NoticeCell.self)
         }
-    private let noticeTableAdapter = TableViewAdapter()
+    private lazy var noticeTableAdapter = TableViewAdapter(tableView: noticeTableView).then {
+        noticeTableView.setAdapter(adapter: $0)
+    }
 
     override func addView() {
         view.addSubviews {
@@ -49,10 +51,9 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
 
     override func bindState() {
         Just([(), (), ()])
-            .map { GenericTableViewSectionModel<Void, NoticeCell>(models: $0) }
-            .sink(receiveValue: { [noticeTableView, noticeTableAdapter] sectionModel in
-                noticeTableAdapter.updateSections(sections: [sectionModel])
-                noticeTableView.setAdapter(adapter: noticeTableAdapter)
+            .map { [GenericTableViewSectionModel<Void, NoticeCell>(models: $0)] }
+            .sink(receiveValue: { [noticeTableAdapter] sectionModels in
+                noticeTableAdapter.updateSections(sections: sectionModels)
             })
             .store(in: &subscription)
     }

@@ -1,14 +1,17 @@
 import UIKit
 
 public final class TableViewAdapter: NSObject {
+    private let tableView: UITableView
     private var sections: [any TableViewSectionModel]
 
-    public init(sections: [any TableViewSectionModel] = []) {
+    public init(tableView: UITableView, sections: [any TableViewSectionModel] = []) {
+        self.tableView = tableView
         self.sections = sections
     }
 
     public func updateSections(sections: [any TableViewSectionModel]) {
         self.sections = sections
+        tableView.reloadData()
     }
 }
 
