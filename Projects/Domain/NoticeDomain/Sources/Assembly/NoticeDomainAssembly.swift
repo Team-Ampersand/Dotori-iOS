@@ -3,6 +3,7 @@ import NoticeDomainInterface
 import Swinject
 
 public final class NoticeDomainAssembly: Assembly {
+    public init() {}
     public func assemble(container: Container) {
         container.register(RemoteNoticeDataSource.self) { resolver in
             RemoteNoticeDataSourceImpl(networking: resolver.resolve(Networking.self)!)
