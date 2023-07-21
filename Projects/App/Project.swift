@@ -39,6 +39,7 @@ let targets: [Target] = [
             .domain(target: .SelfStudyDomain),
             .domain(target: .MassageDomain),
             .domain(target: .MealDomain),
+            .domain(target: .NoticeDomain),
             .core(target: .JwtStore),
             .core(target: .KeyValueStore),
             .core(target: .Networking),
