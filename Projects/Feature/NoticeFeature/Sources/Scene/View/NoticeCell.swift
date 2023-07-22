@@ -30,6 +30,7 @@ final class NoticeCell: BaseTableViewCell<NoticeModel> {
 
             dateLabel
         }
+        .alignment(.center)
 
         VStackView(spacing: 2) {
             titleLabel
