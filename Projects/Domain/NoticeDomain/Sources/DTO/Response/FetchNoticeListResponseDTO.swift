@@ -10,8 +10,8 @@ struct FetchNoticeListResponseDTO: Decodable {
         let id: Int
         let title: String
         let content: String
-        let roles: UserRoleType
-        let createdTime: String
+        let role: UserRoleType
+        let createdDate: String
     }
 }
 
@@ -21,8 +21,8 @@ extension FetchNoticeListResponseDTO.NoticeResponseDTO {
             id: id,
             title: title,
             content: content,
-            roles: roles,
-            createdTime: createdTime.toDateWithCustomFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
+            roles: role,
+            createdTime: createdDate.toDateWithCustomFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
         )
     }
 }
