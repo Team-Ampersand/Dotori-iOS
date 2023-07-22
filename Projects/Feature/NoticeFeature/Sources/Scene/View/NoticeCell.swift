@@ -2,6 +2,7 @@ import BaseDomainInterface
 import BaseFeature
 import DateUtility
 import DesignSystem
+import Localization
 import MSGLayout
 import NoticeDomainInterface
 import UIKit
@@ -72,10 +73,10 @@ final class NoticeCell: BaseTableViewCell<NoticeModel> {
 private extension UserRoleType {
     var toAuthorString: String {
         switch self {
-        case .admin: return "사감선생님"
-        case .councillor: return "기숙사자치위원회"
-        case .developer: return "도토리"
-        case .member: return "학생"
+        case .admin: return L10n.Notice.authorRoleAdmin
+        case .councillor: return L10n.Notice.authorRoleCouncillor
+        case .developer: return L10n.Notice.authorRoleDeveloper
+        case .member: return L10n.Notice.authorRoleMember
         }
     }
 

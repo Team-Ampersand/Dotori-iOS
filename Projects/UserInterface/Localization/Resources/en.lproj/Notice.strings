@@ -7,3 +7,7 @@
 */
 
 "entire_title" = "Entire";
+"author_role_admin" = "Dormitory Supervisor";
+"author_role_developer" = "Dotori";
+"author_role_councillor" = "Dormitory Councillor";
+"author_role_member" = "Student";
