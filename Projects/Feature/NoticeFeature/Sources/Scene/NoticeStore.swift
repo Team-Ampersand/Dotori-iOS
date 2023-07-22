@@ -3,6 +3,7 @@ import BaseFeature
 import Combine
 import DateUtility
 import Foundation
+import Localization
 import Moordinator
 import NoticeDomainInterface
 import Store
@@ -96,7 +97,8 @@ private extension NoticeStore {
         return noticeList.reduce(
             into: [SectiondNoticeTuple]()
         ) { partialResult, notice in
-            let yearAndMonth = notice.createdTime.toStringWithCustomFormat("yyyy년 MM월")
+            let yearAndMonth = notice.createdTime
+                .toStringWithCustomFormat(L10n.Notice.noticeSectionDateFormat)
 
             if let index = partialResult.firstIndex(where: { $0.section == yearAndMonth }) {
                 var sectionTuple = partialResult[index]

@@ -7,6 +7,7 @@
 */
 
 "entire_title" = "전체";
+"notice_section_date_format" = "yyyy년 MM월";
 "author_role_admin" = "사감선생님";
 "author_role_developer" = "도토리";
 "author_role_councillor" = "기숙사자치위원회";
