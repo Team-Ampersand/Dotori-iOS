@@ -1,23 +1,51 @@
 import UIKit
 
-public final class TableViewAdapter: NSObject {
-    private let tableView: UITableView
-    private var sections: [any TableViewSectionModel]
-    public var viewForHeaderInSection: (UITableView, Int) -> UIView? = { _, _ in nil }
-    public var viewForFooterInSection: (UITableView, Int) -> UIView? = { _, _ in nil }
+public final class TableViewAdapter<Section: SectionModelProtocol>:
+    NSObject,
+    UITableViewDelegate,
+    UITableViewDataSource {
 
-    public init(tableView: UITableView, sections: [any TableViewSectionModel] = []) {
+    public typealias Item = Section.Item
+    private let tableView: UITableView
+    private var sections: [Section] = []
+    private var configureCell: (UITableView, IndexPath, Item) -> UITableViewCell
+    private var viewForHeaderInSection: (UITableView, Int) -> UIView? = { _, _ in nil }
+    private var viewForFooterInSection: (UITableView, Int) -> UIView? = { _, _ in nil }
+
+    public init(
+        tableView: UITableView,
+        configureCell: @escaping (UITableView, IndexPath, Item) -> UITableViewCell,
+        viewForHeaderInSection: @escaping (UITableView, Int) -> UIView? = { _, _ in nil },
+        viewForFooterInSection: @escaping (UITableView, Int) -> UIView? = { _, _ in nil }
+    ) {
         self.tableView = tableView
-        self.sections = sections
+        self.configureCell = configureCell
+        self.viewForHeaderInSection = viewForHeaderInSection
+        self.viewForFooterInSection = viewForFooterInSection
+        super.init()
+        tableView.delegate = self
+        tableView.dataSource = self
     }
 
-    public func updateSections(sections: [any TableViewSectionModel]) {
+    public func updateSections(sections: [Section]) {
         self.sections = sections
         tableView.reloadData()
     }
-}
 
-extension TableViewAdapter: UITableViewDelegate, UITableViewDataSource {
+    public func setViewForHeaderInSection(
+        _ viewForHeaderInSection: @escaping (UITableView, Int) -> UIView?
+    ) {
+        self.viewForHeaderInSection = viewForHeaderInSection
+    }
+
+    public func setViewForFooterInSection(
+        _ viewForFooterInSection: @escaping (UITableView, Int) -> UIView?
+    ) {
+        self.viewForFooterInSection = viewForFooterInSection
+    }
+
+    // MARK: - TableView Delegate & DataSource
+
     public func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
@@ -26,7 +54,7 @@ extension TableViewAdapter: UITableViewDelegate, UITableViewDataSource {
         _ tableView: UITableView,
         numberOfRowsInSection section: Int
     ) -> Int {
-        return sections[section].count
+        return sections[section].items.count
     }
 
     public func tableView(
@@ -47,26 +75,16 @@ extension TableViewAdapter: UITableViewDelegate, UITableViewDataSource {
         _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
-        return sections[indexPath.section].cell(at: indexPath.row)
-    }
-
-    public func tableView(
-        _ tableView: UITableView,
-        didSelectRowAt indexPath: IndexPath
-    ) {
-        sections[indexPath.section].selected(at: indexPath.row)
-    }
-
-    public func tableView(
-        _ tableView: UITableView,
-        didDeselectRowAt indexPath: IndexPath
-    ) {
-        sections[indexPath.section].deselected(at: indexPath.row)
+        return self.configureCell(
+            tableView,
+            indexPath,
+            sections[indexPath.section].items[indexPath.row]
+        )
     }
 }
 
 public extension UITableView {
-    func setAdapter(adapter: TableViewAdapter) {
+    func setAdapter<Section: SectionModelProtocol>(adapter: TableViewAdapter<Section>) {
         self.delegate = adapter
         self.dataSource = adapter
         self.reloadData()

@@ -24,12 +24,15 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
         .then {
             $0.register(cellType: NoticeCell.self)
         }
-    private lazy var noticeTableAdapter = TableViewAdapter(tableView: noticeTableView).then {
-        $0.viewForHeaderInSection = { [store] _, index in
-            guard store.currentState.noticeSectionList.count > index else { return nil }
-            return NoticeSectionLabel(title: store.currentState.noticeSectionList[index].section)
-        }
-        noticeTableView.setAdapter(adapter: $0)
+    private lazy var noticeTableAdapter = TableViewAdapter<GenericSectionModel<NoticeModel>>(
+        tableView: noticeTableView
+    ) { tableView, indexPath, notice in
+        let cell: NoticeCell = tableView.dequeueReusableCell(for: indexPath)
+        cell.adapt(model: notice)
+        return cell
+    } viewForHeaderInSection: { [store] _, index in
+        let sectionTitle = store.currentState.noticeSectionList[index].section
+        return NoticeSectionLabel(title: sectionTitle)
     }
 
     override func addView() {
@@ -70,9 +73,9 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
 
         sharedState
             .map(\.noticeSectionList)
-            .map { sections in
-                sections.map {
-                    GenericTableViewSectionModel<NoticeModel, NoticeCell>(models: $0.1)
+            .map { noticeSection in
+                noticeSection.map { _, noticeList in
+                    GenericSectionModel(items: noticeList)
                 }
             }
             .sink(receiveValue: noticeTableAdapter.updateSections(sections:))
