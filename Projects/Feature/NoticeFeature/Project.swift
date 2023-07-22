@@ -7,7 +7,8 @@ let project = Project.module(
     targets: [
         .implements(module: .feature(.NoticeFeature), dependencies: [
             .feature(target: .BaseFeature),
-            .domain(target: .NoticeDomain, type: .interface)
+            .domain(target: .NoticeDomain, type: .interface),
+            .domain(target: .UserDomain, type: .interface)
         ]),
         .tests(module: .feature(.NoticeFeature), dependencies: [
             .feature(target: .NoticeFeature)
