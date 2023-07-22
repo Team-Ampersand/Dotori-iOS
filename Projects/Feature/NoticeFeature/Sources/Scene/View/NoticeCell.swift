@@ -11,10 +11,11 @@ final class NoticeCell: BaseTableViewCell<NoticeModel> {
         .set(\.backgroundColor, .blue)
         .set(\.cornerRadius, 6)
         .set(\.clipsToBounds, true)
-    private let authorLabel = DotoriLabel("", font: .smalltitle)
-    private let dateLabel = DotoriLabel("", textColor: .neutral(.n20), font: .caption)
-    private let titleLabel = DotoriLabel("", textColor: .neutral(.n20), font: .caption)
-    private let contentLabel = DotoriLabel("", textColor: .neutral(.n20), font: .caption)
+    private let authorLabel = DotoriLabel(font: .smalltitle)
+    private let dateLabel = DotoriLabel(textColor: .neutral(.n20), font: .caption)
+    private let titleLabel = DotoriLabel(textColor: .neutral(.n20), font: .caption)
+        .set(\.numberOfLines, 1)
+    private let contentLabel = DotoriLabel(textColor: .neutral(.n20), font: .caption)
         .set(\.numberOfLines, 2)
 
     override func setLayout() {
