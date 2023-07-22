@@ -77,5 +77,11 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
             }
             .sink(receiveValue: noticeTableAdapter.updateSections(sections:))
             .store(in: &subscription)
+
+        sharedState
+            .map(\.currentUserRole)
+            .map { $0 != .member }
+            .assign(to: \.allowsSelection, on: noticeTableView)
+            .store(in: &subscription)
     }
 }

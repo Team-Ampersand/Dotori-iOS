@@ -1,3 +1,4 @@
+import BaseDomainInterface
 import BaseFeature
 import Combine
 import DateUtility
@@ -5,6 +6,7 @@ import Foundation
 import Moordinator
 import NoticeDomainInterface
 import Store
+import UserDomainInterface
 
 final class NoticeStore: BaseStore {
     var route: PassthroughSubject<RoutePath, Never> = .init()
@@ -12,22 +14,29 @@ final class NoticeStore: BaseStore {
     var initialState: State
     var stateSubject: CurrentValueSubject<State, Never>
     private let fetchNoticeListUseCase: any FetchNoticeListUseCase
+    private let loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase
 
-    init(fetchNoticeListUseCase: any FetchNoticeListUseCase) {
+    init(
+        fetchNoticeListUseCase: any FetchNoticeListUseCase,
+        loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase
+    ) {
         initialState = .init()
         stateSubject = .init(initialState)
         self.fetchNoticeListUseCase = fetchNoticeListUseCase
+        self.loadCurrentUserRoleUseCase = loadCurrentUserRoleUseCase
     }
 
     struct State {
         var noticeList: [NoticeModel] = []
         var sectionsByYearAndMonth: [(String, [NoticeModel])] = []
+        var currentUserRole: UserRoleType = .member
     }
     enum Action {
         case viewDidLoad
     }
     enum Mutation {
         case updateNoticeList([NoticeModel])
+        case updateCurrentUserRole(UserRoleType)
     }
 }
 
@@ -62,6 +71,9 @@ extension NoticeStore {
             }
 
             newState.sectionsByYearAndMonth = sections
+
+        case let .updateCurrentUserRole(userRole):
+            newState.currentUserRole = userRole
         }
         return newState
     }
@@ -69,12 +81,24 @@ extension NoticeStore {
 
 private extension NoticeStore {
     func viewDidLoad() -> SideEffect<Mutation, Never> {
-        return SideEffect<[NoticeModel], Error>
+        let noticeSideEffect = SideEffect<[NoticeModel], Error>
             .tryAsync { [fetchNoticeListUseCase] in
                 try await fetchNoticeListUseCase()
             }
             .map(Mutation.updateNoticeList)
             .catchToNever()
             .eraseToSideEffect()
+
+        let userRoleSideEffect = SideEffect
+            .just(try? loadCurrentUserRoleUseCase())
+            .replaceNil(with: .member)
+            .setFailureType(to: Never.self)
+            .map(Mutation.updateCurrentUserRole)
+            .eraseToSideEffect()
+        
+        return .merge(
+            noticeSideEffect,
+            userRoleSideEffect
+        )
     }
 }

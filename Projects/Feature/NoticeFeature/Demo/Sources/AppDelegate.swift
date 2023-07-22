@@ -1,7 +1,9 @@
+import BaseDomainInterface
 import Inject
 import UIKit
 @testable import NoticeFeature
 @testable import NoticeDomainTesting
+@testable import UserDomainTesting
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,7 +23,12 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             .init(id: 5, title: "제목", content: "내용내용\n내용내용냐용", roles: .admin, createdTime: .init().addingTimeInterval(TimeInterval(86400 * 31 * 2))),
             .init(id: 6, title: "제목", content: "내용내용\n내용내용\n내용", roles: .developer, createdTime: .init().addingTimeInterval(TimeInterval(86400 * 31 * 3)))
         ]
-        let store = NoticeStore(fetchNoticeListUseCase: fetchNoticeListUseCase)
+
+        let loadCurrentUserRoleUseCase = LoadCurrentUserRoleUseCaseSpy()
+        let store = NoticeStore(
+            fetchNoticeListUseCase: fetchNoticeListUseCase,
+            loadCurrentUserRoleUseCase: loadCurrentUserRoleUseCase
+        )
         let viewController = Inject.ViewControllerHost(
             UINavigationController(rootViewController: NoticeViewController(store: store))
         )
