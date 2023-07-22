@@ -17,33 +17,40 @@ final class NoticeCell: BaseTableViewCell<NoticeModel> {
         .set(\.numberOfLines, 1)
     private let contentLabel = DotoriLabel(textColor: .neutral(.n20), font: .caption)
         .set(\.numberOfLines, 2)
+    private lazy var contentStackView = VStackView(spacing: 8) {
+        HStackView(spacing: 4) {
+            signatureColorView
+                .width(12)
+                .height(12)
+            
+            authorLabel
+            
+            SpacerView()
+            
+            dateLabel
+        }
+        
+        VStackView(spacing: 2) {
+            titleLabel
+            
+            contentLabel
+        }
+    }
+        .margin(.init(top: 12, left: 16, bottom: 12, right: 16))
+        .set(\.backgroundColor, .dotori(.neutral(.n50)))
+        .set(\.cornerRadius, 8)
 
     override func setLayout() {
         MSGLayout.stackedLayout(self.contentView) {
-            VStackView(spacing: 8) {
-                HStackView(spacing: 4) {
-                    signatureColorView
-                        .width(12)
-                        .height(12)
-
-                    authorLabel
-
-                    SpacerView()
-
-                    dateLabel
-                }
-
-                VStackView(spacing: 2) {
-                    titleLabel
-
-                    contentLabel
-                }
-            }
-            .margin(.init(top: 12, left: 16, bottom: 12, right: 16))
-            .set(\.backgroundColor, .dotori(.neutral(.n50)))
-            .set(\.cornerRadius, 8)
+            contentStackView
         }
         .margin(.init(top: 6, left: 20, bottom: 6, right: 20))
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        self.contentStackView.layer.borderColor = selected ? UIColor.dotori(.primary(.p10)).cgColor : UIColor.clear.cgColor
+        self.contentStackView.layer.borderWidth = selected ? 2 : 0
     }
 
     override func configureView() {

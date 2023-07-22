@@ -20,6 +20,7 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
         .set(\.backgroundColor, .clear)
         .set(\.separatorStyle, .none)
         .set(\.sectionHeaderTopPadding, 0)
+        .set(\.allowsMultipleSelection, true)
         .then {
             $0.register(cellType: NoticeCell.self)
         }
