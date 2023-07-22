@@ -42,7 +42,7 @@ final class NoticeCell: BaseTableViewCell<NoticeModel> {
             .set(\.backgroundColor, .dotori(.neutral(.n50)))
             .set(\.cornerRadius, 8)
         }
-        .margin(.vertical(6))
+        .margin(.init(top: 6, left: 20, bottom: 6, right: 20))
     }
 
     override func configureView() {

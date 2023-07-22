@@ -1,5 +1,7 @@
 import BaseFeature
 import Combine
+import DateUtility
+import Foundation
 import Moordinator
 import NoticeDomainInterface
 import Store
@@ -19,6 +21,7 @@ final class NoticeStore: BaseStore {
 
     struct State {
         var noticeList: [NoticeModel] = []
+        var sectionsByYearAndMonth: [(String, [NoticeModel])] = []
     }
     enum Action {
         case viewDidLoad
@@ -44,6 +47,21 @@ extension NoticeStore {
         switch mutate {
         case let .updateNoticeList(noticeList):
             newState.noticeList = noticeList
+            let sections = noticeList.reduce(
+                into: [(String, [NoticeModel])]()
+            ) { partialResult, notice in
+                let yearAndMonth = notice.createdTime.toStringWithCustomFormat("yyyy년 MM월")
+
+                if let index = partialResult.firstIndex(where: { $0.0 == yearAndMonth }) {
+                    var sectionTuple = partialResult[index]
+                    sectionTuple.1.append(notice)
+                    partialResult[index] = sectionTuple
+                } else {
+                    partialResult.append((yearAndMonth, [notice]))
+                }
+            }
+
+            newState.sectionsByYearAndMonth = sections
         }
         return newState
     }
