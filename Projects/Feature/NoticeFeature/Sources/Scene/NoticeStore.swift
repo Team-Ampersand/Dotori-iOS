@@ -33,6 +33,7 @@ final class NoticeStore: BaseStore {
         var noticeList: [NoticeModel] = []
         var noticeSectionList: [SectiondNoticeTuple] = []
         var currentUserRole: UserRoleType = .member
+        var isEditingMode = false
     }
     enum Action {
         case viewDidLoad
@@ -40,6 +41,7 @@ final class NoticeStore: BaseStore {
     enum Mutation {
         case updateNoticeList([NoticeModel])
         case updateCurrentUserRole(UserRoleType)
+        case updateIsEditingMode(Bool)
     }
 }
 
@@ -64,6 +66,9 @@ extension NoticeStore {
 
         case let .updateCurrentUserRole(userRole):
             newState.currentUserRole = userRole
+
+        case let .updateIsEditingMode(isEditingMode):
+            newState.isEditingMode = isEditingMode
         }
         return newState
     }
