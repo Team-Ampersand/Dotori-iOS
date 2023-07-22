@@ -22,17 +22,17 @@ final class NoticeCell: BaseTableViewCell<NoticeModel> {
             signatureColorView
                 .width(12)
                 .height(12)
-            
+
             authorLabel
-            
+
             SpacerView()
-            
+
             dateLabel
         }
-        
+
         VStackView(spacing: 2) {
             titleLabel
-            
+
             contentLabel
         }
     }
@@ -49,7 +49,9 @@ final class NoticeCell: BaseTableViewCell<NoticeModel> {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        self.contentStackView.layer.borderColor = selected ? UIColor.dotori(.primary(.p10)).cgColor : UIColor.clear.cgColor
+        self.contentStackView.layer.borderColor = selected
+        ? UIColor.dotori(.primary(.p10)).cgColor
+        : UIColor.clear.cgColor
         self.contentStackView.layer.borderWidth = selected ? 2 : 0
     }
 
