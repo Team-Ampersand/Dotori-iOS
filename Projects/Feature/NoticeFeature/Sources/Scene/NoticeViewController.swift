@@ -26,8 +26,8 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
         }
     private lazy var noticeTableAdapter = TableViewAdapter(tableView: noticeTableView).then {
         $0.viewForHeaderInSection = { [store] _, index in
-            guard store.currentState.sectionsByYearAndMonth.count > index else { return nil }
-            return NoticeSectionLabel(title: store.currentState.sectionsByYearAndMonth[index].0)
+            guard store.currentState.noticeSectionList.count > index else { return nil }
+            return NoticeSectionLabel(title: store.currentState.noticeSectionList[index].section)
         }
         noticeTableView.setAdapter(adapter: $0)
     }
@@ -69,7 +69,7 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
             .receive(on: DispatchQueue.main)
 
         sharedState
-            .map(\.sectionsByYearAndMonth)
+            .map(\.noticeSectionList)
             .map { sections in
                 sections.map {
                     GenericTableViewSectionModel<NoticeModel, NoticeCell>(models: $0.1)

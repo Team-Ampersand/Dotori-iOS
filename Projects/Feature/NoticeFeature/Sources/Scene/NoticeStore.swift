@@ -8,6 +8,8 @@ import NoticeDomainInterface
 import Store
 import UserDomainInterface
 
+typealias SectiondNoticeTuple = (section: String, noticeList: [NoticeModel])
+
 final class NoticeStore: BaseStore {
     var route: PassthroughSubject<RoutePath, Never> = .init()
     var subscription: Set<AnyCancellable> = .init()
@@ -28,7 +30,7 @@ final class NoticeStore: BaseStore {
 
     struct State {
         var noticeList: [NoticeModel] = []
-        var sectionsByYearAndMonth: [(String, [NoticeModel])] = []
+        var noticeSectionList: [SectiondNoticeTuple] = []
         var currentUserRole: UserRoleType = .member
     }
     enum Action {
@@ -56,21 +58,9 @@ extension NoticeStore {
         switch mutate {
         case let .updateNoticeList(noticeList):
             newState.noticeList = noticeList
-            let sections = noticeList.reduce(
-                into: [(String, [NoticeModel])]()
-            ) { partialResult, notice in
-                let yearAndMonth = notice.createdTime.toStringWithCustomFormat("yyyy년 MM월")
+            let sections = self.noticeListToSections(noticeList: noticeList)
 
-                if let index = partialResult.firstIndex(where: { $0.0 == yearAndMonth }) {
-                    var sectionTuple = partialResult[index]
-                    sectionTuple.1.append(notice)
-                    partialResult[index] = sectionTuple
-                } else {
-                    partialResult.append((yearAndMonth, [notice]))
-                }
-            }
-
-            newState.sectionsByYearAndMonth = sections
+            newState.noticeSectionList = sections
 
         case let .updateCurrentUserRole(userRole):
             newState.currentUserRole = userRole
@@ -95,10 +85,26 @@ private extension NoticeStore {
             .setFailureType(to: Never.self)
             .map(Mutation.updateCurrentUserRole)
             .eraseToSideEffect()
-        
+
         return .merge(
             noticeSideEffect,
             userRoleSideEffect
         )
+    }
+
+    func noticeListToSections(noticeList: [NoticeModel]) -> [SectiondNoticeTuple] {
+        return noticeList.reduce(
+            into: [SectiondNoticeTuple]()
+        ) { partialResult, notice in
+            let yearAndMonth = notice.createdTime.toStringWithCustomFormat("yyyy년 MM월")
+
+            if let index = partialResult.firstIndex(where: { $0.section == yearAndMonth }) {
+                var sectionTuple = partialResult[index]
+                sectionTuple.noticeList.append(notice)
+                partialResult[index] = sectionTuple
+            } else {
+                partialResult.append((yearAndMonth, [notice]))
+            }
+        }
     }
 }
