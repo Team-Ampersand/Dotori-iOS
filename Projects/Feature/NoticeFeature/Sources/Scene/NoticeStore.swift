@@ -37,11 +37,12 @@ final class NoticeStore: BaseStore {
     }
     enum Action {
         case viewDidLoad
+        case editButtonDidTap
     }
     enum Mutation {
         case updateNoticeList([NoticeModel])
         case updateCurrentUserRole(UserRoleType)
-        case updateIsEditingMode(Bool)
+        case toggleIsEditing
     }
 }
 
@@ -50,6 +51,9 @@ extension NoticeStore {
         switch action {
         case .viewDidLoad:
             return viewDidLoad()
+
+        case .editButtonDidTap:
+            return .just(Mutation.toggleIsEditing)
         }
         return .none
     }
@@ -67,8 +71,8 @@ extension NoticeStore {
         case let .updateCurrentUserRole(userRole):
             newState.currentUserRole = userRole
 
-        case let .updateIsEditingMode(isEditingMode):
-            newState.isEditingMode = isEditingMode
+        case .toggleIsEditing:
+            newState.isEditingMode.toggle()
         }
         return newState
     }
