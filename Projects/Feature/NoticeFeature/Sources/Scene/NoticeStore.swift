@@ -60,7 +60,6 @@ extension NoticeStore {
         case let .updateNoticeList(noticeList):
             newState.noticeList = noticeList
             let sections = self.noticeListToSections(noticeList: noticeList)
-
             newState.noticeSectionList = sections
 
         case let .updateCurrentUserRole(userRole):
