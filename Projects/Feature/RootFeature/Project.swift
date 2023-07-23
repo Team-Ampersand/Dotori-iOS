@@ -8,7 +8,8 @@ let project = Project.module(
         .implements(module: .feature(.RootFeature), dependencies: [
             .feature(target: .SigninFeature),
             .feature(target: .MainTabFeature),
-            .feature(target: .BaseFeature)
+            .feature(target: .BaseFeature),
+            .feature(target: .ConfirmationDialogFeature)
         ])
     ]
 )

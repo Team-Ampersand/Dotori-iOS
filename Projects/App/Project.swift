@@ -34,6 +34,7 @@ let targets: [Target] = [
             .feature(target: .MainTabFeature),
             .feature(target: .SignupFeature),
             .feature(target: .RenewalPasswordFeature),
+            .feature(target: .ConfirmationDialogFeature),
             .domain(target: .AuthDomain),
             .domain(target: .UserDomain),
             .domain(target: .SelfStudyDomain),
