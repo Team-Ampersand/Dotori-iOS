@@ -9,7 +9,7 @@ struct CheckIsLoggedInUseCaseImpl: CheckIsLoggedInUseCase {
 
     func callAsFunction() async -> IsLoggedIn {
         let isConnected = await authRepository.networkIsConnected()
-        let tokenIsExist = authRepository.checkTokenIsExist()
+        lazy var tokenIsExist = authRepository.checkTokenIsExist()
 
         guard isConnected else {
             return tokenIsExist

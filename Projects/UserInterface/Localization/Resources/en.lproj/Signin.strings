@@ -14,3 +14,4 @@
 "signup_button_title" = "New to Dotori? Signup";
 "find_password_button_title" = "Find Password";
 "invalid_password_error" = "Email or password doesn't match.";
+"refresh_token_expired" = "RefreshToken is expired.";

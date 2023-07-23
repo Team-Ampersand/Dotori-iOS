@@ -5,4 +5,7 @@ public enum AuthDomainError: Error {
 
     // MARK: Signin
     case invalidPassword
+
+    // MARK: Refresh
+    case refreshTokenExpired
 }
