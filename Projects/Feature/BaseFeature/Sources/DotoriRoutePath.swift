@@ -9,6 +9,8 @@ public enum DotoriRoutePath: RoutePath {
         style: UIAlertController.Style = .alert,
         actions: [UIAlertAction] = []
     )
+    case dismiss
+    case pop
 
     // MARK: Auth
     case splash

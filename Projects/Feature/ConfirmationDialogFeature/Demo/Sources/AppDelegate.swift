@@ -11,7 +11,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let store = ConfirmationDialogStore()
+        let store = ConfirmationDialogStore {}
         let viewController = Inject.ViewControllerHost(
             ConfirmationDialogViewController(
                 title: "제목",
