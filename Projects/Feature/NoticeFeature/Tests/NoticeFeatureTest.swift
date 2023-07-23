@@ -120,4 +120,27 @@ final class NoticeFeatureTests: XCTestCase {
             return
         }
     }
+
+    func test_InsertSelectedNotice_When_NoticeDidTap_And_IsEditingTrue() {
+        sut.send(.editButtonDidTap)
+        XCTAssertEqual(sut.currentState.isEditingMode, true)
+
+        let noticeIDOne = 1
+        sut.send(.noticeDidTap(noticeIDOne))
+
+        XCTAssertEqual([noticeIDOne], sut.currentState.selectedNotice)
+
+        let noticeIDTwo = 2
+        sut.send(.noticeDidTap(noticeIDTwo))
+        XCTAssertEqual([noticeIDOne, noticeIDTwo], sut.currentState.selectedNotice)
+
+        sut.send(.noticeDidTap(noticeIDOne))
+        XCTAssertEqual([noticeIDTwo], sut.currentState.selectedNotice)
+
+        sut.send(.noticeDidTap(noticeIDOne))
+        XCTAssertEqual([noticeIDOne, noticeIDTwo], sut.currentState.selectedNotice)
+
+        sut.send(.editButtonDidTap)
+        XCTAssertEqual([], sut.currentState.selectedNotice)
+    }
 }
