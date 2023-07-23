@@ -32,7 +32,8 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
         .set(\.backgroundColor, .clear)
         .set(\.separatorStyle, .none)
         .set(\.sectionHeaderTopPadding, 0)
-        .set(\.allowsMultipleSelection, true)
+        .set(\.allowsSelection, false)
+        .set(\.allowsMultipleSelection, false)
         .then {
             $0.register(cellType: NoticeCell.self)
         }
@@ -88,6 +89,13 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
             .map { Store.Action.editButtonDidTap }
             .sink(receiveValue: store.send(_:))
             .store(in: &subscription)
+
+        noticeTableAdapter.modelSelected
+            .merge(with: noticeTableAdapter.modelDeselected)
+            .map(\.id)
+            .map(Store.Action.noticeDidTap)
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
     }
 
     override func bindState() {
@@ -96,6 +104,10 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
 
         sharedState
             .map(\.noticeSectionList)
+            .removeDuplicates(by: { section1, section2 in
+                section1.map(\.noticeList)
+                    .elementsEqual(section2.map(\.noticeList))
+            })
             .map { noticeSection in
                 noticeSection.map { _, noticeList in
                     GenericSectionModel(items: noticeList)
@@ -107,6 +119,11 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
         sharedState
             .map { $0.currentUserRole != .member && $0.isEditingMode }
             .assign(to: \.allowsSelection, on: noticeTableView)
+            .store(in: &subscription)
+
+        sharedState
+            .map { $0.currentUserRole != .member && $0.isEditingMode }
+            .assign(to: \.allowsMultipleSelection, on: noticeTableView)
             .store(in: &subscription)
 
         sharedState

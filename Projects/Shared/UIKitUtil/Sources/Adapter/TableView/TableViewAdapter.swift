@@ -1,16 +1,30 @@
+import Combine
 import UIKit
+
+public protocol TableViewAdapterActionProtocol {
+    associatedtype Item
+    var itemSelected: AnyPublisher<IndexPath, Never> { get }
+    var itemDeselected: AnyPublisher<IndexPath, Never> { get }
+    var modelSelected: AnyPublisher<Item, Never> { get }
+    var modelDeselected: AnyPublisher<Item, Never> { get }
+}
 
 public final class TableViewAdapter<Section: SectionModelProtocol>:
     NSObject,
+    TableViewAdapterActionProtocol,
     UITableViewDelegate,
     UITableViewDataSource {
 
     public typealias Item = Section.Item
-    private let tableView: UITableView
     private var sections: [Section] = []
-    private var configureCell: (UITableView, IndexPath, Item) -> UITableViewCell
+    private let tableView: UITableView
+    private let configureCell: (UITableView, IndexPath, Item) -> UITableViewCell
     private var viewForHeaderInSection: (UITableView, Int) -> UIView? = { _, _ in nil }
     private var viewForFooterInSection: (UITableView, Int) -> UIView? = { _, _ in nil }
+    private let itemSelectedSubject = PassthroughSubject<IndexPath, Never>()
+    private let itemDeselectedSubject = PassthroughSubject<IndexPath, Never>()
+    private let modelSelectedSubject = PassthroughSubject<Item, Never>()
+    private let modelDeselectedSubject = PassthroughSubject<Item, Never>()
 
     public init(
         tableView: UITableView,
@@ -42,6 +56,22 @@ public final class TableViewAdapter<Section: SectionModelProtocol>:
         _ viewForFooterInSection: @escaping (UITableView, Int) -> UIView?
     ) {
         self.viewForFooterInSection = viewForFooterInSection
+    }
+
+    public var itemSelected: AnyPublisher<IndexPath, Never> {
+        itemSelectedSubject.eraseToAnyPublisher()
+    }
+
+    public var modelSelected: AnyPublisher<Item, Never> {
+        modelSelectedSubject.eraseToAnyPublisher()
+    }
+
+    public var itemDeselected: AnyPublisher<IndexPath, Never> {
+        itemDeselectedSubject.eraseToAnyPublisher()
+    }
+
+    public var modelDeselected: AnyPublisher<Item, Never> {
+        modelDeselectedSubject.eraseToAnyPublisher()
     }
 
     // MARK: - TableView Delegate & DataSource
@@ -80,6 +110,18 @@ public final class TableViewAdapter<Section: SectionModelProtocol>:
             indexPath,
             sections[indexPath.section].items[indexPath.row]
         )
+    }
+
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        itemSelectedSubject.send(indexPath)
+        let model = sections[indexPath.section].items[indexPath.row]
+        modelSelectedSubject.send(model)
+    }
+
+    public func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        itemDeselectedSubject.send(indexPath)
+        let model = sections[indexPath.section].items[indexPath.row]
+        modelDeselectedSubject.send(model)
     }
 }
 

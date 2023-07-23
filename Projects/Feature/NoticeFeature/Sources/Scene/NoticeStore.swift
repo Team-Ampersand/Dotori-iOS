@@ -34,15 +34,20 @@ final class NoticeStore: BaseStore {
         var noticeSectionList: [SectiondNoticeTuple] = []
         var currentUserRole: UserRoleType = .member
         var isEditingMode = false
+        var selectedNotice: Set<Int> = []
     }
     enum Action {
         case viewDidLoad
         case editButtonDidTap
+        case noticeDidTap(Int)
     }
     enum Mutation {
         case updateNoticeList([NoticeModel])
         case updateCurrentUserRole(UserRoleType)
         case toggleIsEditing
+        case insertSelectedNotice(Int)
+        case removeSelectedNotice(Int)
+        case removeAllSelectedNotice
     }
 }
 
@@ -53,7 +58,13 @@ extension NoticeStore {
             return viewDidLoad()
 
         case .editButtonDidTap:
-            return .just(Mutation.toggleIsEditing)
+            return .merge(
+                .just(.toggleIsEditing),
+                .just(.removeAllSelectedNotice)
+            )
+
+        case let .noticeDidTap(noticeID):
+            return noticeDidTap(noticeID: noticeID)
         }
         return .none
     }
@@ -73,6 +84,15 @@ extension NoticeStore {
 
         case .toggleIsEditing:
             newState.isEditingMode.toggle()
+
+        case let .insertSelectedNotice(noticeID):
+            newState.selectedNotice.insert(noticeID)
+
+        case let .removeSelectedNotice(noticeID):
+            newState.selectedNotice.remove(noticeID)
+
+        case .removeAllSelectedNotice:
+            newState.selectedNotice.removeAll()
         }
         return newState
     }
@@ -99,6 +119,17 @@ private extension NoticeStore {
             noticeSideEffect,
             userRoleSideEffect
         )
+    }
+
+    func noticeDidTap(noticeID: Int) -> SideEffect<Mutation, Never> {
+        guard currentState.isEditingMode else {
+            route.send(DotoriRoutePath.noticeDetail(noticeID: noticeID))
+            return .none
+        }
+        let mutation = currentState.selectedNotice.contains(noticeID)
+        ? Mutation.removeSelectedNotice(noticeID)
+        : Mutation.insertSelectedNotice(noticeID)
+        return .just(mutation)
     }
 
     func noticeListToSections(noticeList: [NoticeModel]) -> [SectiondNoticeTuple] {
