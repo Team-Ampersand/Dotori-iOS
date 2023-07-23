@@ -12,8 +12,8 @@ final class SplashStore: BaseStore {
     private let checkIsLoggedInUseCase: any CheckIsLoggedInUseCase
 
     init(checkIsLoggedInUseCase: any CheckIsLoggedInUseCase) {
-        initialState = .init()
-        stateSubject = .init(initialState)
+        self.initialState = .init()
+        self.stateSubject = .init(initialState)
         self.checkIsLoggedInUseCase = checkIsLoggedInUseCase
     }
 
