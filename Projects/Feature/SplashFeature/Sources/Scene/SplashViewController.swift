@@ -14,7 +14,13 @@ final class SplashViewController: BaseViewController<SplashStore> {
 
     override func setLayout() {
         MSGLayout.buildLayout {
-            dotoriLogoImageView
+            dotoriLogoImageView.layout
+                .center(.toSuperview())
+                .size(108)
         }
+    }
+
+    override func configureViewController() {
+        self.view.backgroundColor = .dotori(.background(.bg))
     }
 }
