@@ -1,4 +1,5 @@
 import UIKit
+import UIKitUtil
 
 public final class DotoriOutlineButton: UIButton {
     public override var isHighlighted: Bool {
@@ -33,9 +34,7 @@ private extension DotoriOutlineButton {
         self.setTitle(text, for: .normal)
         self.layer.cornerRadius = 8
         self.layer.borderWidth = 1
-        self.heightAnchor.constraint(
-            equalToConstant: DotoriButtonProperty.Dimension.buttonHeight
-        ).isActive = true
+        self.setContentInsets(insets: .init(top: 14, left: 0, bottom: 14, right: 0))
     }
 
     func setButtonColor() {

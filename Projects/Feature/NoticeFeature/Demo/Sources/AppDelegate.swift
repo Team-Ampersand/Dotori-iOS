@@ -25,6 +25,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         ]
 
         let loadCurrentUserRoleUseCase = LoadCurrentUserRoleUseCaseSpy()
+        loadCurrentUserRoleUseCase.loadCurrentUserRoleReturn = .developer
         let store = NoticeStore(
             fetchNoticeListUseCase: fetchNoticeListUseCase,
             loadCurrentUserRoleUseCase: loadCurrentUserRoleUseCase

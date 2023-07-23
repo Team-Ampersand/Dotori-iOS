@@ -1,4 +1,5 @@
 import UIKit
+import UIKitUtil
 
 public final class DotoriButton: UIButton {
     public override var isEnabled: Bool {
@@ -35,9 +36,7 @@ private extension DotoriButton {
         self.titleLabel?.font = .dotori(.subtitle2)
         self.setTitle(text, for: .normal)
         self.layer.cornerRadius = 8
-        self.heightAnchor.constraint(
-            equalToConstant: DotoriButtonProperty.Dimension.buttonHeight
-        ).isActive = true
+        self.setContentInsets(insets: .init(top: 14, left: 0, bottom: 14, right: 0))
     }
 
     func setButtonColor() {
