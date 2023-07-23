@@ -10,7 +10,8 @@ let project = Project.module(
             .domain(target: .AuthDomain, type: .interface)
         ]),
         .tests(module: .feature(.SplashFeature), dependencies: [
-            .feature(target: .SplashFeature)
+            .feature(target: .SplashFeature),
+            .domain(target: .AuthDomain, type: .testing)
         ])
     ]
 )
