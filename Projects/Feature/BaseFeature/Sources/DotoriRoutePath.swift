@@ -9,6 +9,11 @@ public enum DotoriRoutePath: RoutePath {
         style: UIAlertController.Style = .alert,
         actions: [UIAlertAction] = []
     )
+    case confirmationDialog(
+        title: String = "",
+        message: String = "",
+        confirmAction: () -> Void
+    )
     case dismiss
     case pop
 
