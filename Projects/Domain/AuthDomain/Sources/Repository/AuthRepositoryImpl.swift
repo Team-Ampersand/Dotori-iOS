@@ -20,4 +20,16 @@ final class AuthRepositoryImpl: AuthRepository {
     func loadJwtToken() -> JwtTokenEntity {
         localAuthDataSource.loadJwtToken()
     }
+
+    func tokenRefresh() async throws {
+        try await remoteAuthDataSource.tokenRefresh()
+    }
+
+    func checkTokenIsExist() -> Bool {
+        localAuthDataSource.checkTokenIsExist()
+    }
+
+    func networkIsConnected() async -> Bool {
+        await remoteAuthDataSource.networkIsConnected()
+    }
 }
