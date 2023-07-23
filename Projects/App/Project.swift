@@ -30,6 +30,7 @@ let targets: [Target] = [
         scripts: scripts,
         dependencies: [
             .feature(target: .RootFeature),
+            .feature(target: .SplashFeature),
             .feature(target: .SigninFeature),
             .feature(target: .MainTabFeature),
             .feature(target: .SignupFeature),
