@@ -1,5 +1,5 @@
 import UIKit
 
 public protocol ConfirmationDialogFactory {
-    func makeViewController() -> UIViewController
+    func makeViewController(title: String, description: String) -> UIViewController
 }

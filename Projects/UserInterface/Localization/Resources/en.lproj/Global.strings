@@ -8,3 +8,4 @@
 
 "unknown_error" = "An unknown error occurred, please contact us if it persists.";
 "cancel_button_title" = "Cancel";
+"confirm_button_title" = "Confirm";
