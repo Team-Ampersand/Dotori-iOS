@@ -34,15 +34,9 @@ final class NoticeFeatureTests: XCTestCase {
         let expected = UserRoleType.developer
         loadCurrentUserRoleUseCase.loadCurrentUserRoleReturn = expected
 
-        sut.state.map(\.currentUserRole).sink { _ in
-            expectation.fulfill()
-        }
-        .store(in: &subscription)
-
         XCTAssertEqual(loadCurrentUserRoleUseCase.loadCurrentUserRoleCallCount, 0)
         sut.send(.viewDidLoad)
 
-        wait(for: [expectation], timeout: 1.0)
         XCTAssertEqual(expected, sut.currentState.currentUserRole)
         XCTAssertEqual(loadCurrentUserRoleUseCase.loadCurrentUserRoleCallCount, 1)
     }
@@ -85,5 +79,19 @@ final class NoticeFeatureTests: XCTestCase {
         XCTAssertEqual(sectiondExpected[1].noticeList, sut.currentState.noticeSectionList[1].noticeList)
 
         XCTAssertEqual(fetchNoticeListUseCase.fetchNoticeListCallCount, 1)
+    }
+
+    func test_ToggleIsEditing_When_EditButtonDidTap() {
+        XCTAssertEqual(sut.currentState.isEditingMode, false)
+        sut.send(.editButtonDidTap)
+
+        XCTAssertEqual(sut.currentState.isEditingMode, true)
+        sut.send(.editButtonDidTap)
+
+        XCTAssertEqual(sut.currentState.isEditingMode, false)
+        sut.send(.editButtonDidTap)
+
+        XCTAssertEqual(sut.currentState.isEditingMode, true)
+        sut.send(.editButtonDidTap)
     }
 }
