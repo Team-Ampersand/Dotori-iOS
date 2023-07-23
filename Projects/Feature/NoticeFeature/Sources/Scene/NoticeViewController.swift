@@ -18,7 +18,7 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
     private let entireTitleLabel = DotoriLabel(L10n.Notice.entireTitle, font: .subtitle1)
     private let editButton = DotoriOutlineButton(text: "편집")
         .set(\.contentEdgeInsets, .init(top: 7.5, left: 13.5, bottom: 7.5, right: 13.5))
-    private let writeOrRemoveButton = DotoriButton(text: "+ 작성")
+    private let writeOrRemoveButton = DotoriTextButton("+ 작성")
     private lazy var headerStackView = HStackView(spacing: 8) {
         entireTitleLabel
 
@@ -47,8 +47,8 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
         return NoticeSectionLabel(title: sectionTitle)
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         editButton.cornerRadius = editButton.frame.height / 2
         writeOrRemoveButton.cornerRadius = writeOrRemoveButton.frame.height / 2
     }
@@ -105,8 +105,7 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
             .store(in: &subscription)
 
         sharedState
-            .map(\.currentUserRole)
-            .map { $0 != .member }
+            .map { $0.currentUserRole != .member && $0.isEditingMode }
             .assign(to: \.allowsSelection, on: noticeTableView)
             .store(in: &subscription)
 
@@ -141,6 +140,9 @@ private extension NoticeViewController {
         let title = isEditMode ? "삭제" : "+ 작성"
         let titleColor: UIColor = isEditMode ? .dotori(.system(.error)) : .dotori(.sub(.white))
         let backgroundColor = isEditMode ? UIColor.clear : .dotori(.primary(.p10))
+        let highlightedBackgroundColor = isEditMode
+        ? backgroundColor.withAlphaComponent(0.1)
+        : backgroundColor.withAlphaComponent(0.8)
         let borderColor = isEditMode ? UIColor.dotori(.system(.error)).cgColor : UIColor.clear.cgColor
         let contentInsets = isEditMode
         ? UIEdgeInsets(top: 7.5, left: 13.5, bottom: 7.5, right: 13.5)
@@ -148,10 +150,12 @@ private extension NoticeViewController {
 
         self.writeOrRemoveButton.setTitle(title, for: .normal)
         self.writeOrRemoveButton.setTitleColor(titleColor, for: .normal)
+        self.writeOrRemoveButton.setTitleColor(titleColor, for: .highlighted)
         self.writeOrRemoveButton.setBackgroundColor(backgroundColor, for: .normal)
-        self.writeOrRemoveButton.setBackgroundColor(backgroundColor, for: .highlighted)
+        self.writeOrRemoveButton.setBackgroundColor(highlightedBackgroundColor, for: .highlighted)
         self.writeOrRemoveButton.layer.borderColor = borderColor
         self.writeOrRemoveButton.layer.borderWidth = 1
+        self.writeOrRemoveButton.clipsToBounds = true
         self.writeOrRemoveButton.setContentInsets(insets: contentInsets)
     }
 }
