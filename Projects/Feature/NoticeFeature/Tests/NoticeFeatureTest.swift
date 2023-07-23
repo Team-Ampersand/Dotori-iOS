@@ -83,15 +83,14 @@ final class NoticeFeatureTests: XCTestCase {
 
     func test_ToggleIsEditing_When_EditButtonDidTap() {
         XCTAssertEqual(sut.currentState.isEditingMode, false)
-        sut.send(.editButtonDidTap)
 
+        sut.send(.editButtonDidTap)
         XCTAssertEqual(sut.currentState.isEditingMode, true)
-        sut.send(.editButtonDidTap)
 
+        sut.send(.editButtonDidTap)
         XCTAssertEqual(sut.currentState.isEditingMode, false)
-        sut.send(.editButtonDidTap)
 
-        XCTAssertEqual(sut.currentState.isEditingMode, true)
         sut.send(.editButtonDidTap)
+        XCTAssertEqual(sut.currentState.isEditingMode, true)
     }
 }
