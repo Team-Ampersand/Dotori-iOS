@@ -25,4 +25,11 @@ final class SplashViewController: BaseViewController<SplashStore> {
     override func configureViewController() {
         self.view.backgroundColor = .dotori(.background(.bg))
     }
+
+    override func bindAction() {
+        viewDidLoadPublisher
+            .map { Store.Action.viewDidLoad }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+    }
 }

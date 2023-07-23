@@ -18,15 +18,30 @@ final class SplashStore: BaseStore {
     }
 
     struct State {}
-    enum Action {}
+    enum Action {
+        case viewDidLoad
+    }
     enum Mutation {}
 
     func mutate(state: State, action: Action) -> SideEffect<Mutation, Never> {
-        .none
+        switch action {
+        case .viewDidLoad:
+            viewDidLoad()
+        }
+        return .none
     }
 
     func reduce(state: State, mutate: Mutation) -> State {
-        var newState = state
-        return newState
+        return state
+    }
+}
+
+private extension SplashStore {
+    func viewDidLoad() {
+        Task {
+            let isLoggedIn = await checkIsLoggedInUseCase()
+            let routePath = isLoggedIn ? DotoriRoutePath.main : .signin
+            route.send(routePath)
+        }
     }
 }
