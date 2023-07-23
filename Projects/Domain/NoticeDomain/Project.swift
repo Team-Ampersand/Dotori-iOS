@@ -6,7 +6,6 @@ let project = Project.module(
     name: ModulePaths.Domain.NoticeDomain.rawValue,
     targets: [
         .interface(module: .domain(.NoticeDomain), dependencies: [
-            .domain(target: .UserDomain, type: .interface),
             .domain(target: .BaseDomain, type: .interface)
         ]),
         .implements(module: .domain(.NoticeDomain), dependencies: [
