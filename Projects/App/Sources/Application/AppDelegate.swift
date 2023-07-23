@@ -17,6 +17,7 @@ import SelfStudyDomain
 import SelfStudyFeature
 import SigninFeature
 import SignupFeature
+import SplashFeature
 import Swinject
 import Timer
 import UIKit
@@ -37,6 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NetworkingAssembly(),
             TimerAssembly(),
             DatabaseAssembly(),
+            SplashAssembly(),
             HomeAssembly(),
             NoticeAssembly(),
             SelfStudyAssembly(),
