@@ -70,6 +70,7 @@ final class ConfirmationDialogViewController: BaseModalViewController<Confirmati
 
     override func bindAction() {
         cancelButton.tapPublisher
+            .throttle(for: 1, scheduler: RunLoop.main, latest: true)
             .filter { [store] in !store.currentState.isLoading }
             .map { Store.Action.cancelButtonDidTap }
             .sink(receiveValue: store.send(_:))
