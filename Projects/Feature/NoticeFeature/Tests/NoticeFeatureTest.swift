@@ -1,6 +1,7 @@
 import BaseDomainInterface
 import BaseFeature
 import Combine
+import Localization
 import Moordinator
 import NoticeDomainInterface
 import XCTest
@@ -58,9 +59,10 @@ final class NoticeFeatureTests: XCTestCase {
             NoticeModel(id: 1, title: "title", content: "content", roles: .councillor, createdTime: todayMonth),
             NoticeModel(id: 2, title: "title2", content: "conten2t", roles: .developer, createdTime: nextMonth)
         ]
+        #warning("뭔가가 뭔가인 이 DateFormatting 방식 변경")
         let sectiondExpected: [SectiondNoticeTuple] = [
-            ("2023년 07월", [expected[0]]),
-            ("2023년 08월", [expected[1]])
+            (todayMonth.toStringWithCustomFormat(L10n.Notice.noticeSectionDateFormat), [expected[0]]),
+            (nextMonth.toStringWithCustomFormat(L10n.Notice.noticeSectionDateFormat), [expected[1]])
         ]
         fetchNoticeListUseCase.fetchNoticeListReturn = expected
 
