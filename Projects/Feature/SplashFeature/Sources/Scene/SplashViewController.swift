@@ -4,7 +4,10 @@ import MSGLayout
 import UIKit
 
 final class SplashViewController: BaseViewController<SplashStore> {
-    private let dotoriLogoImageView = DotoriIconView(size: .custom(108), image: .Dotori.dotori)
+    private let dotoriLogoImageView = DotoriIconView(
+        size: .custom(.init(width: 108,height: 108)),
+        image: .Dotori.dotori
+    )
 
     override func addView() {
         view.addSubviews {
