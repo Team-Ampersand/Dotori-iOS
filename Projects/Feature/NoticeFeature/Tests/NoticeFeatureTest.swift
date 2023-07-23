@@ -1,5 +1,7 @@
 import BaseDomainInterface
+import BaseFeature
 import Combine
+import Moordinator
 import NoticeDomainInterface
 import XCTest
 @testable import NoticeFeature
@@ -92,5 +94,30 @@ final class NoticeFeatureTests: XCTestCase {
 
         sut.send(.editButtonDidTap)
         XCTAssertEqual(sut.currentState.isEditingMode, true)
+    }
+
+    func test_RouteNoticeDetail_When_NoticeDidTap_And_IsEditingFalse() {
+        let expectedNoticeID = 1
+        XCTAssertEqual(sut.currentState.isEditingMode, false)
+        let expectation = XCTestExpectation(description: "route expectation")
+
+        var latestRoutePath: RoutePath?
+        sut.route.sink { routePath in
+            latestRoutePath = routePath
+            expectation.fulfill()
+        }
+        .store(in: &subscription)
+
+        sut.send(.noticeDidTap(expectedNoticeID))
+
+        wait(for: [expectation], timeout: 1.0)
+        guard
+            let latestRoutePath = latestRoutePath?.asDotori,
+            case let .noticeDetail(noticeID) = latestRoutePath,
+            noticeID == expectedNoticeID
+        else {
+            XCTFail("latestRoutePath is not DotoriRoutePath.noticeDetail")
+            return
+        }
     }
 }
