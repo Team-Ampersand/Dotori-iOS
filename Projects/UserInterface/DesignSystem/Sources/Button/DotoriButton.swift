@@ -46,7 +46,8 @@ private extension DotoriButton {
             textForegroundColor = .dotori(.sub(.white))
             backgroundColor = .dotori(.primary(.p10))
         } else {
-            textForegroundColor = .dotori(.neutral(.n50))
+            let isLight = UITraitCollection.current.userInterfaceStyle == .light
+            textForegroundColor = isLight ? .dotori(.neutral(.n50)) : .dotori(.neutral(.n20))
             backgroundColor = .dotori(.primary(.p30))
         }
         setTitleColor(textForegroundColor, for: .normal)
