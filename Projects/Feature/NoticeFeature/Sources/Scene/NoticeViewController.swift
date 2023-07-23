@@ -85,6 +85,11 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
             .sink(receiveValue: store.send(_:))
             .store(in: &subscription)
 
+        viewWillAppearPublisher
+            .map { Store.Action.viewWillAppear }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+
         editButton.tapPublisher
             .map { Store.Action.editButtonDidTap }
             .sink(receiveValue: store.send(_:))

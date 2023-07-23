@@ -38,6 +38,7 @@ final class NoticeStore: BaseStore {
     }
     enum Action {
         case viewDidLoad
+        case viewWillAppear
         case editButtonDidTap
         case noticeDidTap(Int)
     }
@@ -56,6 +57,9 @@ extension NoticeStore {
         switch action {
         case .viewDidLoad:
             return viewDidLoad()
+
+        case .viewWillAppear:
+            return viewWillAppear()
 
         case .editButtonDidTap:
             return .merge(
@@ -99,26 +103,23 @@ extension NoticeStore {
 }
 
 private extension NoticeStore {
-    func viewDidLoad() -> SideEffect<Mutation, Never> {
-        let noticeSideEffect = SideEffect<[NoticeModel], Error>
+    func viewWillAppear() -> SideEffect<Mutation, Never> {
+        return SideEffect<[NoticeModel], Error>
             .tryAsync { [fetchNoticeListUseCase] in
                 try await fetchNoticeListUseCase()
             }
             .map(Mutation.updateNoticeList)
             .catchToNever()
             .eraseToSideEffect()
+    }
 
-        let userRoleSideEffect = SideEffect
+    func viewDidLoad() -> SideEffect<Mutation, Never> {
+        return SideEffect
             .just(try? loadCurrentUserRoleUseCase())
             .replaceNil(with: .member)
             .setFailureType(to: Never.self)
             .map(Mutation.updateCurrentUserRole)
             .eraseToSideEffect()
-
-        return .merge(
-            noticeSideEffect,
-            userRoleSideEffect
-        )
     }
 
     func noticeDidTap(noticeID: Int) -> SideEffect<Mutation, Never> {
