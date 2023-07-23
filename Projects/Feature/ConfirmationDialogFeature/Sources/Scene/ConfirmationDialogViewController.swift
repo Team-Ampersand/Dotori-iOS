@@ -15,7 +15,9 @@ final class ConfirmationDialogViewController: BaseModalViewController<Confirmati
     private let descriptionLabel = DotoriLabel(textColor: .neutral(.n20), font: .body2)
         .set(\.numberOfLines, 2)
     private let cancelButton = DotoriButton(text: L10n.Global.cancelButtonTitle)
+        .set(\.contentEdgeInsets, .vertical(12))
     private let confirmButton = DotoriOutlineButton()
+        .set(\.contentEdgeInsets, .vertical(12))
     private let loadingIndicatorView = UIActivityIndicatorView(style: .medium)
 
     init(

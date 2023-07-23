@@ -44,7 +44,7 @@ open class BaseModalViewController<Store: BaseStore>:
         if UITraitCollection.current.userInterfaceStyle == .light {
             view.backgroundColor = .init(red: 0.02, green: 0.03, blue: 0.17, alpha: 0.45)
         } else {
-            view.backgroundColor = .init(red: 0, green: 0, blue: 0, alpha: 45)
+            view.backgroundColor = .init(red: 0, green: 0, blue: 0, alpha: 0.45)
         }
         addView()
         setLayout()

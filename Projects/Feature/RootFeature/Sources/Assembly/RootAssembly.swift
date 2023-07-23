@@ -1,3 +1,4 @@
+import ConfirmationDialogFeature
 import MainTabFeature
 import SigninFeature
 import Swinject
@@ -9,7 +10,8 @@ public final class RootAssembly: Assembly {
             RootMoordinator(
                 window: window,
                 signinFactory: resolver.resolve(SigninFactory.self)!,
-                mainFactory: resolver.resolve(MainFactory.self)!
+                mainFactory: resolver.resolve(MainFactory.self)!,
+                confirmationDialogFactory: resolver.resolve(ConfirmationDialogFactory.self)!
             )
         }
     }

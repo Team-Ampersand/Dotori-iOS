@@ -1,5 +1,6 @@
 import BaseFeature
 import Combine
+import ConfirmationDialogFeature
 import MainTabFeature
 import Moordinator
 import SigninFeature
@@ -9,6 +10,7 @@ public final class RootMoordinator: Moordinator {
     private let window: UIWindow
     private let signinFactory: any SigninFactory
     private let mainFactory: any MainFactory
+    private let confirmationDialogFactory: any ConfirmationDialogFactory
     private lazy var rootVC: UIViewController = {
         let viewController = UIViewController()
         viewController.view.backgroundColor = .white
@@ -22,11 +24,13 @@ public final class RootMoordinator: Moordinator {
     public init(
         window: UIWindow,
         signinFactory: any SigninFactory,
-        mainFactory: any MainFactory
+        mainFactory: any MainFactory,
+        confirmationDialogFactory: any ConfirmationDialogFactory
     ) {
         self.window = window
         self.signinFactory = signinFactory
         self.mainFactory = mainFactory
+        self.confirmationDialogFactory = confirmationDialogFactory
         window.rootViewController = rootVC
         window.makeKeyAndVisible()
     }
@@ -70,8 +74,28 @@ public final class RootMoordinator: Moordinator {
                 )
             )
 
+        case let .confirmationDialog(title, description, confirmAction):
+            let viewController = confirmationDialogFactory.makeViewController(
+                title: title,
+                description: description,
+                confirmAction: confirmAction
+            )
+            viewController.modalPresentationStyle = .overFullScreen
+            viewController.modalTransitionStyle = .crossDissolve
+            self.window.rootViewController?.present(viewController, animated: true)
+            return .one(
+                .contribute(
+                    withNextPresentable: viewController,
+                    withNextRouter: viewController.store
+                )
+            )
+
+        case .dismiss:
+            self.window.rootViewController?.presentedViewController?.dismiss(animated: true)
+
         default:
             return .none
         }
+        return .none
     }
 }
