@@ -3,16 +3,18 @@ import Combine
 import MainTabFeature
 import Moordinator
 import SigninFeature
+import SplashFeature
 import UIKit
 
 public final class RootMoordinator: Moordinator {
     private let window: UIWindow
+    private let splashFactory: any SplashFactory
     private let signinFactory: any SigninFactory
     private let mainFactory: any MainFactory
-    private lazy var rootVC: UIViewController = {
-        let viewController = UIViewController()
-        viewController.view.backgroundColor = .white
-        return viewController
+    private let rootVC: UIViewController = {
+        let launchScreenStoryboard = UIStoryboard(name: "LaunchScreen", bundle: .main)
+        let launchScreen = launchScreenStoryboard.instantiateViewController(withIdentifier: "LaunchScreen")
+        return launchScreen
     }()
 
     public var root: Presentable {
@@ -21,29 +23,34 @@ public final class RootMoordinator: Moordinator {
 
     public init(
         window: UIWindow,
+        splashFactory: any SplashFactory,
         signinFactory: any SigninFactory,
         mainFactory: any MainFactory
     ) {
         self.window = window
+        self.splashFactory = splashFactory
         self.signinFactory = signinFactory
         self.mainFactory = mainFactory
-        window.rootViewController = rootVC
-        window.makeKeyAndVisible()
+        self.window.makeKeyAndVisible()
     }
 
     public func route(to path: RoutePath) -> MoordinatorContributors {
         guard let path = path.asDotori else { return .none }
         switch path {
+        case .splash:
+            let splashViewController = splashFactory.makeViewController()
+            self.setRootViewController(viewController: splashViewController)
+            return .one(
+                .contribute(
+                    withNextPresentable: splashViewController,
+                    withNextRouter: splashViewController.store
+                )
+            )
+
         case .signin:
             let signinMoordinator = signinFactory.makeMoordinator()
             Moord.use(signinMoordinator) { root in
-                UIView.transition(
-                    with: self.window,
-                    duration: 0.3,
-                    options: .transitionCrossDissolve
-                ) {
-                    self.window.rootViewController = root
-                }
+                self.setRootViewController(viewController: root)
             }
             return .one(
                 .contribute(
@@ -55,13 +62,7 @@ public final class RootMoordinator: Moordinator {
         case .main:
             let mainMoordinator = mainFactory.makeMoordinator()
             Moord.use(mainMoordinator) { root in
-                UIView.transition(
-                    with: self.window,
-                    duration: 0.3,
-                    options: .transitionCrossDissolve
-                ) {
-                    self.window.rootViewController = root
-                }
+                self.setRootViewController(viewController: root)
             }
             return .one(
                 .contribute(
@@ -72,6 +73,18 @@ public final class RootMoordinator: Moordinator {
 
         default:
             return .none
+        }
+    }
+}
+
+private extension RootMoordinator {
+    func setRootViewController(viewController: UIViewController) {
+        UIView.transition(
+            with: self.window,
+            duration: 0.3,
+            options: .transitionCrossDissolve
+        ) {
+            self.window.rootViewController = viewController
         }
     }
 }
