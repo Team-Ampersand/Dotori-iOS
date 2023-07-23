@@ -12,3 +12,6 @@
 "author_role_developer" = "Dotori";
 "author_role_councillor" = "Dormitory Councillor";
 "author_role_member" = "Student";
+"edit_button_title" = "Edit";
+"write_button_title" = "+ Write";
+"remove_button_title" = "Remove";

@@ -16,9 +16,9 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
     }
     private let dotoriBarButton = DotoriBarButtonItem()
     private let entireTitleLabel = DotoriLabel(L10n.Notice.entireTitle, font: .subtitle1)
-    private let editButton = DotoriOutlineButton(text: "편집")
+    private let editButton = DotoriOutlineButton(text: L10n.Notice.editButtonTitle)
         .set(\.contentEdgeInsets, .init(top: 7.5, left: 13.5, bottom: 7.5, right: 13.5))
-    private let writeOrRemoveButton = DotoriTextButton("+ 작성")
+    private let writeOrRemoveButton = DotoriTextButton(L10n.Notice.writeButtonTitle)
     private lazy var headerStackView = HStackView(spacing: 8) {
         entireTitleLabel
 
@@ -118,12 +118,12 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
 
         sharedState
             .map { $0.currentUserRole != .member && $0.isEditingMode }
-            .assign(to: \.allowsSelection, on: noticeTableView)
-            .store(in: &subscription)
-
-        sharedState
-            .map { $0.currentUserRole != .member && $0.isEditingMode }
-            .assign(to: \.allowsMultipleSelection, on: noticeTableView)
+            .removeDuplicates()
+            .sink(with: noticeTableView, receiveValue: { tableView, isEditing in
+                tableView.allowsSelection = isEditing
+                tableView.allowsMultipleSelection = isEditing
+                tableView.reloadData()
+            })
             .store(in: &subscription)
 
         sharedState
@@ -137,7 +137,7 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
 
         sharedState
             .map(\.isEditingMode)
-            .map { $0 ? "취소" : "편집" }
+            .map { $0 ? L10n.Global.cancelButtonTitle : L10n.Notice.editButtonTitle }
             .sink(with: editButton, receiveValue: { editButton, title in
                 editButton.setTitle(title, for: .normal)
             })
@@ -154,7 +154,7 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
 
 private extension NoticeViewController {
     func transformWriteOrRemoveButton(isEditMode: Bool) {
-        let title = isEditMode ? "삭제" : "+ 작성"
+        let title = isEditMode ? L10n.Notice.removeButtonTitle : L10n.Notice.writeButtonTitle
         let titleColor: UIColor = isEditMode ? .dotori(.system(.error)) : .dotori(.sub(.white))
         let backgroundColor = isEditMode ? UIColor.clear : .dotori(.primary(.p10))
         let highlightedBackgroundColor = isEditMode
