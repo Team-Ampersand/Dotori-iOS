@@ -24,6 +24,7 @@ public enum DotoriRoutePath: RoutePath {
 
     // MARK: Notice
     case notice
+    case noticeDetail(noticeID: Int)
 
     // MARK: SelfStudy
     case selfStudy

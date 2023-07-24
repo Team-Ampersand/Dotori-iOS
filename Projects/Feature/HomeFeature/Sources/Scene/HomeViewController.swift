@@ -12,16 +12,8 @@ final class HomeViewController: BaseViewController<HomeStore> {
         static let horizontalPadding: CGFloat = 20
         static let spacing: CGFloat = 12
     }
-    private let scrollView = UIScrollView()
-    private lazy var dotoriBarButtonItem = UIBarButtonItem(title: "DOTORI", style: .done, target: nil, action: nil)
-        .set(\.isEnabled, false)
-        .then {
-            $0.setTitleTextAttributes([
-                .font: UIFont.dotori(.h3),
-                .foregroundColor: UIColor.dotori(.primary(.p10))
-            ], for: .disabled)
-        }
-    private lazy var myInfoImageView = UIImageView(image: .Dotori.personCircle)
+    private let dotoriBarButtonItem = DotoriBarButtonItem()
+    private let myInfoImageView = UIImageView(image: .Dotori.personCircle)
     private lazy var myInfoBarButtonItem = UIBarButtonItem(customView: myInfoImageView)
     private let timeHeaderView = TimeHeaderView()
     private let selfStudyApplicationCardView = ApplicationCardView(

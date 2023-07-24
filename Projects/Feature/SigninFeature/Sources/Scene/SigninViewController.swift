@@ -30,6 +30,7 @@ final class SigninViewController: BaseViewController<SigninStore> {
         font: .body2
     )
     private let signinButton = DotoriButton(text: L10n.Signin.loginButtonTitle)
+        .set(\.contentEdgeInsets, .vertical(16))
     private let signupButton = DotoriTextButton(
         L10n.Signin.signupButtonTitle,
         textColor: .neutral(.n20),

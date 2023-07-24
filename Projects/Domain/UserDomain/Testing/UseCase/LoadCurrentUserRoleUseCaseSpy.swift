@@ -1,3 +1,4 @@
+import BaseDomainInterface
 import UserDomainInterface
 
 final class LoadCurrentUserRoleUseCaseSpy: LoadCurrentUserRoleUseCase {

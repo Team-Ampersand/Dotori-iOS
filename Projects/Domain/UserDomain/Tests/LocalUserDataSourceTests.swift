@@ -1,3 +1,4 @@
+import BaseDomainInterface
 import UserDomainInterface
 import XCTest
 @testable import UserDomainTesting

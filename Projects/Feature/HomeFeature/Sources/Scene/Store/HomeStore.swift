@@ -1,3 +1,4 @@
+import BaseDomainInterface
 import BaseFeature
 import Combine
 import ConcurrencyUtil

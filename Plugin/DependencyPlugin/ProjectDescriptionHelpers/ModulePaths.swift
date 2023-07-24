@@ -41,6 +41,7 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum Domain: String, MicroTargetPathConvertable {
+        case NoticeDomain
         case MealDomain
         case MassageDomain
         case SelfStudyDomain
@@ -62,6 +63,7 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum Shared: String, MicroTargetPathConvertable {
+        case UIKitUtil
         case ConcurrencyUtil
         case DateUtility
         case CombineUtility

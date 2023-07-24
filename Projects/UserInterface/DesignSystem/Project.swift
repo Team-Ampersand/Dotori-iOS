@@ -12,7 +12,8 @@ let project = Project.module(
                 resources: ["Resources/**"],
                 dependencies: [
                     .userInterface(target: .DWebKit),
-                    .shared(target: .GlobalThirdPartyLibrary)
+                    .shared(target: .GlobalThirdPartyLibrary),
+                    .shared(target: .UIKitUtil)
                 ]
             )
         ),
