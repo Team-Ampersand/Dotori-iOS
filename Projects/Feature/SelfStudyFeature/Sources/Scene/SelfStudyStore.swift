@@ -8,12 +8,12 @@ final class SelfStudyStore: BaseStore {
     var subscription: Set<AnyCancellable> = .init()
     var initialState: State
     var stateSubject: CurrentValueSubject<State, Never>
-    
+
     init() {
         initialState = .init()
         stateSubject = .init(initialState)
     }
-    
+
     struct State {}
     enum Action {}
     enum Mutation {}

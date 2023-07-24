@@ -1,4 +1,6 @@
 import UIKit
+import Inject
+@testable import SelfStudyFeature
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -9,8 +11,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let viewController = UIViewController()
-        viewController.view.backgroundColor = .yellow
+        let store = SelfStudyStore()
+        let viewController = Inject.ViewControllerHost(
+            UINavigationController(rootViewController: SelfStudyViewController(store: store))
+        )
         window?.rootViewController = viewController
         window?.makeKeyAndVisible()
 
