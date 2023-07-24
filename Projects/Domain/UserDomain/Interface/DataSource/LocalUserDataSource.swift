@@ -1,3 +1,4 @@
+import BaseDomainInterface
 import Foundation
 
 public protocol LocalUserDataSource {

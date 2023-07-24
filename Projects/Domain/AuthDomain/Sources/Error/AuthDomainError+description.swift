@@ -10,6 +10,9 @@ extension AuthDomainError: LocalizedError {
 
         case .invalidPassword:
             return L10n.Signin.invalidPasswordError
+
+        case .refreshTokenExpired:
+            return L10n.Signin.refreshTokenExpired
         }
     }
 }

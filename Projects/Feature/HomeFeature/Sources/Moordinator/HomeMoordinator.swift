@@ -7,13 +7,12 @@ import UIKit
 final class HomeMoordinator: Moordinator {
     private let rootVC = UINavigationController()
     private let homeViewController: any StoredViewControllable
+    var root: Presentable {
+        rootVC
+    }
 
     init(homeViewController: any StoredViewControllable) {
         self.homeViewController = homeViewController
-    }
-
-    var root: Presentable {
-        rootVC
     }
 
     func route(to path: RoutePath) -> MoordinatorContributors {

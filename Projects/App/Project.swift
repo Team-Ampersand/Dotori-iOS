@@ -30,6 +30,7 @@ let targets: [Target] = [
         scripts: scripts,
         dependencies: [
             .feature(target: .RootFeature),
+            .feature(target: .SplashFeature),
             .feature(target: .SigninFeature),
             .feature(target: .MainTabFeature),
             .feature(target: .SignupFeature),
@@ -40,6 +41,7 @@ let targets: [Target] = [
             .domain(target: .SelfStudyDomain),
             .domain(target: .MassageDomain),
             .domain(target: .MealDomain),
+            .domain(target: .NoticeDomain),
             .core(target: .JwtStore),
             .core(target: .KeyValueStore),
             .core(target: .Networking),

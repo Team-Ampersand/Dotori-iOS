@@ -11,6 +11,7 @@ import MassageFeature
 import MealDomain
 import MusicFeature
 import Networking
+import NoticeDomain
 import NoticeFeature
 import RenewalPasswordFeature
 import RootFeature
@@ -18,6 +19,7 @@ import SelfStudyDomain
 import SelfStudyFeature
 import SigninFeature
 import SignupFeature
+import SplashFeature
 import Swinject
 import Timer
 import UIKit
@@ -38,6 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NetworkingAssembly(),
             TimerAssembly(),
             DatabaseAssembly(),
+            SplashAssembly(),
             HomeAssembly(),
             NoticeAssembly(),
             SelfStudyAssembly(),
@@ -53,7 +56,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UserDomainAssembly(),
             SelfStudyDomainAssembly(),
             MassageDomainAssembly(),
-            MealDomainAssembly()
+            MealDomainAssembly(),
+            NoticeDomainAssembly()
         ], container: AppDelegate.container)
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.enableAutoToolbar = true

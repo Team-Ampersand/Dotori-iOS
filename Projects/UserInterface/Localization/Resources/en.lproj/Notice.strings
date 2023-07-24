@@ -5,3 +5,13 @@
   Created by 최형우 on 2023/06/07.
   Copyright © 2023 com.msg. All rights reserved.
 */
+
+"entire_title" = "Entire";
+"notice_section_date_format" = "MMM yyyy";
+"author_role_admin" = "Dormitory Supervisor";
+"author_role_developer" = "Dotori";
+"author_role_councillor" = "Dormitory Councillor";
+"author_role_member" = "Student";
+"edit_button_title" = "Edit";
+"write_button_title" = "+ Write";
+"remove_button_title" = "Remove";
