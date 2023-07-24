@@ -9,8 +9,7 @@ let project = Project.module(
             .feature(target: .SplashFeature),
             .feature(target: .SigninFeature),
             .feature(target: .MainTabFeature),
-            .feature(target: .BaseFeature),
-            .feature(target: .ConfirmationDialogFeature)
+            .feature(target: .BaseFeature)
         ])
     ]
 )
