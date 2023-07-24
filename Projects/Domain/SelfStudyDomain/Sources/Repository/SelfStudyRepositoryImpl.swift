@@ -15,7 +15,11 @@ final class SelfStudyRepositoryImpl: SelfStudyRepository {
         try await remoteSelfStudyDataSource.applySelfStudy()
     }
 
-    func fetchSelfStudyRankList() async throws -> [SelfStudyRankModel] {
+    func fetchSelfStudyRankList() async throws -> [SelfStudyRankEntity] {
         try await remoteSelfStudyDataSource.fetchSelfStudyRankList()
+    }
+
+    func fetchSelfStudyRankSearch(req: FetchSelfStudyRankSearchRequestDTO) async throws -> [SelfStudyRankEntity] {
+        try await remoteSelfStudyDataSource.fetchSelfStudyRankSearch(req: req)
     }
 }

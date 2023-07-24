@@ -1,3 +1,3 @@
 public protocol FetchSelfStudyRankListUseCase {
-    func callAsFunction() async throws -> [SelfStudyRankModel]
+    func callAsFunction(req: FetchSelfStudyRankSearchRequestDTO?) async throws -> [SelfStudyRankModel]
 }

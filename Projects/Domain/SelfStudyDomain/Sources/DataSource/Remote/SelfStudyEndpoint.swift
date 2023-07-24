@@ -6,6 +6,7 @@ public enum SelfStudyEndpoint {
     case fetchSelfStudyInfo
     case applySelfStudy
     case fetchSelfStudyRank
+    case fetchSelfStudySearch(FetchSelfStudyRankSearchRequestDTO)
 }
 
 extension SelfStudyEndpoint: DotoriEndpoint {
@@ -23,11 +24,17 @@ extension SelfStudyEndpoint: DotoriEndpoint {
 
         case .fetchSelfStudyRank:
             return .get("/rank")
+
+        case .fetchSelfStudySearch:
+            return .get("/search")
         }
     }
 
     public var task: HTTPTask {
         switch self {
+        case let .fetchSelfStudySearch(req):
+            return .requestParameters(query: req.toDictionary())
+
         default:
             return .requestPlain
         }

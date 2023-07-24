@@ -7,7 +7,11 @@ struct FetchSelfStudyRankListUseCaseImpl: FetchSelfStudyRankListUseCase {
         self.selfStudyRepository = selfStudyRepository
     }
 
-    func callAsFunction() async throws -> [SelfStudyRankModel] {
-        try await selfStudyRepository.fetchSelfStudyRankList()
+    func callAsFunction(req: FetchSelfStudyRankSearchRequestDTO?) async throws -> [SelfStudyRankModel] {
+        if let req {
+            return try await selfStudyRepository.fetchSelfStudyRankSearch(req: req)
+        } else {
+            return try await selfStudyRepository.fetchSelfStudyRankList()
+        }
     }
 }
