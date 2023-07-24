@@ -25,6 +25,7 @@ public extension UIImage {
         public static let pen = DesignSystemAsset.DotoriIcon.pen.image
         public static let person = DesignSystemAsset.DotoriIcon.person.image
         public static let personCircle = DesignSystemAsset.DotoriIcon.personCircle.image
+        public static let personRectangle = DesignSystemAsset.DotoriIcon.personRectangle.image
         public static let plus = DesignSystemAsset.DotoriIcon.plus.image
         public static let search = DesignSystemAsset.DotoriIcon.search.image
         public static let shortcut = DesignSystemAsset.DotoriIcon.shortcut.image
