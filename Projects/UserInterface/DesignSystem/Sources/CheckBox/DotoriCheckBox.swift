@@ -1,5 +1,12 @@
+import Combine
+import CombineUtility
 import Configure
+import GlobalThirdPartyLibrary
 import UIKit
+
+public protocol DotoriCheckBoxActionProtocol {
+    var checkBoxDidTapPublisher: AnyPublisher<Bool, Never> { get }
+}
 
 public final class DotoriCheckBox: UIControl {
     private let checkedView = UIImageView()
@@ -39,8 +46,8 @@ public final class DotoriCheckBox: UIControl {
     // MARK: - handle touches
     public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
-        self.sendActions(for: .valueChanged)
         self.isChecked.toggle()
+        self.sendActions(for: .valueChanged)
     }
 
     // MARK: - Increase hit area
@@ -65,6 +72,14 @@ public final class DotoriCheckBox: UIControl {
             width: frame.width - checkedViewInsets.left - checkedViewInsets.right,
             height: frame.height - checkedViewInsets.top - checkedViewInsets.bottom
         )
+    }
+}
+
+extension DotoriCheckBox: DotoriCheckBoxActionProtocol {
+    public var checkBoxDidTapPublisher: AnyPublisher<Bool, Never> {
+        self.controlPublisher(for: .valueChanged)
+            .map { [weak self] _ in self?.isChecked ?? false }
+            .eraseToAnyPublisher()
     }
 }
 

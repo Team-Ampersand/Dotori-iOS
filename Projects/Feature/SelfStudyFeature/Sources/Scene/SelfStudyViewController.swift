@@ -3,6 +3,7 @@ import Combine
 import Configure
 import DesignSystem
 import MSGLayout
+import SelfStudyDomainInterface
 import UIKit
 import UIKitUtil
 
@@ -20,11 +21,12 @@ final class SelfStudyViewController: BaseViewController<SelfStudyStore> {
         .then {
             $0.register(cellType: SelfStudyCell.self)
         }
-    private lazy var selfStudyTableAdapter = TableViewAdapter<GenericSectionModel<Void>>(
+    private lazy var selfStudyTableAdapter = TableViewAdapter<GenericSectionModel<SelfStudyRankModel>>(
         tableView: selfStudyTableView
-    ) { tableView, indexPath, item in
+    ) { [store] tableView, indexPath, item in
         let cell: SelfStudyCell = tableView.dequeueReusableCell(for: indexPath)
         cell.adapt(model: item)
+        cell.delegate = store
         return cell
     }
 
@@ -37,8 +39,9 @@ final class SelfStudyViewController: BaseViewController<SelfStudyStore> {
     override func setLayout() {
         MSGLayout.buildLayout {
             selfStudyTableView.layout
-                .vertical(.to(view.safeAreaLayoutGuide))
+                .top(.toSuperview(), .equal(24))
                 .horizontal(.toSuperview())
+                .bottom(.to(view.safeAreaLayoutGuide))
         }
     }
 
@@ -47,8 +50,19 @@ final class SelfStudyViewController: BaseViewController<SelfStudyStore> {
         self.navigationItem.setRightBarButton(filterBarButton, animated: true)
     }
 
+    override func bindAction() {
+        viewDidLoadPublisher
+            .map { Store.Action.viewDidLoad }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+    }
+
     override func bindState() {
-        Just([(), ()])
+        let sharedState = store.state.share()
+            .receive(on: DispatchQueue.main)
+
+        sharedState
+            .map(\.selfStudyRankList)
             .map { [GenericSectionModel(items: $0)] }
             .sink(receiveValue: selfStudyTableAdapter.updateSections(sections:))
             .store(in: &subscription)
