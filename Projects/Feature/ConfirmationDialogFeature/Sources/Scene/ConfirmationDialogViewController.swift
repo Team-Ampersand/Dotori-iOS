@@ -1,3 +1,4 @@
+import Anim
 import BaseFeature
 import CombineUtility
 import DesignSystem
@@ -28,10 +29,19 @@ final class ConfirmationDialogViewController: BaseModalViewController<Confirmati
         super.init(store: store)
         self.titleLabel.text = title
         self.descriptionLabel.text = description
+        self.contentView.alpha = 0
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        contentView.anim(anim: .concurrent([
+            .fadeIn(0.2),
+            ModalAnim()
+        ]))
     }
 
     override func addView() {
