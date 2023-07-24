@@ -14,9 +14,9 @@ let project = Project.module(
             .domain(target: .SelfStudyDomain, type: .testing)
         ]),
         .demo(
-            module: .feature(.HomeFeature),
+            module: .feature(.SelfStudyFeature),
             dependencies: [
-                .feature(target: .HomeFeature),
+                .feature(target: .SelfStudyFeature),
                 .domain(target: .SelfStudyDomain, type: .testing)
             ]
         )
