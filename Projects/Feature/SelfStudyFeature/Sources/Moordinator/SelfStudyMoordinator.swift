@@ -5,9 +5,14 @@ import Moordinator
 
 final class SelfStudyMoordinator: Moordinator {
     private let rootVC = UINavigationController()
+    private let selfStudyViewController: any StoredViewControllable
 
     var root: Presentable {
         rootVC
+    }
+
+    init(selfStudyViewController: any StoredViewControllable) {
+        self.selfStudyViewController = selfStudyViewController
     }
 
     func route(to path: RoutePath) -> MoordinatorContributors {
@@ -25,8 +30,12 @@ final class SelfStudyMoordinator: Moordinator {
 
 private extension SelfStudyMoordinator {
     func coordinateToSelfStudy() -> MoordinatorContributors {
-        let selfStudyWebViewController = DWebViewController(urlString: "https://www.dotori-gsm.com/selfstudy")
-        self.rootVC.setViewControllers([selfStudyWebViewController], animated: true)
-        return .none
+        self.rootVC.setViewControllers([self.selfStudyViewController], animated: true)
+        return .one(
+            .contribute(
+                withNextPresentable: self.selfStudyViewController,
+                withNextRouter: self.selfStudyViewController.store
+            )
+        )
     }
 }
