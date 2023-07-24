@@ -1,17 +1,20 @@
 import BaseFeature
 import Combine
-import Store
 import Moordinator
+import SelfStudyDomainInterface
+import Store
 
 final class SelfStudyStore: BaseStore {
     var route: PassthroughSubject<RoutePath, Never> = .init()
     var subscription: Set<AnyCancellable> = .init()
     var initialState: State
     var stateSubject: CurrentValueSubject<State, Never>
+    private let fetchSelfStudyRankListUseCase: any FetchSelfStudyRankListUseCase
 
-    init() {
-        initialState = .init()
-        stateSubject = .init(initialState)
+    init(fetchSelfStudyRankListUseCase: any FetchSelfStudyRankListUseCase) {
+        self.initialState = .init()
+        self.stateSubject = .init(initialState)
+        self.fetchSelfStudyRankListUseCase = fetchSelfStudyRankListUseCase
     }
 
     struct State {}

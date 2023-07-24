@@ -1,6 +1,7 @@
-import UIKit
 import Inject
+import UIKit
 @testable import SelfStudyFeature
+@testable import SelfStudyDomainTesting
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -11,7 +12,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let store = SelfStudyStore()
+        var fetchSelfStudyRankListUseCase = FetchSelfStudyRankListUseCaseSpy()
+        let store = SelfStudyStore(fetchSelfStudyRankListUseCase: fetchSelfStudyRankListUseCase)
         let viewController = Inject.ViewControllerHost(
             UINavigationController(rootViewController: SelfStudyViewController(store: store))
         )
