@@ -81,10 +81,7 @@ open class BaseModalViewController<Store: BaseStore>:
 
     open func setLayout() {}
 
-    open func configureViewController() {
-        self.modalTransitionStyle = .crossDissolve
-        self.modalPresentationStyle = .overFullScreen
-    }
+    open func configureViewController() {}
 
     open func configureNavigation() {}
 

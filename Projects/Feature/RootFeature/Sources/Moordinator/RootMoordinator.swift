@@ -6,6 +6,7 @@ import Moordinator
 import SigninFeature
 import SplashFeature
 import UIKit
+import UIKitUtil
 
 public final class RootMoordinator: Moordinator {
     private let window: UIWindow
@@ -81,9 +82,7 @@ public final class RootMoordinator: Moordinator {
                 description: description,
                 confirmAction: confirmAction
             )
-            viewController.modalPresentationStyle = .overFullScreen
-            viewController.modalTransitionStyle = .crossDissolve
-            self.window.rootViewController?.present(viewController, animated: true)
+            self.window.rootViewController?.modalPresent(viewController)
             return .one(
                 .contribute(
                     withNextPresentable: viewController,
