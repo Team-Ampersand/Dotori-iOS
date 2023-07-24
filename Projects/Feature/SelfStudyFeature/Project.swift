@@ -7,10 +7,18 @@ let project = Project.module(
     targets: [
         .implements(module: .feature(.SelfStudyFeature), dependencies: [
             .feature(target: .BaseFeature),
-            .domain(target: .AuthDomain, type: .interface)
+            .domain(target: .SelfStudyDomain, type: .interface)
         ]),
         .tests(module: .feature(.SelfStudyFeature), dependencies: [
-            .feature(target: .SelfStudyFeature)
-        ])
+            .feature(target: .SelfStudyFeature),
+            .domain(target: .SelfStudyDomain, type: .testing)
+        ]),
+        .demo(
+            module: .feature(.HomeFeature),
+            dependencies: [
+                .feature(target: .HomeFeature),
+                .domain(target: .SelfStudyDomain, type: .testing)
+            ]
+        )
     ]
 )
