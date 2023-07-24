@@ -1,7 +1,9 @@
+import BaseDomainInterface
 import Inject
 import UIKit
 @testable import SelfStudyFeature
 @testable import SelfStudyDomainTesting
+@testable import UserDomainTesting
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,7 +20,11 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             .init(id: 2, rank: 2, stuNum: "3217", memberName: "전승원", gender: .man, selfStudyCheck: true),
             .init(id: 3, rank: 3, stuNum: "3111", memberName: "선민재", gender: .woman, selfStudyCheck: false)
         ]
-        let store = SelfStudyStore(fetchSelfStudyRankListUseCase: fetchSelfStudyRankListUseCase)
+        let loadCurrentUserRoleUseCase = LoadCurrentUserRoleUseCaseSpy()
+        let store = SelfStudyStore(
+            fetchSelfStudyRankListUseCase: fetchSelfStudyRankListUseCase,
+            loadCurrentUserRoleUseCase: loadCurrentUserRoleUseCase
+        )
         let viewController = Inject.ViewControllerHost(
             UINavigationController(rootViewController: SelfStudyViewController(store: store))
         )

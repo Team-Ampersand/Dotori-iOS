@@ -1,3 +1,4 @@
+import BaseDomainInterface
 import BaseFeature
 import Combine
 import DesignSystem
@@ -14,6 +15,7 @@ final class SelfStudyCell: BaseTableViewCell<SelfStudyRankModel> {
     private let containerView = UIView()
     private let rankLabel = DotoriLabel(textColor: .neutral(.n20), font: .caption)
     private let selfStudyCheckBox = DotoriCheckBox()
+        .set(\.isHidden, true)
     private let userImageView = DotoriIconView(
         size: .custom(.init(width: 64, height: 64)),
         image: .Dotori.personRectangle
@@ -99,6 +101,10 @@ final class SelfStudyCell: BaseTableViewCell<SelfStudyRankModel> {
         self.genderImageView.image = model.gender == .man ? .Dotori.men : .Dotori.women
         self.stuNumLabel.text = model.stuNum
         self.selfStudyCheckBox.isChecked = model.selfStudyCheck
+    }
+
+    func setUserRole(userRole: UserRoleType) {
+        selfStudyCheckBox.isHidden = userRole == .member
     }
 }
 

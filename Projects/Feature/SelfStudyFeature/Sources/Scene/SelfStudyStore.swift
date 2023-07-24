@@ -1,8 +1,10 @@
+import BaseDomainInterface
 import BaseFeature
 import Combine
 import Moordinator
 import SelfStudyDomainInterface
 import Store
+import UserDomainInterface
 
 final class SelfStudyStore: BaseStore {
     var route: PassthroughSubject<RoutePath, Never> = .init()
@@ -10,15 +12,21 @@ final class SelfStudyStore: BaseStore {
     var initialState: State
     var stateSubject: CurrentValueSubject<State, Never>
     private let fetchSelfStudyRankListUseCase: any FetchSelfStudyRankListUseCase
+    private let loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase
 
-    init(fetchSelfStudyRankListUseCase: any FetchSelfStudyRankListUseCase) {
+    init(
+        fetchSelfStudyRankListUseCase: any FetchSelfStudyRankListUseCase,
+        loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase
+    ) {
         self.initialState = .init()
         self.stateSubject = .init(initialState)
         self.fetchSelfStudyRankListUseCase = fetchSelfStudyRankListUseCase
+        self.loadCurrentUserRoleUseCase = loadCurrentUserRoleUseCase
     }
 
     struct State {
         var selfStudyRankList: [SelfStudyRankModel] = []
+        var currentUserRole = UserRoleType.member
     }
     enum Action {
         case viewDidLoad
@@ -27,6 +35,7 @@ final class SelfStudyStore: BaseStore {
     enum Mutation {
         case updateSelfStudyRankList([SelfStudyRankModel])
         case updateSelfStudyCheck(id: Int, isChecked: Bool)
+        case updateCurrentUserRole(UserRoleType)
     }
 }
 
@@ -49,9 +58,10 @@ extension SelfStudyStore {
         switch mutate {
         case let .updateSelfStudyRankList(rankList):
             newState.selfStudyRankList = rankList
-
         case let .updateSelfStudyCheck(id, isChecked):
             newState.selfStudyRankList = self.updateSelfStudyCheck(id: id, isChecked: isChecked)
+        case let .updateCurrentUserRole(userRole):
+            newState.currentUserRole = userRole
         }
         return newState
     }
@@ -65,13 +75,25 @@ extension SelfStudyStore: SelfStudyCellDelegate {
 
 private extension SelfStudyStore {
     func viewDidLoad() -> SideEffect<Mutation, Never> {
-        return SideEffect<[SelfStudyRankModel], Error>
+        let selfStudyEffect = SideEffect<[SelfStudyRankModel], Error>
             .tryAsync { [fetchSelfStudyRankListUseCase] in
                 try await fetchSelfStudyRankListUseCase()
             }
-            .map { .updateSelfStudyRankList($0) }
+            .map(Mutation.updateSelfStudyRankList)
             .catchToNever()
             .eraseToSideEffect()
+
+        let userRoleEffect = SideEffect
+            .just(try? loadCurrentUserRoleUseCase())
+            .replaceNil(with: .member)
+            .map(Mutation.updateCurrentUserRole)
+            .setFailureType(to: Never.self)
+            .eraseToSideEffect()
+        
+        return .merge(
+            selfStudyEffect,
+            userRoleEffect
+        )
     }
 }
 

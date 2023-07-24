@@ -26,6 +26,7 @@ final class SelfStudyViewController: BaseViewController<SelfStudyStore> {
     ) { [store] tableView, indexPath, item in
         let cell: SelfStudyCell = tableView.dequeueReusableCell(for: indexPath)
         cell.adapt(model: item)
+        cell.setUserRole(userRole: store.currentState.currentUserRole)
         cell.delegate = store
         return cell
     }
@@ -63,6 +64,7 @@ final class SelfStudyViewController: BaseViewController<SelfStudyStore> {
 
         sharedState
             .map(\.selfStudyRankList)
+            .removeDuplicates()
             .map { [GenericSectionModel(items: $0)] }
             .sink(receiveValue: selfStudyTableAdapter.updateSections(sections:))
             .store(in: &subscription)
