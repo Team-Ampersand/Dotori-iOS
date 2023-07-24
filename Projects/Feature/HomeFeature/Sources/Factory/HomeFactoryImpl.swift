@@ -1,3 +1,4 @@
+import ConfirmationDialogFeature
 import MassageDomainInterface
 import MealDomainInterface
 import Moordinator
@@ -13,6 +14,7 @@ struct HomeFactoryImpl: HomeFactory {
     private let loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase
     private let applySelfStudyUseCase: any ApplySelfStudyUseCase
     private let applyMassageUseCase: any ApplyMassageUseCase
+    private let confirmationDialogFactory: any ConfirmationDialogFactory
 
     init(
         repeatableTimer: any RepeatableTimer,
@@ -21,7 +23,8 @@ struct HomeFactoryImpl: HomeFactory {
         fetchMealInfoUseCase: any FetchMealInfoUseCase,
         loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase,
         applySelfStudyUseCase: any ApplySelfStudyUseCase,
-        applyMassageUseCase: any ApplyMassageUseCase
+        applyMassageUseCase: any ApplyMassageUseCase,
+        confirmationDialogFactory: any ConfirmationDialogFactory
     ) {
         self.repeatableTimer = repeatableTimer
         self.fetchSelfStudyInfoUseCase = fetchSelfStudyInfoUseCase
@@ -30,6 +33,7 @@ struct HomeFactoryImpl: HomeFactory {
         self.loadCurrentUserRoleUseCase = loadCurrentUserRoleUseCase
         self.applySelfStudyUseCase = applySelfStudyUseCase
         self.applyMassageUseCase = applyMassageUseCase
+        self.confirmationDialogFactory = confirmationDialogFactory
     }
 
     func makeMoordinator() -> Moordinator {
@@ -43,6 +47,9 @@ struct HomeFactoryImpl: HomeFactory {
             applyMassageUseCase: applyMassageUseCase
         )
         let homeViewController = HomeViewController(store: homeStore)
-        return HomeMoordinator(homeViewController: homeViewController)
+        return HomeMoordinator(
+            homeViewController: homeViewController,
+            confirmationDialogFactory: confirmationDialogFactory
+        )
     }
 }

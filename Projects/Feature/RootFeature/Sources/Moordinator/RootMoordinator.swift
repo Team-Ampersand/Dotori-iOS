@@ -1,6 +1,5 @@
 import BaseFeature
 import Combine
-import ConfirmationDialogFeature
 import MainTabFeature
 import Moordinator
 import SigninFeature
@@ -13,7 +12,6 @@ public final class RootMoordinator: Moordinator {
     private let splashFactory: any SplashFactory
     private let signinFactory: any SigninFactory
     private let mainFactory: any MainFactory
-    private let confirmationDialogFactory: any ConfirmationDialogFactory
     private let rootVC: UIViewController = {
         let launchScreenStoryboard = UIStoryboard(name: "LaunchScreen", bundle: .main)
         let launchScreen = launchScreenStoryboard.instantiateViewController(withIdentifier: "LaunchScreen")
@@ -28,15 +26,13 @@ public final class RootMoordinator: Moordinator {
         window: UIWindow,
         splashFactory: any SplashFactory,
         signinFactory: any SigninFactory,
-        mainFactory: any MainFactory,
-        confirmationDialogFactory: any ConfirmationDialogFactory
+        mainFactory: any MainFactory
     ) {
         self.window = window
         self.splashFactory = splashFactory
         self.signinFactory = signinFactory
         self.mainFactory = mainFactory
         self.window.makeKeyAndVisible()
-        self.confirmationDialogFactory = confirmationDialogFactory
     }
 
     public func route(to path: RoutePath) -> MoordinatorContributors {
@@ -75,23 +71,6 @@ public final class RootMoordinator: Moordinator {
                     withNextRouter: DisposableRouter(singlePath: DotoriRoutePath.main)
                 )
             )
-
-        case let .confirmationDialog(title, description, confirmAction):
-            let viewController = confirmationDialogFactory.makeViewController(
-                title: title,
-                description: description,
-                confirmAction: confirmAction
-            )
-            self.window.rootViewController?.modalPresent(viewController)
-            return .one(
-                .contribute(
-                    withNextPresentable: viewController,
-                    withNextRouter: viewController.store
-                )
-            )
-
-        case .dismiss:
-            self.window.rootViewController?.presentedViewController?.dismiss(animated: true)
 
         default:
             return .none

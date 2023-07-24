@@ -45,14 +45,6 @@ final class MainTabMoordinator: Moordinator {
         case .massage:
             rootVC.selectedIndex = 3
 
-        case let .confirmationDialog(title, message, confirmAction):
-            let confirmationDialogRoutePath = DotoriRoutePath.confirmationDialog(
-                title: title,
-                message: message,
-                confirmAction: confirmAction
-            )
-            return .one(.forwardToParent(with: confirmationDialogRoutePath))
-
         default:
             return .none
         }

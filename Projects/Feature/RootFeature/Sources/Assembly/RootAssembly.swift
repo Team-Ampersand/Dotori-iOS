@@ -12,8 +12,7 @@ public final class RootAssembly: Assembly {
                 window: window,
                 splashFactory: resolver.resolve(SplashFactory.self)!,
                 signinFactory: resolver.resolve(SigninFactory.self)!,
-                mainFactory: resolver.resolve(MainFactory.self)!,
-                confirmationDialogFactory: resolver.resolve(ConfirmationDialogFactory.self)!
+                mainFactory: resolver.resolve(MainFactory.self)!
             )
         }
     }
