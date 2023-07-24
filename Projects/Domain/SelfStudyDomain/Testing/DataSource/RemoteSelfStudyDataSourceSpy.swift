@@ -13,4 +13,11 @@ final class RemoteSelfStudyDataSourceSpy: RemoteSelfStudyDataSource {
     func applySelfStudy() async throws {
         applySelfStudyCallCount += 1
     }
+
+    var fetchSelfStudyRankListCallCount = 0
+    var fetchSelfStudyRankListReturn: [SelfStudyRankEntity] = []
+    func fetchSelfStudyRankList() async throws -> [SelfStudyRankEntity] {
+        fetchSelfStudyRankListCallCount += 1
+        return fetchSelfStudyRankListReturn
+    }
 }

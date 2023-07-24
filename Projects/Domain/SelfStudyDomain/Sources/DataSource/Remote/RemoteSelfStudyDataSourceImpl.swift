@@ -19,4 +19,12 @@ final class RemoteSelfStudyDataSourceImpl: RemoteSelfStudyDataSource {
     func applySelfStudy() async throws {
         try await networking.request(SelfStudyEndpoint.applySelfStudy)
     }
+
+    func fetchSelfStudyRankList() async throws -> [SelfStudyRankEntity] {
+        try await networking.request(
+            SelfStudyEndpoint.fetchSelfStudyRank,
+            dto: FetchSelfStudyRankListResponseDTO.self
+        )
+        .toDomain()
+    }
 }

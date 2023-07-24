@@ -5,6 +5,7 @@ import SelfStudyDomainInterface
 public enum SelfStudyEndpoint {
     case fetchSelfStudyInfo
     case applySelfStudy
+    case fetchSelfStudyRank
 }
 
 extension SelfStudyEndpoint: DotoriEndpoint {
@@ -19,6 +20,9 @@ extension SelfStudyEndpoint: DotoriEndpoint {
 
         case .applySelfStudy:
             return .post("")
+
+        case .fetchSelfStudyRank:
+            return .get("/rank")
         }
     }
 
@@ -33,7 +37,7 @@ extension SelfStudyEndpoint: DotoriEndpoint {
         .accessToken
     }
 
-    public var errorMap: [Int : Error] {
+    public var errorMap: [Int: Error] {
         switch self {
         case .applySelfStudy:
             return [
