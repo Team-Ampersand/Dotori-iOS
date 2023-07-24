@@ -38,5 +38,9 @@ public final class AuthDomainAssembly: Assembly {
         container.register(LoadJwtTokenUseCase.self) { resolver in
             LoadJwtTokenUseCaseImpl(authRepository: resolver.resolve(AuthRepository.self)!)
         }
+
+        container.register(CheckIsLoggedInUseCase.self) { resolver in
+            CheckIsLoggedInUseCaseImpl(authRepository: resolver.resolve(AuthRepository.self)!)
+        }
     }
 }

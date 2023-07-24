@@ -25,6 +25,7 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum Feature: String, MicroTargetPathConvertable {
+        case SplashFeature
         case MusicFeature
         case MassageFeature
         case SelfStudyFeature

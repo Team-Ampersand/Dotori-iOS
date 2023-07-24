@@ -16,4 +16,8 @@ final class LocalAuthDataSourceImpl: LocalAuthDataSource {
             expiresAt: jwtStore.load(property: .accessExpiresAt)
         )
     }
+
+    func checkTokenIsExist() -> Bool {
+        jwtStore.load(property: .accessToken).isEmpty == false
+    }
 }

@@ -14,3 +14,4 @@
 "signup_button_title" = "Dotori가 처음이라면? 회원가입";
 "find_password_button_title" = "비밀번호 찾기";
 "invalid_password_error" = "이메일 혹은 비밀번호가 일치하지 않습니다.";
+"refresh_token_expired" = "리프레시토큰이 만료되었습니다.";
