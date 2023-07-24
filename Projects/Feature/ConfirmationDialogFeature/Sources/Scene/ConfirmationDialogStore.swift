@@ -9,9 +9,9 @@ final class ConfirmationDialogStore: BaseStore {
     var subscription: Set<AnyCancellable> = .init()
     var initialState: State
     var stateSubject: CurrentValueSubject<State, Never>
-    private let confirmAction: () -> Void
+    private let confirmAction: () async -> Void
 
-    init(confirmAction: @escaping () -> Void) {
+    init(confirmAction: @escaping () async -> Void) {
         self.initialState = .init()
         self.stateSubject = .init(initialState)
         self.confirmAction = confirmAction
@@ -34,8 +34,19 @@ final class ConfirmationDialogStore: BaseStore {
             route.send(DotoriRoutePath.dismiss)
 
         case .confirmButtonDidTap:
-            confirmAction()
-            return .just(.updateIsLoading(true))
+            let confirmEffect = SideEffect<Void, Never>
+                .async { [confirmAction] in
+                    await confirmAction()
+                }
+                .handleEvents(receiveOutput: { [route] in
+                    route.send(DotoriRoutePath.dismiss)
+                })
+                .flatMap { SideEffect<Mutation, Never>.none }
+                .eraseToSideEffect()
+            return .merge(
+                confirmEffect,
+                .just(.updateIsLoading(true))
+            )
         }
         return .none
     }

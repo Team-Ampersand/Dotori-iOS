@@ -5,6 +5,6 @@ public protocol ConfirmationDialogFactory {
     func makeViewController(
         title: String,
         description: String,
-        confirmAction: @escaping () -> Void
+        confirmAction: @escaping () async -> Void
     ) -> any StoredViewControllable
 }
