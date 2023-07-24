@@ -72,6 +72,7 @@ final class ConfirmationDialogViewController: BaseModalViewController<Confirmati
 
     override func bindAction() {
         cancelButton.tapPublisher
+            .merge(with: view.tapGesturePublisher().map { _ in })
             .throttle(for: 1, scheduler: RunLoop.main, latest: true)
             .filter { [store] in !store.currentState.isLoading }
             .map { Store.Action.cancelButtonDidTap }
