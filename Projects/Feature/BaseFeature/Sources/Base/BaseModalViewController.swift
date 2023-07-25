@@ -1,4 +1,6 @@
+import Anim
 import Combine
+import Configure
 import DesignSystem
 import UIKit
 
@@ -25,6 +27,7 @@ open class BaseModalViewController<Store: BaseStore>:
     public let store: Store
     public var subscription = Set<AnyCancellable>()
     public var contentView = UIView()
+        .set(\.alpha, 0)
 
     // MARK: - Init
 
@@ -44,7 +47,7 @@ open class BaseModalViewController<Store: BaseStore>:
         if UITraitCollection.current.userInterfaceStyle == .light {
             view.backgroundColor = .init(red: 0.02, green: 0.03, blue: 0.17, alpha: 0.45)
         } else {
-            view.backgroundColor = .init(red: 0, green: 0, blue: 0, alpha: 45)
+            view.backgroundColor = .init(red: 0, green: 0, blue: 0, alpha: 0.45)
         }
         addView()
         setLayout()
@@ -58,6 +61,7 @@ open class BaseModalViewController<Store: BaseStore>:
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewWillAppearSubject.send(())
+        modalAnimation()
     }
 
     open override func viewDidAppear(_ animated: Bool) {
@@ -81,12 +85,19 @@ open class BaseModalViewController<Store: BaseStore>:
 
     open func setLayout() {}
 
-    open func configureViewController() {
-        self.modalTransitionStyle = .crossDissolve
-        self.modalPresentationStyle = .overFullScreen
-    }
+    open func configureViewController() {}
 
     open func configureNavigation() {}
+
+    /**
+     해당 method는 viewWillAppear에 실행됩니다
+     */
+    open func modalAnimation() {
+        contentView.anim(anim: .concurrent([
+            .fadeIn(0.2),
+            .dotoriDialog()
+        ]))
+    }
 
     open func bindState() {}
 

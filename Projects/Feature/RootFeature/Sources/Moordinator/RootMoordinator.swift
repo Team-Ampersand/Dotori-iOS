@@ -5,6 +5,7 @@ import Moordinator
 import SigninFeature
 import SplashFeature
 import UIKit
+import UIKitUtil
 
 public final class RootMoordinator: Moordinator {
     private let window: UIWindow
@@ -74,6 +75,7 @@ public final class RootMoordinator: Moordinator {
         default:
             return .none
         }
+        return .none
     }
 }
 

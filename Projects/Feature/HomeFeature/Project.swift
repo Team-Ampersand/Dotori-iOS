@@ -9,6 +9,7 @@ let project = Project.module(
             module: .feature(.HomeFeature),
             dependencies: [
                 .feature(target: .BaseFeature),
+                .feature(target: .ConfirmationDialogFeature),
                 .domain(target: .SelfStudyDomain, type: .interface),
                 .domain(target: .MassageDomain, type: .interface),
                 .domain(target: .MealDomain, type: .interface),

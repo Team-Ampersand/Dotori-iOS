@@ -16,7 +16,9 @@ final class HomeFeatureTests: XCTestCase {
     var fetchMealInfoUseCase: FetchMealInfoUseCaseSpy!
     var loadCurrentUserRoleUseCase: LoadCurrentUserRoleUseCaseSpy!
     var applySelfStudyUseCase: ApplySelfStudyUseCaseSpy!
+    var cancelSelfStudyUseCase: CancelSelfStudyUseCaseSpy!
     var applyMassageUseCase: ApplyMassageUseCaseSpy!
+    var cancelMassageUseCase: CancelMassageUseCaseSpy!
     var sut: HomeStore!
     var subscription: Set<AnyCancellable>!
 
@@ -27,7 +29,9 @@ final class HomeFeatureTests: XCTestCase {
         fetchMealInfoUseCase = .init()
         loadCurrentUserRoleUseCase = .init()
         applySelfStudyUseCase = .init()
+        cancelSelfStudyUseCase = .init()
         applyMassageUseCase = .init()
+        cancelMassageUseCase = .init()
         sut = .init(
             repeatableTimer: repeatableTimer,
             fetchSelfStudyInfoUseCase: fetchSelfStudyInfoUseCase,
@@ -35,7 +39,9 @@ final class HomeFeatureTests: XCTestCase {
             fetchMealInfoUseCase: fetchMealInfoUseCase,
             loadCurrentUserRoleUseCase: loadCurrentUserRoleUseCase,
             applySelfStudyUseCase: applySelfStudyUseCase,
-            applyMassageUseCase: applyMassageUseCase
+            cancelSelfStudyUseCase: cancelSelfStudyUseCase,
+            applyMassageUseCase: applyMassageUseCase,
+            cancelMassageUseCase: cancelMassageUseCase
         )
         subscription = .init()
     }
@@ -47,7 +53,9 @@ final class HomeFeatureTests: XCTestCase {
         fetchMealInfoUseCase = nil
         loadCurrentUserRoleUseCase = nil
         applySelfStudyUseCase = nil
+        cancelSelfStudyUseCase = nil
         applyMassageUseCase = nil
+        cancelMassageUseCase = nil
         sut = nil
         subscription = nil
     }
@@ -59,7 +67,8 @@ final class HomeFeatureTests: XCTestCase {
                 .eraseToAnyPublisher()
         }
 
-        let expectation = XCTestExpectation(description: "Asd")
+        let expectation = XCTestExpectation(description: "viewDidLoad expectation")
+        expectation.expectedFulfillmentCount = 2
         var testTargetDate: Date?
 
         sut.state.map(\.currentTime).sink {

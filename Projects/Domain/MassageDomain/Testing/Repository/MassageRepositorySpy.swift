@@ -12,4 +12,9 @@ final class MassageRepositorySpy: MassageRepository {
     func applyMassage() async throws {
         applyMassageCallCount += 1
     }
+
+    var cancelMassageCallCount = 0
+    func cancelMassage() async throws {
+        cancelMassageCallCount += 1
+    }
 }
