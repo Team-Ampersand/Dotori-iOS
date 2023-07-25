@@ -7,3 +7,4 @@
 */
 
 "violation_title" = "Vioalation History";
+"empty_violation_title" = "Violation list is empty.";

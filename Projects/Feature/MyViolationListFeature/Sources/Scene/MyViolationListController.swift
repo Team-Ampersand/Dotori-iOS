@@ -16,6 +16,7 @@ final class MyViolationListViewController: BaseStoredModalViewController<MyViola
     private let xmarkButton = DotoriIconButton(image: .Dotori.xmark)
     private let violationHistoryTableView = UITableView()
         .set(\.backgroundColor, .clear)
+        .set(\.cornerRadius, 8)
         .set(\.separatorStyle, .none)
         .set(\.sectionHeaderHeight, 0)
         .set(\.sectionFooterHeight, 0)
@@ -29,16 +30,28 @@ final class MyViolationListViewController: BaseStoredModalViewController<MyViola
         cell.adapt(model: item)
         return cell
     }
+    private let emptyViolationLabel = DotoriLabel(
+        L10n.ViolationHistory.emptyViolationTitle,
+        textColor: .neutral(.n30),
+        font: .smalltitle
+    ).set(\.isHidden, true)
     private let confirmButton = DotoriButton(text: L10n.Global.confirmButtonTitle)
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func addView() {
+        super.addView()
+        violationHistoryTableView.addSubviews {
+            emptyViolationLabel
+        }
     }
+
     override func setLayout() {
         MSGLayout.buildLayout {
             contentView.layout
                 .center(.toSuperview())
                 .horizontal(.toSuperview(), .equal(20))
+
+            emptyViolationLabel.layout
+                .center(.toSuperview())
         }
 
         MSGLayout.stackedLayout(self.contentView) {
@@ -89,6 +102,18 @@ final class MyViolationListViewController: BaseStoredModalViewController<MyViola
             .map(\.violationList)
             .map { [GenericSectionModel(items: $0)] }
             .sink(receiveValue: violationHistoryTableAdapter.updateSections(sections:))
+            .store(in: &subscription)
+
+        sharedState
+            .map(\.violationList)
+            .map(\.count)
+            .map { $0 == 0 }
+            .sink(with: self, receiveValue: { owner, violationIsEmpty in
+                owner.violationHistoryTableView.backgroundColor = violationIsEmpty
+                ? .dotori(.background(.bg))
+                : .clear
+                owner.emptyViolationLabel.isHidden = !violationIsEmpty
+            })
             .store(in: &subscription)
     }
 }
