@@ -68,6 +68,7 @@ final class HomeFeatureTests: XCTestCase {
         }
 
         let expectation = XCTestExpectation(description: "Asd")
+        expectation.expectedFulfillmentCount = 2
         var testTargetDate: Date?
 
         sut.state.map(\.currentTime).sink {
