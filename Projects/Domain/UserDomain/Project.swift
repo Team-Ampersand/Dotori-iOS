@@ -11,7 +11,8 @@ let project = Project.module(
         .implements(module: .domain(.UserDomain), dependencies: [
             .domain(target: .UserDomain, type: .interface),
             .domain(target: .BaseDomain),
-            .core(target: .KeyValueStore, type: .interface)
+            .core(target: .KeyValueStore, type: .interface),
+            .core(target: .JwtStore, type: .interface)
         ]),
         .testing(module: .domain(.UserDomain), dependencies: [
             .domain(target: .UserDomain, type: .interface)
@@ -19,7 +20,8 @@ let project = Project.module(
         .tests(module: .domain(.UserDomain), dependencies: [
             .domain(target: .UserDomain),
             .domain(target: .UserDomain, type: .testing),
-            .core(target: .KeyValueStore, type: .testing)
+            .core(target: .KeyValueStore, type: .testing),
+            .core(target: .JwtStore, type: .testing)
         ])
     ]
 )
