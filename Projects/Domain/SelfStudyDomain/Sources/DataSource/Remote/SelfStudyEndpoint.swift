@@ -7,6 +7,7 @@ public enum SelfStudyEndpoint {
     case applySelfStudy
     case fetchSelfStudyRank
     case fetchSelfStudySearch(FetchSelfStudyRankSearchRequestDTO)
+    case checkSelfStudyMember(memberID: Int, isChecked: Bool)
 }
 
 extension SelfStudyEndpoint: DotoriEndpoint {
@@ -27,6 +28,9 @@ extension SelfStudyEndpoint: DotoriEndpoint {
 
         case .fetchSelfStudySearch:
             return .get("/search")
+
+        case let .checkSelfStudyMember(memberID, _):
+            return .patch("/check/\(memberID)")
         }
     }
 
@@ -34,6 +38,11 @@ extension SelfStudyEndpoint: DotoriEndpoint {
         switch self {
         case let .fetchSelfStudySearch(req):
             return .requestParameters(query: req.toDictionary())
+
+        case let .checkSelfStudyMember(_, isChecked):
+            return .requestParameters(body: [
+                "selfStudyCheck": isChecked
+            ])
 
         default:
             return .requestPlain

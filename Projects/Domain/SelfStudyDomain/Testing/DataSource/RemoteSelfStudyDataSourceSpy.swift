@@ -27,4 +27,9 @@ final class RemoteSelfStudyDataSourceSpy: RemoteSelfStudyDataSource {
         fetchSelfStudyRankSearchCallCount += 1
         return fetchSelfStudyRankSearchReturn
     }
+
+    var checkSelfStudyMemberCallCount = 0
+    func checkSelfStudyMember(memberID: Int, isChecked: Bool) async throws {
+        checkSelfStudyMemberCallCount += 1
+    }
 }
