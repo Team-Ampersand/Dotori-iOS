@@ -1,13 +1,19 @@
 import BaseDomainInterface
 import Foundation
+import JwtStoreInterface
 import KeyValueStoreInterface
 import UserDomainInterface
 
 final class LocalUserDataSourceImpl: LocalUserDataSource {
     private let keyValueStore: any KeyValueStore
+    private let jwtStore: any JwtStore
 
-    init(keyValueStore: any KeyValueStore) {
+    init(
+        keyValueStore: any KeyValueStore,
+        jwtStore: any JwtStore
+    ) {
         self.keyValueStore = keyValueStore
+        self.jwtStore = jwtStore
     }
 
     func loadCurrentUserRole() throws -> UserRoleType {
@@ -17,5 +23,11 @@ final class LocalUserDataSourceImpl: LocalUserDataSource {
             throw UserDomainError.cannotFindUserRole
         }
         return userRole
+    }
+
+    func logout() {
+        jwtStore.delete(property: .accessToken)
+        jwtStore.delete(property: .refreshToken)
+        jwtStore.delete(property: .accessExpiresAt)
     }
 }

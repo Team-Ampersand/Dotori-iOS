@@ -9,4 +9,9 @@ final class UserRepositorySpy: UserRepository {
         loadCurrentUserRoleCallCount += 1
         return loadCurrentUserRoleReturn
     }
+
+    var logoutCallCount = 0
+    func logout() {
+        logoutCallCount += 1
+    }
 }
