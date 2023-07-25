@@ -20,6 +20,9 @@ final class MusicMoordinator: Moordinator {
         case .music:
             return coordinateToMusic()
 
+        case let .alert(title, message, style, actions):
+            return presentToAlert(title: title, message: message, style: style, actions: actions)
+
         default:
             return .none
         }
@@ -36,5 +39,21 @@ private extension MusicMoordinator {
                 withNextRouter: self.musicViewController.store
             )
         )
+    }
+
+    func presentToAlert(
+        title: String?,
+        message: String?,
+        style: UIAlertController.Style,
+        actions: [UIAlertAction]
+    ) -> MoordinatorContributors {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: style)
+        if !actions.isEmpty {
+            actions.forEach(alert.addAction(_:))
+        } else {
+            alert.addAction(.init(title: "확인", style: .default))
+        }
+        self.rootVC.topViewController?.present(alert, animated: true)
+        return .none
     }
 }

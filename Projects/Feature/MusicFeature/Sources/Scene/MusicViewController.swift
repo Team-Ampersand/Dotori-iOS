@@ -28,9 +28,10 @@ final class MusicViewController: BaseStoredViewController<MusicStore> {
     private let musicRefreshControl = UIRefreshControl()
     private lazy var musicTableAdapter = TableViewAdapter<GenericSectionModel<MusicModel>>(
         tableView: musicTableView
-    ) { tableView, indexPath, item in
+    ) { [weak self] tableView, indexPath, item in
         let cell: MusicCell = tableView.dequeueReusableCell(for: indexPath)
         cell.adapt(model: item)
+        cell.delegate = self
         return cell
     }
     private let emptyMusicStackView = VStackView(spacing: 8) {
@@ -103,9 +104,15 @@ final class MusicViewController: BaseStoredViewController<MusicStore> {
             .map(\.musicList)
             .map(\.isEmpty)
             .removeDuplicates()
-            .sink(with: emptyMusicStackView) { emptyView, musicListIsEmpty in
+            .sink(with: emptyMusicStackView, receiveValue: { emptyView, musicListIsEmpty in
                 emptyView.isHidden = !musicListIsEmpty
-            }
+            })
             .store(in: &subscription)
+    }
+}
+
+extension MusicViewController: MusicCellDelegate {
+    func cellMeatballDidTap(model: MusicModel) {
+        store.send(.cellMeatballDidTap(music: model))
     }
 }

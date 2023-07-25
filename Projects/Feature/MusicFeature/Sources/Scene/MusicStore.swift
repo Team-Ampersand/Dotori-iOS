@@ -6,6 +6,7 @@ import Foundation
 import Moordinator
 import MusicDomainInterface
 import Store
+import UIKit
 import UserDomainInterface
 
 final class MusicStore: BaseStore {
@@ -34,6 +35,7 @@ final class MusicStore: BaseStore {
     enum Action {
         case viewDidLoad
         case refresh
+        case cellMeatballDidTap(music: MusicModel)
     }
     enum Mutation {
         case updateMusicList([MusicModel])
@@ -47,6 +49,9 @@ extension MusicStore {
         switch action {
         case .viewDidLoad, .refresh:
             return self.fetchMusicList()
+
+        case let .cellMeatballDidTap(music):
+            return self.cellMeatballDidTap(music: music)
         }
     }
 }
@@ -84,6 +89,12 @@ private extension MusicStore {
         )
     }
 
+    func cellMeatballDidTap(music: MusicModel) -> SideEffect<Mutation, Never> {
+        let alertActions: [UIAlertAction] = self.cellMeatballAction(music: music)
+        route.send(DotoriRoutePath.alert(style: .actionSheet, actions: alertActions))
+        return .none
+    }
+
     func fetchMusicList() -> SideEffect<Mutation, Never> {
         guard !currentState.isRefreshing else { return .none }
         let musicListEffect = SideEffect<[MusicModel], Error>
@@ -94,6 +105,29 @@ private extension MusicStore {
             .eraseToSideEffect()
             .catchToNever()
         return self.makeRefreshingSideEffect(musicListEffect)
+    }
+
+    func cellMeatballAction(music: MusicModel) -> [UIAlertAction] {
+        let youtubeID = self.parseYoutubeID(url: music.url)
+        var actions: [UIAlertAction] = [
+            .init(title: "바로가기", style: .default, handler: { _ in
+                guard let youtubeID,
+                      let url = URL(string: "youtube://\(youtubeID)")
+                else { return }
+                if UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url)
+                } else if let webURL = URL(string: "https://youtube.com/watch?v=\(youtubeID)") {
+                    UIApplication.shared.open(webURL)
+                }
+            })
+        ]
+        if currentState.currentUserRole != .member {
+            actions.append(.init(title: "기상음악 삭제", style: .destructive, handler: { _ in
+                
+            }))
+        }
+        actions.append(.init(title: "취소", style: .cancel))
+        return actions
     }
 }
 
@@ -110,5 +144,14 @@ private extension MusicStore {
             .append(publisher)
             .append(endLoadingPublisher)
             .eraseToSideEffect()
+    }
+
+    func parseYoutubeID(url: String) -> String? {
+        guard let url = URL(string: url) else { return nil }
+        let queryItems = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems
+        if let idValue = queryItems?.first(where: { $0.name == "v" })?.value {
+            return idValue
+        }
+        return url.lastPathComponent.isEmpty ? nil : url.lastPathComponent
     }
 }
