@@ -13,15 +13,18 @@ final class SelfStudyStore: BaseStore {
     var stateSubject: CurrentValueSubject<State, Never>
     private let fetchSelfStudyRankListUseCase: any FetchSelfStudyRankListUseCase
     private let loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase
+    private let checkSelfStudyMemberUseCase: any CheckSelfStudyMemberUseCase
 
     init(
         fetchSelfStudyRankListUseCase: any FetchSelfStudyRankListUseCase,
-        loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase
+        loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase,
+        checkSelfStudyMemberUseCase: any CheckSelfStudyMemberUseCase
     ) {
         self.initialState = .init()
         self.stateSubject = .init(initialState)
         self.fetchSelfStudyRankListUseCase = fetchSelfStudyRankListUseCase
         self.loadCurrentUserRoleUseCase = loadCurrentUserRoleUseCase
+        self.checkSelfStudyMemberUseCase = checkSelfStudyMemberUseCase
     }
 
     struct State {
@@ -46,7 +49,7 @@ extension SelfStudyStore {
             return viewDidLoad()
 
         case let .selfStudyCheckButtonDidTap(id, isChecked):
-            return .just(.updateSelfStudyCheck(id: id, isChecked: isChecked))
+            return selfStudyCheckButtonDidTap(memberID: id, isChecked: isChecked)
         }
         return .none
     }
@@ -94,6 +97,15 @@ private extension SelfStudyStore {
             selfStudyEffect,
             userRoleEffect
         )
+    }
+
+    func selfStudyCheckButtonDidTap(memberID: Int, isChecked: Bool) -> SideEffect<Mutation, Never> {
+        Task {
+            try await checkSelfStudyMemberUseCase(memberID: memberID, isChecked: isChecked)
+        }
+
+        return SideEffect<Mutation, Never>
+            .just(.updateSelfStudyCheck(id: memberID, isChecked: isChecked))
     }
 }
 
