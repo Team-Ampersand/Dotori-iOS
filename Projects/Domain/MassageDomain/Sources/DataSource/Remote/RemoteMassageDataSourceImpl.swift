@@ -13,7 +13,7 @@ final class RemoteMassageDataSourceImpl: RemoteMassageDataSource {
             MassageEndpoint.fetchMassageInfo,
             dto: FetchMassageInfoResponseDTO.self
         )
-        .toEntity()
+        .toDomain()
     }
 
     func applyMassage() async throws {

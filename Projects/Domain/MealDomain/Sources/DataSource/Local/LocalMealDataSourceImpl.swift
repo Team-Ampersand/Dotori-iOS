@@ -31,7 +31,7 @@ final class LocalMealDataSourceImpl: LocalMealDataSource {
             as: MealInfoLocalEntity.self,
             filter: (dateStart...dateEnd).contains(Column("date"))
         )
-        .map { $0.toDomainEntity() }
+        .map { $0.toDomain() }
     }
 
     func saveMealInfoList(date: Date, mealInfoList: [MealInfoEntity]) throws {

@@ -13,7 +13,7 @@ final class RemoteSelfStudyDataSourceImpl: RemoteSelfStudyDataSource {
             SelfStudyEndpoint.fetchSelfStudyInfo,
             dto: FetchSelfStudyInfoResponseDTO.self
         )
-        .toEntity()
+        .toDomain()
     }
 
     func applySelfStudy() async throws {

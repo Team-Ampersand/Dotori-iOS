@@ -8,7 +8,7 @@ struct FetchSelfStudyInfoResponseDTO: Decodable {
 }
 
 extension FetchSelfStudyInfoResponseDTO {
-    func toEntity() -> SelfStudyInfoEntity {
+    func toDomain() -> SelfStudyInfoEntity {
         SelfStudyInfoEntity(count: count, limit: limit, selfStudyStatus: selfStudyStatus)
     }
 }
