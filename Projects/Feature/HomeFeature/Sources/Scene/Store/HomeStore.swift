@@ -162,8 +162,8 @@ private extension HomeStore {
             },
             .init(title: L10n.Home.logoutButtonTitle, style: .default) { [route, logoutUseCase] _ in
                 let confirmationDialogRoutePath = DotoriRoutePath.confirmationDialog(
-                    title: "로그아웃",
-                    message: "정말로 도토리를 로그아웃 하시겠습니까?"
+                    title: L10n.Home.logoutTitle,
+                    message: L10n.Home.reallyLogoutTitle
                 ) {
                     logoutUseCase()
                     route.send(DotoriRoutePath.signin)
