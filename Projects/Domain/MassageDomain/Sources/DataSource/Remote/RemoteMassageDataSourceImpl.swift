@@ -19,4 +19,8 @@ final class RemoteMassageDataSourceImpl: RemoteMassageDataSource {
     func applyMassage() async throws {
         try await networking.request(MassageEndpoint.applyMassage)
     }
+
+    func cancelMassage() async throws {
+        try await networking.request(MassageEndpoint.cancelMassage)
+    }
 }

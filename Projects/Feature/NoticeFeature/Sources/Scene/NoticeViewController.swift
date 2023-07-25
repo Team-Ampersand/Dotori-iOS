@@ -37,6 +37,7 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
         .then {
             $0.register(cellType: NoticeCell.self)
         }
+    private let noticeRefreshControl = UIRefreshControl()
     private lazy var noticeTableAdapter = TableViewAdapter<GenericSectionModel<NoticeModel>>(
         tableView: noticeTableView
     ) { tableView, indexPath, notice in
@@ -59,6 +60,7 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
             headerStackView
             noticeTableView
         }
+        noticeTableView.refreshControl = noticeRefreshControl
     }
 
     override func setLayout() {
@@ -86,7 +88,7 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
             .store(in: &subscription)
 
         viewWillAppearPublisher
-            .map { Store.Action.viewWillAppear }
+            .map { Store.Action.fetchNoticeList }
             .sink(receiveValue: store.send(_:))
             .store(in: &subscription)
 
@@ -99,6 +101,11 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
             .merge(with: noticeTableAdapter.modelDeselected)
             .map(\.id)
             .map(Store.Action.noticeDidTap)
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+
+        noticeRefreshControl.controlPublisher(for: .valueChanged)
+            .map { _ in Store.Action.fetchNoticeList }
             .sink(receiveValue: store.send(_:))
             .store(in: &subscription)
     }
@@ -153,6 +160,13 @@ final class NoticeViewController: BaseViewController<NoticeStore> {
             .sink(receiveValue: { [weak self] isEditingMode in
                 self?.transformWriteOrRemoveButton(isEditMode: isEditingMode)
             })
+            .store(in: &subscription)
+
+        sharedState
+            .map(\.isRefreshing)
+            .sink(with: noticeRefreshControl) { refreshControl, isRefreshing in
+                isRefreshing ? refreshControl.beginRefreshing() : refreshControl.endRefreshing()
+            }
             .store(in: &subscription)
     }
 }

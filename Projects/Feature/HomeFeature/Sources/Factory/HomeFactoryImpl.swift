@@ -13,7 +13,9 @@ struct HomeFactoryImpl: HomeFactory {
     private let fetchMealInfoUseCase: any FetchMealInfoUseCase
     private let loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase
     private let applySelfStudyUseCase: any ApplySelfStudyUseCase
+    private let cancelSelfStudyUseCase: any CancelSelfStudyUseCase
     private let applyMassageUseCase: any ApplyMassageUseCase
+    private let cancelMassageUseCase: any CancelMassageUseCase
     private let confirmationDialogFactory: any ConfirmationDialogFactory
 
     init(
@@ -23,7 +25,9 @@ struct HomeFactoryImpl: HomeFactory {
         fetchMealInfoUseCase: any FetchMealInfoUseCase,
         loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase,
         applySelfStudyUseCase: any ApplySelfStudyUseCase,
+        cancelSelfStudyUseCase: any CancelSelfStudyUseCase,
         applyMassageUseCase: any ApplyMassageUseCase,
+        cancelMassageUseCase: any CancelMassageUseCase
         confirmationDialogFactory: any ConfirmationDialogFactory
     ) {
         self.repeatableTimer = repeatableTimer
@@ -32,7 +36,9 @@ struct HomeFactoryImpl: HomeFactory {
         self.fetchMealInfoUseCase = fetchMealInfoUseCase
         self.loadCurrentUserRoleUseCase = loadCurrentUserRoleUseCase
         self.applySelfStudyUseCase = applySelfStudyUseCase
+        self.cancelSelfStudyUseCase = cancelSelfStudyUseCase
         self.applyMassageUseCase = applyMassageUseCase
+        self.cancelMassageUseCase = cancelMassageUseCase
         self.confirmationDialogFactory = confirmationDialogFactory
     }
 
@@ -44,7 +50,9 @@ struct HomeFactoryImpl: HomeFactory {
             fetchMealInfoUseCase: fetchMealInfoUseCase,
             loadCurrentUserRoleUseCase: loadCurrentUserRoleUseCase,
             applySelfStudyUseCase: applySelfStudyUseCase,
-            applyMassageUseCase: applyMassageUseCase
+            cancelSelfStudyUseCase: cancelSelfStudyUseCase,
+            applyMassageUseCase: applyMassageUseCase,
+            cancelMassageUseCase: cancelMassageUseCase
         )
         let homeViewController = HomeViewController(store: homeStore)
         return HomeMoordinator(
