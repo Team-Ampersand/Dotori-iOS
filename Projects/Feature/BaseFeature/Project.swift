@@ -10,7 +10,6 @@ let project = Project.module(
             .SPM.Moordinator,
             .SPM.Store,
             .SPM.IQKeyboardManagerSwift,
-            .SPM.Anim,
             .userInterface(target: .DesignSystem),
             .userInterface(target: .Localization),
             .shared(target: .GlobalThirdPartyLibrary),

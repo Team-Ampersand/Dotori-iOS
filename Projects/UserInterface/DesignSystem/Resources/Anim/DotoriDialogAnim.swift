@@ -1,8 +1,9 @@
 import Anim
 import UIKit
 
-struct ModalAnim: Anim {
-    func animate(view: UIView, completion: @escaping () -> Void) {
+public struct DotoriDialogAnim: Anim {
+    public init() {}
+    public func animate(view: UIView, completion: @escaping () -> Void) {
         let scaleAffineTransform = CGAffineTransform(scaleX: 0.8, y: 0.8)
 
         let transformFrom = view.transform
@@ -25,5 +26,11 @@ struct ModalAnim: Anim {
             completion()
         }
         animator.startAnimation()
+    }
+}
+
+public extension Anim where Self == DotoriDialogAnim {
+    static func dotoriDialog() -> DotoriDialogAnim {
+        DotoriDialogAnim()
     }
 }

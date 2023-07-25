@@ -11,6 +11,7 @@ let project = Project.module(
             spec: .init(
                 resources: ["Resources/**"],
                 dependencies: [
+                    .SPM.Anim,
                     .userInterface(target: .DWebKit),
                     .shared(target: .GlobalThirdPartyLibrary),
                     .shared(target: .UIKitUtil)

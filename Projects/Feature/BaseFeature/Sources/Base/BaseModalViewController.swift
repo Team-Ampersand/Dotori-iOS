@@ -1,4 +1,6 @@
+import Anim
 import Combine
+import Configure
 import DesignSystem
 import UIKit
 
@@ -25,6 +27,7 @@ open class BaseModalViewController<Store: BaseStore>:
     public let store: Store
     public var subscription = Set<AnyCancellable>()
     public var contentView = UIView()
+        .set(\.alpha, 0)
 
     // MARK: - Init
 
@@ -58,6 +61,7 @@ open class BaseModalViewController<Store: BaseStore>:
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewWillAppearSubject.send(())
+        modalAnimation()
     }
 
     open override func viewDidAppear(_ animated: Bool) {
@@ -84,6 +88,16 @@ open class BaseModalViewController<Store: BaseStore>:
     open func configureViewController() {}
 
     open func configureNavigation() {}
+
+    /**
+     해당 method는 viewWillAppear에 실행됩니다
+     */
+    open func modalAnimation() {
+        contentView.anim(anim: .concurrent([
+            .fadeIn(0.2),
+            .dotoriDialog()
+        ]))
+    }
 
     open func bindState() {}
 
