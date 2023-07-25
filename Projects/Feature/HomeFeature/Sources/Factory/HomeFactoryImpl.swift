@@ -1,3 +1,4 @@
+import ConfirmationDialogFeature
 import MassageDomainInterface
 import MealDomainInterface
 import Moordinator
@@ -15,6 +16,7 @@ struct HomeFactoryImpl: HomeFactory {
     private let cancelSelfStudyUseCase: any CancelSelfStudyUseCase
     private let applyMassageUseCase: any ApplyMassageUseCase
     private let cancelMassageUseCase: any CancelMassageUseCase
+    private let confirmationDialogFactory: any ConfirmationDialogFactory
 
     init(
         repeatableTimer: any RepeatableTimer,
@@ -25,7 +27,8 @@ struct HomeFactoryImpl: HomeFactory {
         applySelfStudyUseCase: any ApplySelfStudyUseCase,
         cancelSelfStudyUseCase: any CancelSelfStudyUseCase,
         applyMassageUseCase: any ApplyMassageUseCase,
-        cancelMassageUseCase: any CancelMassageUseCase
+        cancelMassageUseCase: any CancelMassageUseCase,
+        confirmationDialogFactory: any ConfirmationDialogFactory
     ) {
         self.repeatableTimer = repeatableTimer
         self.fetchSelfStudyInfoUseCase = fetchSelfStudyInfoUseCase
@@ -36,6 +39,7 @@ struct HomeFactoryImpl: HomeFactory {
         self.cancelSelfStudyUseCase = cancelSelfStudyUseCase
         self.applyMassageUseCase = applyMassageUseCase
         self.cancelMassageUseCase = cancelMassageUseCase
+        self.confirmationDialogFactory = confirmationDialogFactory
     }
 
     func makeMoordinator() -> Moordinator {
@@ -51,6 +55,9 @@ struct HomeFactoryImpl: HomeFactory {
             cancelMassageUseCase: cancelMassageUseCase
         )
         let homeViewController = HomeViewController(store: homeStore)
-        return HomeMoordinator(homeViewController: homeViewController)
+        return HomeMoordinator(
+            homeViewController: homeViewController,
+            confirmationDialogFactory: confirmationDialogFactory
+        )
     }
 }

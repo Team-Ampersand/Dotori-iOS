@@ -157,7 +157,15 @@ private extension HomeStore {
             .init(title: L10n.Home.profileEditButtonTitle, style: .default) { _ in },
             .init(title: L10n.Home.violationHistoryButtonTitle, style: .default) { _ in },
             .init(title: L10n.Home.changePasswordButtonTitle, style: .default) { _ in },
-            .init(title: L10n.Home.logoutButtonTitle, style: .default) { _ in },
+            .init(title: L10n.Home.logoutButtonTitle, style: .default) { [route] _ in
+                let confirmationDialogRoutePath = DotoriRoutePath.confirmationDialog(
+                    title: "로그아웃",
+                    message: "정말로 도토리를 로그아웃 하시겠습니까?"
+                ) {
+                    #warning("로그아웃 로직 구현")
+                }
+                route.send(confirmationDialogRoutePath)
+            },
             .init(title: L10n.Global.cancelButtonTitle, style: .cancel)
         ])
         self.route.send(alertPath)

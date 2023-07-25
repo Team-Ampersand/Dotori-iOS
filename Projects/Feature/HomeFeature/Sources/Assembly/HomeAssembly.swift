@@ -1,3 +1,4 @@
+import ConfirmationDialogFeature
 import MassageDomainInterface
 import MealDomainInterface
 import Moordinator
@@ -19,7 +20,8 @@ public final class HomeAssembly: Assembly {
                 applySelfStudyUseCase: resolver.resolve(ApplySelfStudyUseCase.self)!,
                 cancelSelfStudyUseCase: resolver.resolve(CancelSelfStudyUseCase.self)!,
                 applyMassageUseCase: resolver.resolve(ApplyMassageUseCase.self)!,
-                cancelMassageUseCase: resolver.resolve(CancelMassageUseCase.self)!
+                cancelMassageUseCase: resolver.resolve(CancelMassageUseCase.self)!,
+                confirmationDialogFactory: resolver.resolve(ConfirmationDialogFactory.self)!
             )
         }
     }

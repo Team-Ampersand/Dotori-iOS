@@ -5,6 +5,7 @@ public extension TargetDependency {
 }
 
 public extension TargetDependency.SPM {
+    static let Anim = TargetDependency.external(name: "Anim")
     static let CombineMiniature = TargetDependency.external(name: "CombineMiniature")
     static let AsyncNeiSwift = TargetDependency.external(name: "AsyncNeiSwift")
     static let Inject = TargetDependency.external(name: "Inject")

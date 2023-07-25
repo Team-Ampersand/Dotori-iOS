@@ -67,7 +67,8 @@ final class HomeFeatureTests: XCTestCase {
                 .eraseToAnyPublisher()
         }
 
-        let expectation = XCTestExpectation(description: "Asd")
+        let expectation = XCTestExpectation(description: "viewDidLoad expectation")
+        expectation.expectedFulfillmentCount = 2
         var testTargetDate: Date?
 
         sut.state.map(\.currentTime).sink {

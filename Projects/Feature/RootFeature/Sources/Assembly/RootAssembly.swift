@@ -1,3 +1,4 @@
+import ConfirmationDialogFeature
 import MainTabFeature
 import SigninFeature
 import SplashFeature

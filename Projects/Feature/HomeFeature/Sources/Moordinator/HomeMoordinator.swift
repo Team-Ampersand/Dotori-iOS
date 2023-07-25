@@ -1,4 +1,5 @@
 import BaseFeature
+import ConfirmationDialogFeature
 import DWebKit
 import Moordinator
 import TimerInterface
@@ -7,12 +8,17 @@ import UIKit
 final class HomeMoordinator: Moordinator {
     private let rootVC = UINavigationController()
     private let homeViewController: any StoredViewControllable
+    private let confirmationDialogFactory: any ConfirmationDialogFactory
     var root: Presentable {
         rootVC
     }
 
-    init(homeViewController: any StoredViewControllable) {
+    init(
+        homeViewController: any StoredViewControllable,
+        confirmationDialogFactory: any ConfirmationDialogFactory
+    ) {
         self.homeViewController = homeViewController
+        self.confirmationDialogFactory = confirmationDialogFactory
     }
 
     func route(to path: RoutePath) -> MoordinatorContributors {
@@ -29,6 +35,23 @@ final class HomeMoordinator: Moordinator {
 
         case .massage:
             return .one(.forwardToParent(with: DotoriRoutePath.massage))
+
+        case let .confirmationDialog(title, description, confirmAction):
+            let viewController = confirmationDialogFactory.makeViewController(
+                title: title,
+                description: description,
+                confirmAction: confirmAction
+            )
+            self.rootVC.modalPresent(viewController)
+            return .one(
+                .contribute(
+                    withNextPresentable: viewController,
+                    withNextRouter: viewController.store
+                )
+            )
+
+        case .dismiss:
+            self.rootVC.presentedViewController?.dismiss(animated: true)
 
         default:
             return .none
