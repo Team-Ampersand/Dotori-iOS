@@ -24,6 +24,7 @@ import Swinject
 import Timer
 import UIKit
 import UserDomain
+import ViolationDomain
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -56,6 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UserDomainAssembly(),
             SelfStudyDomainAssembly(),
             MassageDomainAssembly(),
+            ViolationDomainAssembly(),
             MealDomainAssembly(),
             NoticeDomainAssembly()
         ], container: AppDelegate.container)
