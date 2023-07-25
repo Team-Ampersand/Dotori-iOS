@@ -9,7 +9,7 @@ import SelfStudyDomainInterface
 import UIKit
 import UIKitUtil
 
-final class SelfStudyViewController: BaseViewController<SelfStudyStore> {
+final class SelfStudyViewController: BaseStoredViewController<SelfStudyStore> {
     private let dotoriNavigationBarLabel = DotoriNavigationBarLabel(text: "자습신청")
     private let filterBarButton = UIBarButtonItem(
         image: .Dotori.filter.tintColor(color: .dotori(.neutral(.n20))),
