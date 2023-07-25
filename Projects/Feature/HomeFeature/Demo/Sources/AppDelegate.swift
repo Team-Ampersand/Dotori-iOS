@@ -28,7 +28,9 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         let fetchMealInfoUseCase: FetchMealInfoUseCaseSpy = .init()
         let loadCurrentUserRoleUseCase: LoadCurrentUserRoleUseCaseSpy = .init()
         let applySelfStudyUseCase: ApplySelfStudyUseCaseSpy = .init()
+        let cancelSelfStudyUseCase = CancelSelfStudyUseCaseSpy()
         let applyMassageUseCase: ApplyMassageUseCaseSpy = .init()
+        let cancelMassageUseCase = CancelMassageUseCaseSpy()
         let store = HomeStore(
             repeatableTimer: repeatableTimerStub,
             fetchSelfStudyInfoUseCase: fetchSelfStudyInfoUseCase,
@@ -36,7 +38,9 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             fetchMealInfoUseCase: fetchMealInfoUseCase,
             loadCurrentUserRoleUseCase: loadCurrentUserRoleUseCase,
             applySelfStudyUseCase: applySelfStudyUseCase,
-            applyMassageUseCase: applyMassageUseCase
+            cancelSelfStudyUseCase: cancelSelfStudyUseCase,
+            applyMassageUseCase: applyMassageUseCase,
+            cancelMassageUseCase: cancelMassageUseCase
         )
         let viewController = Inject.ViewControllerHost(
             UINavigationController(rootViewController: HomeViewController(store: store))

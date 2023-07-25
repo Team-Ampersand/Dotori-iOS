@@ -5,6 +5,7 @@ import SelfStudyDomainInterface
 public enum SelfStudyEndpoint {
     case fetchSelfStudyInfo
     case applySelfStudy
+    case cancelSelfStudy
     case fetchSelfStudyRank
     case fetchSelfStudySearch(FetchSelfStudyRankSearchRequestDTO)
     case checkSelfStudyMember(memberID: Int, isChecked: Bool)
@@ -22,6 +23,9 @@ extension SelfStudyEndpoint: DotoriEndpoint {
 
         case .applySelfStudy:
             return .post("")
+
+        case .cancelSelfStudy:
+            return .delete("")
 
         case .fetchSelfStudyRank:
             return .get("/rank")

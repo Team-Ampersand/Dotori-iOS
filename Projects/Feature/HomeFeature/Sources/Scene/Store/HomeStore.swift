@@ -29,7 +29,9 @@ final class HomeStore: BaseStore {
     private let fetchMealInfoUseCase: any FetchMealInfoUseCase
     private let loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase
     private let applySelfStudyUseCase: any ApplySelfStudyUseCase
+    private let cancelSelfStudyUseCase: any CancelSelfStudyUseCase
     private let applyMassageUseCase: any ApplyMassageUseCase
+    private let cancelMassageUseCase: any CancelMassageUseCase
 
     init(
         repeatableTimer: any RepeatableTimer,
@@ -38,7 +40,9 @@ final class HomeStore: BaseStore {
         fetchMealInfoUseCase: any FetchMealInfoUseCase,
         loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase,
         applySelfStudyUseCase: any ApplySelfStudyUseCase,
-        applyMassageUseCase: any ApplyMassageUseCase
+        cancelSelfStudyUseCase: any CancelSelfStudyUseCase,
+        applyMassageUseCase: any ApplyMassageUseCase,
+        cancelMassageUseCase: any CancelMassageUseCase
     ) {
         self.initialState = .init()
         self.stateSubject = .init(initialState)
@@ -48,7 +52,9 @@ final class HomeStore: BaseStore {
         self.fetchMealInfoUseCase = fetchMealInfoUseCase
         self.loadCurrentUserRoleUseCase = loadCurrentUserRoleUseCase
         self.applySelfStudyUseCase = applySelfStudyUseCase
+        self.cancelSelfStudyUseCase = cancelSelfStudyUseCase
         self.applyMassageUseCase = applyMassageUseCase
+        self.cancelMassageUseCase = cancelMassageUseCase
     }
 
     enum Action: Equatable {
@@ -164,7 +170,12 @@ private extension HomeStore {
             return
         }
         Task.catching {
-            try await self.applySelfStudyUseCase()
+            if self.currentState.selfStudyStatus == .applied {
+                try await self.cancelSelfStudyUseCase()
+            } else {
+                try await self.applySelfStudyUseCase()
+            }
+            self.send(.refreshSelfStudyButtonDidTap)
         } catch: { @MainActor error in
             DotoriToast.makeToast(text: error.localizedDescription, style: .error)
         }
@@ -176,7 +187,12 @@ private extension HomeStore {
             return
         }
         Task.catching {
-            try await self.applyMassageUseCase()
+            if self.currentState.massageStatus == .applied {
+                try await self.cancelMassageUseCase()
+            } else {
+                try await self.applyMassageUseCase()
+            }
+            self.send(.refreshMassageButtonDidTap)
         } catch: { @MainActor error in
             DotoriToast.makeToast(text: error.localizedDescription, style: .error)
         }

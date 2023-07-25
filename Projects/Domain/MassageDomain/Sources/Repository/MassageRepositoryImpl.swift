@@ -14,4 +14,8 @@ final class MassageRepositoryImpl: MassageRepository {
     func applyMassage() async throws {
         try await remoteMassageDataSource.applyMassage()
     }
+
+    func cancelMassage() async throws {
+        try await remoteMassageDataSource.cancelMassage()
+    }
 }

@@ -6,6 +6,7 @@ import NetworkingInterface
 public enum MassageEndpoint {
     case fetchMassageInfo
     case applyMassage
+    case cancelMassage
 }
 
 extension MassageEndpoint: DotoriEndpoint {
@@ -20,6 +21,9 @@ extension MassageEndpoint: DotoriEndpoint {
 
         case .applyMassage:
             return .post("")
+
+        case .cancelMassage:
+            return .delete("")
         }
     }
 
