@@ -1,17 +1,19 @@
 import BaseFeature
+import DateUtility
 import DesignSystem
 import MSGLayout
 import UIKit
+import ViolationDomainInterface
 
-final class ViolationCell: BaseTableViewCell<Void> {
+final class ViolationCell: BaseTableViewCell<ViolationModel> {
     private enum Metric {
         static let padding: CGFloat = 16
     }
     private let containerView = UIView()
         .set(\.backgroundColor, .dotori(.background(.bg)))
         .set(\.cornerRadius, 8)
-    private let violationTitleLabel = DotoriLabel("타호실 출입", font: .body1)
-    private let dateLabel = DotoriLabel("2023.07.13", textColor: .neutral(.n20), font: .body2)
+    private let violationTitleLabel = DotoriLabel(font: .body1)
+    private let dateLabel = DotoriLabel(textColor: .neutral(.n20), font: .body2)
 
     override func addView() {
         contentView.addSubviews {
@@ -40,5 +42,10 @@ final class ViolationCell: BaseTableViewCell<Void> {
 
     override func configureView() {
         self.selectionStyle = .none
+    }
+
+    override func adapt(model: ViolationModel) {
+        self.violationTitleLabel.text = model.rule
+        self.dateLabel.text = model.createDate.toStringWithCustomFormat("yyyy.MM.dd")
     }
 }

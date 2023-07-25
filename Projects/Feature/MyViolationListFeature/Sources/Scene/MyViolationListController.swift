@@ -6,6 +6,7 @@ import Localization
 import MSGLayout
 import UIKit
 import UIKitUtil
+import ViolationDomainInterface
 
 final class MyViolationListViewController: BaseStoredModalViewController<MyViolationListStore> {
     private enum Metric {
@@ -21,7 +22,7 @@ final class MyViolationListViewController: BaseStoredModalViewController<MyViola
         .then {
             $0.register(cellType: ViolationCell.self)
         }
-    private lazy var violationHistoryTableAdapter = TableViewAdapter<GenericSectionModel<Void>>(
+    private lazy var violationHistoryTableAdapter = TableViewAdapter<GenericSectionModel<ViolationModel>>(
         tableView: violationHistoryTableView
     ) { tableView, indexPath, item in
         let cell: ViolationCell = tableView.dequeueReusableCell(for: indexPath)
@@ -59,9 +60,9 @@ final class MyViolationListViewController: BaseStoredModalViewController<MyViola
     }
 
     override func bindState() {
-        Just([(), ()])
-            .map { [GenericSectionModel(items: $0)] }
-            .sink(receiveValue: violationHistoryTableAdapter.updateSections(sections:))
-            .store(in: &subscription)
+        
+//            .map { [GenericSectionModel(items: $0)] }
+//            .sink(receiveValue: violationHistoryTableAdapter.updateSections(sections:))
+//            .store(in: &subscription)
     }
 }
