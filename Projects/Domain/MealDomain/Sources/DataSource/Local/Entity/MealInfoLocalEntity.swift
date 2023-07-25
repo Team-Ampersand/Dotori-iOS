@@ -25,7 +25,7 @@ struct MealInfoLocalEntity: Codable, FetchableRecord, PersistableRecord {
 }
 
 extension MealInfoLocalEntity {
-    func toDomainEntity() -> MealInfoEntity {
+    func toDomain() -> MealInfoEntity {
         MealInfoEntity(
             meals: meals,
             mealType: MealType(rawValue: mealType) ?? .breakfast

@@ -13,6 +13,6 @@ final class RemoteNoticeDataSourceImpl: RemoteNoticeDataSource {
             NoticeEndpoint.fetchNoticeList,
             dto: FetchNoticeListResponseDTO.self
         )
-        .toEntity()
+        .toDomain()
     }
 }

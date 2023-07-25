@@ -21,12 +21,12 @@ final class RemoteMealDataSourceImpl: RemoteMealDataSource {
         )
 
         return try await neis.fetchMealInfo(request: request)
-            .toEntity()
+            .toDomain()
     }
 }
 
 extension [MealInfoResponse] {
-    func toEntity() -> [MealInfoEntity] {
+    func toDomain() -> [MealInfoEntity] {
         self.map {
             MealInfoEntity(
                 meals: $0.DDISH_NM.components(separatedBy: "<br/>"),

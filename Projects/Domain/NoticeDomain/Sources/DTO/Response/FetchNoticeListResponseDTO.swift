@@ -16,7 +16,7 @@ struct FetchNoticeListResponseDTO: Decodable {
 }
 
 extension FetchNoticeListResponseDTO.NoticeResponseDTO {
-    func toEntity() -> NoticeEntity {
+    func toDomain() -> NoticeEntity {
         .init(
             id: id,
             title: title,
@@ -28,8 +28,8 @@ extension FetchNoticeListResponseDTO.NoticeResponseDTO {
 }
 
 extension FetchNoticeListResponseDTO {
-    func toEntity() -> [NoticeEntity] {
+    func toDomain() -> [NoticeEntity] {
         self.boardList
-            .map { $0.toEntity() }
+            .map { $0.toDomain() }
     }
 }

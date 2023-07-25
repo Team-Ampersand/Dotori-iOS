@@ -8,7 +8,7 @@ struct FetchMassageInfoResponseDTO: Decodable {
 }
 
 extension FetchMassageInfoResponseDTO {
-    func toEntity() -> MassageInfoEntity {
+    func toDomain() -> MassageInfoEntity {
         MassageInfoModel(count: count, limit: limit, massageStatus: massageStatus)
     }
 }
