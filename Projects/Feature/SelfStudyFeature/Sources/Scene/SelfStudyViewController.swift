@@ -1,7 +1,9 @@
 import BaseFeature
 import Combine
+import CombineUtility
 import Configure
 import DesignSystem
+import GlobalThirdPartyLibrary
 import MSGLayout
 import SelfStudyDomainInterface
 import UIKit
@@ -22,6 +24,7 @@ final class SelfStudyViewController: BaseViewController<SelfStudyStore> {
         .then {
             $0.register(cellType: SelfStudyCell.self)
         }
+    private let selfStudyRefreshContorol = UIRefreshControl()
     private lazy var selfStudyTableAdapter = TableViewAdapter<GenericSectionModel<SelfStudyRankModel>>(
         tableView: selfStudyTableView
     ) { [store] tableView, indexPath, item in
@@ -47,6 +50,7 @@ final class SelfStudyViewController: BaseViewController<SelfStudyStore> {
             selfStudyTableView
             emptySelfStudyStackView
         }
+        selfStudyTableView.refreshControl = selfStudyRefreshContorol
     }
 
     override func setLayout() {
@@ -68,7 +72,8 @@ final class SelfStudyViewController: BaseViewController<SelfStudyStore> {
 
     override func bindAction() {
         viewDidLoadPublisher
-            .map { Store.Action.viewDidLoad }
+            .merge(with: selfStudyRefreshContorol.controlPublisher(for: .valueChanged).map { _ in })
+            .map { Store.Action.fetchSelfStudyRank }
             .sink(receiveValue: store.send(_:))
             .store(in: &subscription)
     }
@@ -92,6 +97,13 @@ final class SelfStudyViewController: BaseViewController<SelfStudyStore> {
             .sink(with: self, receiveValue: { owner, selfStudyIsEmpty in
                 owner.selfStudyTableView.isHidden = selfStudyIsEmpty
                 owner.emptySelfStudyStackView.isHidden = !selfStudyIsEmpty
+            })
+            .store(in: &subscription)
+
+        sharedState
+            .map(\.isRefreshing)
+            .sink(with: selfStudyRefreshContorol, receiveValue: { refreshControl, isRefreshing in
+                isRefreshing ? refreshControl.beginRefreshing() : refreshControl.endRefreshing()
             })
             .store(in: &subscription)
     }

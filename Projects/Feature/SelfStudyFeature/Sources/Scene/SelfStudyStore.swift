@@ -30,23 +30,26 @@ final class SelfStudyStore: BaseStore {
     struct State {
         var selfStudyRankList: [SelfStudyRankModel] = []
         var currentUserRole = UserRoleType.member
+        var isRefreshing = false
     }
     enum Action {
-        case viewDidLoad
+        case fetchSelfStudyRank
         case selfStudyCheckButtonDidTap(id: Int, isChecked: Bool)
+        case refresh
     }
     enum Mutation {
         case updateSelfStudyRankList([SelfStudyRankModel])
         case updateSelfStudyCheck(id: Int, isChecked: Bool)
         case updateCurrentUserRole(UserRoleType)
+        case updateIsRefreshing(Bool)
     }
 }
 
 extension SelfStudyStore {
     func mutate(state: State, action: Action) -> SideEffect<Mutation, Never> {
         switch action {
-        case .viewDidLoad:
-            return viewDidLoad()
+        case .fetchSelfStudyRank, .refresh:
+            return fetchSelfStudyRank()
 
         case let .selfStudyCheckButtonDidTap(id, isChecked):
             return selfStudyCheckButtonDidTap(memberID: id, isChecked: isChecked)
@@ -65,6 +68,8 @@ extension SelfStudyStore {
             newState.selfStudyRankList = self.updateSelfStudyCheck(id: id, isChecked: isChecked)
         case let .updateCurrentUserRole(userRole):
             newState.currentUserRole = userRole
+        case let .updateIsRefreshing(isRefreshing):
+            newState.isRefreshing = isRefreshing
         }
         return newState
     }
@@ -77,7 +82,7 @@ extension SelfStudyStore: SelfStudyCellDelegate {
 }
 
 private extension SelfStudyStore {
-    func viewDidLoad() -> SideEffect<Mutation, Never> {
+    func fetchSelfStudyRank() -> SideEffect<Mutation, Never> {
         let selfStudyEffect = SideEffect<[SelfStudyRankModel], Error>
             .tryAsync { [fetchSelfStudyRankListUseCase] in
                 try await fetchSelfStudyRankListUseCase()
@@ -94,7 +99,7 @@ private extension SelfStudyStore {
             .eraseToSideEffect()
 
         return .merge(
-            selfStudyEffect,
+            self.makeRefreshingSideEffect(selfStudyEffect),
             userRoleEffect
         )
     }
@@ -122,5 +127,20 @@ private extension SelfStudyStore {
                 selfStudyCheck: isChecked
             )
         }
+    }
+}
+
+private extension SelfStudyStore {
+    func makeRefreshingSideEffect(
+        _ publisher: SideEffect<Mutation, Never>
+    ) -> SideEffect<Mutation, Never> {
+        let startLoadingPublisher = SideEffect<Mutation, Never>
+            .just(Mutation.updateIsRefreshing(true))
+        let endLoadingPublisher = SideEffect<Mutation, Never>
+            .just(Mutation.updateIsRefreshing(false))
+        return startLoadingPublisher
+            .append(publisher)
+            .append(endLoadingPublisher)
+            .eraseToSideEffect()
     }
 }
