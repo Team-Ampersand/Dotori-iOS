@@ -14,4 +14,8 @@ final class SelfStudyRepositoryImpl: SelfStudyRepository {
     func applySelfStudy() async throws {
         try await remoteSelfStudyDataSource.applySelfStudy()
     }
+
+    func cancelSelfStudy() async throws {
+        try await remoteSelfStudyDataSource.cancelSelfStudy()
+    }
 }

@@ -13,4 +13,9 @@ final class SelfStudyRepositorySpy: SelfStudyRepository {
     func applySelfStudy() async throws {
         applySelfStudyCallCount += 1
     }
+
+    var cancelSelfStudyCallCount = 0
+    func cancelSelfStudy() async throws {
+        cancelSelfStudyCallCount += 1
+    }
 }

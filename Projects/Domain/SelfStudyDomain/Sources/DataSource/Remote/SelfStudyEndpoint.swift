@@ -5,6 +5,7 @@ import SelfStudyDomainInterface
 public enum SelfStudyEndpoint {
     case fetchSelfStudyInfo
     case applySelfStudy
+    case cancelSelfStudy
 }
 
 extension SelfStudyEndpoint: DotoriEndpoint {
@@ -19,6 +20,9 @@ extension SelfStudyEndpoint: DotoriEndpoint {
 
         case .applySelfStudy:
             return .post("")
+
+        case .cancelSelfStudy:
+            return .delete("")
         }
     }
 
