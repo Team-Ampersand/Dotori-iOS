@@ -19,8 +19,8 @@ public final class TableViewAdapter<Section: SectionModelProtocol>:
     private var sections: [Section] = []
     private let tableView: UITableView
     private let configureCell: (UITableView, IndexPath, Item) -> UITableViewCell
-    private var viewForHeaderInSection: (UITableView, Int) -> UIView? = { _, _ in nil }
-    private var viewForFooterInSection: (UITableView, Int) -> UIView? = { _, _ in nil }
+    private var viewForHeaderInSection: (UITableView, Int) -> UIView?
+    private var viewForFooterInSection: (UITableView, Int) -> UIView?
     private let itemSelectedSubject = PassthroughSubject<IndexPath, Never>()
     private let itemDeselectedSubject = PassthroughSubject<IndexPath, Never>()
     private let modelSelectedSubject = PassthroughSubject<Item, Never>()
@@ -29,8 +29,8 @@ public final class TableViewAdapter<Section: SectionModelProtocol>:
     public init(
         tableView: UITableView,
         configureCell: @escaping (UITableView, IndexPath, Item) -> UITableViewCell,
-        viewForHeaderInSection: @escaping (UITableView, Int) -> UIView? = { _, _ in nil },
-        viewForFooterInSection: @escaping (UITableView, Int) -> UIView? = { _, _ in nil }
+        viewForHeaderInSection: @escaping (UITableView, Int) -> UIView? = { _, _ in UIView() },
+        viewForFooterInSection: @escaping (UITableView, Int) -> UIView? = { _, _ in UIView() }
     ) {
         self.tableView = tableView
         self.configureCell = configureCell

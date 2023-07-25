@@ -6,6 +6,9 @@ public enum SelfStudyEndpoint {
     case fetchSelfStudyInfo
     case applySelfStudy
     case cancelSelfStudy
+    case fetchSelfStudyRank
+    case fetchSelfStudySearch(FetchSelfStudyRankSearchRequestDTO)
+    case checkSelfStudyMember(memberID: Int, isChecked: Bool)
 }
 
 extension SelfStudyEndpoint: DotoriEndpoint {
@@ -23,11 +26,28 @@ extension SelfStudyEndpoint: DotoriEndpoint {
 
         case .cancelSelfStudy:
             return .delete("")
+
+        case .fetchSelfStudyRank:
+            return .get("/rank")
+
+        case .fetchSelfStudySearch:
+            return .get("/search")
+
+        case let .checkSelfStudyMember(memberID, _):
+            return .patch("/check/\(memberID)")
         }
     }
 
     public var task: HTTPTask {
         switch self {
+        case let .fetchSelfStudySearch(req):
+            return .requestParameters(query: req.toDictionary())
+
+        case let .checkSelfStudyMember(_, isChecked):
+            return .requestParameters(body: [
+                "selfStudyCheck": isChecked
+            ])
+
         default:
             return .requestPlain
         }
@@ -37,7 +57,7 @@ extension SelfStudyEndpoint: DotoriEndpoint {
         .accessToken
     }
 
-    public var errorMap: [Int : Error] {
+    public var errorMap: [Int: Error] {
         switch self {
         case .applySelfStudy:
             return [

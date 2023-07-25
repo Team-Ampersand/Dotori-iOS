@@ -18,4 +18,16 @@ final class SelfStudyRepositoryImpl: SelfStudyRepository {
     func cancelSelfStudy() async throws {
         try await remoteSelfStudyDataSource.cancelSelfStudy()
     }
+
+    func fetchSelfStudyRankList() async throws -> [SelfStudyRankEntity] {
+        try await remoteSelfStudyDataSource.fetchSelfStudyRankList()
+    }
+
+    func fetchSelfStudyRankSearch(req: FetchSelfStudyRankSearchRequestDTO) async throws -> [SelfStudyRankEntity] {
+        try await remoteSelfStudyDataSource.fetchSelfStudyRankSearch(req: req)
+    }
+
+    func checkSelfStudyMember(memberID: Int, isChecked: Bool) async throws {
+        try await remoteSelfStudyDataSource.checkSelfStudyMember(memberID: memberID, isChecked: isChecked)
+    }
 }

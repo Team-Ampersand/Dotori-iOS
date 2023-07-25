@@ -26,5 +26,13 @@ public final class SelfStudyDomainAssembly: Assembly {
         container.register(CancelSelfStudyUseCase.self) { resolver in
             CancelSelfStudyUseCaseImpl(selfStudyRepository: resolver.resolve(SelfStudyRepository.self)!)
         }
+
+        container.register(FetchSelfStudyRankListUseCase.self) { resolver in
+            FetchSelfStudyRankListUseCaseImpl(selfStudyRepository: resolver.resolve(SelfStudyRepository.self)!)
+        }
+
+        container.register(CheckSelfStudyMemberUseCase.self) { resolver in
+            CheckSelfStudyMemberUseCaseImpl(selfStudyRepository: resolver.resolve(SelfStudyRepository.self)!)
+        }
     }
 }
