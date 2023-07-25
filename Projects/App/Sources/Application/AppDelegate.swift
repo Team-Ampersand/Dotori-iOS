@@ -10,6 +10,7 @@ import MassageDomain
 import MassageFeature
 import MealDomain
 import MusicFeature
+import MyViolationListFeature
 import Networking
 import NoticeDomain
 import NoticeFeature
@@ -43,6 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DatabaseAssembly(),
             SplashAssembly(),
             HomeAssembly(),
+            MyViolationListAssembly(),
             NoticeAssembly(),
             SelfStudyAssembly(),
             ConfirmationDialogAssembly(),
