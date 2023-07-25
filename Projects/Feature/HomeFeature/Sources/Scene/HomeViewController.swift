@@ -94,6 +94,11 @@ final class HomeViewController: BaseViewController<HomeStore> {
             .sink(receiveValue: store.send(_:))
             .store(in: &subscription)
 
+        massageApplicationCardView.applyButtonDidTapPublisher
+            .map { Store.Action.applyMassageButtonDidTap }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+
         selfStudyApplicationCardView.refreshButtonDidTapPublisher
             .map { Store.Action.refreshSelfStudyButtonDidTap }
             .sink(receiveValue: store.send(_:))

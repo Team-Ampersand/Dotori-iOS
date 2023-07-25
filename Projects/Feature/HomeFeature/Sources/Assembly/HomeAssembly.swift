@@ -17,7 +17,9 @@ public final class HomeAssembly: Assembly {
                 fetchMealInfoUseCase: resolver.resolve(FetchMealInfoUseCase.self)!,
                 loadCurrentUserRoleUseCase: resolver.resolve(LoadCurrentUserRoleUseCase.self)!,
                 applySelfStudyUseCase: resolver.resolve(ApplySelfStudyUseCase.self)!,
-                applyMassageUseCase: resolver.resolve(ApplyMassageUseCase.self)!
+                cancelSelfStudyUseCase: resolver.resolve(CancelSelfStudyUseCase.self)!,
+                applyMassageUseCase: resolver.resolve(ApplyMassageUseCase.self)!,
+                cancelMassageUseCase: resolver.resolve(CancelMassageUseCase.self)!
             )
         }
     }
