@@ -22,6 +22,7 @@ public final class HomeAssembly: Assembly {
                 cancelSelfStudyUseCase: resolver.resolve(CancelSelfStudyUseCase.self)!,
                 applyMassageUseCase: resolver.resolve(ApplyMassageUseCase.self)!,
                 cancelMassageUseCase: resolver.resolve(CancelMassageUseCase.self)!,
+                logoutUseCase: resolver.resolve(LogoutUseCase.self)!,
                 confirmationDialogFactory: resolver.resolve(ConfirmationDialogFactory.self)!,
                 myViolationListFactory: resolver.resolve(MyViolationListFactory.self)!
             )

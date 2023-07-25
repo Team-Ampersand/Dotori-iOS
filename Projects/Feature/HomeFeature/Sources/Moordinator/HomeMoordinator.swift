@@ -61,6 +61,9 @@ final class HomeMoordinator: Moordinator {
         case .dismiss:
             self.rootVC.presentedViewController?.dismiss(animated: true)
 
+        case .signin:
+            return .end(DotoriRoutePath.signin)
+
         default:
             return .none
         }
