@@ -11,7 +11,7 @@ protocol SelfStudyCellDelegate: AnyObject {
 }
 
 final class SelfStudyCell: BaseTableViewCell<SelfStudyRankModel> {
-    weak var delegate: (any SelfStudyCellDelegate)? = nil
+    weak var delegate: (any SelfStudyCellDelegate)?
     private let containerView = UIView()
     private let rankLabel = DotoriLabel(textColor: .neutral(.n20), font: .caption)
     private let selfStudyCheckBox = DotoriCheckBox()
@@ -99,6 +99,7 @@ final class SelfStudyCell: BaseTableViewCell<SelfStudyRankModel> {
     override func configureView() {
         self.containerView.backgroundColor = .dotori(.background(.card))
         self.containerView.cornerRadius = 16
+        DotoriShadow.cardShadow(card: self.containerView)
         self.backgroundColor = .clear
         self.selectionStyle = .none
     }
