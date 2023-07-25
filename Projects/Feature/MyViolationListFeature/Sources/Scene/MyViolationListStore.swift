@@ -17,19 +17,40 @@ final class MyViolationListStore: BaseStore {
         self.fetchMyViolationListUseCase = fetchMyViolationListUseCase
     }
 
-    struct State {}
-    enum Action {}
-    enum Mutation {}
+    struct State {
+        var violationList = [ViolationModel]()
+    }
+    enum Action {
+        case fetchMyViolationList
+    }
+    enum Mutation {
+        case updateViolationList([ViolationModel])
+    }
 }
 
 extension MyViolationListStore {
     func mutate(state: State, action: Action) -> SideEffect<Mutation, Never> {
-        .none
+        switch action {
+        case .fetchMyViolationList:
+            return SideEffect<[ViolationModel], Error>
+                .tryAsync { [fetchMyViolationListUseCase] in
+                    try await fetchMyViolationListUseCase()
+                }
+                .map(Mutation.updateViolationList)
+                .eraseToSideEffect()
+                .catchToNever()
+        }
+        return .none
     }
 }
 
 extension MyViolationListStore {
     func reduce(state: State, mutate: Mutation) -> State {
-        state
+        var newState = state
+        switch mutate {
+        case let .updateViolationList(violationList):
+            newState.violationList = violationList
+        }
+        return newState
     }
 }

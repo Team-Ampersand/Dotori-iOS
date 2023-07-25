@@ -13,6 +13,7 @@ final class ViolationCell: BaseTableViewCell<ViolationModel> {
         .set(\.backgroundColor, .dotori(.background(.bg)))
         .set(\.cornerRadius, 8)
     private let violationTitleLabel = DotoriLabel(font: .body1)
+        .set(\.numberOfLines, 0)
     private let dateLabel = DotoriLabel(textColor: .neutral(.n20), font: .body2)
 
     override func addView() {

@@ -59,10 +59,21 @@ final class MyViolationListViewController: BaseStoredModalViewController<MyViola
         .distribution(.fill)
     }
 
+    override func bindAction() {
+        viewWillAppearPublisher
+            .map { Store.Action.fetchMyViolationList }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+    }
+
     override func bindState() {
-        
-//            .map { [GenericSectionModel(items: $0)] }
-//            .sink(receiveValue: violationHistoryTableAdapter.updateSections(sections:))
-//            .store(in: &subscription)
+        let sharedState = store.state.share()
+            .receive(on: DispatchQueue.main)
+
+        sharedState
+            .map(\.violationList)
+            .map { [GenericSectionModel(items: $0)] }
+            .sink(receiveValue: violationHistoryTableAdapter.updateSections(sections:))
+            .store(in: &subscription)
     }
 }
