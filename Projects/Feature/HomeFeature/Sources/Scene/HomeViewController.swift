@@ -7,7 +7,7 @@ import Localization
 import MSGLayout
 import UIKit
 
-final class HomeViewController: BaseViewController<HomeStore> {
+final class HomeViewController: BaseStoredViewController<HomeStore> {
     private enum Metric {
         static let horizontalPadding: CGFloat = 20
         static let spacing: CGFloat = 12
