@@ -17,6 +17,7 @@ public extension UIImage {
         public static let eyeSlash = DesignSystemAsset.DotoriIcon.eyeSlash.image
         public static let filter = DesignSystemAsset.DotoriIcon.filter.image
         public static let firstMedal = DesignSystemAsset.DotoriIcon.firstMedal.image
+        public static let graduationcap = DesignSystemAsset.DotoriIcon.graduationcap.image
         public static let hamburger = DesignSystemAsset.DotoriIcon.hamburger.image
         public static let lineList = DesignSystemAsset.DotoriIcon.lineList.image
         public static let lock = DesignSystemAsset.DotoriIcon.lock.image
