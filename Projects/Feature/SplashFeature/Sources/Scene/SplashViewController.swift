@@ -3,7 +3,7 @@ import DesignSystem
 import MSGLayout
 import UIKit
 
-final class SplashViewController: BaseViewController<SplashStore> {
+final class SplashViewController: BaseStoredViewController<SplashStore> {
     private let dotoriLogoImageView = DotoriIconView(
         size: .custom(.init(width: 108, height: 108)),
         image: .Dotori.dotori
