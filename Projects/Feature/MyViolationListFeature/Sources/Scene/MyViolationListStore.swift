@@ -22,6 +22,9 @@ final class MyViolationListStore: BaseStore {
     }
     enum Action {
         case fetchMyViolationList
+        case xmarkButtonDidTap
+        case dimmedBackgroundDidTap
+        case confirmButtonDidTap
     }
     enum Mutation {
         case updateViolationList([ViolationModel])
@@ -39,6 +42,9 @@ extension MyViolationListStore {
                 .map(Mutation.updateViolationList)
                 .eraseToSideEffect()
                 .catchToNever()
+
+        case .xmarkButtonDidTap, .dimmedBackgroundDidTap, .confirmButtonDidTap:
+            route.send(DotoriRoutePath.dismiss)
         }
         return .none
     }

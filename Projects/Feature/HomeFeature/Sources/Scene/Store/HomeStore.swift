@@ -154,9 +154,9 @@ private extension HomeStore {
 
     func myInfoButtonDidTap() -> SideEffect<Mutation, Never> {
         let alertPath = DotoriRoutePath.alert(style: .actionSheet, actions: [
-            .init(title: L10n.Home.profileEditButtonTitle, style: .default) { _ in },
-            .init(title: L10n.Home.violationHistoryButtonTitle, style: .default) { _ in },
-            .init(title: L10n.Home.changePasswordButtonTitle, style: .default) { _ in },
+            .init(title: L10n.Home.violationHistoryButtonTitle, style: .default) { [route] _ in
+                route.send(DotoriRoutePath.myViolationList)
+            },
             .init(title: L10n.Home.logoutButtonTitle, style: .default) { [route] _ in
                 let confirmationDialogRoutePath = DotoriRoutePath.confirmationDialog(
                     title: "로그아웃",

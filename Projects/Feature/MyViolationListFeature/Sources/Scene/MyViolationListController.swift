@@ -64,6 +64,21 @@ final class MyViolationListViewController: BaseStoredModalViewController<MyViola
             .map { Store.Action.fetchMyViolationList }
             .sink(receiveValue: store.send(_:))
             .store(in: &subscription)
+
+        xmarkButton.tapPublisher
+            .map { Store.Action.xmarkButtonDidTap }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+
+        view.tapGesturePublisher()
+            .map { _ in Store.Action.dimmedBackgroundDidTap }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+
+        confirmButton.tapPublisher
+            .map { Store.Action.confirmButtonDidTap }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
     }
 
     override func bindState() {
