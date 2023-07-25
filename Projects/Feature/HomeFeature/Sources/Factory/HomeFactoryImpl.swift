@@ -27,7 +27,7 @@ struct HomeFactoryImpl: HomeFactory {
         applySelfStudyUseCase: any ApplySelfStudyUseCase,
         cancelSelfStudyUseCase: any CancelSelfStudyUseCase,
         applyMassageUseCase: any ApplyMassageUseCase,
-        cancelMassageUseCase: any CancelMassageUseCase
+        cancelMassageUseCase: any CancelMassageUseCase,
         confirmationDialogFactory: any ConfirmationDialogFactory
     ) {
         self.repeatableTimer = repeatableTimer
