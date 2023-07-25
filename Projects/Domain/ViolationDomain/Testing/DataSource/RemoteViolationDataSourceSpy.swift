@@ -1,6 +1,6 @@
 import ViolationDomainInterface
 
-final class ViolationRepositorySpy: ViolationRepository {
+final class RemoteViolationDataSourceSpy: RemoteViolationDataSource {
     var fetchMyViolationListCallCount = 0
     var fetchMyViolationListHandler: () async throws -> [ViolationEntity] = { [] }
     func fetchMyViolationList() async throws -> [ViolationEntity] {

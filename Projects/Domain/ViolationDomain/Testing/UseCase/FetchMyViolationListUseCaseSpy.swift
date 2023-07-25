@@ -2,9 +2,9 @@ import ViolationDomainInterface
 
 final class FetchMyViolationListUseCaseSpy: FetchMyViolationListUseCase {
     var fetchMyViolationListCallCount = 0
-    var fetchMyViolationListHandler: () throws -> [ViolationModel] = { [] }
+    var fetchMyViolationListHandler: () async throws -> [ViolationModel] = { [] }
     func callAsFunction() async throws -> [ViolationModel] {
         fetchMyViolationListCallCount += 1
-        return try fetchMyViolationListHandler()
+        return try await fetchMyViolationListHandler()
     }
 }
