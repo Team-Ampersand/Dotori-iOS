@@ -25,7 +25,7 @@ final class MusicCell: BaseTableViewCell<MusicModel> {
         .set(\.cornerRadius, 8)
         .set(\.clipsToBounds, true)
         .set(\.contentMode, .scaleAspectFit)
-    private let titleLabel = DotoriLabel("로딩중...", font: .smalltitle)
+    private let titleLabel = DotoriLabel(font: .smalltitle)
         .set(\.numberOfLines, 2)
     private let authorLabel = DotoriLabel(textColor: .neutral(.n20), font: .caption)
     private let meatballButton = DotoriIconButton(

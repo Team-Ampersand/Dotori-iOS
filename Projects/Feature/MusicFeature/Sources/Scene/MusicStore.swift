@@ -3,6 +3,7 @@ import BaseFeature
 import Combine
 import DateUtility
 import Foundation
+import Localization
 import Moordinator
 import MusicDomainInterface
 import Store
@@ -110,7 +111,7 @@ private extension MusicStore {
     func cellMeatballAction(music: MusicModel) -> [UIAlertAction] {
         let youtubeID = self.parseYoutubeID(url: music.url)
         var actions: [UIAlertAction] = [
-            .init(title: "바로가기", style: .default, handler: { _ in
+            .init(title: L10n.Music.directGoTitle, style: .default, handler: { _ in
                 guard let youtubeID,
                       let url = URL(string: "youtube://\(youtubeID)")
                 else { return }
@@ -122,11 +123,11 @@ private extension MusicStore {
             })
         ]
         if currentState.currentUserRole != .member {
-            actions.append(.init(title: "기상음악 삭제", style: .destructive, handler: { _ in
+            actions.append(.init(title: L10n.Music.removeMusicTitle, style: .destructive, handler: { _ in
                 
             }))
         }
-        actions.append(.init(title: "취소", style: .cancel))
+        actions.append(.init(title: L10n.Global.cancelButtonTitle, style: .cancel))
         return actions
     }
 }

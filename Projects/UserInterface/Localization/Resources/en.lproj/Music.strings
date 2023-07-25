@@ -9,3 +9,5 @@
 "music_title" = "Wakeup Music";
 "empty_music_title" = "No one has proposed for the Wakeup Music..";
 "propose_music_title" = "Apply for the Wakeup Music from the TopRight button";
+"direct_go_title" = "Open in Youtube";
+"remove_music_title" = "Remove Wakeup Music";
