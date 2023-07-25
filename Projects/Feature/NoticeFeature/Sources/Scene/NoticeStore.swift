@@ -35,10 +35,11 @@ final class NoticeStore: BaseStore {
         var currentUserRole: UserRoleType = .member
         var isEditingMode = false
         var selectedNotice: Set<Int> = []
+        var isRefreshing = false
     }
     enum Action {
         case viewDidLoad
-        case viewWillAppear
+        case fetchNoticeList
         case editButtonDidTap
         case noticeDidTap(Int)
     }
@@ -49,6 +50,7 @@ final class NoticeStore: BaseStore {
         case insertSelectedNotice(Int)
         case removeSelectedNotice(Int)
         case removeAllSelectedNotice
+        case updateIsRefreshing(Bool)
     }
 }
 
@@ -58,8 +60,8 @@ extension NoticeStore {
         case .viewDidLoad:
             return viewDidLoad()
 
-        case .viewWillAppear:
-            return viewWillAppear()
+        case .fetchNoticeList:
+            return fetchNoticeList()
 
         case .editButtonDidTap:
             return .merge(
@@ -97,20 +99,25 @@ extension NoticeStore {
 
         case .removeAllSelectedNotice:
             newState.selectedNotice.removeAll()
+
+        case let .updateIsRefreshing(isRefreshing):
+            newState.isRefreshing = isRefreshing
         }
         return newState
     }
 }
 
+// MARK: - Action
 private extension NoticeStore {
-    func viewWillAppear() -> SideEffect<Mutation, Never> {
-        return SideEffect<[NoticeModel], Error>
+    func fetchNoticeList() -> SideEffect<Mutation, Never> {
+        let noticeEffect = SideEffect<[NoticeModel], Error>
             .tryAsync { [fetchNoticeListUseCase] in
                 try await fetchNoticeListUseCase()
             }
             .map(Mutation.updateNoticeList)
             .catchToNever()
             .eraseToSideEffect()
+        return self.makeRefreshingSideEffect(noticeEffect)
     }
 
     func viewDidLoad() -> SideEffect<Mutation, Never> {
@@ -132,7 +139,10 @@ private extension NoticeStore {
         : Mutation.insertSelectedNotice(noticeID)
         return .just(mutation)
     }
+}
 
+// MARK: - Mutate
+private extension NoticeStore {
     func noticeListToSections(noticeList: [NoticeModel]) -> [SectiondNoticeTuple] {
         return noticeList.reduce(
             into: [SectiondNoticeTuple]()
@@ -148,5 +158,21 @@ private extension NoticeStore {
                 partialResult.append((yearAndMonth, [notice]))
             }
         }
+    }
+}
+
+// MARK: - Reusable
+private extension NoticeStore {
+    func makeRefreshingSideEffect(
+        _ publisher: SideEffect<Mutation, Never>
+    ) -> SideEffect<Mutation, Never> {
+        let startLoadingPublisher = SideEffect<Mutation, Never>
+            .just(Mutation.updateIsRefreshing(true))
+        let endLoadingPublisher = SideEffect<Mutation, Never>
+            .just(Mutation.updateIsRefreshing(false))
+        return startLoadingPublisher
+            .append(publisher)
+            .append(endLoadingPublisher)
+            .eraseToSideEffect()
     }
 }

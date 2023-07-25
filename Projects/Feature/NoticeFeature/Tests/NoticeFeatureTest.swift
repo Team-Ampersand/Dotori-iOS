@@ -66,13 +66,13 @@ final class NoticeFeatureTests: XCTestCase {
         ]
         fetchNoticeListUseCase.fetchNoticeListReturn = expected
 
-        sut.state.map(\.noticeList).sink { _ in
+        sut.state.map(\.noticeList).removeDuplicates().sink { _ in
             expectation.fulfill()
         }
         .store(in: &subscription)
 
         XCTAssertEqual(fetchNoticeListUseCase.fetchNoticeListCallCount, 0)
-        sut.send(.viewWillAppear)
+        sut.send(.fetchNoticeList)
 
         wait(for: [expectation], timeout: 1.0)
         XCTAssertEqual(expected, sut.currentState.noticeList)
