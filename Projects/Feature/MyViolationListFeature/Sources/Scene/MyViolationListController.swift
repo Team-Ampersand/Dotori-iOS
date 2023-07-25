@@ -7,7 +7,7 @@ import MSGLayout
 import UIKit
 import UIKitUtil
 
-final class MyViolationHistoryViewController: BaseStoredModalViewController<MyViolationHistoryStore> {
+final class MyViolationListViewController: BaseStoredModalViewController<MyViolationListStore> {
     private enum Metric {
         static let padding: CGFloat = 24
     }

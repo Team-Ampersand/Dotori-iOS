@@ -10,7 +10,7 @@ let project = Project.module(
             dependencies: [
                 .feature(target: .BaseFeature),
                 .feature(target: .ConfirmationDialogFeature),
-                .feature(target: .MyViolationHistoryFeature),
+                .feature(target: .MyViolationListFeature),
                 .domain(target: .SelfStudyDomain, type: .interface),
                 .domain(target: .MassageDomain, type: .interface),
                 .domain(target: .MealDomain, type: .interface),

@@ -1,6 +1,6 @@
 import Inject
 import UIKit
-@testable import MyViolationHistoryFeature
+@testable import MyViolationListFeature
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -11,9 +11,9 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let store = MyViolationHistoryStore()
+        let store = MyViolationListStore()
         let viewController = Inject.ViewControllerHost(
-            MyViolationHistoryViewController(store: store)
+            MyViolationListViewController(store: store)
         )
         window?.rootViewController = viewController
         window?.makeKeyAndVisible()

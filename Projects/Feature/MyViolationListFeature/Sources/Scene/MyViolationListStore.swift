@@ -3,7 +3,7 @@ import Combine
 import Store
 import Moordinator
 
-final class MyViolationHistoryStore: BaseStore {
+final class MyViolationListStore: BaseStore {
     var route: PassthroughSubject<RoutePath, Never> = .init()
     var subscription: Set<AnyCancellable> = .init()
     var initialState: State
@@ -19,13 +19,13 @@ final class MyViolationHistoryStore: BaseStore {
     enum Mutation {}
 }
 
-extension MyViolationHistoryStore {
+extension MyViolationListStore {
     func mutate(state: State, action: Action) -> SideEffect<Mutation, Never> {
         .none
     }
 }
 
-extension MyViolationHistoryStore {
+extension MyViolationListStore {
     func reduce(state: State, mutate: Mutation) -> State {
         state
     }
