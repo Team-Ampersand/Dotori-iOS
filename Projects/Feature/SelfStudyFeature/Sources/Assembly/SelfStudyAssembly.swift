@@ -8,7 +8,8 @@ public final class SelfStudyAssembly: Assembly {
         container.register(SelfStudyFactory.self) { resolver in
             SelfStudyFactoryImpl(
                 fetchSelfStudyRankListUseCase: resolver.resolve(FetchSelfStudyRankListUseCase.self)!,
-                loadCurrentUserRoleUseCase: resolver.resolve(LoadCurrentUserRoleUseCase.self)!
+                loadCurrentUserRoleUseCase: resolver.resolve(LoadCurrentUserRoleUseCase.self)!,
+                checkSelfStudyMemberUseCase: resolver.resolve(CheckSelfStudyMemberUseCase.self)!
             )
         }
     }

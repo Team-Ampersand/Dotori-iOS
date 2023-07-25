@@ -18,6 +18,7 @@ final class SelfStudyViewController: BaseViewController<SelfStudyStore> {
     private let selfStudyTableView = UITableView()
         .set(\.backgroundColor, .clear)
         .set(\.separatorStyle, .none)
+        .set(\.isHidden, true)
         .then {
             $0.register(cellType: SelfStudyCell.self)
         }
@@ -30,10 +31,21 @@ final class SelfStudyViewController: BaseViewController<SelfStudyStore> {
         cell.delegate = store
         return cell
     }
+    private let emptySelfStudyStackView = VStackView(spacing: 8) {
+        DotoriIconView(
+            size: .custom(.init(width: 96, height: 77)),
+            image: .Dotori.graduationcap
+        )
+
+        DotoriLabel("자습 신청한 인원이 없습니다.", font: .subtitle2)
+
+        DotoriLabel("홈에서 자습 신청을 해보세요!", textColor: .neutral(.n20), font: .caption)
+    }.alignment(.center)
 
     override func addView() {
         view.addSubviews {
             selfStudyTableView
+            emptySelfStudyStackView
         }
     }
 
@@ -43,6 +55,9 @@ final class SelfStudyViewController: BaseViewController<SelfStudyStore> {
                 .top(.toSuperview(), .equal(24))
                 .horizontal(.toSuperview())
                 .bottom(.to(view.safeAreaLayoutGuide))
+
+            emptySelfStudyStackView.layout
+                .center(.toSuperview())
         }
     }
 
@@ -67,6 +82,17 @@ final class SelfStudyViewController: BaseViewController<SelfStudyStore> {
             .removeDuplicates()
             .map { [GenericSectionModel(items: $0)] }
             .sink(receiveValue: selfStudyTableAdapter.updateSections(sections:))
+            .store(in: &subscription)
+
+        sharedState
+            .map(\.selfStudyRankList)
+            .map(\.count)
+            .map { $0 == 0 }
+            .removeDuplicates()
+            .sink(with: self, receiveValue: { owner, selfStudyIsEmpty in
+                owner.selfStudyTableView.isHidden = selfStudyIsEmpty
+                owner.emptySelfStudyStackView.isHidden = !selfStudyIsEmpty
+            })
             .store(in: &subscription)
     }
 }

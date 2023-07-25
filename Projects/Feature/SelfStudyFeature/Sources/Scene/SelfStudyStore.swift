@@ -54,7 +54,7 @@ extension SelfStudyStore {
         return .none
     }
 }
-
+import Foundation
 extension SelfStudyStore {
     func reduce(state: State, mutate: Mutation) -> State {
         var newState = state
@@ -83,8 +83,8 @@ private extension SelfStudyStore {
                 try await fetchSelfStudyRankListUseCase()
             }
             .map(Mutation.updateSelfStudyRankList)
-            .catchToNever()
             .eraseToSideEffect()
+            .catchToNever()
 
         let userRoleEffect = SideEffect
             .just(try? loadCurrentUserRoleUseCase())
