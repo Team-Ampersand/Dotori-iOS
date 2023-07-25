@@ -66,7 +66,7 @@ final class NoticeFeatureTests: XCTestCase {
         ]
         fetchNoticeListUseCase.fetchNoticeListReturn = expected
 
-        sut.state.map(\.noticeList).sink { _ in
+        sut.state.map(\.noticeList).removeDuplicates().sink { _ in
             expectation.fulfill()
         }
         .store(in: &subscription)
