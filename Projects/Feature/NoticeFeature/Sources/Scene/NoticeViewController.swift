@@ -9,7 +9,7 @@ import NoticeDomainInterface
 import UIKit
 import UIKitUtil
 
-final class NoticeViewController: BaseViewController<NoticeStore> {
+final class NoticeViewController: BaseStoredViewController<NoticeStore> {
     private enum Metric {
         static let horizontalPadding: CGFloat = 20
         static let spacing: CGFloat = 12

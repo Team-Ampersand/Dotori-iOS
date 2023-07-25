@@ -2,15 +2,13 @@ import Combine
 import DesignSystem
 import UIKit
 
-open class BaseViewController<Store: BaseStore>:
+open class BaseViewController:
     UIViewController,
     HasCancellableBag,
-    StoredViewControllable,
     AddViewable,
     SetLayoutable,
     ViewControllerConfigurable,
-    NavigationConfigurable,
-    StoreBindable {
+    NavigationConfigurable {
 
     // MARK: - Properties
 
@@ -19,21 +17,7 @@ open class BaseViewController<Store: BaseStore>:
     private let viewDidAppearSubject = PassthroughSubject<Void, Never>()
     private let viewWillDisappearSubject = PassthroughSubject<Void, Never>()
     private let viewDidDisappearSubject = PassthroughSubject<Void, Never>()
-    public let store: Store
     public var subscription = Set<AnyCancellable>()
-
-    // MARK: - Init
-
-    public init(store: Store) {
-        self.store = store
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required public init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    // MARK: - LifeCycle
 
     open override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,8 +26,6 @@ open class BaseViewController<Store: BaseStore>:
         setLayout()
         configureViewController()
         configureNavigation()
-        bindAction()
-        bindState()
         viewDidLoadSubject.send(())
     }
 
@@ -74,10 +56,6 @@ open class BaseViewController<Store: BaseStore>:
     open func configureViewController() {}
 
     open func configureNavigation() {}
-
-    open func bindState() {}
-
-    open func bindAction() {}
 }
 
 // MARK: - LifeCyclePublishable

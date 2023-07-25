@@ -7,7 +7,7 @@ import Localization
 import MSGLayout
 import UIKit
 
-final class ConfirmationDialogViewController: BaseModalViewController<ConfirmationDialogStore> {
+final class ConfirmationDialogViewController: BaseStoredModalViewController<ConfirmationDialogStore> {
     private enum Metric {
         static let horizontalPadding: CGFloat = 40
         static let spacing: CGFloat = 8

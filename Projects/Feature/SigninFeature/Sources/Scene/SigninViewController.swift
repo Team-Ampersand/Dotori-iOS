@@ -8,7 +8,7 @@ import MSGLayout
 import UIKit
 import UtilityModule
 
-final class SigninViewController: BaseViewController<SigninStore> {
+final class SigninViewController: BaseStoredViewController<SigninStore> {
     private let dotoriLogoImageView = UIImageView()
         .set(\.image, .Dotori.dotoriSigninLogo
             .withRenderingMode(.alwaysTemplate)
