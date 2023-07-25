@@ -1,6 +1,7 @@
 import Inject
 import UIKit
 @testable import MyViolationListFeature
+@testable import ViolationDomainTesting
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -11,7 +12,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let store = MyViolationListStore()
+        let fetchMyViolationListUseCase = FetchMyViolationListUseCaseSpy()
+        let store = MyViolationListStore(
+            fetchMyViolationListUseCase: fetchMyViolationListUseCase
+        )
         let viewController = Inject.ViewControllerHost(
             MyViolationListViewController(store: store)
         )
