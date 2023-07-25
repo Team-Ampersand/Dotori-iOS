@@ -38,6 +38,10 @@ final class SelfStudyCell: BaseTableViewCell<SelfStudyRankModel> {
 
         stuNumLabel
     }.alignment(.center)
+    private let medalImageView = DotoriIconView(
+        size: .custom(.init(width: 56, height: 80)),
+        image: nil
+    )
     private var subscription = Set<AnyCancellable>()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -62,6 +66,7 @@ final class SelfStudyCell: BaseTableViewCell<SelfStudyRankModel> {
             rankLabel
             selfStudyCheckBox
             profileStackView
+            medalImageView
         }
     }
 
@@ -84,6 +89,10 @@ final class SelfStudyCell: BaseTableViewCell<SelfStudyRankModel> {
                 .centerX(.toSuperview())
                 .top(.toSuperview(), .equal(28))
                 .bottom(.toSuperview(), .equal(-28))
+
+            medalImageView.layout
+                .trailing(.toSuperview(), .equal(-8))
+                .bottom(.toSuperview(), .equal(20))
         }
     }
 
@@ -101,6 +110,7 @@ final class SelfStudyCell: BaseTableViewCell<SelfStudyRankModel> {
         self.genderImageView.image = model.gender == .man ? .Dotori.men : .Dotori.women
         self.stuNumLabel.text = model.stuNum
         self.selfStudyCheckBox.isChecked = model.selfStudyCheck
+        self.medalImageView.image = self.rankToImage(rank: model.rank)
     }
 
     func setUserRole(userRole: UserRoleType) {
@@ -119,5 +129,14 @@ private extension SelfStudyCell {
                 owner.delegate?.selfStudyCheckBoxDidTap(id: checked.0, isChecked: checked.1)
             })
             .store(in: &subscription)
+    }
+
+    func rankToImage(rank: Int) -> UIImage? {
+        switch rank {
+        case 1: return .Dotori.firstMedal
+        case 2: return .Dotori.secondMedal
+        case 3: return .Dotori.thirdMedal
+        default: return nil
+        }
     }
 }

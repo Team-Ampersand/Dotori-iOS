@@ -89,7 +89,7 @@ private extension SelfStudyStore {
             .map(Mutation.updateCurrentUserRole)
             .setFailureType(to: Never.self)
             .eraseToSideEffect()
-        
+
         return .merge(
             selfStudyEffect,
             userRoleEffect

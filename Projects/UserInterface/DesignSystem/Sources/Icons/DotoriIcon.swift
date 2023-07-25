@@ -16,6 +16,7 @@ public extension UIImage {
         public static let eye = DesignSystemAsset.DotoriIcon.eye.image
         public static let eyeSlash = DesignSystemAsset.DotoriIcon.eyeSlash.image
         public static let filter = DesignSystemAsset.DotoriIcon.filter.image
+        public static let firstMedal = DesignSystemAsset.DotoriIcon.firstMedal.image
         public static let hamburger = DesignSystemAsset.DotoriIcon.hamburger.image
         public static let lineList = DesignSystemAsset.DotoriIcon.lineList.image
         public static let lock = DesignSystemAsset.DotoriIcon.lock.image
@@ -28,11 +29,13 @@ public extension UIImage {
         public static let personRectangle = DesignSystemAsset.DotoriIcon.personRectangle.image
         public static let plus = DesignSystemAsset.DotoriIcon.plus.image
         public static let search = DesignSystemAsset.DotoriIcon.search.image
+        public static let secondMedal = DesignSystemAsset.DotoriIcon.secondMedal.image
         public static let shortcut = DesignSystemAsset.DotoriIcon.shortcut.image
         public static let smallMen = DesignSystemAsset.DotoriIcon.smallMen.image
         public static let smallWomen = DesignSystemAsset.DotoriIcon.smallWomen.image
         public static let smallXmark = DesignSystemAsset.DotoriIcon.smallXmark.image
         public static let trashcan = DesignSystemAsset.DotoriIcon.trashcan.image
+        public static let thirdMedal = DesignSystemAsset.DotoriIcon.thirdMedal.image
         public static let warning = DesignSystemAsset.DotoriIcon.warning.image
         public static let women = DesignSystemAsset.DotoriIcon.women.image
         public static let xmark = DesignSystemAsset.DotoriIcon.xmark.image
