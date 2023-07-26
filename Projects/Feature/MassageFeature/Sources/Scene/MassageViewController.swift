@@ -2,6 +2,7 @@ import BaseFeature
 import DesignSystem
 import Localization
 import MSGLayout
+import MassageDomainInterface
 import UIKit
 import UIKitUtil
 
@@ -15,13 +16,12 @@ final class MassageViewController: BaseStoredViewController<MassageStore> {
             $0.register(cellType: MassageCell.self)
         }
     private let massageRefreshContorol = UIRefreshControl()
-    private lazy var massageTableAdapter = TableViewAdapter<GenericSectionModel<Void>>(
+    private lazy var massageTableAdapter = TableViewAdapter<GenericSectionModel<MassageRankModel>>(
         tableView: massageTableView
     ) { [store] tableView, indexPath, item in
         let cell: MassageCell = tableView.dequeueReusableCell(for: indexPath)
         cell.adapt(model: item)
-//        cell.setUserRole(userRole: store.currentState.currentUserRole)
-//        cell.delegate = store
+        cell.setUserRole(userRole: store.currentState.currentUserRole)
         return cell
     }
 
@@ -43,11 +43,5 @@ final class MassageViewController: BaseStoredViewController<MassageStore> {
 
     override func configureNavigation() {
         self.navigationItem.setLeftBarButton(massageNavigationBarLabel, animated: true)
-    }
-
-    override func bindState() {
-        massageTableAdapter.updateSections(sections: [
-            .init(items: [(), ()])
-        ])
     }
 }
