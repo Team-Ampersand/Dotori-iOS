@@ -1,17 +1,26 @@
 import BaseFeature
 import Combine
-import Store
 import Moordinator
+import MusicDomainInterface
+import Store
+import UserDomainInterface
 
 final class MusicStore: BaseStore {
     var route: PassthroughSubject<RoutePath, Never> = .init()
     var subscription: Set<AnyCancellable> = .init()
     var initialState: State
     var stateSubject: CurrentValueSubject<State, Never>
+    private let fetchMusicListUseCase: any FetchMusicListUseCase
+    private let loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase
 
-    init() {
+    init(
+        fetchMusicListUseCase: any FetchMusicListUseCase,
+        loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase
+    ) {
         self.initialState = .init()
         self.stateSubject = .init(initialState)
+        self.fetchMusicListUseCase = fetchMusicListUseCase
+        self.loadCurrentUserRoleUseCase = loadCurrentUserRoleUseCase
     }
 
     struct State {}
