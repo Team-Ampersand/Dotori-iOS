@@ -1,4 +1,7 @@
+import Inject
 import UIKit
+@testable import MusicFeature
+@testable import MusicDomainTesting
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -9,8 +12,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let viewController = UIViewController()
-        viewController.view.backgroundColor = .yellow
+        let store = MusicStore()
+        let viewController = Inject.ViewControllerHost(
+            UINavigationController(rootViewController: MusicViewController(store: store))
+        )
         window?.rootViewController = viewController
         window?.makeKeyAndVisible()
 
