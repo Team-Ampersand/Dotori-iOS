@@ -10,7 +10,12 @@ let project = Project.module(
             .domain(target: .MusicDomain, type: .interface)
         ]),
         .tests(module: .feature(.MusicFeature), dependencies: [
-            .feature(target: .MusicFeature)
+            .feature(target: .MusicFeature),
+            .domain(target: .MusicDomain, type: .testing)
+        ]),
+        .demo(module: .feature(.MusicFeature), dependencies: [
+            .feature(target: .MusicFeature),
+            .domain(target: .MusicDomain, type: .testing)
         ])
     ]
 )
