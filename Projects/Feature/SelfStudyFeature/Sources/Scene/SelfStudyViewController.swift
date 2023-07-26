@@ -11,7 +11,7 @@ import UIKit
 import UIKitUtil
 
 final class SelfStudyViewController: BaseStoredViewController<SelfStudyStore> {
-    private let dotoriNavigationBarLabel = DotoriNavigationBarLabel(text: L10n.SelfStudy.selfStudyTitle)
+    private let selfStudyNavigationBarLabel = DotoriNavigationBarLabel(text: L10n.SelfStudy.selfStudyTitle)
     private let filterBarButton = UIBarButtonItem(
         image: .Dotori.filter.tintColor(color: .dotori(.neutral(.n20))),
         style: .done,
