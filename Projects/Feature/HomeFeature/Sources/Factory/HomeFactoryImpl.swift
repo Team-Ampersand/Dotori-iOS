@@ -2,6 +2,7 @@ import ConfirmationDialogFeature
 import MassageDomainInterface
 import MealDomainInterface
 import Moordinator
+import MyViolationListFeature
 import SelfStudyDomainInterface
 import TimerInterface
 import UserDomainInterface
@@ -16,7 +17,9 @@ struct HomeFactoryImpl: HomeFactory {
     private let cancelSelfStudyUseCase: any CancelSelfStudyUseCase
     private let applyMassageUseCase: any ApplyMassageUseCase
     private let cancelMassageUseCase: any CancelMassageUseCase
+    private let logoutUseCase: any LogoutUseCase
     private let confirmationDialogFactory: any ConfirmationDialogFactory
+    private let myViolationListFactory: any MyViolationListFactory
 
     init(
         repeatableTimer: any RepeatableTimer,
@@ -28,7 +31,9 @@ struct HomeFactoryImpl: HomeFactory {
         cancelSelfStudyUseCase: any CancelSelfStudyUseCase,
         applyMassageUseCase: any ApplyMassageUseCase,
         cancelMassageUseCase: any CancelMassageUseCase,
-        confirmationDialogFactory: any ConfirmationDialogFactory
+        logoutUseCase: any LogoutUseCase,
+        confirmationDialogFactory: any ConfirmationDialogFactory,
+        myViolationListFactory: any MyViolationListFactory
     ) {
         self.repeatableTimer = repeatableTimer
         self.fetchSelfStudyInfoUseCase = fetchSelfStudyInfoUseCase
@@ -39,7 +44,9 @@ struct HomeFactoryImpl: HomeFactory {
         self.cancelSelfStudyUseCase = cancelSelfStudyUseCase
         self.applyMassageUseCase = applyMassageUseCase
         self.cancelMassageUseCase = cancelMassageUseCase
+        self.logoutUseCase = logoutUseCase
         self.confirmationDialogFactory = confirmationDialogFactory
+        self.myViolationListFactory = myViolationListFactory
     }
 
     func makeMoordinator() -> Moordinator {
@@ -52,12 +59,14 @@ struct HomeFactoryImpl: HomeFactory {
             applySelfStudyUseCase: applySelfStudyUseCase,
             cancelSelfStudyUseCase: cancelSelfStudyUseCase,
             applyMassageUseCase: applyMassageUseCase,
-            cancelMassageUseCase: cancelMassageUseCase
+            cancelMassageUseCase: cancelMassageUseCase,
+            logoutUseCase: logoutUseCase
         )
         let homeViewController = HomeViewController(store: homeStore)
         return HomeMoordinator(
             homeViewController: homeViewController,
-            confirmationDialogFactory: confirmationDialogFactory
+            confirmationDialogFactory: confirmationDialogFactory,
+            myViolationListFactory: myViolationListFactory
         )
     }
 }

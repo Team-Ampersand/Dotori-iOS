@@ -25,6 +25,7 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum Feature: String, MicroTargetPathConvertable {
+        case MyViolationListFeature
         case SplashFeature
         case ConfirmationDialogFeature
         case MusicFeature
@@ -43,6 +44,7 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum Domain: String, MicroTargetPathConvertable {
+        case ViolationDomain
         case NoticeDomain
         case MealDomain
         case MassageDomain

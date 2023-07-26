@@ -32,6 +32,7 @@ final class HomeStore: BaseStore {
     private let cancelSelfStudyUseCase: any CancelSelfStudyUseCase
     private let applyMassageUseCase: any ApplyMassageUseCase
     private let cancelMassageUseCase: any CancelMassageUseCase
+    private let logoutUseCase: any LogoutUseCase
 
     init(
         repeatableTimer: any RepeatableTimer,
@@ -42,7 +43,8 @@ final class HomeStore: BaseStore {
         applySelfStudyUseCase: any ApplySelfStudyUseCase,
         cancelSelfStudyUseCase: any CancelSelfStudyUseCase,
         applyMassageUseCase: any ApplyMassageUseCase,
-        cancelMassageUseCase: any CancelMassageUseCase
+        cancelMassageUseCase: any CancelMassageUseCase,
+        logoutUseCase: any LogoutUseCase
     ) {
         self.initialState = .init()
         self.stateSubject = .init(initialState)
@@ -55,6 +57,7 @@ final class HomeStore: BaseStore {
         self.cancelSelfStudyUseCase = cancelSelfStudyUseCase
         self.applyMassageUseCase = applyMassageUseCase
         self.cancelMassageUseCase = cancelMassageUseCase
+        self.logoutUseCase = logoutUseCase
     }
 
     enum Action: Equatable {
@@ -154,15 +157,16 @@ private extension HomeStore {
 
     func myInfoButtonDidTap() -> SideEffect<Mutation, Never> {
         let alertPath = DotoriRoutePath.alert(style: .actionSheet, actions: [
-            .init(title: L10n.Home.profileEditButtonTitle, style: .default) { _ in },
-            .init(title: L10n.Home.violationHistoryButtonTitle, style: .default) { _ in },
-            .init(title: L10n.Home.changePasswordButtonTitle, style: .default) { _ in },
-            .init(title: L10n.Home.logoutButtonTitle, style: .default) { [route] _ in
+            .init(title: L10n.Home.violationHistoryButtonTitle, style: .default) { [route] _ in
+                route.send(DotoriRoutePath.myViolationList)
+            },
+            .init(title: L10n.Home.logoutButtonTitle, style: .default) { [route, logoutUseCase] _ in
                 let confirmationDialogRoutePath = DotoriRoutePath.confirmationDialog(
-                    title: "로그아웃",
-                    message: "정말로 도토리를 로그아웃 하시겠습니까?"
+                    title: L10n.Home.logoutTitle,
+                    message: L10n.Home.reallyLogoutTitle
                 ) {
-                    #warning("로그아웃 로직 구현")
+                    logoutUseCase()
+                    route.send(DotoriRoutePath.signin)
                 }
                 route.send(confirmationDialogRoutePath)
             },

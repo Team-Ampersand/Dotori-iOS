@@ -21,6 +21,8 @@ final class SelfStudyViewController: BaseStoredViewController<SelfStudyStore> {
     private let selfStudyTableView = UITableView()
         .set(\.backgroundColor, .clear)
         .set(\.separatorStyle, .none)
+        .set(\.sectionHeaderHeight, 0)
+        .set(\.sectionFooterHeight, 0)
         .set(\.isHidden, true)
         .then {
             $0.register(cellType: SelfStudyCell.self)

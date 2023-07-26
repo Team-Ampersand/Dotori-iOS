@@ -10,6 +10,7 @@ import MassageDomain
 import MassageFeature
 import MealDomain
 import MusicFeature
+import MyViolationListFeature
 import Networking
 import NoticeDomain
 import NoticeFeature
@@ -24,6 +25,7 @@ import Swinject
 import Timer
 import UIKit
 import UserDomain
+import ViolationDomain
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -42,6 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DatabaseAssembly(),
             SplashAssembly(),
             HomeAssembly(),
+            MyViolationListAssembly(),
             NoticeAssembly(),
             SelfStudyAssembly(),
             ConfirmationDialogAssembly(),
@@ -56,6 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UserDomainAssembly(),
             SelfStudyDomainAssembly(),
             MassageDomainAssembly(),
+            ViolationDomainAssembly(),
             MealDomainAssembly(),
             NoticeDomainAssembly()
         ], container: AppDelegate.container)

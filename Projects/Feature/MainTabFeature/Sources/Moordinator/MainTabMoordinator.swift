@@ -45,6 +45,9 @@ final class MainTabMoordinator: Moordinator {
         case .massage:
             rootVC.selectedIndex = 3
 
+        case .signin:
+            return .end(DotoriRoutePath.signin)
+
         default:
             return .none
         }

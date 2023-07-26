@@ -48,7 +48,7 @@ final class SigninMoordinator: Moordinator {
             return .one(.contribute(withNextPresentable: viewController))
 
         case .main:
-            return .one(.forwardToParent(with: DotoriRoutePath.main))
+            return .end(DotoriRoutePath.main)
 
         default:
             return .none

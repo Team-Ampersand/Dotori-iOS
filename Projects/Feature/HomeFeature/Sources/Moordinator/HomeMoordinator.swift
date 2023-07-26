@@ -2,23 +2,28 @@ import BaseFeature
 import ConfirmationDialogFeature
 import DWebKit
 import Moordinator
+import MyViolationListFeature
 import TimerInterface
 import UIKit
+import UIKitUtil
 
 final class HomeMoordinator: Moordinator {
     private let rootVC = UINavigationController()
     private let homeViewController: any StoredViewControllable
     private let confirmationDialogFactory: any ConfirmationDialogFactory
+    private let myViolationListFactory: any MyViolationListFactory
     var root: Presentable {
         rootVC
     }
 
     init(
         homeViewController: any StoredViewControllable,
-        confirmationDialogFactory: any ConfirmationDialogFactory
+        confirmationDialogFactory: any ConfirmationDialogFactory,
+        myViolationListFactory: any MyViolationListFactory
     ) {
         self.homeViewController = homeViewController
         self.confirmationDialogFactory = confirmationDialogFactory
+        self.myViolationListFactory = myViolationListFactory
     }
 
     func route(to path: RoutePath) -> MoordinatorContributors {
@@ -35,6 +40,9 @@ final class HomeMoordinator: Moordinator {
 
         case .massage:
             return .one(.forwardToParent(with: DotoriRoutePath.massage))
+
+        case .myViolationList:
+            return presentToMyViolationList()
 
         case let .confirmationDialog(title, description, confirmAction):
             let viewController = confirmationDialogFactory.makeViewController(
@@ -53,6 +61,9 @@ final class HomeMoordinator: Moordinator {
         case .dismiss:
             self.rootVC.presentedViewController?.dismiss(animated: true)
 
+        case .signin:
+            return .end(DotoriRoutePath.signin)
+
         default:
             return .none
         }
@@ -66,6 +77,15 @@ private extension HomeMoordinator {
         return .one(.contribute(
             withNextPresentable: self.homeViewController,
             withNextRouter: self.homeViewController.store
+        ))
+    }
+
+    func presentToMyViolationList() -> MoordinatorContributors {
+        let viewController = myViolationListFactory.makeViewController()
+        self.rootVC.topViewController?.modalPresent(viewController)
+        return .one(.contribute(
+            withNextPresentable: viewController,
+            withNextRouter: viewController.store
         ))
     }
 

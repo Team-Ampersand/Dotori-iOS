@@ -4,21 +4,27 @@ import XCTest
 @testable import UserDomainTesting
 @testable import UserDomain
 @testable import KeyValueStoreTesting
+@testable import JwtStoreTesting
 
 final class LocalUserDataSourceTests: XCTestCase {
     var localUserDataSource: LocalUserDataSourceImpl!
     var keyValueStoreFake: DictionaryKeyValueStore!
+    var jwtStore: DictionaryJwtStore!
 
     override func setUp() {
         super.setUp()
         keyValueStoreFake = DictionaryKeyValueStore()
-        localUserDataSource = LocalUserDataSourceImpl(keyValueStore: keyValueStoreFake)
+        jwtStore = .init()
+        localUserDataSource = LocalUserDataSourceImpl(
+            keyValueStore: keyValueStoreFake,
+            jwtStore: jwtStore
+        )
     }
 
     override func tearDown() {
         localUserDataSource = nil
         keyValueStoreFake = nil
-        super.tearDown()
+        jwtStore = nil
     }
 
     func testLoadCurrentUserRole_Success() {
