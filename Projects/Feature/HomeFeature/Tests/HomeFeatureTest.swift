@@ -19,6 +19,7 @@ final class HomeFeatureTests: XCTestCase {
     var cancelSelfStudyUseCase: CancelSelfStudyUseCaseSpy!
     var applyMassageUseCase: ApplyMassageUseCaseSpy!
     var cancelMassageUseCase: CancelMassageUseCaseSpy!
+    var logoutUseCase: LogoutUseCaseSpy!
     var sut: HomeStore!
     var subscription: Set<AnyCancellable>!
 
@@ -32,6 +33,7 @@ final class HomeFeatureTests: XCTestCase {
         cancelSelfStudyUseCase = .init()
         applyMassageUseCase = .init()
         cancelMassageUseCase = .init()
+        logoutUseCase = .init()
         sut = .init(
             repeatableTimer: repeatableTimer,
             fetchSelfStudyInfoUseCase: fetchSelfStudyInfoUseCase,
@@ -41,7 +43,8 @@ final class HomeFeatureTests: XCTestCase {
             applySelfStudyUseCase: applySelfStudyUseCase,
             cancelSelfStudyUseCase: cancelSelfStudyUseCase,
             applyMassageUseCase: applyMassageUseCase,
-            cancelMassageUseCase: cancelMassageUseCase
+            cancelMassageUseCase: cancelMassageUseCase,
+            logoutUseCase: logoutUseCase
         )
         subscription = .init()
     }
@@ -56,6 +59,7 @@ final class HomeFeatureTests: XCTestCase {
         cancelSelfStudyUseCase = nil
         applyMassageUseCase = nil
         cancelMassageUseCase = nil
+        logoutUseCase = nil
         sut = nil
         subscription = nil
     }
