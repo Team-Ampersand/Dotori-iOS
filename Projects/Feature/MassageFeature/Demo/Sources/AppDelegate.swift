@@ -2,6 +2,7 @@ import UIKit
 import Inject
 @testable import MassageFeature
 @testable import MassageDomainTesting
+@testable import UserDomainTesting
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,7 +21,11 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
                 .init(id: 3, rank: 3, stuNum: "1236", memberName: "이름대충", gender: .woman)
             ]
         }
-        let store = MassageStore(fetchMassageRankListUseCase: fetchMassageRankListUseCase)
+        let loadCurrentUserRoleUseCase = LoadCurrentUserRoleUseCaseSpy()
+        let store = MassageStore(
+            fetchMassageRankListUseCase: fetchMassageRankListUseCase,
+            loadCurrentUserRoleUseCase: loadCurrentUserRoleUseCase
+        )
         let viewController = Inject.ViewControllerHost(
             UINavigationController(rootViewController: MassageViewController(store: store))
         )

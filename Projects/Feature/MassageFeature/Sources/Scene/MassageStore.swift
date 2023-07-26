@@ -1,8 +1,9 @@
 import BaseFeature
 import Combine
+import MassageDomainInterface
 import Moordinator
 import Store
-import MassageDomainInterface
+import UserDomainInterface
 
 final class MassageStore: BaseStore {
     var route: PassthroughSubject<RoutePath, Never> = .init()
@@ -10,11 +11,16 @@ final class MassageStore: BaseStore {
     var initialState: State
     var stateSubject: CurrentValueSubject<State, Never>
     private let fetchMassageRankListUseCase: any FetchMassageRankListUseCase
+    private let loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase
 
-    init(fetchMassageRankListUseCase: any FetchMassageRankListUseCase) {
+    init(
+        fetchMassageRankListUseCase: any FetchMassageRankListUseCase,
+        loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase
+    ) {
         self.initialState = .init()
         self.stateSubject = .init(initialState)
         self.fetchMassageRankListUseCase = fetchMassageRankListUseCase
+        self.loadCurrentUserRoleUseCase = loadCurrentUserRoleUseCase
     }
 
     struct State {
