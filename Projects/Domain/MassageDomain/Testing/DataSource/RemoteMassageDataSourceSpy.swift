@@ -17,4 +17,11 @@ final class RemoteMassageDataSourceSpy: RemoteMassageDataSource {
     func cancelMassage() async throws {
         cancelMassageCallCount += 1
     }
+
+    var fetchMassageRankListCallCount = 0
+    var fetchMassageRankListHandler: () async throws -> [MassageRankEntity] = { [] }
+    func fetchMassageRankList() async throws -> [MassageRankEntity] {
+        fetchMassageRankListCallCount += 1
+        return try await fetchMassageRankListHandler()
+    }
 }

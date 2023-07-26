@@ -57,7 +57,7 @@ extension SelfStudyStore {
         return .none
     }
 }
-import Foundation
+
 extension SelfStudyStore {
     func reduce(state: State, mutate: Mutation) -> State {
         var newState = state
@@ -81,6 +81,7 @@ extension SelfStudyStore: SelfStudyCellDelegate {
     }
 }
 
+// MARK: - Mutate
 private extension SelfStudyStore {
     func fetchSelfStudyRank() -> SideEffect<Mutation, Never> {
         let selfStudyEffect = SideEffect<[SelfStudyRankModel], Error>
@@ -114,6 +115,7 @@ private extension SelfStudyStore {
     }
 }
 
+// MARK: - Reduce
 private extension SelfStudyStore {
     func updateSelfStudyCheck(id: Int, isChecked: Bool) -> [SelfStudyRankModel] {
         currentState.selfStudyRankList.map {
@@ -130,6 +132,7 @@ private extension SelfStudyStore {
     }
 }
 
+// MARK: - Reusable
 private extension SelfStudyStore {
     func makeRefreshingSideEffect(
         _ publisher: SideEffect<Mutation, Never>

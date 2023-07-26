@@ -5,3 +5,7 @@
   Created by 최형우 on 2023/06/07.
   Copyright © 2023 com.msg. All rights reserved.
 */
+
+"massage_title" = "안마의자";
+"empty_massage_title" = "안마의자를 신청한 인원이 없습니다..";
+"apply_from_home_massage_title" = "홈에서 안마의자 신청을 해보세요!";

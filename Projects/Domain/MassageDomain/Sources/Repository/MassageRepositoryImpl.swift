@@ -18,4 +18,8 @@ final class MassageRepositoryImpl: MassageRepository {
     func cancelMassage() async throws {
         try await remoteMassageDataSource.cancelMassage()
     }
+
+    func fetchMassageRankList() async throws -> [MassageRankEntity] {
+        try await remoteMassageDataSource.fetchMassageRankList()
+    }
 }

@@ -7,10 +7,18 @@ let project = Project.module(
     targets: [
         .implements(module: .feature(.MassageFeature), dependencies: [
             .feature(target: .BaseFeature),
-            .domain(target: .AuthDomain, type: .interface)
+            .domain(target: .MassageDomain, type: .interface),
+            .domain(target: .UserDomain, type: .interface)
         ]),
         .tests(module: .feature(.MassageFeature), dependencies: [
-            .feature(target: .MassageFeature)
+            .feature(target: .MassageFeature),
+            .domain(target: .MassageDomain, type: .testing),
+            .domain(target: .UserDomain, type: .testing)
+        ]),
+        .demo(module: .feature(.MassageFeature), dependencies: [
+            .feature(target: .MassageFeature),
+            .domain(target: .MassageDomain, type: .testing),
+            .domain(target: .UserDomain, type: .testing)
         ])
     ]
 )

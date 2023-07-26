@@ -23,4 +23,12 @@ final class RemoteMassageDataSourceImpl: RemoteMassageDataSource {
     func cancelMassage() async throws {
         try await networking.request(MassageEndpoint.cancelMassage)
     }
+
+    func fetchMassageRankList() async throws -> [MassageRankEntity] {
+        try await networking.request(
+            MassageEndpoint.fetchMassageRankList,
+            dto: FetchMassageRankListResponseDTO.self
+        )
+        .toDomain()
+    }
 }

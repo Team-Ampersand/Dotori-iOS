@@ -6,7 +6,6 @@ let project = Project.module(
     name: ModulePaths.Feature.BaseFeature.rawValue,
     targets: [
         .implements(module: .feature(.BaseFeature), product: .framework, dependencies: [
-            .SPM.MSGLayout,
             .SPM.Moordinator,
             .SPM.Store,
             .SPM.IQKeyboardManagerSwift,
