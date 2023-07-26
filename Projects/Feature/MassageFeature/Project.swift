@@ -15,8 +15,8 @@ let project = Project.module(
             .domain(target: .MassageDomain, type: .testing),
             .domain(target: .UserDomain, type: .testing)
         ]),
-        .demo(module: .feature(.NoticeFeature), dependencies: [
-            .feature(target: .NoticeFeature),
+        .demo(module: .feature(.MassageFeature), dependencies: [
+            .feature(target: .MassageFeature),
             .domain(target: .MassageDomain, type: .testing),
             .domain(target: .UserDomain, type: .testing)
         ])
