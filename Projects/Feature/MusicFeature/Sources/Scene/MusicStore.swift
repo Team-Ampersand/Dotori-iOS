@@ -23,9 +23,13 @@ final class MusicStore: BaseStore {
         self.loadCurrentUserRoleUseCase = loadCurrentUserRoleUseCase
     }
 
-    struct State {}
+    struct State {
+        var musicList = [MusicModel]()
+    }
     enum Action {}
-    enum Mutation {}
+    enum Mutation {
+        case updateMusicList([MusicModel])
+    }
 }
 
 extension MusicStore {
@@ -37,6 +41,10 @@ extension MusicStore {
 extension MusicStore {
     func reduce(state: State, mutate: Mutation) -> State {
         var newState = state
+        switch mutate {
+        case let .updateMusicList(musicList):
+            newState.musicList = musicList
+        }
         return newState
     }
 }
