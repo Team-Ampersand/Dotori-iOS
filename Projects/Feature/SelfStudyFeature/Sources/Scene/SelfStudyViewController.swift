@@ -101,6 +101,8 @@ final class SelfStudyViewController: BaseStoredViewController<SelfStudyStore> {
 
         sharedState
             .map(\.isRefreshing)
+            .removeDuplicates()
+            .dropFirst(2)
             .sink(with: selfStudyRefreshContorol, receiveValue: { refreshControl, isRefreshing in
                 isRefreshing ? refreshControl.beginRefreshing() : refreshControl.endRefreshing()
             })
