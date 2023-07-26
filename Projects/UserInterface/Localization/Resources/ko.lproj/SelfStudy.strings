@@ -6,4 +6,7 @@
   Copyright © 2023 com.msg. All rights reserved.
 */
 
+"self_study_title" = "자습신청";
 "self_study_limit_exceeded" = "자기주도학습 신청 인원이 초과되었습니다.";
+"empty_self_study_title" = "자습 신청한 인원이 없습니다..";
+"apply_from_home_self_study_title" = "홈에서 자습 신청을 해보세요!";
