@@ -32,7 +32,7 @@ final class MassageFeatureTests: XCTestCase {
         ]
         fetchMassageRankListUseCase.fetchMassageRankListHandler = { expectedMassageRankList }
 
-        sut.state.map(\.massageRankList).sink { _ in
+        sut.state.map(\.massageRankList).removeDuplicates().sink { _ in
             expectation.fulfill()
         }
         .store(in: &subscription)
