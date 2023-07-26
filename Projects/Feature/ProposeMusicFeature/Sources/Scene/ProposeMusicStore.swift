@@ -1,6 +1,7 @@
 import BaseFeature
 import Combine
 import DesignSystem
+import Foundation
 import Localization
 import Moordinator
 import MusicDomainInterface
@@ -26,6 +27,7 @@ final class ProposeMusicStore: BaseStore {
     enum Action {
         case updateURL(String)
         case proposeButtonDidTap
+        case dimmedBackgroundDidTap
     }
     enum Mutation {
         case updateURL(String)
@@ -41,6 +43,9 @@ extension ProposeMusicStore {
 
         case .proposeButtonDidTap:
             return self.proposeButtonDidTap()
+
+        case .dimmedBackgroundDidTap:
+            route.send(DotoriRoutePath.dismiss)
         }
         return .none
     }
@@ -66,13 +71,14 @@ private extension ProposeMusicStore {
             .tryAsync { [url = currentState.url, proposeMusicUseCase] in
                 try await proposeMusicUseCase(url: url)
             }
-            .catchMap { error in
-                DotoriToast.makeToast(text: error.localizedDescription, style: .error)
-            }
             .handleEvents(receiveOutput: { [route] _ in
                 DotoriToast.makeToast(text: L10n.ProposeMusic.successToProposeTitle, style: .success)
                 route.send(DotoriRoutePath.dismiss)
             })
+            .eraseToSideEffect()
+            .catchMap { error in
+                DotoriToast.makeToast(text: error.localizedDescription, style: .error)
+            }
             .flatMap { SideEffect<Mutation, Never>.none }
             .eraseToSideEffect()
         return self.makeLoadingSideEffect(proposeMusicEffect)

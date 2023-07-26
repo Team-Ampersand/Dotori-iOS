@@ -18,7 +18,6 @@ final class ProposeMusicViewController: BaseStoredModalViewController<ProposeMus
     private let shareTipLabel = DotoriLabel()
     private let urlTextField = DotoriSimpleTextField(placeholder: L10n.ProposeMusic.inputUrlPlaceholder)
     private let proposeButton = DotoriButton(text: L10n.ProposeMusic.proposeButtonTitle)
-        .set(\.isEnabled, false)
     private let proposeActivityView = UIActivityIndicatorView(style: .medium)
 
     override func addView() {
@@ -70,6 +69,11 @@ final class ProposeMusicViewController: BaseStoredModalViewController<ProposeMus
             .map { Store.Action.proposeButtonDidTap }
             .sink(receiveValue: store.send(_:))
             .store(in: &subscription)
+
+        view.tapGesturePublisher()
+            .map { _ in Store.Action.dimmedBackgroundDidTap }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
     }
 
     override func bindState() {
@@ -81,13 +85,6 @@ final class ProposeMusicViewController: BaseStoredModalViewController<ProposeMus
             .removeDuplicates()
             .map(Optional.init)
             .assign(to: \.text, on: urlTextField)
-            .store(in: &subscription)
-
-        sharedState
-            .map(\.url)
-            .map(\.isEmpty)
-            .map { !$0 }
-            .assign(to: \.isEnabled, on: proposeButton)
             .store(in: &subscription)
 
         sharedState

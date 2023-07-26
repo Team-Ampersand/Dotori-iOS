@@ -30,7 +30,8 @@ final class SelfStudyCell: BaseTableViewCell<SelfStudyRankModel> {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.subscription.removeAll()
+        guard model == nil else { return }
+        subscription.removeAll()
     }
 
     override func addView() {
@@ -81,7 +82,6 @@ final class SelfStudyCell: BaseTableViewCell<SelfStudyRankModel> {
 private extension SelfStudyCell {
     func bindAction() {
         appliedStudentCardView.attendanceCheckBoxPublisher
-            .throttle(for: 1, scheduler: RunLoop.main, latest: true)
             .compactMap { [weak self] (checked) -> (Int, Bool)? in
                 guard let id = self?.model?.id else { return nil }
                 return (id, checked)

@@ -2,12 +2,12 @@ import Combine
 import UIKit
 
 public extension UIView {
-    func publisher<G: UIGestureRecognizer>(for gestureRecognizer: G) -> UIGestureRecognizer.Publisher<G> {
+    func publisher<G: UIGestureRecognizer>(gesture gestureRecognizer: G) -> UIGestureRecognizer.Publisher<G> {
         UIGestureRecognizer.Publisher(gestureRecognizer: gestureRecognizer, view: self)
     }
 
     func tapGesturePublisher() -> AnyPublisher<UIGestureRecognizer, Never> {
-        self.publisher(for: UITapGestureRecognizer())
+        self.publisher(gesture: UITapGestureRecognizer())
             .eraseToAnyPublisher()
     }
 }

@@ -1,4 +1,5 @@
 import MusicDomainInterface
+import ProposeMusicFeature
 import Swinject
 import UserDomainInterface
 
@@ -9,7 +10,8 @@ public final class MusicAssembly: Assembly {
             MusicFactoryImpl(
                 fetchMusicListUseCase: resolver.resolve(FetchMusicListUseCase.self)!,
                 removeMusicUseCase: resolver.resolve(RemoveMusicUseCase.self)!,
-                loadCurrentUserRoleUseCase: resolver.resolve(LoadCurrentUserRoleUseCase.self)!
+                loadCurrentUserRoleUseCase: resolver.resolve(LoadCurrentUserRoleUseCase.self)!,
+                proposeMusicFactory: resolver.resolve(ProposeMusicFactory.self)!
             )
         }
     }
