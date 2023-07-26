@@ -7,6 +7,7 @@ public enum MassageEndpoint {
     case fetchMassageInfo
     case applyMassage
     case cancelMassage
+    case fetchMassageRankList
 }
 
 extension MassageEndpoint: DotoriEndpoint {
@@ -24,6 +25,9 @@ extension MassageEndpoint: DotoriEndpoint {
 
         case .cancelMassage:
             return .delete("")
+
+        case .fetchMassageRankList:
+            return .get("/rank")
         }
     }
 

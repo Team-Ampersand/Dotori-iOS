@@ -11,7 +11,7 @@ import UIKit
 import UIKitUtil
 
 final class SelfStudyViewController: BaseStoredViewController<SelfStudyStore> {
-    private let dotoriNavigationBarLabel = DotoriNavigationBarLabel(text: L10n.SelfStudy.selfStudyTitle)
+    private let selfStudyNavigationBarLabel = DotoriNavigationBarLabel(text: L10n.SelfStudy.selfStudyTitle)
     private let filterBarButton = UIBarButtonItem(
         image: .Dotori.filter.tintColor(color: .dotori(.neutral(.n20))),
         style: .done,
@@ -69,7 +69,7 @@ final class SelfStudyViewController: BaseStoredViewController<SelfStudyStore> {
     }
 
     override func configureNavigation() {
-        self.navigationItem.setLeftBarButton(dotoriNavigationBarLabel, animated: true)
+        self.navigationItem.setLeftBarButton(selfStudyNavigationBarLabel, animated: true)
         self.navigationItem.setRightBarButton(filterBarButton, animated: true)
     }
 
@@ -94,8 +94,7 @@ final class SelfStudyViewController: BaseStoredViewController<SelfStudyStore> {
 
         sharedState
             .map(\.selfStudyRankList)
-            .map(\.count)
-            .map { $0 == 0 }
+            .map(\.isEmpty)
             .removeDuplicates()
             .sink(with: self, receiveValue: { owner, selfStudyIsEmpty in
                 owner.selfStudyTableView.isHidden = selfStudyIsEmpty
@@ -105,6 +104,8 @@ final class SelfStudyViewController: BaseStoredViewController<SelfStudyStore> {
 
         sharedState
             .map(\.isRefreshing)
+            .removeDuplicates()
+            .dropFirst(2)
             .sink(with: selfStudyRefreshContorol, receiveValue: { refreshControl, isRefreshing in
                 isRefreshing ? refreshControl.beginRefreshing() : refreshControl.endRefreshing()
             })

@@ -12,6 +12,7 @@ let project = Project.module(
                 resources: ["Resources/**"],
                 dependencies: [
                     .SPM.Anim,
+                    .SPM.MSGLayout,
                     .userInterface(target: .DWebKit),
                     .shared(target: .GlobalThirdPartyLibrary),
                     .shared(target: .UIKitUtil)

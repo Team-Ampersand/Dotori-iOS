@@ -5,7 +5,9 @@ import DependencyPlugin
 let project = Project.module(
     name: ModulePaths.Domain.SelfStudyDomain.rawValue,
     targets: [
-        .interface(module: .domain(.SelfStudyDomain)),
+        .interface(module: .domain(.SelfStudyDomain), dependencies: [
+            .domain(target: .BaseDomain, type: .interface)
+        ]),
         .implements(module: .domain(.SelfStudyDomain), dependencies: [
             .domain(target: .SelfStudyDomain, type: .interface),
             .domain(target: .BaseDomain)

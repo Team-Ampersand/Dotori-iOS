@@ -164,9 +164,11 @@ final class NoticeViewController: BaseStoredViewController<NoticeStore> {
 
         sharedState
             .map(\.isRefreshing)
-            .sink(with: noticeRefreshControl) { refreshControl, isRefreshing in
+            .removeDuplicates()
+            .dropFirst(2)
+            .sink(with: noticeRefreshControl, receiveValue: { refreshControl, isRefreshing in
                 isRefreshing ? refreshControl.beginRefreshing() : refreshControl.endRefreshing()
-            }
+            })
             .store(in: &subscription)
     }
 }
