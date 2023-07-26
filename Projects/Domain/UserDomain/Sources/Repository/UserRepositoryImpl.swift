@@ -12,4 +12,8 @@ final class UserRepositoryImpl: UserRepository {
     func loadCurrentUserRole() throws -> UserRoleType {
         try localUserDataSource.loadCurrentUserRole()
     }
+
+    func logout() {
+        localUserDataSource.logout()
+    }
 }

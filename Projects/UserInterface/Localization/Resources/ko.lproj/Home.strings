@@ -27,3 +27,5 @@
 "applied_massage_button_title" = "신청 취소";
 "modify_limit_button_title" = "인원 수정";
 "recent_refresh_date" = "최근 새로고침 : %@";
+"logout_title" = "로그아웃";
+"really_logout_title" = "정말로 도토리를 로그아웃 하시겠습니까?";

@@ -12,19 +12,20 @@ open class BaseModalViewController: BaseViewController {
     // MARK: - Properties
 
     public var contentView = UIView()
+        .set(\.backgroundColor, .dotori(.background(.card)))
+        .set(\.cornerRadius, 16)
         .set(\.alpha, 0)
 
     // MARK: - LifeCycle
 
     open override func viewDidLoad() {
+        super.viewDidLoad()
         if UITraitCollection.current.userInterfaceStyle == .light {
             view.backgroundColor = .init(red: 0.02, green: 0.03, blue: 0.17, alpha: 0.45)
         } else {
             view.backgroundColor = .init(red: 0, green: 0, blue: 0, alpha: 0.45)
         }
-        super.viewDidLoad()
     }
-
 
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

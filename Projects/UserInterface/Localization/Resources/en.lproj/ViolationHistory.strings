@@ -1,0 +1,10 @@
+/* 
+  ViolationHistory.strings
+  Localization
+
+  Created by 최형우 on 2023/07/25.
+  Copyright © 2023 com.msg. All rights reserved.
+*/
+
+"violation_title" = "Vioalation History";
+"empty_violation_title" = "Violation list is empty.";

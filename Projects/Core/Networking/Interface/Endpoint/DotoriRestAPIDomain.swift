@@ -9,4 +9,5 @@ public enum DotoriRestAPIDomain: String {
     case selfStudy = "dotori-role/self-study"
     case massage = "dotori-role/massage"
     case notice = "dotori-role/board"
+    case violation = "dotori-role/rule"
 }

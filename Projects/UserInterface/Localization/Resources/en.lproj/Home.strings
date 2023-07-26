@@ -27,3 +27,5 @@
 "applied_massage_button_title" = "Cancel Massage";
 "modify_limit_button_title" = "Modify Limit";
 "recent_refresh_date" = "Recent Refresh : %@";
+"logout_title" = "Logout";
+"really_logout_title" = "Are you sure you want to logout Dotori?";

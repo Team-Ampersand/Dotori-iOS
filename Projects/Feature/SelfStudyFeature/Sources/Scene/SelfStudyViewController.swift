@@ -4,13 +4,14 @@ import CombineUtility
 import Configure
 import DesignSystem
 import GlobalThirdPartyLibrary
+import Localization
 import MSGLayout
 import SelfStudyDomainInterface
 import UIKit
 import UIKitUtil
 
 final class SelfStudyViewController: BaseStoredViewController<SelfStudyStore> {
-    private let dotoriNavigationBarLabel = DotoriNavigationBarLabel(text: "자습신청")
+    private let dotoriNavigationBarLabel = DotoriNavigationBarLabel(text: L10n.SelfStudy.selfStudyTitle)
     private let filterBarButton = UIBarButtonItem(
         image: .Dotori.filter.tintColor(color: .dotori(.neutral(.n20))),
         style: .done,
@@ -20,6 +21,8 @@ final class SelfStudyViewController: BaseStoredViewController<SelfStudyStore> {
     private let selfStudyTableView = UITableView()
         .set(\.backgroundColor, .clear)
         .set(\.separatorStyle, .none)
+        .set(\.sectionHeaderHeight, 0)
+        .set(\.sectionFooterHeight, 0)
         .set(\.isHidden, true)
         .then {
             $0.register(cellType: SelfStudyCell.self)
@@ -40,9 +43,9 @@ final class SelfStudyViewController: BaseStoredViewController<SelfStudyStore> {
             image: .Dotori.graduationcap
         )
 
-        DotoriLabel("자습 신청한 인원이 없습니다.", font: .subtitle2)
+        DotoriLabel(L10n.SelfStudy.emptySelfStudyTitle, font: .subtitle2)
 
-        DotoriLabel("홈에서 자습 신청을 해보세요!", textColor: .neutral(.n20), font: .caption)
+        DotoriLabel(L10n.SelfStudy.applyFromHomeSelfStudyTitle, textColor: .neutral(.n20), font: .caption)
     }.alignment(.center)
 
     override func addView() {
