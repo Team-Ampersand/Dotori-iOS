@@ -69,7 +69,7 @@ final class SelfStudyViewController: BaseStoredViewController<SelfStudyStore> {
     }
 
     override func configureNavigation() {
-        self.navigationItem.setLeftBarButton(dotoriNavigationBarLabel, animated: true)
+        self.navigationItem.setLeftBarButton(selfStudyNavigationBarLabel, animated: true)
         self.navigationItem.setRightBarButton(filterBarButton, animated: true)
     }
 
