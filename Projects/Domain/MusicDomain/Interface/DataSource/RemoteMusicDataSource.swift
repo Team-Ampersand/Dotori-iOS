@@ -1,3 +1,3 @@
 public protocol RemoteMusicDataSource {
-    func fetchMusicList() async throws -> [MusicEntity]
+    func fetchMusicList(date: String) async throws -> [MusicEntity]
 }

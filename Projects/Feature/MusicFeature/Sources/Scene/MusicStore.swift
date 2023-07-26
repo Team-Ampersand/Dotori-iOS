@@ -1,5 +1,7 @@
 import BaseFeature
 import Combine
+import DateUtility
+import Foundation
 import Moordinator
 import MusicDomainInterface
 import Store
@@ -26,7 +28,10 @@ final class MusicStore: BaseStore {
     struct State {
         var musicList = [MusicModel]()
     }
-    enum Action {}
+    enum Action {
+        case viewDidLoad
+        case refresh
+    }
     enum Mutation {
         case updateMusicList([MusicModel])
     }
@@ -34,7 +39,10 @@ final class MusicStore: BaseStore {
 
 extension MusicStore {
     func mutate(state: State, action: Action) -> SideEffect<Mutation, Never> {
-        .none
+        switch action {
+        case .viewDidLoad, .refresh:
+            return self.fetchMusicList()
+        }
     }
 }
 
@@ -46,5 +54,18 @@ extension MusicStore {
             newState.musicList = musicList
         }
         return newState
+    }
+}
+
+// MARK: - Mutate
+private extension MusicStore {
+    func fetchMusicList() -> SideEffect<Mutation, Never> {
+        return SideEffect<[MusicModel], Error>
+            .tryAsync { [fetchMusicListUseCase] in
+                try await fetchMusicListUseCase(date: Date().toStringWithCustomFormat("yyyy-MM-dd"))
+            }
+            .map(Mutation.updateMusicList)
+            .eraseToSideEffect()
+            .catchToNever()
     }
 }

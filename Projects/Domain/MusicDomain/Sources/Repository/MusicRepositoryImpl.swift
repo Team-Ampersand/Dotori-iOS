@@ -7,7 +7,7 @@ final class MusicRepositoryImpl: MusicRepository {
         self.remoteMusicDataSource = remoteMusicDataSource
     }
 
-    func fetchMusicList() async throws -> [MusicEntity] {
-        try await remoteMusicDataSource.fetchMusicList()
+    func fetchMusicList(date: String) async throws -> [MusicEntity] {
+        try await remoteMusicDataSource.fetchMusicList(date: date)
     }
 }

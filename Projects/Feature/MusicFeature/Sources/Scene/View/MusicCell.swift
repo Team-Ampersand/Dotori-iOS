@@ -19,7 +19,7 @@ final class MusicCell: BaseTableViewCell<MusicModel> {
         .set(\.clipsToBounds, true)
         .set(\.contentMode, .scaleAspectFit)
     private let titleLabel = DotoriLabel("로딩중...", font: .smalltitle)
-        .set(\.numberOfLines, 3)
+        .set(\.numberOfLines, 2)
     private let authorLabel = DotoriLabel(textColor: .neutral(.n20), font: .caption)
     private let meatballButton = DotoriIconButton(
         image: .Dotori.meatBall.tintColor(color: .dotori(.neutral(.n30)))
@@ -64,23 +64,10 @@ final class MusicCell: BaseTableViewCell<MusicModel> {
     }
 
     override func adapt(model: MusicModel) {
+        super.adapt(model: model)
         let timeString = "\(model.createdTime.hour % 12)시 \(model.createdTime.minute)분"
         authorLabel.text = "\(model.stuNum) \(model.username) • \(timeString)"
-
-        guard let url = URL(string: model.url) else { return }
-        Task {
-            let provider = LPMetadataProvider()
-            let metadata = try await provider.startFetchingMetadata(for: url)
-            await MainActor.run {
-                self.titleLabel.text = metadata.title
-            }
-
-            metadata.imageProvider?.loadObject(ofClass: UIImage.self, completionHandler: { image, _ in
-                DispatchQueue.main.async {
-                guard let image = image as? UIImage else { return }
-                    self.thumbnailView.image = image
-                }
-            })
-        }
+        titleLabel.text = model.title
+        thumbnailView.image = model.thumbnailUIImage
     }
 }

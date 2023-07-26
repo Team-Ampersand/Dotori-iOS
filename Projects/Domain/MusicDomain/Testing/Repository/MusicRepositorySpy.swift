@@ -2,9 +2,9 @@ import MusicDomainInterface
 
 final class MusicRepositorySpy: MusicRepository {
     var fetchMusicListCallCount = 0
-    var fetchMusicListHandler: () async throws -> [MusicEntity] = { [] }
-    func fetchMusicList() async throws -> [MusicEntity] {
+    var fetchMusicListHandler: (String) async throws -> [MusicEntity] = { _ in [] }
+    func fetchMusicList(date: String) async throws -> [MusicEntity] {
         fetchMusicListCallCount += 1
-        return try await fetchMusicListHandler()
+        return try await fetchMusicListHandler(date)
     }
 }

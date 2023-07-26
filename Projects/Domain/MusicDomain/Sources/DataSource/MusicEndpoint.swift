@@ -2,7 +2,7 @@ import Emdpoint
 import NetworkingInterface
 
 enum MusicEndpoint {
-    case fetchMusicList
+    case fetchMusicList(date: String)
 }
 
 extension MusicEndpoint: DotoriEndpoint {
@@ -19,6 +19,10 @@ extension MusicEndpoint: DotoriEndpoint {
 
     var task: HTTPTask {
         switch self {
+        case let .fetchMusicList(date):
+            return .requestParameters(query: [
+                "date": date
+            ])
         default:
             return .requestPlain
         }

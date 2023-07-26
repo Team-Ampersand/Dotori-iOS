@@ -2,9 +2,9 @@ import MusicDomainInterface
 
 final class FetchMusicListUseCaseSpy: FetchMusicListUseCase {
     var fetchMusicListCallCount = 0
-    var fetchMusicListHandler: () async throws -> [MusicEntity] = { [] }
-    func callAsFunction() async throws -> [MusicEntity] {
+    var fetchMusicListHandler: (String) async throws -> [MusicModel] = { _ in [] }
+    func callAsFunction(date: String) async throws -> [MusicModel] {
         fetchMusicListCallCount += 1
-        return try await fetchMusicListHandler()
+        return try await fetchMusicListHandler(date)
     }
 }

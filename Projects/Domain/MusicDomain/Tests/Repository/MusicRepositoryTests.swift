@@ -27,10 +27,10 @@ final class MusicRepositoryTests: XCTestCase {
                 stuNum: "stuNum"
             )
         ]
-        remoteMusicDataSource.fetchMusicListHandler = { expected }
+        remoteMusicDataSource.fetchMusicListHandler = { _ in expected }
         XCTAssertEqual(remoteMusicDataSource.fetchMusicListCallCount, 0)
 
-        let actual = try await sut.fetchMusicList()
+        let actual = try await sut.fetchMusicList(date: "")
 
         XCTAssertEqual(actual, expected)
         XCTAssertEqual(remoteMusicDataSource.fetchMusicListCallCount, 1)

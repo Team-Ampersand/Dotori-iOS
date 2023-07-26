@@ -1,3 +1,3 @@
 public protocol FetchMusicListUseCase {
-    func callAsFunction() async throws -> [MusicModel]
+    func callAsFunction(date: String) async throws -> [MusicModel]
 }

@@ -1,3 +1,5 @@
+import ConcurrencyUtil
+import LinkPresentation
 import MusicDomainInterface
 
 struct FetchMusicListUseCaseImpl: FetchMusicListUseCase {
@@ -7,7 +9,54 @@ struct FetchMusicListUseCaseImpl: FetchMusicListUseCase {
         self.musicRepository = musicRepository
     }
 
-    func callAsFunction() async throws -> [MusicModel] {
-        try await musicRepository.fetchMusicList()
+    func callAsFunction(date: String) async throws -> [MusicModel] {
+        try await musicRepository.fetchMusicList(date: date)
+            .concurrentMap { try await $0.toModel() }
+    }
+}
+
+private extension MusicEntity {
+    func toModel() async throws -> MusicModel {
+        let emptyModel = MusicModel(
+            id: id,
+            url: url,
+            title: nil,
+            thumbnailUIImage: nil,
+            username: username,
+            createdTime: createdTime,
+            stuNum: stuNum
+        )
+        let provider = LPMetadataProvider()
+        guard let url = URL(string: url) else {
+            return emptyModel
+        }
+        let metadata = try await provider.startFetchingMetadata(
+            for: url
+        )
+        return try await withCheckedThrowingContinuation({ continuation in
+            metadata.imageProvider?.loadObject(
+                ofClass: UIImage.self,
+                completionHandler: { image, error in
+                    if let error {
+                        continuation.resume(throwing: error)
+                        return
+                    }
+                    if let image = image as? UIImage {
+                        let model = MusicModel(
+                            id: id,
+                            url: self.url,
+                            title: metadata.title,
+                            thumbnailUIImage: image,
+                            username: username,
+                            createdTime: createdTime,
+                            stuNum: stuNum
+                        )
+                        continuation.resume(returning: model)
+                        return
+                    }
+                    continuation.resume(returning: emptyModel)
+                }
+            )
+        })
     }
 }

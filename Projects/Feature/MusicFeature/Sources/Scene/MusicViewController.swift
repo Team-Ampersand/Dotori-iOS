@@ -24,6 +24,7 @@ final class MusicViewController: BaseStoredViewController<MusicStore> {
         .then {
             $0.register(cellType: MusicCell.self)
         }
+    private let musicRefreshControl = UIRefreshControl()
     private lazy var musicTableAdapter = TableViewAdapter<GenericSectionModel<MusicModel>>(
         tableView: musicTableView
     ) { tableView, indexPath, item in
@@ -36,6 +37,7 @@ final class MusicViewController: BaseStoredViewController<MusicStore> {
         view.addSubviews {
             musicTableView
         }
+        musicTableView.refreshControl = musicRefreshControl
     }
 
     override func setLayout() {
@@ -49,5 +51,28 @@ final class MusicViewController: BaseStoredViewController<MusicStore> {
     override func configureNavigation() {
         self.navigationItem.setLeftBarButton(musicNavigationBarLabel, animated: true)
         self.navigationItem.setRightBarButtonItems([newMusicButton, calendarBarButton], animated: true)
+    }
+
+    override func bindAction() {
+        viewDidLoadPublisher
+            .map { Store.Action.viewDidLoad }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+
+        musicRefreshControl.controlPublisher(for: .valueChanged)
+            .map { _ in Store.Action.refresh }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+    }
+
+    override func bindState() {
+        let sharedState = store.state.share()
+            .receive(on: DispatchQueue.main)
+
+        sharedState
+            .map(\.musicList)
+            .map { [GenericSectionModel(items: $0)] }
+            .sink(receiveValue: musicTableAdapter.updateSections(sections:))
+            .store(in: &subscription)
     }
 }

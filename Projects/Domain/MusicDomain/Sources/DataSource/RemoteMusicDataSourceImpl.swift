@@ -8,9 +8,9 @@ final class RemoteMusicDataSourceImpl: RemoteMusicDataSource {
         self.networking = networking
     }
 
-    func fetchMusicList() async throws -> [MusicEntity] {
+    func fetchMusicList(date: String) async throws -> [MusicEntity] {
         try await networking.request(
-            MusicEndpoint.fetchMusicList,
+            MusicEndpoint.fetchMusicList(date: date),
             dto: FetchMusicListResponseDTO.self
         )
         .toDomain()
