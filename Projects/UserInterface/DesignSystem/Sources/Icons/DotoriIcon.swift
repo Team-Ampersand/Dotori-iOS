@@ -8,6 +8,7 @@ public extension UIImage {
         public static let chevronDown = DesignSystemAsset.DotoriIcon.chevronDown.image
         public static let chevronLeft = DesignSystemAsset.DotoriIcon.chevronLeft.image
         public static let chevronRight = DesignSystemAsset.DotoriIcon.chevronRight.image
+        public static let coffee = DesignSystemAsset.DotoriIcon.coffee.image
         public static let dotori = DesignSystemAsset.DotoriIcon.dotori.image
         public static let dotoriSigninLogo = DesignSystemAsset.DotoriIcon.dotoriSigninLogo.image
         public static let dotoriHomeLogo = DesignSystemAsset.DotoriIcon.dotoriHomeLogo.image

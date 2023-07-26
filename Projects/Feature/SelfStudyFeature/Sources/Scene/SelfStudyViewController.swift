@@ -91,8 +91,7 @@ final class SelfStudyViewController: BaseStoredViewController<SelfStudyStore> {
 
         sharedState
             .map(\.selfStudyRankList)
-            .map(\.count)
-            .map { $0 == 0 }
+            .map(\.isEmpty)
             .removeDuplicates()
             .sink(with: self, receiveValue: { owner, selfStudyIsEmpty in
                 owner.selfStudyTableView.isHidden = selfStudyIsEmpty

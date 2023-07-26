@@ -11,6 +11,7 @@ final class MassageViewController: BaseStoredViewController<MassageStore> {
     private let massageNavigationBarLabel = DotoriNavigationBarLabel(text: L10n.Massage.massageTitle)
     private let massageTableView = UITableView()
         .set(\.backgroundColor, .clear)
+        .set(\.isHidden, true)
         .set(\.separatorStyle, .none)
         .set(\.sectionHeaderHeight, 0)
         .then {
@@ -24,10 +25,21 @@ final class MassageViewController: BaseStoredViewController<MassageStore> {
         cell.adapt(model: item)
         return cell
     }
+    private let emptySelfStudyStackView = VStackView(spacing: 8) {
+        DotoriIconView(
+            size: .custom(.init(width: 73.5, height: 120)),
+            image: .Dotori.coffee
+        )
+
+        DotoriLabel(L10n.Massage.emptyMassageTitle, font: .subtitle2)
+
+        DotoriLabel(L10n.Massage.applyFromHomeMassageTitle, textColor: .neutral(.n20), font: .caption)
+    }.alignment(.center)
 
     override func addView() {
         view.addSubviews {
             massageTableView
+            emptySelfStudyStackView
         }
         massageTableView.refreshControl = massageRefreshContorol
     }
@@ -38,6 +50,9 @@ final class MassageViewController: BaseStoredViewController<MassageStore> {
                 .top(.toSuperview(), .equal(24))
                 .horizontal(.toSuperview())
                 .bottom(.to(view.safeAreaLayoutGuide))
+
+            emptySelfStudyStackView.layout
+                .center(.toSuperview())
         }
     }
 
@@ -73,6 +88,16 @@ final class MassageViewController: BaseStoredViewController<MassageStore> {
             .dropFirst(2)
             .sink(with: massageRefreshContorol, receiveValue: { refreshControl, isRefreshing in
                 isRefreshing ? refreshControl.beginRefreshing() : refreshControl.endRefreshing()
+            })
+            .store(in: &subscription)
+
+        sharedState
+            .map(\.massageRankList)
+            .map(\.isEmpty)
+            .removeDuplicates()
+            .sink(with: self, receiveValue: { owner, massageIsEmpty in
+                owner.massageTableView.isHidden = massageIsEmpty
+                owner.emptySelfStudyStackView.isHidden = !massageIsEmpty
             })
             .store(in: &subscription)
     }
