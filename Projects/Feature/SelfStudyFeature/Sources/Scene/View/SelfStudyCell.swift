@@ -108,7 +108,8 @@ final class SelfStudyCell: BaseTableViewCell<SelfStudyRankModel> {
         super.adapt(model: model)
         self.rankLabel.text = "\(model.rank)"
         self.nameLabel.text = model.memberName
-        self.genderImageView.image = model.gender == .man ? .Dotori.men : .Dotori.women
+        self.genderImageView.image = (model.gender == .man ? UIImage.Dotori.men : .Dotori.women)
+            .tintColor(color: .dotori(.neutral(.n10)))
         self.stuNumLabel.text = model.stuNum
         self.selfStudyCheckBox.isChecked = model.selfStudyCheck
         self.medalImageView.image = self.rankToImage(rank: model.rank)
