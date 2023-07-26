@@ -5,3 +5,7 @@
   Created by 최형우 on 2023/06/07.
   Copyright © 2023 com.msg. All rights reserved.
 */
+
+"music_title" = "Wakeup Music";
+"empty_music_title" = "No one has proposed for the Wakeup Music..";
+"propose_music_title" = "Apply for the Wakeup Music from the TopRight button";

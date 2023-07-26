@@ -1,13 +1,14 @@
 import BaseFeature
 import CombineUtility
 import DesignSystem
+import Localization
 import MSGLayout
 import MusicDomainInterface
 import UIKit
 import UIKitUtil
 
 final class MusicViewController: BaseStoredViewController<MusicStore> {
-    private let musicNavigationBarLabel = DotoriNavigationBarLabel(text: "기상음악 신청")
+    private let musicNavigationBarLabel = DotoriNavigationBarLabel(text: L10n.Music.musicTitle)
     private let calendarBarButton = UIBarButtonItem(
         image: .Dotori.calendar.tintColor(color: .dotori(.neutral(.n20)))
     )
@@ -32,10 +33,21 @@ final class MusicViewController: BaseStoredViewController<MusicStore> {
         cell.adapt(model: item)
         return cell
     }
+    private let emptyMusicStackView = VStackView(spacing: 8) {
+        DotoriIconView(
+            size: .custom(.init(width: 120, height: 120)),
+            image: .Dotori.music
+        )
+
+        DotoriLabel(L10n.Music.emptyMusicTitle, font: .subtitle2)
+
+        DotoriLabel(L10n.Music.proposeMusicTitle, textColor: .neutral(.n20), font: .caption)
+    }.alignment(.center)
 
     override func addView() {
         view.addSubviews {
             musicTableView
+            emptyMusicStackView
         }
         musicTableView.refreshControl = musicRefreshControl
     }
@@ -45,6 +57,9 @@ final class MusicViewController: BaseStoredViewController<MusicStore> {
             musicTableView.layout
                 .horizontal(.toSuperview(), .equal(20))
                 .vertical(.to(view.safeAreaLayoutGuide), .equal(16))
+
+            emptyMusicStackView.layout
+                .center(.toSuperview())
         }
     }
 
@@ -73,6 +88,24 @@ final class MusicViewController: BaseStoredViewController<MusicStore> {
             .map(\.musicList)
             .map { [GenericSectionModel(items: $0)] }
             .sink(receiveValue: musicTableAdapter.updateSections(sections:))
+            .store(in: &subscription)
+
+        sharedState
+            .filter { !$0.musicList.isEmpty }
+            .map(\.isRefreshing)
+            .removeDuplicates()
+            .sink(with: musicRefreshControl, receiveValue: { refreshControl, isRefreshing in
+                isRefreshing ? refreshControl.beginRefreshing() : refreshControl.endRefreshing()
+            })
+            .store(in: &subscription)
+
+        sharedState
+            .map(\.musicList)
+            .map(\.isEmpty)
+            .removeDuplicates()
+            .sink(with: emptyMusicStackView) { emptyView, musicListIsEmpty in
+                emptyView.isHidden = !musicListIsEmpty
+            }
             .store(in: &subscription)
     }
 }

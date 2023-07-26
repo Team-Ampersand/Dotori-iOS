@@ -1,3 +1,4 @@
+import BaseDomainInterface
 import BaseFeature
 import Combine
 import DateUtility
@@ -27,6 +28,8 @@ final class MusicStore: BaseStore {
 
     struct State {
         var musicList = [MusicModel]()
+        var isRefreshing = false
+        var currentUserRole = UserRoleType.member
     }
     enum Action {
         case viewDidLoad
@@ -34,6 +37,8 @@ final class MusicStore: BaseStore {
     }
     enum Mutation {
         case updateMusicList([MusicModel])
+        case updateIsRefreshing(Bool)
+        case updateCurrentUserRole(UserRoleType)
     }
 }
 
@@ -52,6 +57,10 @@ extension MusicStore {
         switch mutate {
         case let .updateMusicList(musicList):
             newState.musicList = musicList
+        case let .updateIsRefreshing(isRefreshing):
+            newState.isRefreshing = isRefreshing
+        case let .updateCurrentUserRole(userRole):
+            newState.currentUserRole = userRole
         }
         return newState
     }
@@ -59,13 +68,47 @@ extension MusicStore {
 
 // MARK: - Mutate
 private extension MusicStore {
+    func viewDidLoad() -> SideEffect<Mutation, Never> {
+        let fetchMusicListEffect = self.fetchMusicList()
+
+        let userRoleEffect = SideEffect
+            .just(try? loadCurrentUserRoleUseCase())
+            .replaceNil(with: .member)
+            .setFailureType(to: Never.self)
+            .map(Mutation.updateCurrentUserRole)
+            .eraseToSideEffect()
+
+        return .merge(
+            fetchMusicListEffect,
+            userRoleEffect
+        )
+    }
+
     func fetchMusicList() -> SideEffect<Mutation, Never> {
-        return SideEffect<[MusicModel], Error>
+        guard !currentState.isRefreshing else { return .none }
+        let musicListEffect = SideEffect<[MusicModel], Error>
             .tryAsync { [fetchMusicListUseCase] in
                 try await fetchMusicListUseCase(date: Date().toStringWithCustomFormat("yyyy-MM-dd"))
             }
             .map(Mutation.updateMusicList)
             .eraseToSideEffect()
             .catchToNever()
+        return self.makeRefreshingSideEffect(musicListEffect)
+    }
+}
+
+// MARK: - Reusable
+private extension MusicStore {
+    func makeRefreshingSideEffect(
+        _ publisher: SideEffect<Mutation, Never>
+    ) -> SideEffect<Mutation, Never> {
+        let startLoadingPublisher = SideEffect<Mutation, Never>
+            .just(Mutation.updateIsRefreshing(true))
+        let endLoadingPublisher = SideEffect<Mutation, Never>
+            .just(Mutation.updateIsRefreshing(false))
+        return startLoadingPublisher
+            .append(publisher)
+            .append(endLoadingPublisher)
+            .eraseToSideEffect()
     }
 }
