@@ -5,9 +5,13 @@ import UIKit
 
 final class MassageMoordinator: Moordinator {
     private let rootVC = UINavigationController()
-
+    private let massageViewController: any StoredViewControllable
     var root: Presentable {
         rootVC
+    }
+
+    init(massageViewController: any StoredViewControllable) {
+        self.massageViewController = massageViewController
     }
 
     func route(to path: RoutePath) -> MoordinatorContributors {
@@ -25,8 +29,12 @@ final class MassageMoordinator: Moordinator {
 
 private extension MassageMoordinator {
     func coordinateToMassage() -> MoordinatorContributors {
-        let noticeWebViewController = DWebViewController(urlString: "https://www.dotori-gsm.com/massage")
-        self.rootVC.setViewControllers([noticeWebViewController], animated: true)
-        return .none
+        self.rootVC.setViewControllers([self.massageViewController], animated: true)
+        return .one(
+            .contribute(
+                withNextPresentable: self.massageViewController,
+                withNextRouter: self.massageViewController.store
+            )
+        )
     }
 }
