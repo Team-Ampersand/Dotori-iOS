@@ -8,20 +8,6 @@ import UIKit
 
 final class MassageCell: BaseTableViewCell<MassageRankModel> {
     private let appliedStudentCardView = AppliedStudentCardView()
-    private var subscription = Set<AnyCancellable>()
-
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        self.subscription.removeAll()
-    }
 
     override func addView() {
         contentView.addSubviews {
@@ -53,9 +39,5 @@ final class MassageCell: BaseTableViewCell<MassageRankModel> {
                 isChecked: false
             )
         )
-    }
-
-    func setUserRole(userRole: UserRoleType) {
-        appliedStudentCardView.setIsHiddenAttendanceCheckBox(userRole == .member)
     }
 }

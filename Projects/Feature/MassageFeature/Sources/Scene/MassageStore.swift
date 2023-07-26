@@ -12,21 +12,17 @@ final class MassageStore: BaseStore {
     var initialState: State
     var stateSubject: CurrentValueSubject<State, Never>
     private let fetchMassageRankListUseCase: any FetchMassageRankListUseCase
-    private let loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase
 
     init(
-        fetchMassageRankListUseCase: any FetchMassageRankListUseCase,
-        loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase
+        fetchMassageRankListUseCase: any FetchMassageRankListUseCase
     ) {
         self.initialState = .init()
         self.stateSubject = .init(initialState)
         self.fetchMassageRankListUseCase = fetchMassageRankListUseCase
-        self.loadCurrentUserRoleUseCase = loadCurrentUserRoleUseCase
     }
 
     struct State {
         var massageRankList: [MassageRankModel] = []
-        var currentUserRole = UserRoleType.member
         var isRefreshing = false
     }
     enum Action {
@@ -35,7 +31,6 @@ final class MassageStore: BaseStore {
     }
     enum Mutation {
         case updateMassageRankList([MassageRankModel])
-        case updateCurrentUserRole(UserRoleType)
         case updateIsRefreshing(Bool)
     }
 }
@@ -60,9 +55,6 @@ extension MassageStore {
         case let .updateMassageRankList(rankList):
             newState.massageRankList = rankList
 
-        case let .updateCurrentUserRole(userRole):
-            newState.currentUserRole = userRole
-
         case let .updateIsRefreshing(isRefreshing):
             newState.isRefreshing = isRefreshing
         }
@@ -73,16 +65,7 @@ extension MassageStore {
 // MARK: - Mutate
 private extension MassageStore {
     func viewDidLoad() -> SideEffect<Mutation, Never> {
-        let userRoleEffect = SideEffect
-            .just(try? loadCurrentUserRoleUseCase())
-            .replaceNil(with: .member)
-            .setFailureType(to: Never.self)
-            .map(Mutation.updateCurrentUserRole)
-            .eraseToSideEffect()
-        return .merge(
-            userRoleEffect,
-            fetchMassageRankList()
-        )
+        return self.fetchMassageRankList()
     }
 
     func fetchMassageRankList() -> SideEffect<Mutation, Never> {

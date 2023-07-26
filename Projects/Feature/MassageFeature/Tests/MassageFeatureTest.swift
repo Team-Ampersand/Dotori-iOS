@@ -7,23 +7,19 @@ import XCTest
 
 final class MassageFeatureTests: XCTestCase {
     var fetchMassageRankListUseCase: FetchMassageRankListUseCaseSpy!
-    var loadCurrentUserRoleUseCase: LoadCurrentUserRoleUseCaseSpy!
     var sut: MassageStore!
     var subscription: Set<AnyCancellable>!
 
     override func setUp() {
         fetchMassageRankListUseCase = .init()
-        loadCurrentUserRoleUseCase = .init()
         sut = .init(
-            fetchMassageRankListUseCase: fetchMassageRankListUseCase,
-            loadCurrentUserRoleUseCase: loadCurrentUserRoleUseCase
+            fetchMassageRankListUseCase: fetchMassageRankListUseCase
         )
         subscription = []
     }
 
     override func tearDown() {
         fetchMassageRankListUseCase = nil
-        loadCurrentUserRoleUseCase = nil
         sut = nil
         subscription = nil
     }

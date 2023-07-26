@@ -1,4 +1,5 @@
 import BaseFeature
+import CombineUtility
 import DesignSystem
 import Localization
 import MSGLayout
@@ -11,17 +12,16 @@ final class MassageViewController: BaseStoredViewController<MassageStore> {
     private let massageTableView = UITableView()
         .set(\.backgroundColor, .clear)
         .set(\.separatorStyle, .none)
-        .set(\.isHidden, true)
+        .set(\.sectionHeaderHeight, 0)
         .then {
             $0.register(cellType: MassageCell.self)
         }
     private let massageRefreshContorol = UIRefreshControl()
     private lazy var massageTableAdapter = TableViewAdapter<GenericSectionModel<MassageRankModel>>(
         tableView: massageTableView
-    ) { [store] tableView, indexPath, item in
+    ) { tableView, indexPath, item in
         let cell: MassageCell = tableView.dequeueReusableCell(for: indexPath)
         cell.adapt(model: item)
-        cell.setUserRole(userRole: store.currentState.currentUserRole)
         return cell
     }
 
@@ -43,5 +43,37 @@ final class MassageViewController: BaseStoredViewController<MassageStore> {
 
     override func configureNavigation() {
         self.navigationItem.setLeftBarButton(massageNavigationBarLabel, animated: true)
+    }
+
+    override func bindAction() {
+        viewDidLoadPublisher
+            .map { Store.Action.viewDidLoad }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+
+        massageRefreshContorol.controlPublisher(for: .valueChanged)
+            .map { _ in Store.Action.fetchMassageRankList }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+    }
+
+    override func bindState() {
+        let sharedState = store.state.share()
+            .receive(on: DispatchQueue.main)
+
+        sharedState
+            .map(\.massageRankList)
+            .map { [GenericSectionModel(items: $0)] }
+            .sink(receiveValue: massageTableAdapter.updateSections(sections:))
+            .store(in: &subscription)
+
+        sharedState
+            .map(\.isRefreshing)
+            .removeDuplicates()
+            .dropFirst(2)
+            .sink(with: massageRefreshContorol, receiveValue: { refreshControl, isRefreshing in
+                isRefreshing ? refreshControl.beginRefreshing() : refreshControl.endRefreshing()
+            })
+            .store(in: &subscription)
     }
 }

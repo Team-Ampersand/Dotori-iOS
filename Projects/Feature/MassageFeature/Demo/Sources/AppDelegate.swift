@@ -21,10 +21,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
                 .init(id: 3, rank: 3, stuNum: "1236", memberName: "이름대충", gender: .woman)
             ]
         }
-        let loadCurrentUserRoleUseCase = LoadCurrentUserRoleUseCaseSpy()
         let store = MassageStore(
-            fetchMassageRankListUseCase: fetchMassageRankListUseCase,
-            loadCurrentUserRoleUseCase: loadCurrentUserRoleUseCase
+            fetchMassageRankListUseCase: fetchMassageRankListUseCase
         )
         let viewController = Inject.ViewControllerHost(
             UINavigationController(rootViewController: MassageViewController(store: store))
