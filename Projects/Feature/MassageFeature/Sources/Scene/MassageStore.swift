@@ -15,7 +15,7 @@ final class MassageStore: BaseStore {
     }
 
     struct State {}
-    enum Action{}
+    enum Action {}
     enum Mutation {}
 }
 
