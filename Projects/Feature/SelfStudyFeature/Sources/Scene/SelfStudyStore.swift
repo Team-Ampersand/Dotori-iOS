@@ -75,12 +75,6 @@ extension SelfStudyStore {
     }
 }
 
-extension SelfStudyStore: SelfStudyCellDelegate {
-    func selfStudyCheckBoxDidTap(id: Int, isChecked: Bool) {
-        self.send(.selfStudyCheckButtonDidTap(id: id, isChecked: isChecked))
-    }
-}
-
 // MARK: - Mutate
 private extension SelfStudyStore {
     func fetchSelfStudyRank() -> SideEffect<Mutation, Never> {

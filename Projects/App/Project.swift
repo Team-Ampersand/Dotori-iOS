@@ -43,6 +43,7 @@ let targets: [Target] = [
             .domain(target: .MealDomain),
             .domain(target: .NoticeDomain),
             .domain(target: .ViolationDomain),
+            .domain(target: .MusicDomain),
             .core(target: .JwtStore),
             .core(target: .KeyValueStore),
             .core(target: .Networking),

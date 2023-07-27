@@ -30,11 +30,12 @@ final class SelfStudyViewController: BaseStoredViewController<SelfStudyStore> {
     private let selfStudyRefreshContorol = DotoriRefreshControl()
     private lazy var selfStudyTableAdapter = TableViewAdapter<GenericSectionModel<SelfStudyRankModel>>(
         tableView: selfStudyTableView
-    ) { [store] tableView, indexPath, item in
+    ) { [weak self] tableView, indexPath, item in
+        guard let self else { return .init() }
         let cell: SelfStudyCell = tableView.dequeueReusableCell(for: indexPath)
         cell.adapt(model: item)
-        cell.setUserRole(userRole: store.currentState.currentUserRole)
-        cell.delegate = store
+        cell.setUserRole(userRole: self.store.currentState.currentUserRole)
+        cell.delegate = self
         return cell
     }
     private let emptySelfStudyStackView = VStackView(spacing: 8) {
@@ -103,12 +104,18 @@ final class SelfStudyViewController: BaseStoredViewController<SelfStudyStore> {
             .store(in: &subscription)
 
         sharedState
+            .filter { !$0.selfStudyRankList.isEmpty }
             .map(\.isRefreshing)
             .removeDuplicates()
-            .dropFirst(2)
             .sink(with: selfStudyRefreshContorol, receiveValue: { refreshControl, isRefreshing in
                 isRefreshing ? refreshControl.beginRefreshing() : refreshControl.endRefreshing()
             })
             .store(in: &subscription)
+    }
+}
+
+extension SelfStudyViewController: SelfStudyCellDelegate {
+    func selfStudyCheckBoxDidTap(id: Int, isChecked: Bool) {
+        store.send(.selfStudyCheckButtonDidTap(id: id, isChecked: isChecked))
     }
 }
