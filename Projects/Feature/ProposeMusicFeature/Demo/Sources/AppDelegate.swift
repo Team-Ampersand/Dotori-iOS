@@ -1,4 +1,6 @@
+import Inject
 import UIKit
+@testable import ProposeMusicFeature
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -9,8 +11,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let viewController = UIViewController()
-        viewController.view.backgroundColor = .yellow
+        let store = ProposeMusicStore()
+        let viewController = Inject.ViewControllerHost(
+            ProposeMusicViewController(store: store)
+        )
         window?.rootViewController = viewController
         window?.makeKeyAndVisible()
 

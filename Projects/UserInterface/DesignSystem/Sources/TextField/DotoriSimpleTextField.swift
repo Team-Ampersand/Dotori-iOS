@@ -30,7 +30,7 @@ public final class DotoriSimpleTextField: UITextField {
     public override func resignFirstResponder() -> Bool {
         let didResignFirstResponder = super.resignFirstResponder()
         if didResignFirstResponder {
-            self.layer.borderWidth = 1
+            self.layer.borderWidth = 0
             self.layer.borderColor = nil
         }
         return didResignFirstResponder
@@ -99,7 +99,7 @@ private extension DotoriSimpleTextField {
         ).isActive = true
         self.isEnabled = true
         self.textColor = .dotori(.neutral(.n10))
-        self.layer.borderWidth = 1
+        self.layer.borderWidth = 0
         self.layer.borderColor = nil
     }
 
