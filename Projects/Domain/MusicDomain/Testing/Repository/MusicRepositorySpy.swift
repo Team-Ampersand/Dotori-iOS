@@ -12,4 +12,9 @@ final class MusicRepositorySpy: MusicRepository {
     func removeMusic(musicID: Int) async throws {
         removeMusicCallCount += 1
     }
+
+    var proposeMusicCallCount = 0
+    func proposeMusic(url: String) async throws {
+        proposeMusicCallCount += 1
+    }
 }
