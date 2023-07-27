@@ -5,3 +5,9 @@
   Created by 최형우 on 2023/06/07.
   Copyright © 2023 com.msg. All rights reserved.
 */
+
+"music_title" = "기상음악 신청";
+"empty_music_title" = "아직 신청한 음악이 없습니다..";
+"propose_music_title" = "오른쪽 위에서 음악 신청을 해보세요!";
+"direct_go_title" = "바로가기";
+"remove_music_title" = "기상음악 삭제";

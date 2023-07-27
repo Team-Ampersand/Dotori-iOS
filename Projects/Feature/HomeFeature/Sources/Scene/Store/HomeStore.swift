@@ -177,15 +177,23 @@ private extension HomeStore {
     }
 
     func applySelfStudyButtonDidTap() {
-        guard currentState.currentUserRole == .member else {
-            #warning("자습 인원 수정 로직 추가")
-            return
-        }
+//        guard currentState.currentUserRole == .member else {
+//            return
+//        }
+        #warning("자습 인원 수정 로직 추가")
         Task.catching {
             if self.currentState.selfStudyStatus == .applied {
-                try await self.cancelSelfStudyUseCase()
+                let confirmRoutePath = DotoriRoutePath.confirmationDialog(
+                    title: "자습 신청 취소",
+                    message: "정말 자습 신청을 취소하시겠습니까?"
+                ) { [cancelSelfStudyUseCase = self.cancelSelfStudyUseCase] in
+                    try? await cancelSelfStudyUseCase()
+                    await DotoriToast.makeToast(text: "자습을 취소하였습니다.", style: .success)
+                }
+                self.route.send(confirmRoutePath)
             } else {
                 try await self.applySelfStudyUseCase()
+                await DotoriToast.makeToast(text: "자습을 신청하였습니다.", style: .success)
             }
             self.send(.refreshSelfStudyButtonDidTap)
         } catch: { @MainActor error in
@@ -194,15 +202,23 @@ private extension HomeStore {
     }
 
     func applyMassageButtonDidTap() {
-        guard currentState.currentUserRole == .member else {
-            #warning("안마 인원 수정 로직 추가")
-            return
-        }
+//        guard currentState.currentUserRole == .member else {
+//            return
+//        }
+        #warning("안마 인원 수정 로직 추가")
         Task.catching {
             if self.currentState.massageStatus == .applied {
-                try await self.cancelMassageUseCase()
+                let confirmRoutePath = DotoriRoutePath.confirmationDialog(
+                    title: "안마의자 신청 취소",
+                    message: "정말 안마의자 신청을 취소하시겠습니까?"
+                ) { [cancelMassageUseCase = self.cancelMassageUseCase] in
+                    try? await cancelMassageUseCase()
+                    await DotoriToast.makeToast(text: "안마의자를 취소하였습니다.", style: .success)
+                }
+                self.route.send(confirmRoutePath)
             } else {
                 try await self.applyMassageUseCase()
+                await DotoriToast.makeToast(text: "안마의자를 신청하였습니다.", style: .success)
             }
             self.send(.refreshMassageButtonDidTap)
         } catch: { @MainActor error in

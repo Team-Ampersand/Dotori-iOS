@@ -9,6 +9,7 @@ import MainTabFeature
 import MassageDomain
 import MassageFeature
 import MealDomain
+import MusicDomain
 import MusicFeature
 import MyViolationListFeature
 import Networking
@@ -55,6 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             SignupAssembly(),
             RenewalPasswordAssembly(),
             RootAssembly(),
+            MusicDomainAssembly(),
             AuthDomainAssembly(),
             UserDomainAssembly(),
             SelfStudyDomainAssembly(),
