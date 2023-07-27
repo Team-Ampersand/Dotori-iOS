@@ -27,7 +27,7 @@ final class SelfStudyViewController: BaseStoredViewController<SelfStudyStore> {
         .then {
             $0.register(cellType: SelfStudyCell.self)
         }
-    private let selfStudyRefreshContorol = UIRefreshControl()
+    private let selfStudyRefreshContorol = DotoriRefreshControl()
     private lazy var selfStudyTableAdapter = TableViewAdapter<GenericSectionModel<SelfStudyRankModel>>(
         tableView: selfStudyTableView
     ) { [store] tableView, indexPath, item in

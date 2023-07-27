@@ -37,7 +37,7 @@ final class NoticeViewController: BaseStoredViewController<NoticeStore> {
         .then {
             $0.register(cellType: NoticeCell.self)
         }
-    private let noticeRefreshControl = UIRefreshControl()
+    private let noticeRefreshControl = DotoriRefreshControl()
     private lazy var noticeTableAdapter = TableViewAdapter<GenericSectionModel<NoticeModel>>(
         tableView: noticeTableView
     ) { tableView, indexPath, notice in
