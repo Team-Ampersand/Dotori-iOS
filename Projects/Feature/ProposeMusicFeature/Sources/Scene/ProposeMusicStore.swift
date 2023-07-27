@@ -6,6 +6,7 @@ import Localization
 import Moordinator
 import MusicDomainInterface
 import Store
+import UIKit
 
 final class ProposeMusicStore: BaseStore {
     var route: PassthroughSubject<RoutePath, Never> = .init()
@@ -28,6 +29,7 @@ final class ProposeMusicStore: BaseStore {
         case updateURL(String)
         case proposeButtonDidTap
         case dimmedBackgroundDidTap
+        case youtubeButtonDidTap
     }
     enum Mutation {
         case updateURL(String)
@@ -46,6 +48,9 @@ extension ProposeMusicStore {
 
         case .dimmedBackgroundDidTap:
             route.send(DotoriRoutePath.dismiss)
+
+        case .youtubeButtonDidTap:
+            route.send(DotoriRoutePath.youtube)
         }
         return .none
     }

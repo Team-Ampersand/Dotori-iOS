@@ -43,6 +43,8 @@ public enum DotoriRoutePath: RoutePath {
     // MARK: Music
     case music
     case proposeMusic
+    case youtube
+    case youtubeByID(id: String)
 }
 
 public extension RoutePath {

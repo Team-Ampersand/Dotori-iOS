@@ -35,6 +35,12 @@ final class MusicMoordinator: Moordinator {
         case .dismiss:
             return dismiss()
 
+        case .youtube:
+            return openYoutube()
+
+        case let .youtubeByID(id):
+            return openYoutube(id: id)
+
         default:
             return .none
         }
@@ -82,6 +88,26 @@ private extension MusicMoordinator {
 
     func dismiss() -> MoordinatorContributors {
         self.rootVC.presentedViewController?.dismiss(animated: true)
+        return .none
+    }
+
+    func openYoutube() -> MoordinatorContributors {
+        guard let url = URL(string: "youtube://") else { return .none }
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        } else if let webURL = URL(string: "https://youtube.com") {
+            UIApplication.shared.open(webURL)
+        }
+        return .none
+    }
+
+    func openYoutube(id: String) -> MoordinatorContributors {
+        guard let url = URL(string: "youtube://\(id)") else { return .none }
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        } else if let webURL = URL(string: "https://youtube.com/watch?v=\(id)") {
+            UIApplication.shared.open(webURL)
+        }
         return .none
     }
 }

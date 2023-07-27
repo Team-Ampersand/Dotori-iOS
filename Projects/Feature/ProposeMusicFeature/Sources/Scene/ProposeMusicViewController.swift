@@ -74,6 +74,11 @@ final class ProposeMusicViewController: BaseStoredModalViewController<ProposeMus
             .map { _ in Store.Action.dimmedBackgroundDidTap }
             .sink(receiveValue: store.send(_:))
             .store(in: &subscription)
+
+        openYoutubeButton.tapPublisher
+            .map { Store.Action.youtubeButtonDidTap }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
     }
 
     override func bindState() {
