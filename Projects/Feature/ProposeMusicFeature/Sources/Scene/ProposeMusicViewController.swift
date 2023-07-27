@@ -18,15 +18,23 @@ final class ProposeMusicViewController: BaseStoredModalViewController<ProposeMus
     private let shareTipLabel = DotoriLabel()
     private let urlTextField = DotoriSimpleTextField(placeholder: L10n.ProposeMusic.inputUrlPlaceholder)
     private let proposeButton = DotoriButton(text: L10n.ProposeMusic.proposeButtonTitle)
+        .set(\.isEnabled, false)
+    private let proposeActivityView = UIActivityIndicatorView(style: .medium)
 
     override func addView() {
         super.addView()
+        proposeButton.addSubviews {
+            proposeActivityView
+        }
     }
 
     override func setLayout() {
         MSGLayout.buildLayout {
             contentView.layout
                 .horizontal(.toSuperview(), .equal(20))
+                .center(.toSuperview())
+
+            proposeActivityView.layout
                 .center(.toSuperview())
         }
 
@@ -44,9 +52,55 @@ final class ProposeMusicViewController: BaseStoredModalViewController<ProposeMus
                     urlTextField
 
                     proposeButton
+                        .height(52)
                 }
             }
             .margin(.all(16))
         }
+    }
+
+    override func bindAction() {
+        urlTextField.textPublisher
+            .map(Store.Action.updateURL)
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+
+        proposeButton.tapPublisher
+            .filter { [store] in !store.currentState.isLoading }
+            .map { Store.Action.proposeButtonDidTap }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+    }
+
+    override func bindState() {
+        let sharedState = store.state.share()
+            .receive(on: DispatchQueue.main)
+
+        sharedState
+            .map(\.url)
+            .removeDuplicates()
+            .map(Optional.init)
+            .assign(to: \.text, on: urlTextField)
+            .store(in: &subscription)
+
+        sharedState
+            .map(\.url)
+            .map(\.isEmpty)
+            .map { !$0 }
+            .assign(to: \.isEnabled, on: proposeButton)
+            .store(in: &subscription)
+
+        sharedState
+            .map(\.isLoading)
+            .removeDuplicates()
+            .sink { [proposeButton, proposeActivityView] isLoading in
+                let proposeButtonTitle = isLoading ? "" : L10n.ProposeMusic.proposeButtonTitle
+                proposeButton.setTitle(proposeButtonTitle, for: .normal)
+
+                isLoading
+                ? proposeActivityView.startAnimating()
+                : proposeActivityView.stopAnimating()
+            }
+            .store(in: &subscription)
     }
 }
