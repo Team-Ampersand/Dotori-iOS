@@ -15,4 +15,8 @@ final class RemoteMusicDataSourceImpl: RemoteMusicDataSource {
         )
         .toDomain()
     }
+
+    func removeMusic(musicID: Int) async throws {
+        try await networking.request(MusicEndpoint.removeMusic(musicID: musicID))
+    }
 }

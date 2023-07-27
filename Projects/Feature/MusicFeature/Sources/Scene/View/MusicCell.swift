@@ -78,7 +78,7 @@ final class MusicCell: BaseTableViewCell<MusicModel> {
 
     override func adapt(model: MusicModel) {
         super.adapt(model: model)
-        let timeString = "\(model.createdTime.hour % 12)시 \(model.createdTime.minute)분"
+        let timeString = "\(model.createdTime.hour)시 \(model.createdTime.minute)분"
         authorLabel.text = "\(model.stuNum) \(model.username) • \(timeString)"
         titleLabel.text = model.title
         thumbnailView.image = model.thumbnailUIImage

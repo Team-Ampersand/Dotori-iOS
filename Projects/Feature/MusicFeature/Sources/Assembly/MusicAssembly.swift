@@ -8,6 +8,7 @@ public final class MusicAssembly: Assembly {
         container.register(MusicFactory.self) { resolver in
             MusicFactoryImpl(
                 fetchMusicListUseCase: resolver.resolve(FetchMusicListUseCase.self)!,
+                removeMusicUseCase: resolver.resolve(RemoveMusicUseCase.self)!,
                 loadCurrentUserRoleUseCase: resolver.resolve(LoadCurrentUserRoleUseCase.self)!
             )
         }

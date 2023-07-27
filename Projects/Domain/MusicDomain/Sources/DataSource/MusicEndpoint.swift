@@ -3,6 +3,7 @@ import NetworkingInterface
 
 enum MusicEndpoint {
     case fetchMusicList(date: String)
+    case removeMusic(musicID: Int)
 }
 
 extension MusicEndpoint: DotoriEndpoint {
@@ -14,6 +15,9 @@ extension MusicEndpoint: DotoriEndpoint {
         switch self {
         case .fetchMusicList:
             return .get("")
+
+        case let .removeMusic(musicID):
+            return .delete("/\(musicID)")
         }
     }
 

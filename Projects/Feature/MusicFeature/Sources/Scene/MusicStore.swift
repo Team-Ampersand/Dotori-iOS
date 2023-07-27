@@ -1,7 +1,9 @@
 import BaseDomainInterface
 import BaseFeature
 import Combine
+import ConcurrencyUtil
 import DateUtility
+import DesignSystem
 import Foundation
 import Localization
 import Moordinator
@@ -16,15 +18,18 @@ final class MusicStore: BaseStore {
     var initialState: State
     var stateSubject: CurrentValueSubject<State, Never>
     private let fetchMusicListUseCase: any FetchMusicListUseCase
+    private let removeMusicUseCase: any RemoveMusicUseCase
     private let loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase
 
     init(
         fetchMusicListUseCase: any FetchMusicListUseCase,
+        removeMusicUseCase: any RemoveMusicUseCase,
         loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase
     ) {
         self.initialState = .init()
         self.stateSubject = .init(initialState)
         self.fetchMusicListUseCase = fetchMusicListUseCase
+        self.removeMusicUseCase = removeMusicUseCase
         self.loadCurrentUserRoleUseCase = loadCurrentUserRoleUseCase
     }
 
@@ -48,7 +53,10 @@ final class MusicStore: BaseStore {
 extension MusicStore {
     func mutate(state: State, action: Action) -> SideEffect<Mutation, Never> {
         switch action {
-        case .viewDidLoad, .refresh:
+        case .viewDidLoad:
+            return self.viewDidLoad()
+
+        case .refresh:
             return self.fetchMusicList()
 
         case let .cellMeatballDidTap(music):
@@ -123,8 +131,12 @@ private extension MusicStore {
             })
         ]
         if currentState.currentUserRole != .member {
-            actions.append(.init(title: L10n.Music.removeMusicTitle, style: .destructive, handler: { _ in
-                
+            actions.append(.init(title: L10n.Music.removeMusicTitle, style: .destructive, handler: { [removeMusicUseCase] _ in
+                Task.catching {
+                    try await removeMusicUseCase(musicID: music.id)
+                } catch: { @MainActor error in
+                    DotoriToast.makeToast(text: error.localizedDescription, style: .error)
+                }
             }))
         }
         actions.append(.init(title: L10n.Global.cancelButtonTitle, style: .cancel))

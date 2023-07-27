@@ -10,4 +10,8 @@ final class MusicRepositoryImpl: MusicRepository {
     func fetchMusicList(date: String) async throws -> [MusicEntity] {
         try await remoteMusicDataSource.fetchMusicList(date: date)
     }
+
+    func removeMusic(musicID: Int) async throws {
+        try await remoteMusicDataSource.removeMusic(musicID: musicID)
+    }
 }

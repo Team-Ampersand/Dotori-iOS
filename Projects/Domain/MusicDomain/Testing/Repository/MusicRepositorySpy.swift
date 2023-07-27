@@ -7,4 +7,9 @@ final class MusicRepositorySpy: MusicRepository {
         fetchMusicListCallCount += 1
         return try await fetchMusicListHandler(date)
     }
+
+    var removeMusicCallCount = 0
+    func removeMusic(musicID: Int) async throws {
+        removeMusicCallCount += 1
+    }
 }

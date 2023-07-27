@@ -14,9 +14,17 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
         let fetchMusicListUseCase = FetchMusicListUseCaseSpy()
+        fetchMusicListUseCase.fetchMusicListHandler = { _ in
+            [
+                .init(id: 1, url: "https://youtu.be/yg9sW237Seg", title: "제목", thumbnailUIImage: nil, username: "김김김", createdTime: .init(), stuNum: "1111")
+            ]
+        }
+        let removeMusicUseCase = RemoveMusicUseCaseSpy()
         let loadCurrentUserRoleUseCase = LoadCurrentUserRoleUseCaseSpy()
+        loadCurrentUserRoleUseCase.loadCurrentUserRoleReturn = .developer
         let store = MusicStore(
             fetchMusicListUseCase: fetchMusicListUseCase,
+            removeMusicUseCase: removeMusicUseCase,
             loadCurrentUserRoleUseCase: loadCurrentUserRoleUseCase
         )
         let viewController = Inject.ViewControllerHost(

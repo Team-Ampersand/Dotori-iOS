@@ -92,7 +92,6 @@ final class MusicViewController: BaseStoredViewController<MusicStore> {
             .store(in: &subscription)
 
         sharedState
-            .filter { !$0.musicList.isEmpty }
             .map(\.isRefreshing)
             .removeDuplicates()
             .sink(with: musicRefreshControl, receiveValue: { refreshControl, isRefreshing in
