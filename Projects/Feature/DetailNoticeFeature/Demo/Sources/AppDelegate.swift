@@ -12,10 +12,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
         let store = DetailNoticeStore()
-        let viewController = DetailNoticeViewController(store: store)
-        window?.rootViewController = Inject.ViewControllerHost(
-            UINavigationController(rootViewController: viewController)
+        let viewController = Inject.ViewControllerHost(
+            UINavigationController(rootViewController: DetailNoticeViewController(store: store))
         )
+        window?.rootViewController = viewController
         window?.makeKeyAndVisible()
 
         return true
