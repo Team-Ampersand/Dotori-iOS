@@ -18,5 +18,9 @@ public final class NoticeDomainAssembly: Assembly {
         container.register(FetchNoticeListUseCase.self) { resolver in
             FetchNoticeListUseCaseImpl(noticeRepository: resolver.resolve(NoticeRepository.self)!)
         }
+
+        container.register(FetchNoticeUseCase.self) { resolver in
+            FetchNoticeUseCaseImpl(noticeRepository: resolver.resolve(NoticeRepository.self)!)
+        }
     }
 }

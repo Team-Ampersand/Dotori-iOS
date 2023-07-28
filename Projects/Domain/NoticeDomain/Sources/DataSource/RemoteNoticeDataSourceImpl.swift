@@ -15,4 +15,12 @@ final class RemoteNoticeDataSourceImpl: RemoteNoticeDataSource {
         )
         .toDomain()
     }
+
+    func fetchNotice(id: Int) async throws -> DetailNoticeEntity {
+        try await networking.request(
+            NoticeEndpoint.fetchNotice(id: id),
+            dto: FetchNoticeResponseDTO.self
+        )
+        .toDomain()
+    }
 }
