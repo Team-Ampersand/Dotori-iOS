@@ -11,7 +11,7 @@ public enum DotoriRoutePath: RoutePath {
     )
     case confirmationDialog(
         title: String = "",
-        message: String = "",
+        description: String = "",
         confirmAction: () async -> Void
     )
     case dismiss

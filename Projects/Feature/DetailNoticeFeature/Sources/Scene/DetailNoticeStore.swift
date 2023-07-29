@@ -1,9 +1,12 @@
 import BaseDomainInterface
 import BaseFeature
 import Combine
+import DesignSystem
+import Localization
 import Moordinator
 import NoticeDomainInterface
 import Store
+import UIKit
 import UserDomainInterface
 
 final class DetailNoticeStore: BaseStore {
@@ -13,18 +16,21 @@ final class DetailNoticeStore: BaseStore {
     var stateSubject: CurrentValueSubject<State, Never>
     private let noticeID: Int
     private let fetchNoticeUseCase: any FetchNoticeUseCase
-    private let loadCurrentUserRole: any LoadCurrentUserRoleUseCase
+    private let removeNoticeUseCase: any RemoveNoticeUseCase
+    private let loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase
 
     init(
         noticeID: Int,
         fetchNoticeUseCase: any FetchNoticeUseCase,
-        loadCurrentUserRole: any LoadCurrentUserRoleUseCase
+        removeNoticeUseCase: any RemoveNoticeUseCase,
+        loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase
     ) {
         self.initialState = .init()
         self.stateSubject = .init(initialState)
         self.noticeID = noticeID
         self.fetchNoticeUseCase = fetchNoticeUseCase
-        self.loadCurrentUserRole = loadCurrentUserRole
+        self.removeNoticeUseCase = removeNoticeUseCase
+        self.loadCurrentUserRoleUseCase = loadCurrentUserRoleUseCase
     }
 
     struct State {
@@ -35,6 +41,7 @@ final class DetailNoticeStore: BaseStore {
     enum Action {
         case viewDidLoad
         case viewWillAppear
+        case removeBarButtonDidTap
     }
     enum Mutation {
         case updateDetailNotice(DetailNoticeModel)
@@ -51,6 +58,9 @@ extension DetailNoticeStore {
 
         case .viewWillAppear:
             return self.viewWillAppear()
+
+        case .removeBarButtonDidTap:
+            return self.removeBarButtonDidTap()
         }
         return .none
     }
@@ -77,7 +87,7 @@ extension DetailNoticeStore {
 private extension DetailNoticeStore {
     func viewDidLoad() -> SideEffect<Mutation, Never> {
         return SideEffect
-            .just(try? loadCurrentUserRole())
+            .just(try? loadCurrentUserRoleUseCase())
             .replaceNil(with: .member)
             .setFailureType(to: Never.self)
             .map(Mutation.updateCurrentUserRole)
@@ -92,6 +102,24 @@ private extension DetailNoticeStore {
             .catchToNever()
             .map(Mutation.updateDetailNotice)
         return self.makeLoadingSideEffect(detailNoticeEffect)
+    }
+
+    func removeBarButtonDidTap() -> SideEffect<Mutation, Never> {
+        let confirmRoutePath = DotoriRoutePath.confirmationDialog(
+            title: L10n.Notice.removeNoticeDialogTitle,
+            description: L10n.Notice.removeNoticeDialogDescription
+        ) { [removeNoticeUseCase, noticeID, route] in
+            do {
+                try await removeNoticeUseCase(id: noticeID)
+                route.send(DotoriRoutePath.dismiss)
+                route.send(DotoriRoutePath.pop)
+                await DotoriToast.makeToast(text: L10n.Notice.completeToRemoveNotice, style: .success)
+            } catch {
+                await DotoriToast.makeToast(text: error.localizedDescription, style: .error)
+            }
+        }
+        route.send(confirmRoutePath)
+        return .none
     }
 }
 

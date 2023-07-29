@@ -16,3 +16,6 @@
 "write_button_title" = "+ Write";
 "remove_button_title" = "Remove";
 "detail_notice_date_format" = "MMM dd, yyyy";
+"remove_notice_dialog_title" = "Remove the notice";
+"remove_notice_dialog_description" = "Are you sure you want to delete the notice?";
+"complete_to_remove_notice" = "Complete to remove the notice";

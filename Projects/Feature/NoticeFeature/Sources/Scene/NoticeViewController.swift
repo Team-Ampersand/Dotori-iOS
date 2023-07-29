@@ -32,7 +32,6 @@ final class NoticeViewController: BaseStoredViewController<NoticeStore> {
         .set(\.backgroundColor, .clear)
         .set(\.separatorStyle, .none)
         .set(\.sectionHeaderTopPadding, 0)
-        .set(\.sectionHeaderHeight, 0)
         .set(\.allowsMultipleSelection, false)
         .then {
             $0.register(cellType: NoticeCell.self)

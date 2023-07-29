@@ -16,3 +16,6 @@
 "write_button_title" = "+ 작성";
 "remove_button_title" = "삭제";
 "detail_notice_date_format" = "yyyy년 MM월 dd일";
+"remove_notice_dialog_title" = "공지사항 삭제";
+"remove_notice_dialog_description" = "정말로 공지사항을 삭제하시겠습니까?";
+"complete_to_remove_notice" = "공지사항 삭제 완료";

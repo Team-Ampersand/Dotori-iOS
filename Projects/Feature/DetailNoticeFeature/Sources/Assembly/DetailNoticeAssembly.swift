@@ -8,7 +8,8 @@ public final class DetailNoticeAssembly: Assembly {
         container.register(DetailNoticeFactory.self) { resolver in
             DetailNoticeFactoryImpl(
                 fetchNoticeUseCase: resolver.resolve(FetchNoticeUseCase.self)!,
-                loadCurrentUserRole: resolver.resolve(LoadCurrentUserRoleUseCase.self)!
+                removeNoticeUseCase: resolver.resolve(RemoveNoticeUseCase.self)!,
+                loadCurrentUserRoleUseCase: resolver.resolve(LoadCurrentUserRoleUseCase.self)!
             )
         }
     }

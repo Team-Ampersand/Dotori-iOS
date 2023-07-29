@@ -8,6 +8,7 @@ let project = Project.module(
         .implements(module: .feature(.NoticeFeature), dependencies: [
             .feature(target: .BaseFeature),
             .feature(target: .DetailNoticeFeature),
+            .feature(target: .ConfirmationDialogFeature),
             .domain(target: .NoticeDomain, type: .interface),
             .domain(target: .UserDomain, type: .interface)
         ]),

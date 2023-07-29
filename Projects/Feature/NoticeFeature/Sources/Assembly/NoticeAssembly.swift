@@ -1,3 +1,4 @@
+import ConfirmationDialogFeature
 import DetailNoticeFeature
 import NoticeDomainInterface
 import Swinject
@@ -10,6 +11,7 @@ public final class NoticeAssembly: Assembly {
             NoticeFactoryImpl(
                 fetchNoticeListUseCase: resolver.resolve(FetchNoticeListUseCase.self)!,
                 loadCurrentUserRoleUseCase: resolver.resolve(LoadCurrentUserRoleUseCase.self)!,
+                confirmationDialogFactory: resolver.resolve(ConfirmationDialogFactory.self)!,
                 detailNoticeFactory: resolver.resolve(DetailNoticeFactory.self)!
             )
         }

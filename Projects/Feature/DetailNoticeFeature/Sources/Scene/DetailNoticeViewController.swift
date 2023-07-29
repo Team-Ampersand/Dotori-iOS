@@ -42,7 +42,7 @@ final class DetailNoticeViewController: BaseStoredViewController<DetailNoticeSto
 
         titleLabel
     }
-    private let contentLabel = DotoriLabel("", font: .body1)
+    private let contentLabel = DotoriLabel(font: .body1)
         .set(\.numberOfLines, 0)
         .set(\.clipsToBounds, true)
     private lazy var contentStackView = VStackView(spacing: 16) {
@@ -75,6 +75,11 @@ final class DetailNoticeViewController: BaseStoredViewController<DetailNoticeSto
 
         viewWillAppearPublisher
             .map { Store.Action.viewWillAppear }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+
+        removeBarButton.tapPublisher
+            .map { Store.Action.removeBarButtonDidTap }
             .sink(receiveValue: store.send(_:))
             .store(in: &subscription)
     }

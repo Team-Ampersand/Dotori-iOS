@@ -2,6 +2,7 @@ import Inject
 import UIKit
 @testable import DetailNoticeFeature
 @testable import NoticeDomainTesting
+@testable import UserDomainTesting
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -13,8 +14,12 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
         let fetchNoticeUseCase = FetchNoticeUseCaseSpy()
+        let loadCurrentUserRoleUseCase = LoadCurrentUserRoleUseCaseSpy()
+        loadCurrentUserRoleUseCase.loadCurrentUserRoleReturn = .developer
         let store = DetailNoticeStore(
-            fetchNoticeUseCase: fetchNoticeUseCase
+            noticeID: 1,
+            fetchNoticeUseCase: fetchNoticeUseCase,
+            loadCurrentUserRoleUseCase: loadCurrentUserRoleUseCase
         )
         let viewController = Inject.ViewControllerHost(
             UINavigationController(rootViewController: DetailNoticeViewController(store: store))

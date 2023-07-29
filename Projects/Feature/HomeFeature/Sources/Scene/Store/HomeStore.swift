@@ -163,7 +163,7 @@ private extension HomeStore {
             .init(title: L10n.Home.logoutButtonTitle, style: .default) { [route, logoutUseCase] _ in
                 let confirmationDialogRoutePath = DotoriRoutePath.confirmationDialog(
                     title: L10n.Home.logoutTitle,
-                    message: L10n.Home.reallyLogoutTitle
+                    description: L10n.Home.reallyLogoutTitle
                 ) {
                     logoutUseCase()
                     route.send(DotoriRoutePath.signin)
@@ -177,15 +177,15 @@ private extension HomeStore {
     }
 
     func applySelfStudyButtonDidTap() {
-//        guard currentState.currentUserRole == .member else {
-//            return
-//        }
+        guard currentState.currentUserRole == .member else {
+            return
+        }
         #warning("자습 인원 수정 로직 추가")
         Task.catching {
             if self.currentState.selfStudyStatus == .applied {
                 let confirmRoutePath = DotoriRoutePath.confirmationDialog(
                     title: "자습 신청 취소",
-                    message: "정말 자습 신청을 취소하시겠습니까?"
+                    description: "정말 자습 신청을 취소하시겠습니까?"
                 ) { [cancelSelfStudyUseCase = self.cancelSelfStudyUseCase] in
                     try? await cancelSelfStudyUseCase()
                     await DotoriToast.makeToast(text: "자습을 취소하였습니다.", style: .success)
@@ -202,15 +202,15 @@ private extension HomeStore {
     }
 
     func applyMassageButtonDidTap() {
-//        guard currentState.currentUserRole == .member else {
-//            return
-//        }
+        guard currentState.currentUserRole == .member else {
+            return
+        }
         #warning("안마 인원 수정 로직 추가")
         Task.catching {
             if self.currentState.massageStatus == .applied {
                 let confirmRoutePath = DotoriRoutePath.confirmationDialog(
                     title: "안마의자 신청 취소",
-                    message: "정말 안마의자 신청을 취소하시겠습니까?"
+                    description: "정말 안마의자 신청을 취소하시겠습니까?"
                 ) { [cancelMassageUseCase = self.cancelMassageUseCase] in
                     try? await cancelMassageUseCase()
                     await DotoriToast.makeToast(text: "안마의자를 취소하였습니다.", style: .success)
