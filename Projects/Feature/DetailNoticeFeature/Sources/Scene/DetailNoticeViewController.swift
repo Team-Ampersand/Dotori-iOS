@@ -26,6 +26,7 @@ final class DetailNoticeViewController: BaseStoredViewController<DetailNoticeSto
     private let authorLabel = DotoriLabel(font: .h4)
     private let dateLabel = DotoriLabel(textColor: .neutral(.n20), font: .body2)
     private let titleLabel = DotoriLabel(textColor: .neutral(.n10), font: .h3)
+        .set(\.numberOfLines, 0)
     private lazy var headerStackView = VStackView(spacing: 8) {
         HStackView(spacing: 8) {
             signatureColorView
@@ -112,7 +113,8 @@ private extension DetailNoticeViewController {
     func bindNotice(notice: DetailNoticeModel) {
         signatureColorView.backgroundColor = notice.role.toSignatureColor
         authorLabel.text = notice.role.toAuthorString
-        dateLabel.text = (notice.modifiedDate ?? notice.createdDate)
+        titleLabel.text = notice.title
+        dateLabel.text = notice.createdDate
             .toStringWithCustomFormat(L10n.Notice.detailNoticeDateFormat)
         contentLabel.text = notice.content
 
