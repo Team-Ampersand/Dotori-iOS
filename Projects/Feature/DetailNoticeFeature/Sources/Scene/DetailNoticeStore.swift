@@ -1,6 +1,7 @@
 import BaseFeature
 import Combine
 import Moordinator
+import NoticeDomainInterface
 import Store
 
 final class DetailNoticeStore: BaseStore {
@@ -8,10 +9,14 @@ final class DetailNoticeStore: BaseStore {
     var subscription: Set<AnyCancellable> = .init()
     var initialState: State
     var stateSubject: CurrentValueSubject<State, Never>
+    private let fetchNoticeUseCase: any FetchNoticeUseCase
 
-    init() {
+    init(
+        fetchNoticeUseCase: any FetchNoticeUseCase
+    ) {
         self.initialState = .init()
         self.stateSubject = .init(initialState)
+        self.fetchNoticeUseCase = fetchNoticeUseCase
     }
 
     struct State {}
