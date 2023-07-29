@@ -1,11 +1,18 @@
 import XCTest
+@testable import DetailNoticeFeature
+@testable import NoticeDomainTesting
 
 final class DetailNoticeFeatureTests: XCTestCase {
-    override func setUpWithError() throws {}
+    var fetchNoticeUseCase: FetchNoticeUseCaseSpy!
+    var sut: DetailNoticeStore!
 
-    override func tearDownWithError() throws {}
+    override func setUp() {
+        fetchNoticeUseCase = .init()
+        sut = .init(fetchNoticeUseCase: fetchNoticeUseCase)
+    }
 
-    func testExample() {
-        XCTAssertEqual(1, 1)
+    override func tearDown() {
+        fetchNoticeUseCase = nil
+        sut = nil
     }
 }

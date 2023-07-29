@@ -1,6 +1,7 @@
 import AuthDomain
 import ConfirmationDialogFeature
 import Database
+import DetailNoticeFeature
 import HomeFeature
 import IQKeyboardManagerSwift
 import JwtStore
@@ -47,6 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             HomeAssembly(),
             MyViolationListAssembly(),
             NoticeAssembly(),
+            DetailNoticeAssembly(),
             SelfStudyAssembly(),
             ConfirmationDialogAssembly(),
             MassageAssembly(),

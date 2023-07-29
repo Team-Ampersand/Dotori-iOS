@@ -1,6 +1,12 @@
+import BaseDomainInterface
 import BaseFeature
+import ConcurrencyUtil
+import DateUtility
 import DesignSystem
+import Localization
 import MSGLayout
+import NoticeDomainInterface
+import Nuke
 import UIKit
 import UIKitUtil
 
@@ -63,5 +69,73 @@ final class DetailNoticeViewController: BaseStoredViewController<DetailNoticeSto
 
     override func configureNavigation() {
         self.navigationItem.setRightBarButtonItems([removeBarButton, rewriteBarButton], animated: true)
+    }
+
+    override func bindAction() {
+        viewWillAppearPublisher
+            .map { Store.Action.viewWillAppear }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+    }
+
+    override func bindState() {
+        let sharedState = store.state.share()
+            .receive(on: DispatchQueue.main)
+
+        sharedState
+            .compactMap(\.detailNotice)
+            .sink(with: self) { owner, notice in
+                owner.bindNotice(notice: notice)
+            }
+            .store(in: &subscription)
+    }
+}
+
+private extension DetailNoticeViewController {
+    func bindNotice(notice: DetailNoticeModel) {
+        signatureColorView.backgroundColor = notice.role.toSignatureColor
+        authorLabel.text = notice.role.toAuthorString
+        dateLabel.text = (notice.modifiedDate ?? notice.createdDate)
+            .toStringWithCustomFormat(L10n.Notice.detailNoticeDateFormat)
+        contentLabel.text = notice.content
+
+        contentStackView.removeAllChildren()
+        contentStackView.addArrangedSubview(contentLabel)
+        Task {
+            let imageViews = try await notice.images
+                .map { image in
+                    ImageRequest(
+                        url: URL(string: image.imageURL),
+                        processors: [
+                            .gaussianBlur(),
+                            .roundedCorners(radius: 8)
+                        ],
+                        options: .disableDiskCache
+                    )
+                }
+                .concurrentMap { try await ImagePipeline.shared.image(for: $0) }
+                .map { UIImageView(image: $0) }
+            self.contentStackView.addArrangedSubviews(views: imageViews)
+        }
+    }
+}
+
+private extension UserRoleType {
+    var toAuthorString: String {
+        switch self {
+        case .admin: return L10n.Notice.authorRoleAdmin
+        case .councillor: return L10n.Notice.authorRoleCouncillor
+        case .developer: return L10n.Notice.authorRoleDeveloper
+        case .member: return L10n.Notice.authorRoleMember
+        }
+    }
+
+    var toSignatureColor: UIColor {
+        switch self {
+        case .admin: return .dotori(.sub(.yellow))
+        case .member: return .dotori(.neutral(.n20))
+        case .councillor: return .dotori(.sub(.red))
+        case .developer: return .dotori(.primary(.p10))
+        }
     }
 }
