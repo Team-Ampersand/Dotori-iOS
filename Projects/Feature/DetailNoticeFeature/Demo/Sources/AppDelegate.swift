@@ -14,11 +14,13 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
         let fetchNoticeUseCase = FetchNoticeUseCaseSpy()
+        let removeNoticeUseCase = RemoveNoticeUseCaseSpy()
         let loadCurrentUserRoleUseCase = LoadCurrentUserRoleUseCaseSpy()
         loadCurrentUserRoleUseCase.loadCurrentUserRoleReturn = .developer
         let store = DetailNoticeStore(
             noticeID: 1,
             fetchNoticeUseCase: fetchNoticeUseCase,
+            removeNoticeUseCase: removeNoticeUseCase,
             loadCurrentUserRoleUseCase: loadCurrentUserRoleUseCase
         )
         let viewController = Inject.ViewControllerHost(
