@@ -25,7 +25,7 @@ final class MusicViewController: BaseStoredViewController<MusicStore> {
         .then {
             $0.register(cellType: MusicCell.self)
         }
-    private let musicRefreshControl = UIRefreshControl()
+    private let musicRefreshControl = DotoriRefreshControl()
     private lazy var musicTableAdapter = TableViewAdapter<GenericSectionModel<MusicModel>>(
         tableView: musicTableView
     ) { [weak self] tableView, indexPath, item in
