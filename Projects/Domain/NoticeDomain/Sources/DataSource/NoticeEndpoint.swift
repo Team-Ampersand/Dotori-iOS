@@ -4,6 +4,7 @@ import NetworkingInterface
 enum NoticeEndpoint {
     case fetchNoticeList
     case fetchNotice(id: Int)
+    case removeNotice(id: Int)
 }
 
 extension NoticeEndpoint: DotoriEndpoint {
@@ -18,6 +19,9 @@ extension NoticeEndpoint: DotoriEndpoint {
 
         case let .fetchNotice(id):
             return .get("/\(id)")
+
+        case let .removeNotice(id):
+            return .delete("/\(id)")
         }
     }
 

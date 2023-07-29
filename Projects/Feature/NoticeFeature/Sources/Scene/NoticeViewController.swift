@@ -145,8 +145,8 @@ final class NoticeViewController: BaseStoredViewController<NoticeStore> {
 
         sharedState
             .map(\.currentUserRole)
-            .map { $0 == .member }
             .removeDuplicates()
+            .map { $0 == .member }
             .sink { [editButton, writeOrRemoveButton] isMember in
                 editButton.isHidden = isMember
                 writeOrRemoveButton.isHidden = isMember

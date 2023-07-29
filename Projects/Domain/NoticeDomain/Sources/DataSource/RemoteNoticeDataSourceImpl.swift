@@ -23,4 +23,8 @@ final class RemoteNoticeDataSourceImpl: RemoteNoticeDataSource {
         )
         .toDomain()
     }
+
+    func removeNotice(id: Int) async throws {
+        try await networking.request(NoticeEndpoint.removeNotice(id: id))
+    }
 }

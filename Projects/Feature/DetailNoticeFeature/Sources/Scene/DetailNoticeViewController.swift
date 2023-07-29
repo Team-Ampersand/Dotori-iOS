@@ -14,10 +14,10 @@ final class DetailNoticeViewController: BaseStoredViewController<DetailNoticeSto
     private enum Metric {
         static let horizontalPadding: CGFloat = 20
     }
-    private let rewriteBarButton = UIBarButtonItem(
+    private lazy var rewriteBarButton = UIBarButtonItem(
         image: .Dotori.pen.tintColor(color: .dotori(.neutral(.n10)))
     )
-    private let removeBarButton = UIBarButtonItem(
+    private lazy var removeBarButton = UIBarButtonItem(
         image: .Dotori.trashcan.tintColor(color: .dotori(.sub(.red)))
     )
     private let signatureColorView = UIView()
@@ -67,11 +67,12 @@ final class DetailNoticeViewController: BaseStoredViewController<DetailNoticeSto
         self.view.backgroundColor = .dotori(.background(.card))
     }
 
-    override func configureNavigation() {
-        self.navigationItem.setRightBarButtonItems([removeBarButton, rewriteBarButton], animated: true)
-    }
-
     override func bindAction() {
+        viewDidLoadPublisher
+            .map { Store.Action.viewDidLoad }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+
         viewWillAppearPublisher
             .map { Store.Action.viewWillAppear }
             .sink(receiveValue: store.send(_:))
@@ -84,9 +85,20 @@ final class DetailNoticeViewController: BaseStoredViewController<DetailNoticeSto
 
         sharedState
             .compactMap(\.detailNotice)
-            .sink(with: self) { owner, notice in
+            .sink(with: self, receiveValue: { owner, notice in
                 owner.bindNotice(notice: notice)
-            }
+            })
+            .store(in: &subscription)
+
+        sharedState
+            .map(\.currentUserRole)
+            .filter { $0 != .member }
+            .sink(with: self, receiveValue: { owner, _ in
+                owner.navigationItem.setRightBarButtonItems(
+                    [owner.removeBarButton, owner.rewriteBarButton],
+                    animated: true
+                )
+            })
             .store(in: &subscription)
     }
 }

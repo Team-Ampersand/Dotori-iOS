@@ -1,8 +1,10 @@
+import BaseDomainInterface
 import BaseFeature
 import Combine
 import Moordinator
 import NoticeDomainInterface
 import Store
+import UserDomainInterface
 
 final class DetailNoticeStore: BaseStore {
     var route: PassthroughSubject<RoutePath, Never> = .init()
@@ -11,33 +13,42 @@ final class DetailNoticeStore: BaseStore {
     var stateSubject: CurrentValueSubject<State, Never>
     private let noticeID: Int
     private let fetchNoticeUseCase: any FetchNoticeUseCase
+    private let loadCurrentUserRole: any LoadCurrentUserRoleUseCase
 
     init(
         noticeID: Int,
-        fetchNoticeUseCase: any FetchNoticeUseCase
+        fetchNoticeUseCase: any FetchNoticeUseCase,
+        loadCurrentUserRole: any LoadCurrentUserRoleUseCase
     ) {
         self.initialState = .init()
         self.stateSubject = .init(initialState)
         self.noticeID = noticeID
         self.fetchNoticeUseCase = fetchNoticeUseCase
+        self.loadCurrentUserRole = loadCurrentUserRole
     }
 
     struct State {
         var detailNotice: DetailNoticeModel?
         var isLoading = false
+        var currentUserRole = UserRoleType.member
     }
     enum Action {
+        case viewDidLoad
         case viewWillAppear
     }
     enum Mutation {
         case updateDetailNotice(DetailNoticeModel)
         case updateIsLoading(Bool)
+        case updateCurrentUserRole(UserRoleType)
     }
 }
 
 extension DetailNoticeStore {
     func mutate(state: State, action: Action) -> SideEffect<Mutation, Never> {
         switch action {
+        case .viewDidLoad:
+            return self.viewDidLoad()
+
         case .viewWillAppear:
             return self.viewWillAppear()
         }
@@ -54,6 +65,9 @@ extension DetailNoticeStore {
 
         case let .updateIsLoading(isLoading):
             newState.isLoading = isLoading
+
+        case let .updateCurrentUserRole(userRole):
+            newState.currentUserRole = userRole
         }
         return newState
     }
@@ -61,6 +75,15 @@ extension DetailNoticeStore {
 
 // MARK: - Mutate
 private extension DetailNoticeStore {
+    func viewDidLoad() -> SideEffect<Mutation, Never> {
+        return SideEffect
+            .just(try? loadCurrentUserRole())
+            .replaceNil(with: .member)
+            .setFailureType(to: Never.self)
+            .map(Mutation.updateCurrentUserRole)
+            .eraseToSideEffect()
+    }
+
     func viewWillAppear() -> SideEffect<Mutation, Never> {
         let detailNoticeEffect = SideEffect<DetailNoticeModel, Error>
             .tryAsync { [noticeID, fetchNoticeUseCase] in

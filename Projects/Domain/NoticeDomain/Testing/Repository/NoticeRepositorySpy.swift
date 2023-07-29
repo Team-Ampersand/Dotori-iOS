@@ -23,4 +23,11 @@ final class NoticeRepositorySpy: NoticeRepository {
         fetchNoticeCallCount += 1
         return try await fetchNoticeHandler(id)
     }
+
+    var removeNoticeCallCount = 0
+    var removeNoticeHandler: (Int) async throws -> Void = { _ in }
+    func removeNotice(id: Int) async throws {
+        removeNoticeCallCount += 1
+        try await removeNoticeHandler(id)
+    }
 }
