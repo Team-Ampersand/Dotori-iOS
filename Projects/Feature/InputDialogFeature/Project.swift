@@ -5,7 +5,9 @@ import DependencyPlugin
 let project = Project.module(
     name: ModulePaths.Feature.InputDialogFeature.rawValue,
     targets: [
-        .interface(module: .feature(.InputDialogFeature)),
+        .interface(module: .feature(.InputDialogFeature), dependencies: [
+            .feature(target: .BaseFeature, type: .interface)
+        ]),
         .implements(
             module: .feature(.InputDialogFeature),
             dependencies: [
