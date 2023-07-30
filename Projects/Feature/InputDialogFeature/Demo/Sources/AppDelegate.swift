@@ -1,4 +1,6 @@
+import Inject
 import UIKit
+@testable import InputDialogFeature
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -9,8 +11,14 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let viewController = UIViewController()
-        viewController.view.backgroundColor = .yellow
+        let store = InputDialogStore()
+        let viewController = Inject.ViewControllerHost(
+            InputDialogViewController(
+                title: "안마 의자 인원 수정",
+                placeholder: "5",
+                store: store
+            )
+        )
         window?.rootViewController = viewController
         window?.makeKeyAndVisible()
 
