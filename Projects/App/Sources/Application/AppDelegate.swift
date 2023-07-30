@@ -4,6 +4,7 @@ import Database
 import DetailNoticeFeature
 import HomeFeature
 import IQKeyboardManagerSwift
+import InputDialogFeature
 import JwtStore
 import KeyValueStore
 import MainTabFeature
@@ -47,6 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DatabaseAssembly(),
             SplashAssembly(),
             HomeAssembly(),
+            InputDialogAssembly(),
             MyViolationListAssembly(),
             NoticeAssembly(),
             DetailNoticeAssembly(),

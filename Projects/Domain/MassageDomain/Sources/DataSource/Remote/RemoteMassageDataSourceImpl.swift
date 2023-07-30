@@ -31,4 +31,8 @@ final class RemoteMassageDataSourceImpl: RemoteMassageDataSource {
         )
         .toDomain()
     }
+
+    func modifyMassagePersonnel(limit: Int) async throws {
+        try await networking.request(MassageEndpoint.modifyMassagePersonnel(limit: limit))
+    }
 }

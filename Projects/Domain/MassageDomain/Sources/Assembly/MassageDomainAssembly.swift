@@ -30,5 +30,9 @@ public final class MassageDomainAssembly: Assembly {
         container.register(FetchMassageRankListUseCase.self) { resolver in
             FetchMassageRankListUseCaseImpl(massageRepository: resolver.resolve(MassageRepository.self)!)
         }
+
+        container.register(ModifyMassagePersonnelUseCase.self) { resolver in
+            ModifyMassagePersonnelUseCaseImpl(massageRepository: resolver.resolve(MassageRepository.self)!)
+        }
     }
 }

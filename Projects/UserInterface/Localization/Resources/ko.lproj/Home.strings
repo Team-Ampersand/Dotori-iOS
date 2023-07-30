@@ -1,4 +1,4 @@
-/* 
+/*
   Home.strings
   Localization
 
@@ -29,3 +29,15 @@
 "recent_refresh_date" = "최근 새로고침 : %@";
 "logout_title" = "로그아웃";
 "really_logout_title" = "정말로 도토리를 로그아웃 하시겠습니까?";
+"cancel_self_study_title" = "자습 신청 취소";
+"really_cancel_self_study_title" = "정말 자습 신청을 취소하시겠습니까?";
+"complete_to_cancel_self_study_title" = "자습을 취소하였습니다.";
+"complete_to_apply_self_study_title" = "자습을 신청하였습니다.";
+"cancel_massage_title" = "안마의자 신청 취소";
+"really_cancel_massage_title" = "정말 안마의자 신청을 취소하시겠습니까?";
+"complete_to_cancel_massage_title" = "안마의자를 취소하였습니다.";
+"complete_to_apply_massage_title" = "안마의자를 신청하였습니다.";
+"self_study_modify_limit_title" = "자습 인원 수정";
+"complete_to_modify_self_study_limit_title" = "자습 인원 수정 완료";
+"massage_modify_limit_title" = "안마의자 인원 수정";
+"complete_to_modify_massage_limit_title" = "안마의자 인원 수정 완료";

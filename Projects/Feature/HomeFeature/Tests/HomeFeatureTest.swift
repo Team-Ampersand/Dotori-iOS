@@ -17,8 +17,10 @@ final class HomeFeatureTests: XCTestCase {
     var loadCurrentUserRoleUseCase: LoadCurrentUserRoleUseCaseSpy!
     var applySelfStudyUseCase: ApplySelfStudyUseCaseSpy!
     var cancelSelfStudyUseCase: CancelSelfStudyUseCaseSpy!
+    var modifySelfStudyPersonnelUseCase: ModifySelfStudyPersonnelUseCaseSpy!
     var applyMassageUseCase: ApplyMassageUseCaseSpy!
     var cancelMassageUseCase: CancelMassageUseCaseSpy!
+    var modifyMassagePersonnelUseCase: ModifyMassagePersonnelUseCaseSpy!
     var logoutUseCase: LogoutUseCaseSpy!
     var sut: HomeStore!
     var subscription: Set<AnyCancellable>!
@@ -31,8 +33,10 @@ final class HomeFeatureTests: XCTestCase {
         loadCurrentUserRoleUseCase = .init()
         applySelfStudyUseCase = .init()
         cancelSelfStudyUseCase = .init()
+        modifySelfStudyPersonnelUseCase = .init()
         applyMassageUseCase = .init()
         cancelMassageUseCase = .init()
+        modifyMassagePersonnelUseCase = .init()
         logoutUseCase = .init()
         sut = .init(
             repeatableTimer: repeatableTimer,
@@ -42,8 +46,10 @@ final class HomeFeatureTests: XCTestCase {
             loadCurrentUserRoleUseCase: loadCurrentUserRoleUseCase,
             applySelfStudyUseCase: applySelfStudyUseCase,
             cancelSelfStudyUseCase: cancelSelfStudyUseCase,
+            modifySelfStudyPersonnelUseCase: modifySelfStudyPersonnelUseCase,
             applyMassageUseCase: applyMassageUseCase,
             cancelMassageUseCase: cancelMassageUseCase,
+            modifyMassagePersonnelUseCase: modifyMassagePersonnelUseCase,
             logoutUseCase: logoutUseCase
         )
         subscription = .init()
@@ -57,8 +63,10 @@ final class HomeFeatureTests: XCTestCase {
         loadCurrentUserRoleUseCase = nil
         applySelfStudyUseCase = nil
         cancelSelfStudyUseCase = nil
+        modifyMassagePersonnelUseCase = nil
         applyMassageUseCase = nil
         cancelMassageUseCase = nil
+        modifyMassagePersonnelUseCase = nil
         logoutUseCase = nil
         sut = nil
         subscription = nil

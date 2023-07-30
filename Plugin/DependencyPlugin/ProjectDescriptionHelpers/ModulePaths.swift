@@ -26,6 +26,7 @@ public extension ModulePaths {
 public extension ModulePaths {
     enum Feature: String, MicroTargetPathConvertable {
         case ProposeMusicFeature
+        case InputDialogFeature
         case DetailNoticeFeature
         case MyViolationListFeature
         case SplashFeature

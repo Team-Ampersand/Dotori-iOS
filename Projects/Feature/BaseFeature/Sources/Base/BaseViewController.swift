@@ -1,9 +1,11 @@
+import BaseFeatureInterface
 import Combine
 import DesignSystem
 import UIKit
 
 open class BaseViewController:
     UIViewController,
+    ViewControllable,
     HasCancellableBag,
     AddViewable,
     SetLayoutable,

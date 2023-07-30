@@ -30,4 +30,8 @@ final class SelfStudyRepositoryImpl: SelfStudyRepository {
     func checkSelfStudyMember(memberID: Int, isChecked: Bool) async throws {
         try await remoteSelfStudyDataSource.checkSelfStudyMember(memberID: memberID, isChecked: isChecked)
     }
+
+    func modifySelfStudyPersonnel(limit: Int) async throws {
+        try await remoteSelfStudyDataSource.modifySelfStudyPersonnel(limit: limit)
+    }
 }

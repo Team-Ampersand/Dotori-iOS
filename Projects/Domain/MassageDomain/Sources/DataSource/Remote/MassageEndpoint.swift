@@ -8,6 +8,7 @@ public enum MassageEndpoint {
     case applyMassage
     case cancelMassage
     case fetchMassageRankList
+    case modifyMassagePersonnel(limit: Int)
 }
 
 extension MassageEndpoint: DotoriEndpoint {
@@ -28,11 +29,19 @@ extension MassageEndpoint: DotoriEndpoint {
 
         case .fetchMassageRankList:
             return .get("/rank")
+
+        case .modifyMassagePersonnel:
+            return .patch("/limit")
         }
     }
 
     public var task: HTTPTask {
         switch self {
+        case let .modifyMassagePersonnel(limit):
+            return .requestParameters(body: [
+                "limit": limit
+            ])
+
         default:
             return .requestPlain
         }
