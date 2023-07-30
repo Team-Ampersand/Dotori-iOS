@@ -11,7 +11,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let store = InputDialogStore()
+        let store = InputDialogStore(inputType: .text) { _ in }
         let viewController = Inject.ViewControllerHost(
             InputDialogViewController(
                 title: "안마 의자 인원 수정",
