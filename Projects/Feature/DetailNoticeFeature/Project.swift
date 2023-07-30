@@ -3,22 +3,20 @@ import ProjectDescriptionHelpers
 import DependencyPlugin
 
 let project = Project.module(
-    name: ModulePaths.Feature.NoticeFeature.rawValue,
+    name: ModulePaths.Feature.DetailNoticeFeature.rawValue,
     targets: [
-        .implements(module: .feature(.NoticeFeature), dependencies: [
+        .implements(module: .feature(.DetailNoticeFeature), dependencies: [
             .feature(target: .BaseFeature),
-            .feature(target: .DetailNoticeFeature),
-            .feature(target: .ConfirmationDialogFeature),
             .domain(target: .NoticeDomain, type: .interface),
             .domain(target: .UserDomain, type: .interface)
         ]),
-        .tests(module: .feature(.NoticeFeature), dependencies: [
-            .feature(target: .NoticeFeature),
-            .domain(target: .UserDomain, type: .testing),
+        .tests(module: .feature(.DetailNoticeFeature), dependencies: [
+            .feature(target: .DetailNoticeFeature),
             .domain(target: .NoticeDomain, type: .testing),
+            .domain(target: .UserDomain, type: .testing)
         ]),
-        .demo(module: .feature(.NoticeFeature), dependencies: [
-            .feature(target: .NoticeFeature),
+        .demo(module: .feature(.DetailNoticeFeature), dependencies: [
+            .feature(target: .DetailNoticeFeature),
             .domain(target: .NoticeDomain, type: .testing),
             .domain(target: .UserDomain, type: .testing)
         ])

@@ -11,7 +11,7 @@ public enum DotoriRoutePath: RoutePath {
     )
     case confirmationDialog(
         title: String = "",
-        message: String = "",
+        description: String = "",
         confirmAction: () async -> Void
     )
     case dismiss
@@ -32,7 +32,7 @@ public enum DotoriRoutePath: RoutePath {
 
     // MARK: Notice
     case notice
-    case noticeDetail(noticeID: Int)
+    case detailNotice(noticeID: Int)
 
     // MARK: SelfStudy
     case selfStudy

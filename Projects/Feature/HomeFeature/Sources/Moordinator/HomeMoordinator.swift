@@ -45,18 +45,7 @@ final class HomeMoordinator: Moordinator {
             return presentToMyViolationList()
 
         case let .confirmationDialog(title, description, confirmAction):
-            let viewController = confirmationDialogFactory.makeViewController(
-                title: title,
-                description: description,
-                confirmAction: confirmAction
-            )
-            self.rootVC.modalPresent(viewController)
-            return .one(
-                .contribute(
-                    withNextPresentable: viewController,
-                    withNextRouter: viewController.store
-                )
-            )
+            return presentToConfirmationDialog(title: title, description: description, confirmAction: confirmAction)
 
         case .dismiss:
             self.rootVC.presentedViewController?.dismiss(animated: true)
@@ -87,6 +76,25 @@ private extension HomeMoordinator {
             withNextPresentable: viewController,
             withNextRouter: viewController.store
         ))
+    }
+
+    func presentToConfirmationDialog(
+        title: String,
+        description: String,
+        confirmAction: @escaping () async -> Void
+    ) -> MoordinatorContributors {
+        let viewController = confirmationDialogFactory.makeViewController(
+            title: title,
+            description: description,
+            confirmAction: confirmAction
+        )
+        self.rootVC.modalPresent(viewController)
+        return .one(
+            .contribute(
+                withNextPresentable: viewController,
+                withNextRouter: viewController.store
+            )
+        )
     }
 
     func presentToAlert(
