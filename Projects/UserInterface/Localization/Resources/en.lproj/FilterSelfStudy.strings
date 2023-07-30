@@ -1,0 +1,16 @@
+/* 
+  FilterSelfStudy.strings
+  Localization
+
+  Created by 최형우 on 2023/07/30.
+  Copyright © 2023 com.msg. All rights reserved.
+*/
+
+"filter_title" = "Filter";
+"reset_button_title" = "Reset";
+"enter_name_placeholder" = "Enter a name";
+"grade_title" = "Grade";
+"class_title" = "Class";
+"gender_title" = "Gender";
+"gender_man" = "Man";
+"gender_woman" = "Woman";

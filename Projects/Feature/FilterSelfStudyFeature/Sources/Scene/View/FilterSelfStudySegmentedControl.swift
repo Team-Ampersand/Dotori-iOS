@@ -38,16 +38,9 @@ final class FilterSelfStudySegmentedControl: BaseView {
             buttonStackView
         }
     }
-}
 
-extension FilterSelfStudySegmentedControl: FilterSelfStudySegmentedControlActionProtocol {
-    var indexDidChangedPublisher: AnyPublisher<Int?, Never> {
-        indexSubject.eraseToAnyPublisher()
-    }
-}
-
-private extension FilterSelfStudySegmentedControl {
-    func updateSelectedIndex(index: Int?) {
+    public func updateSelectedIndex(index: Int?) {
+        indexSubject.send(index)
         self.subscription.removeAll()
         let buttons = self.items.enumerated().map {
             index == $0
@@ -57,7 +50,15 @@ private extension FilterSelfStudySegmentedControl {
         self.buttonStackView.removeAllChildren()
         self.buttonStackView.addArrangedSubviews(views: buttons)
     }
+}
 
+extension FilterSelfStudySegmentedControl: FilterSelfStudySegmentedControlActionProtocol {
+    var indexDidChangedPublisher: AnyPublisher<Int?, Never> {
+        indexSubject.eraseToAnyPublisher()
+    }
+}
+
+private extension FilterSelfStudySegmentedControl {
     func makeUnselectedButton(index: Int, title: String) -> UIButton {
         let button = DotoriOutlineButton(text: title)
             .set(\.contentEdgeInsets, .vertical(8.5))
