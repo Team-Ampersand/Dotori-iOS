@@ -189,15 +189,17 @@ private extension HomeStore {
                 title: L10n.Home.selfStudyModifyLimitTitle,
                 placeholder: "\(currentState.selfStudyInfo.1)",
                 inputType: .number
-            ) { [modifySelfStudyPersonnelUseCase] limit in
+            ) { [modifySelfStudyPersonnelUseCase, weak self] limit in
                 do {
                     guard let limitInt = Int(limit) else { return }
                     try await modifySelfStudyPersonnelUseCase(limit: limitInt)
-                    await DotoriToast.makeToast(text: L10n.Home.completeToModifySelfStudyLimitTitle, style: .error)
+                    await DotoriToast.makeToast(text: L10n.Home.completeToModifySelfStudyLimitTitle, style: .success)
+                    self?.send(.refreshSelfStudyButtonDidTap)
                 } catch {
                     await DotoriToast.makeToast(text: error.localizedDescription, style: .error)
                 }
             }
+            route.send(inputDialogRoutePath)
             return
         }
 
@@ -227,15 +229,17 @@ private extension HomeStore {
                 title: L10n.Home.massageModifyLimitTitle,
                 placeholder: "\(currentState.massageInfo.1)",
                 inputType: .number
-            ) { [modifyMassagePersonnelUseCase] limit in
+            ) { [modifyMassagePersonnelUseCase, weak self] limit in
                 do {
                     guard let limitInt = Int(limit) else { return }
                     try await modifyMassagePersonnelUseCase(limit: limitInt)
-                    await DotoriToast.makeToast(text: L10n.Home.completeToModifyMassageLimitTitle, style: .error)
+                    await DotoriToast.makeToast(text: L10n.Home.completeToModifyMassageLimitTitle, style: .success)
+                    self?.send(.refreshMassageButtonDidTap)
                 } catch {
                     await DotoriToast.makeToast(text: error.localizedDescription, style: .error)
                 }
             }
+            route.send(inputDialogRoutePath)
             return
         }
 
