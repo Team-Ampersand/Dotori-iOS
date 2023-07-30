@@ -5,7 +5,9 @@ import DependencyPlugin
 let project = Project.module(
     name: ModulePaths.Feature.FilterSelfStudyFeature.rawValue,
     targets: [
-        .interface(module: .feature(.FilterSelfStudyFeature)),
+        .interface(module: .feature(.FilterSelfStudyFeature), dependencies: [
+            .feature(target: .BaseFeature, type: .interface)
+        ]),
         .implements(
             module: .feature(.FilterSelfStudyFeature),
             dependencies: [
