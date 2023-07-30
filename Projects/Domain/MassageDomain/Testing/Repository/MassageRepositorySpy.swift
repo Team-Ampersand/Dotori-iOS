@@ -24,4 +24,9 @@ final class MassageRepositorySpy: MassageRepository {
         fetchMassageRankListCallCount += 1
         return try await fetchMassageRankListHandler()
     }
+
+    var modifyMassagePersonnelCallCount = 0
+    func modifyMassagePersonnel(limit: Int) async throws {
+        modifyMassagePersonnelCallCount += 1
+    }
 }
