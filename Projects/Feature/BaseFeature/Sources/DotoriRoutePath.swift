@@ -1,3 +1,4 @@
+import BaseFeatureInterface
 import Moordinator
 import UIKit
 
@@ -13,6 +14,12 @@ public enum DotoriRoutePath: RoutePath {
         title: String = "",
         message: String = "",
         confirmAction: () async -> Void
+    )
+    case inputDialog(
+        title: String,
+        placeholder: String,
+        inputType: DialogInputType,
+        confirmAction: (String) async -> Void
     )
     case dismiss
     case pop

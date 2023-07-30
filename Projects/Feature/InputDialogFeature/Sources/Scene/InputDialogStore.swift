@@ -1,4 +1,5 @@
 import BaseFeature
+import BaseFeatureInterface
 import Combine
 import InputDialogFeatureInterface
 import Moordinator
@@ -12,7 +13,7 @@ final class InputDialogStore: BaseStore {
     private let confirmAction: (String) async -> Void
 
     init(
-        inputType: InputType,
+        inputType: DialogInputType,
         confirmAction: @escaping (String) async -> Void
     ) {
         self.initialState = .init(inputType: inputType)
@@ -21,7 +22,7 @@ final class InputDialogStore: BaseStore {
     }
 
     struct State {
-        var inputType: InputType
+        var inputType: DialogInputType
         var inputText = ""
         var isLoading = false
     }
@@ -41,7 +42,7 @@ extension InputDialogStore {
     func mutate(state: State, action: Action) -> SideEffect<Mutation, Never> {
         switch action {
         case let .updateInputText(inputText):
-            return .just(.updateInputText(inputText))
+            return self.updateInputText(inputText: inputText)
 
         case .dimmedBackgroundViewDidTap, .cancelButtonDidTap:
             route.send(DotoriRoutePath.dismiss)
@@ -76,5 +77,12 @@ extension InputDialogStore {
             newState.isLoading = isLoading
         }
         return newState
+    }
+}
+
+// MARK: - Mutate
+private extension InputDialogStore {
+    func updateInputText(inputText: String) -> SideEffect<Mutation, Never> {
+        return .just(.updateInputText(inputText))
     }
 }

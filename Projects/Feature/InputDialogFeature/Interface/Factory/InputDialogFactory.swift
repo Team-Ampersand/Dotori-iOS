@@ -5,7 +5,7 @@ public protocol InputDialogFactory {
     func makeViewController(
         title: String,
         placeholder: String,
-        inputType: InputType,
+        inputType: DialogInputType,
         confirmAction: @escaping (String) async -> Void
     ) -> any RoutedViewControllable
 }
