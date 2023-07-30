@@ -1,4 +1,7 @@
+import Inject
 import UIKit
+import UIKitUtil
+@testable import FilterSelfStudyFeature
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -9,9 +12,16 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let viewController = UIViewController()
-        viewController.view.backgroundColor = .yellow
-        window?.rootViewController = viewController
+        let store = FilterSelfStudyStore()
+        let viewController = Inject.ViewControllerHost(
+            FilterSelfStudyViewController(store: store)
+        )
+        let viewContr = UIViewController()
+        viewContr.view.backgroundColor = .blue
+        window?.rootViewController = viewContr
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            viewContr.modalPresent(viewController, animated: false)
+        }
         window?.makeKeyAndVisible()
 
         return true
