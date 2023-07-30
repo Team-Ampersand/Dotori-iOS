@@ -29,8 +29,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         let loadCurrentUserRoleUseCase: LoadCurrentUserRoleUseCaseSpy = .init()
         let applySelfStudyUseCase: ApplySelfStudyUseCaseSpy = .init()
         let cancelSelfStudyUseCase = CancelSelfStudyUseCaseSpy()
+        let modifySelfStudyPersonnelUseCase = ModifySelfStudyPersonnelUseCaseSpy()
         let applyMassageUseCase: ApplyMassageUseCaseSpy = .init()
         let cancelMassageUseCase = CancelMassageUseCaseSpy()
+        let modifyMassagePersonnelUseCase = ModifyMassagePersonnelUseCaseSpy()
         let logoutUseCase = LogoutUseCaseSpy()
         let store = HomeStore(
             repeatableTimer: repeatableTimerStub,
@@ -40,8 +42,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             loadCurrentUserRoleUseCase: loadCurrentUserRoleUseCase,
             applySelfStudyUseCase: applySelfStudyUseCase,
             cancelSelfStudyUseCase: cancelSelfStudyUseCase,
+            modifySelfStudyPersonnelUseCase: modifySelfStudyPersonnelUseCase,
             applyMassageUseCase: applyMassageUseCase,
             cancelMassageUseCase: cancelMassageUseCase,
+            modifyMassagePersonnelUseCase: modifyMassagePersonnelUseCase,
             logoutUseCase: logoutUseCase
         )
         let viewController = Inject.ViewControllerHost(

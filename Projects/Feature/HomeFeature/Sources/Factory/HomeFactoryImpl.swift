@@ -16,8 +16,10 @@ struct HomeFactoryImpl: HomeFactory {
     private let loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase
     private let applySelfStudyUseCase: any ApplySelfStudyUseCase
     private let cancelSelfStudyUseCase: any CancelSelfStudyUseCase
+    private let modifySelfStudyPersonnelUseCase: any ModifySelfStudyPersonnelUseCase
     private let applyMassageUseCase: any ApplyMassageUseCase
     private let cancelMassageUseCase: any CancelMassageUseCase
+    private let modifyMassagePersonnelUseCase: any ModifyMassagePersonnelUseCase
     private let logoutUseCase: any LogoutUseCase
     private let confirmationDialogFactory: any ConfirmationDialogFactory
     private let myViolationListFactory: any MyViolationListFactory
@@ -31,8 +33,10 @@ struct HomeFactoryImpl: HomeFactory {
         loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase,
         applySelfStudyUseCase: any ApplySelfStudyUseCase,
         cancelSelfStudyUseCase: any CancelSelfStudyUseCase,
+        modifySelfStudyPersonnelUseCase: any ModifySelfStudyPersonnelUseCase,
         applyMassageUseCase: any ApplyMassageUseCase,
         cancelMassageUseCase: any CancelMassageUseCase,
+        modifyMassagePersonnelUseCase: any ModifyMassagePersonnelUseCase,
         logoutUseCase: any LogoutUseCase,
         confirmationDialogFactory: any ConfirmationDialogFactory,
         myViolationListFactory: any MyViolationListFactory,
@@ -45,8 +49,10 @@ struct HomeFactoryImpl: HomeFactory {
         self.loadCurrentUserRoleUseCase = loadCurrentUserRoleUseCase
         self.applySelfStudyUseCase = applySelfStudyUseCase
         self.cancelSelfStudyUseCase = cancelSelfStudyUseCase
+        self.modifySelfStudyPersonnelUseCase = modifySelfStudyPersonnelUseCase
         self.applyMassageUseCase = applyMassageUseCase
         self.cancelMassageUseCase = cancelMassageUseCase
+        self.modifyMassagePersonnelUseCase = modifyMassagePersonnelUseCase
         self.logoutUseCase = logoutUseCase
         self.confirmationDialogFactory = confirmationDialogFactory
         self.myViolationListFactory = myViolationListFactory
@@ -62,15 +68,18 @@ struct HomeFactoryImpl: HomeFactory {
             loadCurrentUserRoleUseCase: loadCurrentUserRoleUseCase,
             applySelfStudyUseCase: applySelfStudyUseCase,
             cancelSelfStudyUseCase: cancelSelfStudyUseCase,
+            modifySelfStudyPersonnelUseCase: modifySelfStudyPersonnelUseCase,
             applyMassageUseCase: applyMassageUseCase,
             cancelMassageUseCase: cancelMassageUseCase,
+            modifyMassagePersonnelUseCase: modifyMassagePersonnelUseCase,
             logoutUseCase: logoutUseCase
         )
         let homeViewController = HomeViewController(store: homeStore)
         return HomeMoordinator(
             homeViewController: homeViewController,
             confirmationDialogFactory: confirmationDialogFactory,
-            myViolationListFactory: myViolationListFactory
+            myViolationListFactory: myViolationListFactory,
+            inputDialogFactory: inputDialogFactory
         )
     }
 }

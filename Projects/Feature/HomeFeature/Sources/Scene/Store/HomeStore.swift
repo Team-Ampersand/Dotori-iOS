@@ -30,8 +30,10 @@ final class HomeStore: BaseStore {
     private let loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase
     private let applySelfStudyUseCase: any ApplySelfStudyUseCase
     private let cancelSelfStudyUseCase: any CancelSelfStudyUseCase
+    private let modifySelfStudyPersonnelUseCase: any ModifySelfStudyPersonnelUseCase
     private let applyMassageUseCase: any ApplyMassageUseCase
     private let cancelMassageUseCase: any CancelMassageUseCase
+    private let modifyMassagePersonnelUseCase: any ModifyMassagePersonnelUseCase
     private let logoutUseCase: any LogoutUseCase
 
     init(
@@ -42,8 +44,10 @@ final class HomeStore: BaseStore {
         loadCurrentUserRoleUseCase: any LoadCurrentUserRoleUseCase,
         applySelfStudyUseCase: any ApplySelfStudyUseCase,
         cancelSelfStudyUseCase: any CancelSelfStudyUseCase,
+        modifySelfStudyPersonnelUseCase: any ModifySelfStudyPersonnelUseCase,
         applyMassageUseCase: any ApplyMassageUseCase,
         cancelMassageUseCase: any CancelMassageUseCase,
+        modifyMassagePersonnelUseCase: any ModifyMassagePersonnelUseCase,
         logoutUseCase: any LogoutUseCase
     ) {
         self.initialState = .init()
@@ -55,8 +59,10 @@ final class HomeStore: BaseStore {
         self.loadCurrentUserRoleUseCase = loadCurrentUserRoleUseCase
         self.applySelfStudyUseCase = applySelfStudyUseCase
         self.cancelSelfStudyUseCase = cancelSelfStudyUseCase
+        self.modifySelfStudyPersonnelUseCase = modifySelfStudyPersonnelUseCase
         self.applyMassageUseCase = applyMassageUseCase
         self.cancelMassageUseCase = cancelMassageUseCase
+        self.modifyMassagePersonnelUseCase = modifyMassagePersonnelUseCase
         self.logoutUseCase = logoutUseCase
     }
 
