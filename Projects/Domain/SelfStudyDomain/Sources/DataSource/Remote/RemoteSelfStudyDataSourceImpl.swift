@@ -47,4 +47,8 @@ final class RemoteSelfStudyDataSourceImpl: RemoteSelfStudyDataSource {
             SelfStudyEndpoint.checkSelfStudyMember(memberID: memberID, isChecked: isChecked)
         )
     }
+
+    func modifySelfStudyPersonnel(limit: Int) async throws {
+        try await networking.request(SelfStudyEndpoint.modifySelfStudyPersonnel(limit: limit))
+    }
 }

@@ -34,5 +34,9 @@ public final class SelfStudyDomainAssembly: Assembly {
         container.register(CheckSelfStudyMemberUseCase.self) { resolver in
             CheckSelfStudyMemberUseCaseImpl(selfStudyRepository: resolver.resolve(SelfStudyRepository.self)!)
         }
+
+        container.register(ModifySelfStudyPersonnelUseCase.self) { resolver in
+            ModifySelfStudyPersonnelUseCaseImpl(selfStudyRepository: resolver.resolve(SelfStudyRepository.self)!)
+        }
     }
 }
