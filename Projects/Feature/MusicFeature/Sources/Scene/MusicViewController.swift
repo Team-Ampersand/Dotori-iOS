@@ -66,7 +66,7 @@ final class MusicViewController: BaseStoredViewController<MusicStore> {
 
     override func configureNavigation() {
         self.navigationItem.setLeftBarButton(musicNavigationBarLabel, animated: true)
-        self.navigationItem.setRightBarButtonItems([newMusicButton], animated: true)
+        self.navigationItem.setRightBarButtonItems([proposeMusicButton], animated: true)
         #warning("날짜 선택 구현")
     }
 
