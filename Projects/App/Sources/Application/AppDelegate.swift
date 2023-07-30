@@ -3,6 +3,7 @@ import ConfirmationDialogFeature
 import Database
 import HomeFeature
 import IQKeyboardManagerSwift
+import InputDialogFeature
 import JwtStore
 import KeyValueStore
 import MainTabFeature
@@ -46,6 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DatabaseAssembly(),
             SplashAssembly(),
             HomeAssembly(),
+            InputDialogAssembly(),
             MyViolationListAssembly(),
             NoticeAssembly(),
             SelfStudyAssembly(),
