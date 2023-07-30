@@ -7,5 +7,6 @@
 */
 
 "massage_title" = "안마의자";
+"massage_limit_exceeded" = "안마의자 신청 인원이 초과되었습니다.";
 "empty_massage_title" = "안마의자를 신청한 인원이 없습니다..";
 "apply_from_home_massage_title" = "홈에서 안마의자 신청을 해보세요!";

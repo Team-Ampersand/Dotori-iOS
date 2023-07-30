@@ -41,7 +41,8 @@ final class NoticeStore: BaseStore {
         case viewDidLoad
         case fetchNoticeList
         case editButtonDidTap
-        case noticeDidTap(Int)
+        case noticeDidSelect(Int)
+        case noticeDidDeselect(Int)
     }
     enum Mutation {
         case updateNoticeList([NoticeModel])
@@ -69,8 +70,11 @@ extension NoticeStore {
                 .just(.removeAllSelectedNotice)
             )
 
-        case let .noticeDidTap(noticeID):
-            return noticeDidTap(noticeID: noticeID)
+        case let .noticeDidSelect(noticeID):
+            return noticeDidSelect(noticeID: noticeID)
+
+        case let .noticeDidDeselect(noticeID):
+            return noticeDidDeselect(noticeID: noticeID)
         }
         return .none
     }
@@ -129,15 +133,16 @@ private extension NoticeStore {
             .eraseToSideEffect()
     }
 
-    func noticeDidTap(noticeID: Int) -> SideEffect<Mutation, Never> {
+    func noticeDidSelect(noticeID: Int) -> SideEffect<Mutation, Never> {
         guard currentState.isEditingMode else {
-            route.send(DotoriRoutePath.noticeDetail(noticeID: noticeID))
+            route.send(DotoriRoutePath.detailNotice(noticeID: noticeID))
             return .none
         }
-        let mutation = currentState.selectedNotice.contains(noticeID)
-        ? Mutation.removeSelectedNotice(noticeID)
-        : Mutation.insertSelectedNotice(noticeID)
-        return .just(mutation)
+        return .just(.insertSelectedNotice(noticeID))
+    }
+
+    func noticeDidDeselect(noticeID: Int) -> SideEffect<Mutation, Never> {
+        return .just(.removeSelectedNotice(noticeID))
     }
 }
 

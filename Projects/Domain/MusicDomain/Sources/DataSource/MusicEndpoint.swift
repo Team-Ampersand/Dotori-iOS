@@ -1,9 +1,11 @@
 import Emdpoint
+import MusicDomainInterface
 import NetworkingInterface
 
 enum MusicEndpoint {
     case fetchMusicList(date: String)
     case removeMusic(musicID: Int)
+    case proposeMusic(url: String)
 }
 
 extension MusicEndpoint: DotoriEndpoint {
@@ -18,6 +20,9 @@ extension MusicEndpoint: DotoriEndpoint {
 
         case let .removeMusic(musicID):
             return .delete("/\(musicID)")
+
+        case .proposeMusic:
+            return .post("")
         }
     }
 
@@ -27,6 +32,12 @@ extension MusicEndpoint: DotoriEndpoint {
             return .requestParameters(query: [
                 "date": date
             ])
+
+        case let .proposeMusic(url):
+            return .requestParameters(body: [
+                "url": url
+            ])
+
         default:
             return .requestPlain
         }
@@ -34,5 +45,28 @@ extension MusicEndpoint: DotoriEndpoint {
 
     var jwtTokenType: JwtTokenType {
         .accessToken
+    }
+
+    var errorMap: [Int: Error] {
+        switch self {
+        case .proposeMusic:
+            return [
+                202: MusicDomainError.unavilableDate,
+                409: MusicDomainError.musicAlreadyProposed
+            ]
+
+        default:
+            return [:]
+        }
+    }
+
+    var validationCode: ClosedRange<Int> {
+        switch self {
+        case .proposeMusic:
+            return 200...200
+
+        default:
+            return 200...300
+        }
     }
 }

@@ -42,6 +42,7 @@ final class MusicStore: BaseStore {
         case viewDidLoad
         case refresh
         case cellMeatballDidTap(music: MusicModel)
+        case proposeMusicButtonDidTap
     }
     enum Mutation {
         case updateMusicList([MusicModel])
@@ -61,7 +62,11 @@ extension MusicStore {
 
         case let .cellMeatballDidTap(music):
             return self.cellMeatballDidTap(music: music)
+
+        case .proposeMusicButtonDidTap:
+            route.send(DotoriRoutePath.proposeMusic)
         }
+        return .none
     }
 }
 
@@ -107,7 +112,7 @@ private extension MusicStore {
     func fetchMusicList() -> SideEffect<Mutation, Never> {
         guard !currentState.isRefreshing else { return .none }
         let musicListEffect = SideEffect<[MusicModel], Error>
-            .tryAsync { [fetchMusicListUseCase] in
+            .tryAsync(priority: .low) { [fetchMusicListUseCase] in
                 try await fetchMusicListUseCase(date: Date().toStringWithCustomFormat("yyyy-MM-dd"))
             }
             .map(Mutation.updateMusicList)
@@ -119,15 +124,9 @@ private extension MusicStore {
     func cellMeatballAction(music: MusicModel) -> [UIAlertAction] {
         let youtubeID = self.parseYoutubeID(url: music.url)
         var actions: [UIAlertAction] = [
-            .init(title: L10n.Music.directGoTitle, style: .default, handler: { _ in
-                guard let youtubeID,
-                      let url = URL(string: "youtube://\(youtubeID)")
-                else { return }
-                if UIApplication.shared.canOpenURL(url) {
-                    UIApplication.shared.open(url)
-                } else if let webURL = URL(string: "https://youtube.com/watch?v=\(youtubeID)") {
-                    UIApplication.shared.open(webURL)
-                }
+            .init(title: L10n.Music.directGoTitle, style: .default, handler: { [route] _ in
+                guard let youtubeID else { return }
+                route.send(DotoriRoutePath.youtubeByID(id: youtubeID))
             })
         ]
         if currentState.currentUserRole != .member {

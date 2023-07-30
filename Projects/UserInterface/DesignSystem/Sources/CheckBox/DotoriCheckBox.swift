@@ -47,7 +47,7 @@ public final class DotoriCheckBox: UIControl {
     public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         self.isChecked.toggle()
-        self.sendActions(for: .valueChanged)
+        sendActions(for: .valueChanged)
     }
 
     // MARK: - Increase hit area
@@ -78,13 +78,14 @@ public final class DotoriCheckBox: UIControl {
 extension DotoriCheckBox: DotoriCheckBoxActionProtocol {
     public var checkBoxDidTapPublisher: AnyPublisher<Bool, Never> {
         self.controlPublisher(for: .valueChanged)
-            .map { [weak self] _ in self?.isChecked ?? false }
+            .compactMap { $0 as? DotoriCheckBox }
+            .map(\.isChecked)
             .eraseToAnyPublisher()
     }
 }
 
 private extension DotoriCheckBox {
-    private func setup() {
+    func setup() {
         backgroundColor = uncheckedBackgroundColor
         layer.borderColor = uncheckedBorderColor.cgColor
         layer.borderWidth = 1
@@ -92,7 +93,7 @@ private extension DotoriCheckBox {
         addSubview(checkedView)
     }
 
-    private func updateState() {
+    func updateState() {
         backgroundColor = isChecked ? checkedBackgroundColor : uncheckedBackgroundColor
         layer.borderColor = isChecked ? checkedBorderColor.cgColor : uncheckedBorderColor.cgColor
         checkedView.isHidden = !isChecked

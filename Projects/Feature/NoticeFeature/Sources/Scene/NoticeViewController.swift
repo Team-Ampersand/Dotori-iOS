@@ -32,7 +32,6 @@ final class NoticeViewController: BaseStoredViewController<NoticeStore> {
         .set(\.backgroundColor, .clear)
         .set(\.separatorStyle, .none)
         .set(\.sectionHeaderTopPadding, 0)
-        .set(\.allowsSelection, false)
         .set(\.allowsMultipleSelection, false)
         .then {
             $0.register(cellType: NoticeCell.self)
@@ -98,9 +97,14 @@ final class NoticeViewController: BaseStoredViewController<NoticeStore> {
             .store(in: &subscription)
 
         noticeTableAdapter.modelSelected
-            .merge(with: noticeTableAdapter.modelDeselected)
             .map(\.id)
-            .map(Store.Action.noticeDidTap)
+            .map(Store.Action.noticeDidSelect)
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+
+        noticeTableAdapter.modelDeselected
+            .map(\.id)
+            .map(Store.Action.noticeDidDeselect)
             .sink(receiveValue: store.send(_:))
             .store(in: &subscription)
 
@@ -110,6 +114,7 @@ final class NoticeViewController: BaseStoredViewController<NoticeStore> {
             .store(in: &subscription)
     }
 
+    // swiftlint: disable function_body_length
     override func bindState() {
         let sharedState = store.state.share()
             .receive(on: DispatchQueue.main)
@@ -132,7 +137,6 @@ final class NoticeViewController: BaseStoredViewController<NoticeStore> {
             .map { $0.currentUserRole != .member && $0.isEditingMode }
             .removeDuplicates()
             .sink(with: noticeTableView, receiveValue: { tableView, isEditing in
-                tableView.allowsSelection = isEditing
                 tableView.allowsMultipleSelection = isEditing
                 tableView.reloadData()
             })
@@ -140,6 +144,7 @@ final class NoticeViewController: BaseStoredViewController<NoticeStore> {
 
         sharedState
             .map(\.currentUserRole)
+            .removeDuplicates()
             .map { $0 == .member }
             .sink { [editButton, writeOrRemoveButton] isMember in
                 editButton.isHidden = isMember
@@ -149,16 +154,11 @@ final class NoticeViewController: BaseStoredViewController<NoticeStore> {
 
         sharedState
             .map(\.isEditingMode)
-            .map { $0 ? L10n.Global.cancelButtonTitle : L10n.Notice.editButtonTitle }
-            .sink(with: editButton, receiveValue: { editButton, title in
-                editButton.setTitle(title, for: .normal)
-            })
-            .store(in: &subscription)
-
-        sharedState
-            .map(\.isEditingMode)
             .sink(receiveValue: { [weak self] isEditingMode in
                 self?.transformWriteOrRemoveButton(isEditMode: isEditingMode)
+
+                let title = isEditingMode ? L10n.Global.cancelButtonTitle : L10n.Notice.editButtonTitle
+                self?.editButton.setTitle(title, for: .normal)
             })
             .store(in: &subscription)
 
@@ -171,6 +171,7 @@ final class NoticeViewController: BaseStoredViewController<NoticeStore> {
             })
             .store(in: &subscription)
     }
+    // swiftlint: enable function_body_length
 }
 
 private extension NoticeViewController {

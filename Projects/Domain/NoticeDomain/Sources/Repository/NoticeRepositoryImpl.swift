@@ -10,4 +10,12 @@ final class NoticeRepositoryImpl: NoticeRepository {
     func fetchNoticeList() async throws -> [NoticeEntity] {
         try await remoteNoticeDataSource.fetchNoticeList()
     }
+
+    func fetchNotice(id: Int) async throws -> DetailNoticeEntity {
+        try await remoteNoticeDataSource.fetchNotice(id: id)
+    }
+
+    func removeNotice(id: Int) async throws {
+        try await remoteNoticeDataSource.removeNotice(id: id)
+    }
 }
