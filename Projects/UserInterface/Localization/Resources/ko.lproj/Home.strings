@@ -1,4 +1,4 @@
-/* 
+/*
   Home.strings
   Localization
 
@@ -37,3 +37,7 @@
 "really_cancel_massage_title" = "정말 안마의자 신청을 취소하시겠습니까?";
 "complete_to_cancel_massage_title" = "안마의자를 취소하였습니다.";
 "complete_to_apply_massage_title" = "안마의자를 신청하였습니다.";
+"self_study_modify_limit_title" = "자습 인원 수정";
+"complete_to_modify_self_study_limit_title" = "자습 인원 수정 완료";
+"massage_modify_limit_title" = "안마의자 인원 수정";
+"complete_to_modify_massage_limit_title" = "안마의자 인원 수정 완료";

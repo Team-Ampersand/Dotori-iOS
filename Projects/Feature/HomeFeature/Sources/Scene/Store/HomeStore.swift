@@ -184,10 +184,23 @@ private extension HomeStore {
     }
 
     func applySelfStudyButtonDidTap() {
-//        guard currentState.currentUserRole == .member else {
-//            return
-//        }
-        #warning("자습 인원 수정 로직 추가")
+        guard currentState.currentUserRole == .member else {
+            let inputDialogRoutePath = DotoriRoutePath.inputDialog(
+                title: L10n.Home.selfStudyModifyLimitTitle,
+                placeholder: "\(currentState.selfStudyInfo.1)",
+                inputType: .number
+            ) { [modifySelfStudyPersonnelUseCase] limit in
+                do {
+                    guard let limitInt = Int(limit) else { return }
+                    try await modifySelfStudyPersonnelUseCase(limit: limitInt)
+                    await DotoriToast.makeToast(text: L10n.Home.completeToModifySelfStudyLimitTitle, style: .error)
+                } catch {
+                    await DotoriToast.makeToast(text: error.localizedDescription, style: .error)
+                }
+            }
+            return
+        }
+
         Task.catching {
             if self.currentState.selfStudyStatus == .applied {
                 let confirmRoutePath = DotoriRoutePath.confirmationDialog(
@@ -209,10 +222,23 @@ private extension HomeStore {
     }
 
     func applyMassageButtonDidTap() {
-//        guard currentState.currentUserRole == .member else {
-//            return
-//        }
-        #warning("안마 인원 수정 로직 추가")
+        guard currentState.currentUserRole == .member else {
+            let inputDialogRoutePath = DotoriRoutePath.inputDialog(
+                title: L10n.Home.massageModifyLimitTitle,
+                placeholder: "\(currentState.massageInfo.1)",
+                inputType: .number
+            ) { [modifyMassagePersonnelUseCase] limit in
+                do {
+                    guard let limitInt = Int(limit) else { return }
+                    try await modifyMassagePersonnelUseCase(limit: limitInt)
+                    await DotoriToast.makeToast(text: L10n.Home.completeToModifyMassageLimitTitle, style: .error)
+                } catch {
+                    await DotoriToast.makeToast(text: error.localizedDescription, style: .error)
+                }
+            }
+            return
+        }
+
         Task.catching {
             if self.currentState.massageStatus == .applied {
                 let confirmRoutePath = DotoriRoutePath.confirmationDialog(
