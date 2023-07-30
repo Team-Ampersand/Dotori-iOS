@@ -25,7 +25,7 @@ final class MusicViewController: BaseStoredViewController<MusicStore> {
         .then {
             $0.register(cellType: MusicCell.self)
         }
-    private let musicRefreshControl = UIRefreshControl()
+    private let musicRefreshControl = DotoriRefreshControl()
     private lazy var musicTableAdapter = TableViewAdapter<GenericSectionModel<MusicModel>>(
         tableView: musicTableView
     ) { [weak self] tableView, indexPath, item in
@@ -66,7 +66,8 @@ final class MusicViewController: BaseStoredViewController<MusicStore> {
 
     override func configureNavigation() {
         self.navigationItem.setLeftBarButton(musicNavigationBarLabel, animated: true)
-        self.navigationItem.setRightBarButtonItems([proposeMusicButton, calendarBarButton], animated: true)
+        self.navigationItem.setRightBarButtonItems([proposeMusicButton], animated: true)
+        #warning("날짜 선택 구현")
     }
 
     override func bindAction() {

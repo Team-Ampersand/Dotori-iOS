@@ -1,6 +1,8 @@
 import BaseFeature
+import BaseFeatureInterface
 import ConfirmationDialogFeature
 import DWebKit
+import InputDialogFeatureInterface
 import Moordinator
 import MyViolationListFeature
 import TimerInterface
@@ -12,6 +14,7 @@ final class HomeMoordinator: Moordinator {
     private let homeViewController: any StoredViewControllable
     private let confirmationDialogFactory: any ConfirmationDialogFactory
     private let myViolationListFactory: any MyViolationListFactory
+    private let inputDialogFactory: any InputDialogFactory
     var root: Presentable {
         rootVC
     }
@@ -19,11 +22,13 @@ final class HomeMoordinator: Moordinator {
     init(
         homeViewController: any StoredViewControllable,
         confirmationDialogFactory: any ConfirmationDialogFactory,
-        myViolationListFactory: any MyViolationListFactory
+        myViolationListFactory: any MyViolationListFactory,
+        inputDialogFactory: any InputDialogFactory
     ) {
         self.homeViewController = homeViewController
         self.confirmationDialogFactory = confirmationDialogFactory
         self.myViolationListFactory = myViolationListFactory
+        self.inputDialogFactory = inputDialogFactory
     }
 
     func route(to path: RoutePath) -> MoordinatorContributors {
@@ -45,24 +50,21 @@ final class HomeMoordinator: Moordinator {
             return presentToMyViolationList()
 
         case let .confirmationDialog(title, description, confirmAction):
-            let viewController = confirmationDialogFactory.makeViewController(
-                title: title,
-                description: description,
-                confirmAction: confirmAction
-            )
-            self.rootVC.modalPresent(viewController)
-            return .one(
-                .contribute(
-                    withNextPresentable: viewController,
-                    withNextRouter: viewController.store
-                )
-            )
+            return presentToConfirmationDialog(title: title, description: description, confirmAction: confirmAction)
 
         case .dismiss:
             self.rootVC.presentedViewController?.dismiss(animated: true)
 
         case .signin:
             return .end(DotoriRoutePath.signin)
+
+        case let .inputDialog(title, placeholder, inputType, confirmAction):
+            return presentToInputDialog(
+                title: title,
+                placeholder: placeholder,
+                inputType: inputType,
+                confirmAction: confirmAction
+            )
 
         default:
             return .none
@@ -89,6 +91,25 @@ private extension HomeMoordinator {
         ))
     }
 
+    func presentToConfirmationDialog(
+        title: String,
+        description: String,
+        confirmAction: @escaping () async -> Void
+    ) -> MoordinatorContributors {
+        let viewController = confirmationDialogFactory.makeViewController(
+            title: title,
+            description: description,
+            confirmAction: confirmAction
+        )
+        self.rootVC.modalPresent(viewController)
+        return .one(
+            .contribute(
+                withNextPresentable: viewController,
+                withNextRouter: viewController.store
+            )
+        )
+    }
+
     func presentToAlert(
         title: String?,
         message: String?,
@@ -103,5 +124,26 @@ private extension HomeMoordinator {
         }
         self.rootVC.topViewController?.present(alert, animated: true)
         return .none
+    }
+
+    func presentToInputDialog(
+        title: String,
+        placeholder: String,
+        inputType: DialogInputType,
+        confirmAction: @escaping (String) async -> Void
+    ) -> MoordinatorContributors {
+        let viewController = inputDialogFactory.makeViewController(
+            title: title,
+            placeholder: placeholder,
+            inputType: inputType,
+            confirmAction: confirmAction
+        )
+        self.rootVC.topViewController?.modalPresent(viewController)
+        return .one(
+            .contribute(
+                withNextPresentable: viewController,
+                withNextRouter: viewController.router
+            )
+        )
     }
 }

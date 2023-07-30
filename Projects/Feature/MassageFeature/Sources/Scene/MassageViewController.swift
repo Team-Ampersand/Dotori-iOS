@@ -17,7 +17,7 @@ final class MassageViewController: BaseStoredViewController<MassageStore> {
         .then {
             $0.register(cellType: MassageCell.self)
         }
-    private let massageRefreshContorol = UIRefreshControl()
+    private let massageRefreshContorol = DotoriRefreshControl()
     private lazy var massageTableAdapter = TableViewAdapter<GenericSectionModel<MassageRankModel>>(
         tableView: massageTableView
     ) { tableView, indexPath, item in

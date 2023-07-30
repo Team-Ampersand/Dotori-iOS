@@ -1,7 +1,10 @@
+import BaseFeatureInterface
+import Moordinator
 import UIKit
 
 open class BaseStoredViewController<Store: BaseStore>:
     BaseViewController,
+    RoutedViewControllable,
     StoredViewControllable,
     StoreBindable {
 

@@ -22,4 +22,8 @@ final class MassageRepositoryImpl: MassageRepository {
     func fetchMassageRankList() async throws -> [MassageRankEntity] {
         try await remoteMassageDataSource.fetchMassageRankList()
     }
+
+    func modifyMassagePersonnel(limit: Int) async throws {
+        try await remoteMassageDataSource.modifyMassagePersonnel(limit: limit)
+    }
 }

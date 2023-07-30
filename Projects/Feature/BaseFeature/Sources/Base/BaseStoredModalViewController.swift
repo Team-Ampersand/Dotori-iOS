@@ -1,4 +1,5 @@
 import Anim
+import BaseFeatureInterface
 import Combine
 import Configure
 import DesignSystem
@@ -10,6 +11,7 @@ import UIKit
  */
 open class BaseStoredModalViewController<Store: BaseStore>:
     BaseModalViewController,
+    RoutedViewControllable,
     StoredViewControllable,
     StoreBindable {
 

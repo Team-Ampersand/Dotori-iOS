@@ -37,4 +37,9 @@ final class RemoteSelfStudyDataSourceSpy: RemoteSelfStudyDataSource {
     func checkSelfStudyMember(memberID: Int, isChecked: Bool) async throws {
         checkSelfStudyMemberCallCount += 1
     }
+
+    var modifySelfStudyPersonnelCallCount = 0
+    func modifySelfStudyPersonnel(limit: Int) async throws {
+        modifySelfStudyPersonnelCallCount += 1
+    }
 }

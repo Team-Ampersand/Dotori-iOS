@@ -9,6 +9,7 @@ public enum SelfStudyEndpoint {
     case fetchSelfStudyRank
     case fetchSelfStudySearch(FetchSelfStudyRankSearchRequestDTO)
     case checkSelfStudyMember(memberID: Int, isChecked: Bool)
+    case modifySelfStudyPersonnel(limit: Int)
 }
 
 extension SelfStudyEndpoint: DotoriEndpoint {
@@ -35,6 +36,9 @@ extension SelfStudyEndpoint: DotoriEndpoint {
 
         case let .checkSelfStudyMember(memberID, _):
             return .patch("/check/\(memberID)")
+
+        case .modifySelfStudyPersonnel:
+            return .patch("/limit")
         }
     }
 
@@ -46,6 +50,11 @@ extension SelfStudyEndpoint: DotoriEndpoint {
         case let .checkSelfStudyMember(_, isChecked):
             return .requestParameters(body: [
                 "selfStudyCheck": isChecked
+            ])
+
+        case let .modifySelfStudyPersonnel(limit):
+            return .requestParameters(body: [
+                "limit": limit
             ])
 
         default:

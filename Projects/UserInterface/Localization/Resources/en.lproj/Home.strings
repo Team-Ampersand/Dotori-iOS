@@ -29,3 +29,15 @@
 "recent_refresh_date" = "Recent Refresh : %@";
 "logout_title" = "Logout";
 "really_logout_title" = "Are you sure you want to logout Dotori?";
+"cancel_self_study_title" = "Cancel SelfStudy";
+"really_cancel_self_study_title" = "Are you sure you want to cancel SelfStudy?";
+"complete_to_cancel_self_study_title" = "Complete to cancel SelfStudy";
+"complete_to_apply_self_study_title" = "Complete to apply SelfStudy";
+"cancel_massage_title" = "Cancel Massage";
+"really_cancel_massage_title" = "Are you sure you want to cancel Massage?";
+"complete_to_cancel_massage_title" = "Complete to cancel Massage";
+"complete_to_apply_massage_title" = "Complete to apply Massage";
+"self_study_modify_limit_title" = "Modify SelfStudy limit";
+"complete_to_modify_self_study_limit_title" = "Complete to modify SelfStudy limit";
+"massage_modify_limit_title" = "Modify Massage limit";
+"complete_to_modify_massage_limit_title" = "Complete to modify Massage limit";
