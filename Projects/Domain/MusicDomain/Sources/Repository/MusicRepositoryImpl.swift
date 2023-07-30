@@ -14,4 +14,8 @@ final class MusicRepositoryImpl: MusicRepository {
     func removeMusic(musicID: Int) async throws {
         try await remoteMusicDataSource.removeMusic(musicID: musicID)
     }
+
+    func proposeMusic(url: String) async throws {
+        try await remoteMusicDataSource.proposeMusic(url: url)
+    }
 }

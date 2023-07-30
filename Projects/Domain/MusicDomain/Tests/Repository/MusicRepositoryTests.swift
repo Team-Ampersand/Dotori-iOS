@@ -35,4 +35,20 @@ final class MusicRepositoryTests: XCTestCase {
         XCTAssertEqual(actual, expected)
         XCTAssertEqual(remoteMusicDataSource.fetchMusicListCallCount, 1)
     }
+
+    func test_RemoveMusic() async throws {
+        XCTAssertEqual(remoteMusicDataSource.removeMusicCallCount, 0)
+
+        try await sut.removeMusic(musicID: 1)
+
+        XCTAssertEqual(remoteMusicDataSource.removeMusicCallCount, 1)
+    }
+
+    func test_ProposeMusic() async throws {
+        XCTAssertEqual(remoteMusicDataSource.proposeMusicCallCount, 0)
+
+        try await sut.proposeMusic(url: "")
+
+        XCTAssertEqual(remoteMusicDataSource.proposeMusicCallCount, 1)
+    }
 }
