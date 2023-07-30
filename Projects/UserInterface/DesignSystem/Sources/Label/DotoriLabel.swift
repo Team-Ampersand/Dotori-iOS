@@ -1,6 +1,17 @@
+import MSGLayout
 import UIKit
 
 public final class DotoriLabel: UILabel {
+    public var padding = UIEdgeInsets.all(0)
+
+    public override var intrinsicContentSize: CGSize {
+        var contentSize = super.intrinsicContentSize
+        contentSize.height += padding.top + padding.bottom
+        contentSize.width += padding.left + padding.right
+
+        return contentSize
+    }
+
     public init(
         _ title: String = "",
         textColor: UIColor.DotoriColorSystem = .neutral(.n10),
@@ -10,6 +21,10 @@ public final class DotoriLabel: UILabel {
         self.text = title
         self.font = .dotori(font)
         self.textColor = .dotori(textColor)
+    }
+
+    public override func drawText(in rect: CGRect) {
+        super.drawText(in: rect.inset(by: padding))
     }
 
     required init?(coder: NSCoder) {

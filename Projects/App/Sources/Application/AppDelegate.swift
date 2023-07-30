@@ -1,6 +1,7 @@
 import AuthDomain
 import ConfirmationDialogFeature
 import Database
+import DetailNoticeFeature
 import HomeFeature
 import IQKeyboardManagerSwift
 import InputDialogFeature
@@ -50,6 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             InputDialogAssembly(),
             MyViolationListAssembly(),
             NoticeAssembly(),
+            DetailNoticeAssembly(),
             SelfStudyAssembly(),
             ConfirmationDialogAssembly(),
             MassageAssembly(),

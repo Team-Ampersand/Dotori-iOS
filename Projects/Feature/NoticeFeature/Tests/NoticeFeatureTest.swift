@@ -98,7 +98,7 @@ final class NoticeFeatureTests: XCTestCase {
         XCTAssertEqual(sut.currentState.isEditingMode, true)
     }
 
-    func test_RouteNoticeDetail_When_NoticeDidTap_And_IsEditingFalse() {
+    func test_RouteNoticeDetail_When_NoticeDidSelect_And_IsEditingFalse() {
         let expectedNoticeID = 1
         XCTAssertEqual(sut.currentState.isEditingMode, false)
         let expectation = XCTestExpectation(description: "route expectation")
@@ -110,12 +110,12 @@ final class NoticeFeatureTests: XCTestCase {
         }
         .store(in: &subscription)
 
-        sut.send(.noticeDidTap(expectedNoticeID))
+        sut.send(.noticeDidSelect(expectedNoticeID))
 
         wait(for: [expectation], timeout: 1.0)
         guard
             let latestRoutePath = latestRoutePath?.asDotori,
-            case let .noticeDetail(noticeID) = latestRoutePath,
+            case let .detailNotice(noticeID) = latestRoutePath,
             noticeID == expectedNoticeID
         else {
             XCTFail("latestRoutePath is not DotoriRoutePath.noticeDetail")
@@ -123,24 +123,24 @@ final class NoticeFeatureTests: XCTestCase {
         }
     }
 
-    func test_InsertSelectedNotice_When_NoticeDidTap_And_IsEditingTrue() {
+    func test_InsertSelectedNotice_When_NoticeDidSelectAndDeselect_And_IsEditingTrue() {
         sut.send(.editButtonDidTap)
         XCTAssertEqual(sut.currentState.isEditingMode, true)
 
         let noticeIDOne = 1
-        sut.send(.noticeDidTap(noticeIDOne))
+        sut.send(.noticeDidSelect(noticeIDOne))
 
         XCTAssertEqual([noticeIDOne], sut.currentState.selectedNotice)
 
         let noticeIDTwo = 2
-        sut.send(.noticeDidTap(noticeIDTwo))
+        sut.send(.noticeDidSelect(noticeIDTwo))
         XCTAssertEqual([noticeIDOne, noticeIDTwo], sut.currentState.selectedNotice)
 
-        sut.send(.noticeDidTap(noticeIDOne))
+        sut.send(.noticeDidSelect(noticeIDOne))
+        XCTAssertEqual([noticeIDOne, noticeIDTwo], sut.currentState.selectedNotice)
+
+        sut.send(.noticeDidDeselect(noticeIDOne))
         XCTAssertEqual([noticeIDTwo], sut.currentState.selectedNotice)
-
-        sut.send(.noticeDidTap(noticeIDOne))
-        XCTAssertEqual([noticeIDOne, noticeIDTwo], sut.currentState.selectedNotice)
 
         sut.send(.editButtonDidTap)
         XCTAssertEqual([], sut.currentState.selectedNotice)

@@ -11,6 +11,7 @@ let project = Project.module(
         .implements(module: .feature(.BaseFeature), product: .framework, dependencies: [
             .SPM.Store,
             .SPM.IQKeyboardManagerSwift,
+            .SPM.Nuke,
             .feature(target: .BaseFeature, type: .interface),
             .userInterface(target: .DesignSystem),
             .userInterface(target: .Localization),

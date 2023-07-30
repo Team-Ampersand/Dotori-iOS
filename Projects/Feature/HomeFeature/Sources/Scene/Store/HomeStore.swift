@@ -170,7 +170,7 @@ private extension HomeStore {
             .init(title: L10n.Home.logoutButtonTitle, style: .default) { [route, logoutUseCase] _ in
                 let confirmationDialogRoutePath = DotoriRoutePath.confirmationDialog(
                     title: L10n.Home.logoutTitle,
-                    message: L10n.Home.reallyLogoutTitle
+                    description: L10n.Home.reallyLogoutTitle
                 ) {
                     logoutUseCase()
                     route.send(DotoriRoutePath.signin)
@@ -207,7 +207,7 @@ private extension HomeStore {
             if self.currentState.selfStudyStatus == .applied {
                 let confirmRoutePath = DotoriRoutePath.confirmationDialog(
                     title: L10n.Home.cancelSelfStudyTitle,
-                    message: L10n.Home.reallyCancelSelfStudyTitle
+                    description: L10n.Home.reallyCancelSelfStudyTitle
                 ) { [cancelSelfStudyUseCase = self.cancelSelfStudyUseCase] in
                     try? await cancelSelfStudyUseCase()
                     await DotoriToast.makeToast(text: L10n.Home.completeToCancelSelfStudyTitle, style: .success)
@@ -247,7 +247,7 @@ private extension HomeStore {
             if self.currentState.massageStatus == .applied {
                 let confirmRoutePath = DotoriRoutePath.confirmationDialog(
                     title: L10n.Home.cancelMassageTitle,
-                    message: L10n.Home.reallyCancelMassageTitle
+                    description: L10n.Home.reallyCancelMassageTitle
                 ) { [cancelMassageUseCase = self.cancelMassageUseCase] in
                     try? await cancelMassageUseCase()
                     await DotoriToast.makeToast(text: L10n.Home.completeToCancelMassageTitle, style: .success)
