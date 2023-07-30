@@ -33,7 +33,7 @@ final class HomeFeatureTests: XCTestCase {
         loadCurrentUserRoleUseCase = .init()
         applySelfStudyUseCase = .init()
         cancelSelfStudyUseCase = .init()
-        modifyMassagePersonnelUseCase = .init()
+        modifySelfStudyPersonnelUseCase = .init()
         applyMassageUseCase = .init()
         cancelMassageUseCase = .init()
         modifyMassagePersonnelUseCase = .init()
