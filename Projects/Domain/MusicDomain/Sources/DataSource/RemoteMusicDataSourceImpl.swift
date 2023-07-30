@@ -19,4 +19,8 @@ final class RemoteMusicDataSourceImpl: RemoteMusicDataSource {
     func removeMusic(musicID: Int) async throws {
         try await networking.request(MusicEndpoint.removeMusic(musicID: musicID))
     }
+
+    func proposeMusic(url: String) async throws {
+        try await networking.request(MusicEndpoint.proposeMusic(url: url))
+    }
 }

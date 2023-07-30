@@ -12,7 +12,7 @@ final class MusicViewController: BaseStoredViewController<MusicStore> {
     private let calendarBarButton = UIBarButtonItem(
         image: .Dotori.calendar.tintColor(color: .dotori(.neutral(.n20)))
     )
-    public let newMusicButton = UIBarButtonItem(
+    public let proposeMusicButton = UIBarButtonItem(
         image: .Dotori.plus.tintColor(color: .dotori(.neutral(.n20)))
     )
     private let musicTableView = UITableView()
@@ -66,7 +66,7 @@ final class MusicViewController: BaseStoredViewController<MusicStore> {
 
     override func configureNavigation() {
         self.navigationItem.setLeftBarButton(musicNavigationBarLabel, animated: true)
-        self.navigationItem.setRightBarButtonItems([newMusicButton, calendarBarButton], animated: true)
+        self.navigationItem.setRightBarButtonItems([proposeMusicButton, calendarBarButton], animated: true)
     }
 
     override func bindAction() {
@@ -77,6 +77,11 @@ final class MusicViewController: BaseStoredViewController<MusicStore> {
 
         musicRefreshControl.controlPublisher(for: .valueChanged)
             .map { _ in Store.Action.refresh }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+
+        proposeMusicButton.tapPublisher
+            .map { Store.Action.proposeMusicButtonDidTap }
             .sink(receiveValue: store.send(_:))
             .store(in: &subscription)
     }

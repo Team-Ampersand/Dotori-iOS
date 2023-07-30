@@ -15,6 +15,7 @@ import MyViolationListFeature
 import Networking
 import NoticeDomain
 import NoticeFeature
+import ProposeMusicFeature
 import RenewalPasswordFeature
 import RootFeature
 import SelfStudyDomain
@@ -50,6 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             SelfStudyAssembly(),
             ConfirmationDialogAssembly(),
             MassageAssembly(),
+            ProposeMusicAssembly(),
             MusicAssembly(),
             MainAssembly(),
             SigninAssembly(),
