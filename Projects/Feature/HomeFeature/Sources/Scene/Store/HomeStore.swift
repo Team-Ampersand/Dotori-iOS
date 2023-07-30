@@ -125,6 +125,7 @@ extension HomeStore {
     // swiftlint: enable cyclomatic_complexity
 }
 
+// MARK: - Mutate
 private extension HomeStore {
     func viewDidLoad() -> SideEffect<Mutation, Never> {
         let timerPublisher = repeatableTimer.repeatPublisher(every: 1.0)
@@ -184,16 +185,16 @@ private extension HomeStore {
         Task.catching {
             if self.currentState.selfStudyStatus == .applied {
                 let confirmRoutePath = DotoriRoutePath.confirmationDialog(
-                    title: "자습 신청 취소",
-                    message: "정말 자습 신청을 취소하시겠습니까?"
+                    title: L10n.Home.cancelSelfStudyTitle,
+                    message: L10n.Home.reallyCancelSelfStudyTitle
                 ) { [cancelSelfStudyUseCase = self.cancelSelfStudyUseCase] in
                     try? await cancelSelfStudyUseCase()
-                    await DotoriToast.makeToast(text: "자습을 취소하였습니다.", style: .success)
+                    await DotoriToast.makeToast(text: L10n.Home.completeToCancelSelfStudyTitle, style: .success)
                 }
                 self.route.send(confirmRoutePath)
             } else {
                 try await self.applySelfStudyUseCase()
-                await DotoriToast.makeToast(text: "자습을 신청하였습니다.", style: .success)
+                await DotoriToast.makeToast(text: L10n.Home.completeToApplyMassageTitle, style: .success)
             }
             self.send(.refreshSelfStudyButtonDidTap)
         } catch: { @MainActor error in
@@ -209,16 +210,16 @@ private extension HomeStore {
         Task.catching {
             if self.currentState.massageStatus == .applied {
                 let confirmRoutePath = DotoriRoutePath.confirmationDialog(
-                    title: "안마의자 신청 취소",
-                    message: "정말 안마의자 신청을 취소하시겠습니까?"
+                    title: L10n.Home.cancelMassageTitle,
+                    message: L10n.Home.reallyCancelMassageTitle
                 ) { [cancelMassageUseCase = self.cancelMassageUseCase] in
                     try? await cancelMassageUseCase()
-                    await DotoriToast.makeToast(text: "안마의자를 취소하였습니다.", style: .success)
+                    await DotoriToast.makeToast(text: L10n.Home.completeToCancelMassageTitle, style: .success)
                 }
                 self.route.send(confirmRoutePath)
             } else {
                 try await self.applyMassageUseCase()
-                await DotoriToast.makeToast(text: "안마의자를 신청하였습니다.", style: .success)
+                await DotoriToast.makeToast(text: L10n.Home.completeToApplyMassageTitle, style: .success)
             }
             self.send(.refreshMassageButtonDidTap)
         } catch: { @MainActor error in
@@ -281,7 +282,10 @@ private extension HomeStore {
             }
             .eraseToSideEffect()
     }
+}
 
+// MARK: - Reusable
+private extension HomeStore {
     func makeLoadingSideEffect(
         _ publisher: SideEffect<Mutation, Never>,
         loadingState: HomeLoadingState
@@ -294,52 +298,5 @@ private extension HomeStore {
             .append(publisher)
             .append(endLoadingPublisher)
             .eraseToSideEffect()
-    }
-}
-
-extension SelfStudyStatusType {
-    func buttonDisplay(userRole: UserRoleType) -> String {
-        guard userRole == .member else {
-            return L10n.Home.modifyLimitButtonTitle
-        }
-        switch self {
-        case .can: return L10n.Home.canSelfStudyButtonTitle
-        case .applied: return L10n.Home.appliedSelfStudyButtonTitle
-        case .cant: return L10n.Home.cantApplyButtonTitle
-        case .impossible: return L10n.Home.impossibleSelfStudyButtonTitle
-        }
-    }
-
-    func buttonIsEnabled(userRole: UserRoleType) -> Bool {
-        guard userRole == .member else {
-            return true
-        }
-        switch self {
-        case .can, .applied: return true
-        case .cant, .impossible: return false
-        }
-    }
-}
-
-extension MassageStatusType {
-    func buttonDisplay(userRole: UserRoleType) -> String {
-        guard userRole == .member else {
-            return L10n.Home.modifyLimitButtonTitle
-        }
-        switch self {
-        case .can: return L10n.Home.canMassageButtonTitle
-        case .cant: return L10n.Home.cantApplyButtonTitle
-        case .applied: return L10n.Home.appliedMassageButtonTitle
-        }
-    }
-
-    func buttonIsEnabled(userRole: UserRoleType) -> Bool {
-        guard userRole == .member else {
-            return true
-        }
-        switch self {
-        case .can, .applied: return true
-        case .cant: return false
-        }
     }
 }
