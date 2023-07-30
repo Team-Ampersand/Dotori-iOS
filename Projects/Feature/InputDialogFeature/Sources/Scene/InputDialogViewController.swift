@@ -1,4 +1,5 @@
 import BaseFeature
+import BaseFeatureInterface
 import CombineUtility
 import DesignSystem
 import InputDialogFeatureInterface
@@ -118,7 +119,7 @@ final class InputDialogViewController: BaseStoredModalViewController<InputDialog
     }
 }
 
-private extension InputType {
+private extension DialogInputType {
     var keyboardType: UIKeyboardType {
         switch self {
         case .number: return .numberPad
