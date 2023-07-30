@@ -23,7 +23,7 @@ public struct DotoriRoleInterceptor: InterceptorType {
         }
         var newRequest = request
         let newRequestURLString = requestURLString
-            .replacingOccurrences(of: "dotori-role", with: currentUserRole)
+            .replacingOccurrences(of: "dotori-role", with: currentUserRole.toAPIRoleString)
         newRequest.url = URL(string: newRequestURLString)
 
         completion(.success(newRequest))
@@ -37,7 +37,7 @@ public struct DotoriRoleInterceptor: InterceptorType {
         case let .success(res):
             if let roleDTO = try? JSONDecoder().decode(DotoriRoleDTO.self, from: res.data) {
                 guard let userRole = roleDTO.roles.first else { return }
-                keyValueStore.save(key: .userRole, value: userRole.toAPIRoleString)
+                keyValueStore.save(key: .userRole, value: userRole)
             }
 
         default:

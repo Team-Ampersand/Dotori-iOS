@@ -8,14 +8,16 @@ import ProjectDescriptionHelpers
 let project = Project.module(
     name: ModulePaths.Domain.BaseDomain.rawValue,
     targets: [
-        .interface(module: .domain(.BaseDomain)),
+        .interface(module: .domain(.BaseDomain), dependencies: [
+            .userInterface(target: .Localization)
+        ]),
         .implements(
             module: .domain(.BaseDomain),
             dependencies: [
+                .domain(target: .BaseDomain, type: .interface),
                 .core(target: .JwtStore, type: .interface),
                 .core(target: .Networking, type: .interface),
                 .core(target: .KeyValueStore, type: .interface),
-                .userInterface(target: .Localization),
                 .shared(target: .GlobalThirdPartyLibrary),
                 .shared(target: .UtilityModule)
             ]

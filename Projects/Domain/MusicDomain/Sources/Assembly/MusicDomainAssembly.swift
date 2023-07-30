@@ -22,5 +22,9 @@ public final class MusicDomainAssembly: Assembly {
         container.register(RemoveMusicUseCase.self) { resolver in
             RemoveMusicUseCaseImpl(musicRepository: resolver.resolve(MusicRepository.self)!)
         }
+
+        container.register(ProposeMusicUseCase.self) { resolver in
+            ProposeMusicUseCaseImpl(musicRepository: resolver.resolve(MusicRepository.self)!)
+        }
     }
 }

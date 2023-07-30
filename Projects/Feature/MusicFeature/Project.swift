@@ -7,6 +7,7 @@ let project = Project.module(
     targets: [
         .implements(module: .feature(.MusicFeature), dependencies: [
             .feature(target: .BaseFeature),
+            .feature(target: .ProposeMusicFeature),
             .domain(target: .MusicDomain, type: .interface),
             .domain(target: .UserDomain, type:. interface)
         ]),
