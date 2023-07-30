@@ -1,4 +1,5 @@
 import ConfirmationDialogFeature
+import InputDialogFeatureInterface
 import MassageDomainInterface
 import MealDomainInterface
 import Moordinator
@@ -24,7 +25,8 @@ public final class HomeAssembly: Assembly {
                 cancelMassageUseCase: resolver.resolve(CancelMassageUseCase.self)!,
                 logoutUseCase: resolver.resolve(LogoutUseCase.self)!,
                 confirmationDialogFactory: resolver.resolve(ConfirmationDialogFactory.self)!,
-                myViolationListFactory: resolver.resolve(MyViolationListFactory.self)!
+                myViolationListFactory: resolver.resolve(MyViolationListFactory.self)!,
+                inputDialogFactory: resolver.resolve(InputDialogFactory.self)!
             )
         }
     }

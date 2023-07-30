@@ -1,6 +1,8 @@
 import BaseFeature
+import BaseFeatureInterface
 import ConfirmationDialogFeature
 import DWebKit
+import InputDialogFeatureInterface
 import Moordinator
 import MyViolationListFeature
 import TimerInterface
@@ -12,6 +14,7 @@ final class HomeMoordinator: Moordinator {
     private let homeViewController: any StoredViewControllable
     private let confirmationDialogFactory: any ConfirmationDialogFactory
     private let myViolationListFactory: any MyViolationListFactory
+    private let inputDialogFactory: any InputDialogFactory
     var root: Presentable {
         rootVC
     }
@@ -19,11 +22,13 @@ final class HomeMoordinator: Moordinator {
     init(
         homeViewController: any StoredViewControllable,
         confirmationDialogFactory: any ConfirmationDialogFactory,
-        myViolationListFactory: any MyViolationListFactory
+        myViolationListFactory: any MyViolationListFactory,
+        inputDialogFactory: any InputDialogFactory
     ) {
         self.homeViewController = homeViewController
         self.confirmationDialogFactory = confirmationDialogFactory
         self.myViolationListFactory = myViolationListFactory
+        self.inputDialogFactory = inputDialogFactory
     }
 
     func route(to path: RoutePath) -> MoordinatorContributors {
@@ -64,6 +69,14 @@ final class HomeMoordinator: Moordinator {
         case .signin:
             return .end(DotoriRoutePath.signin)
 
+        case let .inputDialog(title, placeholder, inputType, confirmAction):
+            return presentToInputDialog(
+                title: title,
+                placeholder: placeholder,
+                inputType: inputType,
+                confirmAction: confirmAction
+            )
+
         default:
             return .none
         }
@@ -103,5 +116,26 @@ private extension HomeMoordinator {
         }
         self.rootVC.topViewController?.present(alert, animated: true)
         return .none
+    }
+
+    func presentToInputDialog(
+        title: String,
+        placeholder: String,
+        inputType: DialogInputType,
+        confirmAction: @escaping (String) async -> Void
+    ) -> MoordinatorContributors {
+        let viewController = inputDialogFactory.makeViewController(
+            title: title,
+            placeholder: placeholder,
+            inputType: inputType,
+            confirmAction: confirmAction
+        )
+        self.rootVC.topViewController?.modalPresent(viewController)
+        return .one(
+            .contribute(
+                withNextPresentable: viewController,
+                withNextRouter: viewController.router
+            )
+        )
     }
 }
