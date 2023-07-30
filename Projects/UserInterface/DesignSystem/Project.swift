@@ -13,6 +13,7 @@ let project = Project.module(
                 dependencies: [
                     .SPM.Anim,
                     .SPM.MSGLayout,
+                    .SPM.Lottie,
                     .userInterface(target: .DWebKit),
                     .shared(target: .GlobalThirdPartyLibrary),
                     .shared(target: .UIKitUtil)
@@ -22,5 +23,8 @@ let project = Project.module(
         .demo(module: .userInterface(.DesignSystem), dependencies: [
             .userInterface(target: .DesignSystem)
         ])
+    ],
+    resourceSynthesizers: .default + [
+        .custom(name: "Lottie", parser: .json, extensions: ["json"])
     ]
 )
