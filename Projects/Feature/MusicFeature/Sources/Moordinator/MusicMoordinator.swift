@@ -1,4 +1,5 @@
 import BaseFeature
+import Localization
 import Moordinator
 import ProposeMusicFeature
 import UIKit
@@ -72,7 +73,7 @@ private extension MusicMoordinator {
         if !actions.isEmpty {
             actions.forEach(alert.addAction(_:))
         } else {
-            alert.addAction(.init(title: "확인", style: .default))
+            alert.addAction(.init(title: L10n.Global.confirmButtonTitle, style: .default))
         }
         self.rootVC.topViewController?.present(alert, animated: true)
         return .none

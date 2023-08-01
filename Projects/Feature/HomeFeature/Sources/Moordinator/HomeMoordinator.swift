@@ -3,6 +3,7 @@ import BaseFeatureInterface
 import ConfirmationDialogFeature
 import DWebKit
 import InputDialogFeatureInterface
+import Localization
 import Moordinator
 import MyViolationListFeature
 import TimerInterface
@@ -123,7 +124,7 @@ private extension HomeMoordinator {
         if !actions.isEmpty {
             actions.forEach(alert.addAction(_:))
         } else {
-            alert.addAction(.init(title: "확인", style: .default))
+            alert.addAction(.init(title: L10n.Global.confirmButtonTitle, style: .default))
         }
         self.rootVC.topViewController?.present(alert, animated: true)
         return .none
