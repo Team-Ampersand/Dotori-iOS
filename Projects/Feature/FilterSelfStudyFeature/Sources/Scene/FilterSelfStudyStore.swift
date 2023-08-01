@@ -41,6 +41,7 @@ final class FilterSelfStudyStore: BaseStore {
         case updateGender(Int?)
         case confirmAction
         case resetButtonDidTap
+        case dimmedBackgroundDidTap
     }
     enum Mutation {
         case updateName(String?)
@@ -90,6 +91,9 @@ extension FilterSelfStudyStore {
                 .just(.updateClass(nil)),
                 .just(.updateGender(nil))
             )
+
+        case .dimmedBackgroundDidTap:
+            route.send(DotoriRoutePath.dismiss)
         }
         return .none
     }

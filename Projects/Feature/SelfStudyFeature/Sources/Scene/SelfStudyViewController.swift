@@ -80,6 +80,11 @@ final class SelfStudyViewController: BaseStoredViewController<SelfStudyStore> {
             .map { Store.Action.fetchSelfStudyRank }
             .sink(receiveValue: store.send(_:))
             .store(in: &subscription)
+
+        filterBarButton.tapPublisher
+            .map { Store.Action.filterButtonDidTap }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
     }
 
     override func bindState() {

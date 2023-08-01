@@ -19,13 +19,20 @@ public struct FetchSelfStudyRankSearchRequestDTO {
         self.classNum = classNum
     }
 
-    public func toDictionary() -> [String: Any] {
-        let dictionary: [String: Any?] = [
-            "name": name,
-            "gender": gender?.rawValue,
-            "grade": grade,
-            "classNum": classNum
-        ]
-        return dictionary.compactMapValues { $0 }
+    public func toParameter() -> [String: Any] {
+        var dict = [String: Any]()
+        if let name {
+            dict["name"] = name
+        }
+        if let gender {
+            dict["gender"] = gender.rawValue
+        }
+        if let grade {
+            dict["grade"] = grade
+        }
+        if let classNum {
+            dict["classNum"] = classNum
+        }
+        return dict
     }
 }

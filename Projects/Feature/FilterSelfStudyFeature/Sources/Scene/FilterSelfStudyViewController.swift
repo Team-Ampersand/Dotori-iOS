@@ -41,6 +41,14 @@ final class FilterSelfStudyViewController: BaseStoredModalViewController<FilterS
         ]))
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        contentView.anim(anim: .concurrent([
+            .fadeIn(0.2),
+            .moveFromBottom(offset: contentView.frame.height, reversed: true)
+        ]))
+    }
+
     override func setLayout() {
         MSGLayout.stackedLayout(self.view, ignoreSafeArea: true) {
             SpacerView()
@@ -105,6 +113,11 @@ final class FilterSelfStudyViewController: BaseStoredModalViewController<FilterS
 
         resetButton.tapPublisher
             .map { Store.Action.resetButtonDidTap }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+
+        view.tapGesturePublisher()
+            .map { _ in Store.Action.dimmedBackgroundDidTap }
             .sink(receiveValue: store.send(_:))
             .store(in: &subscription)
     }

@@ -1,3 +1,4 @@
+import FilterSelfStudyFeatureInterface
 import SelfStudyDomainInterface
 import Swinject
 import UserDomainInterface
@@ -9,7 +10,8 @@ public final class SelfStudyAssembly: Assembly {
             SelfStudyFactoryImpl(
                 fetchSelfStudyRankListUseCase: resolver.resolve(FetchSelfStudyRankListUseCase.self)!,
                 loadCurrentUserRoleUseCase: resolver.resolve(LoadCurrentUserRoleUseCase.self)!,
-                checkSelfStudyMemberUseCase: resolver.resolve(CheckSelfStudyMemberUseCase.self)!
+                checkSelfStudyMemberUseCase: resolver.resolve(CheckSelfStudyMemberUseCase.self)!,
+                filterSelfStudyFactory: resolver.resolve(FilterSelfStudyFactory.self)!
             )
         }
     }

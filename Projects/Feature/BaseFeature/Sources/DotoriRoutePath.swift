@@ -43,6 +43,14 @@ public enum DotoriRoutePath: RoutePath {
 
     // MARK: SelfStudy
     case selfStudy
+    case filterSelfStudy(
+        confirmAction: (
+            _ name: String?,
+            _ grade: Int?,
+            _ `class`: Int?,
+            _ gender: String?
+        ) -> Void
+    )
 
     // MARK: Massage
     case massage

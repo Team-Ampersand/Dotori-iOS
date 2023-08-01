@@ -45,7 +45,7 @@ extension SelfStudyEndpoint: DotoriEndpoint {
     public var task: HTTPTask {
         switch self {
         case let .fetchSelfStudySearch(req):
-            return .requestParameters(query: req.toDictionary())
+            return .requestParameters(query: req.toParameter())
 
         case let .checkSelfStudyMember(_, isChecked):
             return .requestParameters(body: [
