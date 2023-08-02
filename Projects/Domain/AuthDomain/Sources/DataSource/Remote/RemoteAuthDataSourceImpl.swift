@@ -38,8 +38,4 @@ final class RemoteAuthDataSourceImpl: RemoteAuthDataSource {
             monitor.start(queue: DispatchQueue(label: "InternetConnectionMonitor"))
         })
     }
-
-    func withdrawal() async throws {
-        try await networking.request(AuthEndpoint.withdrawal)
-    }
 }

@@ -21,6 +21,7 @@ struct HomeFactoryImpl: HomeFactory {
     private let cancelMassageUseCase: any CancelMassageUseCase
     private let modifyMassagePersonnelUseCase: any ModifyMassagePersonnelUseCase
     private let logoutUseCase: any LogoutUseCase
+    private let withdrawalUseCase: any WithdrawalUseCase
     private let confirmationDialogFactory: any ConfirmationDialogFactory
     private let myViolationListFactory: any MyViolationListFactory
     private let inputDialogFactory: any InputDialogFactory
@@ -38,6 +39,7 @@ struct HomeFactoryImpl: HomeFactory {
         cancelMassageUseCase: any CancelMassageUseCase,
         modifyMassagePersonnelUseCase: any ModifyMassagePersonnelUseCase,
         logoutUseCase: any LogoutUseCase,
+        withdrawalUseCase: any WithdrawalUseCase,
         confirmationDialogFactory: any ConfirmationDialogFactory,
         myViolationListFactory: any MyViolationListFactory,
         inputDialogFactory: any InputDialogFactory
@@ -54,6 +56,7 @@ struct HomeFactoryImpl: HomeFactory {
         self.cancelMassageUseCase = cancelMassageUseCase
         self.modifyMassagePersonnelUseCase = modifyMassagePersonnelUseCase
         self.logoutUseCase = logoutUseCase
+        self.withdrawalUseCase = withdrawalUseCase
         self.confirmationDialogFactory = confirmationDialogFactory
         self.myViolationListFactory = myViolationListFactory
         self.inputDialogFactory = inputDialogFactory
@@ -72,7 +75,8 @@ struct HomeFactoryImpl: HomeFactory {
             applyMassageUseCase: applyMassageUseCase,
             cancelMassageUseCase: cancelMassageUseCase,
             modifyMassagePersonnelUseCase: modifyMassagePersonnelUseCase,
-            logoutUseCase: logoutUseCase
+            logoutUseCase: logoutUseCase,
+            withdrawalUseCase: withdrawalUseCase
         )
         let homeViewController = HomeViewController(store: homeStore)
         return HomeMoordinator(

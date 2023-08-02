@@ -1,4 +1,4 @@
-import AuthDomainInterface
+import UserDomainInterface
 
 final class WithdrawalUseCaseSpy: WithdrawalUseCase {
     var withdrawalCallCount = 0

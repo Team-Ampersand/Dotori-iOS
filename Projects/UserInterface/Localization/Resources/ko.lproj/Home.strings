@@ -41,3 +41,5 @@
 "complete_to_modify_self_study_limit_title" = "자습 인원 수정 완료";
 "massage_modify_limit_title" = "안마의자 인원 수정";
 "complete_to_modify_massage_limit_title" = "안마의자 인원 수정 완료";
+"withdrawal_title" = "회원탈퇴";
+"really_withdrawal_title" = "정말로 도토리를 회원탈퇴 하시겠습니까?";

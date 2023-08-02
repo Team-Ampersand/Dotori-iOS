@@ -1,10 +1,10 @@
+import AuthDomainInterface
 import Emdpoint
 import NetworkingInterface
 
 public enum AuthEndpoint {
     case signin(email: String, password: String)
     case refresh
-    case withdrawal
 }
 
 extension AuthEndpoint: DotoriEndpoint {
@@ -19,9 +19,6 @@ extension AuthEndpoint: DotoriEndpoint {
 
         case .refresh:
             return .patch("")
-
-        case .withdrawal:
-            return .post("/withdrawal")
         }
     }
 
@@ -45,6 +42,20 @@ extension AuthEndpoint: DotoriEndpoint {
 
         default:
             return .none
+        }
+    }
+
+    public var errorMap: [Int: Error] {
+        switch self {
+        case .signin:
+            return [
+                400: AuthDomainError.invalidPassword,
+                409: AuthDomainError.invalidPassword,
+                500: AuthDomainError.unknown
+            ]
+
+        default:
+            return [:]
         }
     }
 }

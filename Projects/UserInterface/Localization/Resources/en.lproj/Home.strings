@@ -41,3 +41,5 @@
 "complete_to_modify_self_study_limit_title" = "Complete to modify SelfStudy limit";
 "massage_modify_limit_title" = "Modify Massage limit";
 "complete_to_modify_massage_limit_title" = "Complete to modify Massage limit";
+"withdrawal_title" = "Withdrawal";
+"really_withdrawal_title" = "Are you sure you want to withdrawal Dotori?";

@@ -5,5 +5,4 @@ public protocol RemoteAuthDataSource {
     func signin(req: SigninRequestDTO) async throws
     func tokenRefresh() async throws
     func networkIsConnected() async -> Bool
-    func withdrawal() async throws
 }

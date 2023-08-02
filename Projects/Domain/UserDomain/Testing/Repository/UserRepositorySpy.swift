@@ -14,4 +14,9 @@ final class UserRepositorySpy: UserRepository {
     func logout() {
         logoutCallCount += 1
     }
+
+    var withdrawalCallCount = 0
+    func withdrawal() async throws {
+        withdrawalCallCount += 1
+    }
 }

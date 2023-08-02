@@ -32,8 +32,4 @@ final class AuthRepositoryImpl: AuthRepository {
     func networkIsConnected() async -> Bool {
         await remoteAuthDataSource.networkIsConnected()
     }
-
-    func withdrawal() async throws {
-        try await remoteAuthDataSource.withdrawal()
-    }
 }
