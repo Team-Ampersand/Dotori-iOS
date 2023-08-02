@@ -5,7 +5,6 @@ import XCTest
 @testable import HomeFeature
 @testable import TimerTesting
 @testable import SelfStudyDomainTesting
-@testable import AuthDomainTesting
 @testable import MassageDomainTesting
 @testable import MealDomainTesting
 @testable import UserDomainTesting

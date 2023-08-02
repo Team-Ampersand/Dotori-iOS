@@ -28,6 +28,7 @@ final class HomeViewController: BaseStoredViewController<HomeStore> {
     )
     private let mealCardView = MealCardView()
     private let bottomSpacerView = SpacerView(height: 40)
+        .set(\.backgroundColor, .clear.withAlphaComponent(0.0125))
 
     override func setLayout() {
         MSGLayout.stackedScrollLayout(view) {
