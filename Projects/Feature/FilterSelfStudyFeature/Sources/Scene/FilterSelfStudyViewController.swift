@@ -50,10 +50,10 @@ final class FilterSelfStudyViewController: BaseStoredModalViewController<FilterS
     }
 
     override func setLayout() {
-        MSGLayout.stackedLayout(self.view, ignoreSafeArea: true) {
-            SpacerView()
-
-            contentView
+        MSGLayout.buildLayout {
+            contentView.layout
+                .horizontal(.toSuperview())
+                .bottom(.toSuperview())
         }
 
         MSGLayout.stackedLayout(self.contentView) {
