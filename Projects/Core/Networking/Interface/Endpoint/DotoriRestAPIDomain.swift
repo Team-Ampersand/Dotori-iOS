@@ -6,6 +6,7 @@ import Foundation
  */
 public enum DotoriRestAPIDomain: String {
     case auth
+    case user = "members"
     case selfStudy = "dotori-role/self-study"
     case massage = "dotori-role/massage"
     case notice = "dotori-role/board"

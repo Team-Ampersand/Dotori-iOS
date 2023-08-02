@@ -1,5 +1,6 @@
 import JwtStoreInterface
 import KeyValueStoreInterface
+import NetworkingInterface
 import Swinject
 import UserDomainInterface
 
@@ -14,8 +15,15 @@ public final class UserDomainAssembly: Assembly {
         }
         .inObjectScope(.container)
 
+        container.register(RemoteUserDataSource.self) { resolver in
+            RemoteUserDataSourceImpl(networking: resolver.resolve(Networking.self)!)
+        }
+
         container.register(UserRepository.self) { resolver in
-            UserRepositoryImpl(localUserDataSource: resolver.resolve(LocalUserDataSource.self)!)
+            UserRepositoryImpl(
+                localUserDataSource: resolver.resolve(LocalUserDataSource.self)!,
+                remoteUserDataSource: resolver.resolve(RemoteUserDataSource.self)!
+            )
         }
         .inObjectScope(.container)
 
@@ -25,6 +33,10 @@ public final class UserDomainAssembly: Assembly {
 
         container.register(LogoutUseCase.self) { resolver in
             LogoutUseCaseImpl(userRepository: resolver.resolve(UserRepository.self)!)
+        }
+
+        container.register(WithdrawalUseCase.self) { resolver in
+            WithdrawalUseCaseImpl(userRepository: resolver.resolve(UserRepository.self)!)
         }
     }
 }

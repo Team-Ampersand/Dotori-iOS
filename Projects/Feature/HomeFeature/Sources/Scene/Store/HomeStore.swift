@@ -35,6 +35,7 @@ final class HomeStore: BaseStore {
     private let cancelMassageUseCase: any CancelMassageUseCase
     private let modifyMassagePersonnelUseCase: any ModifyMassagePersonnelUseCase
     private let logoutUseCase: any LogoutUseCase
+    private let withdrawalUseCase: any WithdrawalUseCase
 
     init(
         repeatableTimer: any RepeatableTimer,
@@ -48,7 +49,8 @@ final class HomeStore: BaseStore {
         applyMassageUseCase: any ApplyMassageUseCase,
         cancelMassageUseCase: any CancelMassageUseCase,
         modifyMassagePersonnelUseCase: any ModifyMassagePersonnelUseCase,
-        logoutUseCase: any LogoutUseCase
+        logoutUseCase: any LogoutUseCase,
+        withdrawalUseCase: any WithdrawalUseCase
     ) {
         self.initialState = .init()
         self.stateSubject = .init(initialState)
@@ -64,6 +66,7 @@ final class HomeStore: BaseStore {
         self.cancelMassageUseCase = cancelMassageUseCase
         self.modifyMassagePersonnelUseCase = modifyMassagePersonnelUseCase
         self.logoutUseCase = logoutUseCase
+        self.withdrawalUseCase = withdrawalUseCase
     }
 
     enum Action: Equatable {
@@ -177,6 +180,20 @@ private extension HomeStore {
                 }
                 route.send(confirmationDialogRoutePath)
             },
+            .init(title: L10n.Home.withdrawalTitle, style: .destructive, handler: { [route, withdrawalUseCase] _ in
+                let confirmationDialogRoutePath = DotoriRoutePath.confirmationDialog(
+                    title: L10n.Home.withdrawalTitle,
+                    description: L10n.Home.reallyWithdrawalTitle
+                ) {
+                    do {
+                        try await withdrawalUseCase()
+                        route.send(DotoriRoutePath.signin)
+                    } catch {
+                        await DotoriToast.makeToast(text: error.localizedDescription, style: .error)
+                    }
+                }
+                route.send(confirmationDialogRoutePath)
+            }),
             .init(title: L10n.Global.cancelButtonTitle, style: .cancel)
         ])
         self.route.send(alertPath)

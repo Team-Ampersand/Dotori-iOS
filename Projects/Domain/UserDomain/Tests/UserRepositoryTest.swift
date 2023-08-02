@@ -4,17 +4,23 @@ import XCTest
 
 final class UserRepositoryTests: XCTestCase {
     var userRepository: UserRepositoryImpl!
+    var remoteUserDataSourceSpy: RemoteUserDataSourceSpy!
     var localUserDataSourceSpy: LocalUserDataSourceSpy!
 
     override func setUp() {
         super.setUp()
+        remoteUserDataSourceSpy = .init()
         localUserDataSourceSpy = LocalUserDataSourceSpy()
-        userRepository = UserRepositoryImpl(localUserDataSource: localUserDataSourceSpy)
+        userRepository = UserRepositoryImpl(
+            localUserDataSource: localUserDataSourceSpy,
+            remoteUserDataSource: remoteUserDataSourceSpy
+        )
     }
 
     override func tearDown() {
         userRepository = nil
         localUserDataSourceSpy = nil
+        remoteUserDataSourceSpy = nil
         super.tearDown()
     }
 

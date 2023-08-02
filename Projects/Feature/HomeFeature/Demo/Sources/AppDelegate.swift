@@ -34,6 +34,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         let cancelMassageUseCase = CancelMassageUseCaseSpy()
         let modifyMassagePersonnelUseCase = ModifyMassagePersonnelUseCaseSpy()
         let logoutUseCase = LogoutUseCaseSpy()
+        let withdrawalUseCase = WithdrawalUseCaseSpy()
         let store = HomeStore(
             repeatableTimer: repeatableTimerStub,
             fetchSelfStudyInfoUseCase: fetchSelfStudyInfoUseCase,
@@ -46,7 +47,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             applyMassageUseCase: applyMassageUseCase,
             cancelMassageUseCase: cancelMassageUseCase,
             modifyMassagePersonnelUseCase: modifyMassagePersonnelUseCase,
-            logoutUseCase: logoutUseCase
+            logoutUseCase: logoutUseCase,
+            withdrawalUseCase: withdrawalUseCase
         )
         let viewController = Inject.ViewControllerHost(
             UINavigationController(rootViewController: HomeViewController(store: store))
