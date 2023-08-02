@@ -38,12 +38,18 @@ final class SigninMoordinator: Moordinator {
             )
 
         case .signup:
-            let viewController = signupFactory.makeViewController()
+            let viewController = signupFactory.makeViewController { [rootVC] in
+                print("ASD")
+                rootVC.popViewController(animated: true)
+            }
             rootVC.pushViewController(viewController, animated: true)
             return .one(.contribute(withNextPresentable: viewController))
 
         case .renewalPassword:
-            let viewController = renewalPasswordFactory.makeViewController()
+            let viewController = renewalPasswordFactory.makeViewController { [rootVC] in
+                print("ASD")
+                rootVC.popViewController(animated: true)
+            }
             rootVC.pushViewController(viewController, animated: true)
             return .one(.contribute(withNextPresentable: viewController))
 

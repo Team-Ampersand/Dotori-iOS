@@ -5,9 +5,17 @@ public final class DWebViewController: UIViewController, WKNavigationDelegate {
     // MARK: - Properties
     private let urlString: String
     private let wkWebView: WKWebView
+    private let detectKeyword: String
+    private let detectHandler: () -> Void
+    private var urlObservation: NSKeyValueObservation?
 
     // MARK: - Init
-    public init(urlString: String, tokenDTO: LocalStorageTokenDTO? = nil) {
+    public init(
+        urlString: String,
+        tokenDTO: LocalStorageTokenDTO? = nil,
+        detectKeyword: String = "signin",
+        detectHandler: @escaping () -> Void = {}
+    ) {
         let preferences = WKPreferences()
         preferences.javaScriptCanOpenWindowsAutomatically = true
 
@@ -18,6 +26,8 @@ public final class DWebViewController: UIViewController, WKNavigationDelegate {
         wkWebView.translatesAutoresizingMaskIntoConstraints = false
         self.wkWebView = wkWebView
         self.urlString = urlString
+        self.detectKeyword = detectKeyword
+        self.detectHandler = detectHandler
         super.init(nibName: nil, bundle: nil)
         if let tokenDTO {
             setAccessToken(tokenDTO: tokenDTO, configuration: wkWebView.configuration)
@@ -46,6 +56,12 @@ public final class DWebViewController: UIViewController, WKNavigationDelegate {
             guard let url = URL(string: self.urlString) else { return }
             let request = URLRequest(url: url)
             self.wkWebView.load(request)
+        }
+        urlObservation = wkWebView.observe(\.url, options: .new) { [detectKeyword, detectHandler] webView, _ in
+            guard let url = webView.url?.absoluteString, url.contains(detectKeyword) else {
+                return
+            }
+            detectHandler()
         }
     }
 }

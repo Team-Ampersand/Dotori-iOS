@@ -5,11 +5,12 @@ import DWebKit
 import UIKit
 
 struct SignupFactoryImpl: SignupFactory {
-    func makeViewController() -> UIViewController {
+    func makeViewController(signinHandler: @escaping () -> Void) -> UIViewController {
         let url = "https://www.dotori-gsm.com/signup"
 
         return DWebViewController(
-            urlString: url
+            urlString: url,
+            detectHandler: signinHandler
         )
     }
 }
