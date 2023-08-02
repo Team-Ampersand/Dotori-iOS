@@ -27,7 +27,10 @@ extension UIGestureRecognizer {
         }
     }
 
-    final class Subscription<G: UIGestureRecognizer, S: Subscriber>: Combine.Subscription
+    final class Subscription<G: UIGestureRecognizer, S: Subscriber>:
+        NSObject,
+        Combine.Subscription,
+        UIGestureRecognizerDelegate
         where S.Input == G, S.Failure == Never {
 
         var subscriber: S?
@@ -38,7 +41,9 @@ extension UIGestureRecognizer {
             self.subscriber = subscriber
             self.gestureRecognizer = gestureRecognizer
             self.view = view
+            super.init()
             gestureRecognizer.addTarget(self, action: #selector(handle))
+            gestureRecognizer.delegate = self
             view.addGestureRecognizer(gestureRecognizer)
         }
 
@@ -51,5 +56,12 @@ extension UIGestureRecognizer {
         }
 
         func request(_ demand: Subscribers.Demand) { }
+
+        func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+            guard touch.view == self.view else {
+                return false
+            }
+            return true
+        }
     }
 }
