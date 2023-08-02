@@ -42,5 +42,9 @@ public final class AuthDomainAssembly: Assembly {
         container.register(CheckIsLoggedInUseCase.self) { resolver in
             CheckIsLoggedInUseCaseImpl(authRepository: resolver.resolve(AuthRepository.self)!)
         }
+
+        container.register(WithdrawalUseCase.self) { resolver in
+            WithdrawalUseCaseImpl(authRepository: resolver.resolve(AuthRepository.self)!)
+        }
     }
 }
