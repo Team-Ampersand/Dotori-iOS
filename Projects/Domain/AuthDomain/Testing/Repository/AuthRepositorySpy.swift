@@ -43,4 +43,9 @@ final class AuthRepositorySpy: AuthRepository {
         checkTokenIsExistCallCount += 1
         return checkTokenIsExistReturn
     }
+
+    var withdrawalCallCount = 0
+    func withdrawal() async throws {
+        withdrawalCallCount += 1
+    }
 }

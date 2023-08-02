@@ -7,4 +7,5 @@ public protocol AuthRepository {
     func tokenRefresh() async throws
     func networkIsConnected() async -> Bool
     func checkTokenIsExist() -> Bool
+    func withdrawal() async throws
 }

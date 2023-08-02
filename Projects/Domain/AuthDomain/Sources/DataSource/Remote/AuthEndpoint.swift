@@ -1,8 +1,10 @@
 import Emdpoint
+import NetworkingInterface
 
 public enum AuthEndpoint {
     case signin(email: String, password: String)
     case refresh
+    case withdrawal
 }
 
 extension AuthEndpoint: DotoriEndpoint {
@@ -17,6 +19,9 @@ extension AuthEndpoint: DotoriEndpoint {
 
         case .refresh:
             return .patch("")
+
+        case .withdrawal:
+            return .post("/withdrawal")
         }
     }
 
