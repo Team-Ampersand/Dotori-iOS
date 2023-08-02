@@ -1,4 +1,5 @@
 import BaseFeature
+import Localization
 import Moordinator
 import ProposeMusicFeature
 import UIKit
@@ -65,11 +66,14 @@ private extension MusicMoordinator {
         style: UIAlertController.Style,
         actions: [UIAlertAction]
     ) -> MoordinatorContributors {
+        let style: UIAlertController.Style = (style == .actionSheet && UIDevice.current.userInterfaceIdiom == .pad)
+        ? .alert
+        : style
         let alert = UIAlertController(title: title, message: message, preferredStyle: style)
         if !actions.isEmpty {
             actions.forEach(alert.addAction(_:))
         } else {
-            alert.addAction(.init(title: "확인", style: .default))
+            alert.addAction(.init(title: L10n.Global.confirmButtonTitle, style: .default))
         }
         self.rootVC.topViewController?.present(alert, animated: true)
         return .none
