@@ -27,6 +27,7 @@ final class HomeViewController: BaseStoredViewController<HomeStore> {
         maxApplyCount: 5
     )
     private let mealCardView = MealCardView()
+    private let bottomSpacerView = SpacerView(height: 40)
 
     override func setLayout() {
         MSGLayout.stackedScrollLayout(view) {
@@ -41,7 +42,7 @@ final class HomeViewController: BaseStoredViewController<HomeStore> {
 
                 mealCardView
 
-                SpacerView(height: 32)
+                bottomSpacerView
             }
             .margin(.horizontal(20))
         }
@@ -107,6 +108,15 @@ final class HomeViewController: BaseStoredViewController<HomeStore> {
         massageApplicationCardView.refreshButtonDidTapPublisher
             .map { Store.Action.refreshMassageButtonDidTap }
             .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+
+        bottomSpacerView.tapGesturePublisher()
+            .sink { _ in
+                guard let url = URL(
+                    string: "https://apps.apple.com/kr/app/%EC%98%A4%EB%8A%98-%EB%AD%90%EC%9E%84/id1629567018"
+                ) else { return }
+                UIApplication.shared.open(url)
+            }
             .store(in: &subscription)
     }
 
