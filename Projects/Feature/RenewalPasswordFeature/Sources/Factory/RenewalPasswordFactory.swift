@@ -3,5 +3,5 @@ import Moordinator
 import UIKit
 
 public protocol RenewalPasswordFactory {
-    func makeViewController() -> UIViewController
+    func makeViewController(signinHandler: @escaping () -> Void) -> UIViewController
 }

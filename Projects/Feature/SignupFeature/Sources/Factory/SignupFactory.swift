@@ -3,5 +3,5 @@ import UIKit
 import Moordinator
 
 public protocol SignupFactory {
-    func makeViewController() -> UIViewController
+    func makeViewController(signinHandler: @escaping () -> Void) -> UIViewController
 }
