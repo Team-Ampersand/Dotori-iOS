@@ -6,7 +6,7 @@
   Copyright © 2023 com.msg. All rights reserved.
 */
 
-"propose_music_title" = "기상음악 신청";
+"propose_music_title" = "음악 신청";
 "input_url_placeholder" = "URL을 입력해주세요.";
 "propose_button_title" = "신청하기";
 "unavilable_propse_date" = "신청이 가능한 날이 아닙니다.";

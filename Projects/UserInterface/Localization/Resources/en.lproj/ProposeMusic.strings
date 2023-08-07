@@ -6,7 +6,7 @@
   Copyright © 2023 com.msg. All rights reserved.
 */
 
-"propose_music_title" = "Propose Wakeup Music";
+"propose_music_title" = "Propose Music";
 "input_url_placeholder" = "Enter the URL";
 "propose_button_title" = "Propose";
 "unavilable_propse_date" = "Not an available date.";
