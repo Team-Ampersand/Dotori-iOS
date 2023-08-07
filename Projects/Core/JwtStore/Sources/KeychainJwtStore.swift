@@ -2,9 +2,10 @@ import Foundation
 import JwtStoreInterface
 
 final class KeychainJwtStore: JwtStore {
+    private let bundleIdentifier: String = Bundle.main.bundleIdentifier ?? ""
     private let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as? String ?? ""
     private var accessGroup: String {
-        "\(appIdentifierPrefix)com.msg.Dotori.keychain-group"
+        "\(appIdentifierPrefix)com.msg.Dotori.keychainGroup"
     }
 
     func save(property: JwtStoreProperties, value: String) {

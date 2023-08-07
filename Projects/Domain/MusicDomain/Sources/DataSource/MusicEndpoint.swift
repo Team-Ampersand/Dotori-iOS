@@ -63,7 +63,7 @@ extension MusicEndpoint: DotoriEndpoint {
     var validationCode: ClosedRange<Int> {
         switch self {
         case .proposeMusic:
-            return 200...200
+            return 200...201
 
         default:
             return 200...300

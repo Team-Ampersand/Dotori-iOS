@@ -122,7 +122,9 @@ private extension DotoriShareViewController {
                         }
                     } catch {
                         owner.hideExtension { _ in
-                            owner.extensionContext?.cancelRequest(withError: NSError(domain: "Jwt Token is expired", code: 6))
+                            owner.extensionContext?.cancelRequest(
+                                withError: NSError(domain: "Jwt Token is expired", code: 6)
+                            )
                         }
                     }
                 }

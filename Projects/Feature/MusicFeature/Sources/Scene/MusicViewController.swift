@@ -26,6 +26,7 @@ final class MusicViewController: BaseStoredViewController<MusicStore> {
             $0.register(cellType: MusicCell.self)
         }
     private let musicRefreshControl = DotoriRefreshControl()
+        .set(\.isHidden, true)
     private lazy var musicTableAdapter = TableViewAdapter<GenericSectionModel<MusicModel>>(
         tableView: musicTableView
     ) { [weak self] tableView, indexPath, item in
@@ -102,6 +103,7 @@ final class MusicViewController: BaseStoredViewController<MusicStore> {
             .removeDuplicates()
             .sink(with: musicRefreshControl, receiveValue: { refreshControl, isRefreshing in
                 isRefreshing ? refreshControl.beginRefreshing() : refreshControl.endRefreshing()
+                refreshControl.isHidden = !isRefreshing
             })
             .store(in: &subscription)
 

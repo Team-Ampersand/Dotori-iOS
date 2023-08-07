@@ -59,11 +59,12 @@ let targets: [Target] = [
         name: "\(env.name)ShareExtension",
         platform: .iOS,
         product: .appExtension,
-        bundleId: "\(env.organizationName).\(env.name).share-extension",
+        bundleId: "\(env.organizationName).\(env.name).share",
         deploymentTarget: env.deploymentTarget,
         infoPlist: .file(path: "ShareExtension/Support/Info.plist"),
         sources: ["ShareExtension/Sources/**"],
         resources: ["ShareExtension/Resources/**"],
+        entitlements: "Support/Dotori.entitlements",
         dependencies: [
             .domain(target: .MusicDomain),
             .userInterface(target: .DesignSystem),
