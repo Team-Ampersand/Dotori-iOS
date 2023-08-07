@@ -7,6 +7,7 @@
 */
 
 "propose_music_title" = "Propose Music";
+"share_tip_title" = "Just hit the 'Share' button on YouTube, select the Acorn app, and you're good to go!";
 "input_url_placeholder" = "Enter the URL";
 "propose_button_title" = "Propose";
 "unavilable_propse_date" = "Not an available date.";
