@@ -67,7 +67,10 @@ let targets: [Target] = [
         dependencies: [
             .domain(target: .MusicDomain),
             .userInterface(target: .DesignSystem),
-            .userInterface(target: .Localization)
+            .userInterface(target: .Localization),
+            .core(target: .JwtStore),
+            .core(target: .KeyValueStore),
+            .core(target: .Networking)
         ]
     )
 ]
