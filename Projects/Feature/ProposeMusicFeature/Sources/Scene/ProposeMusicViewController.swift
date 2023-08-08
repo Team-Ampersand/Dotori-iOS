@@ -15,7 +15,8 @@ final class ProposeMusicViewController: BaseStoredModalViewController<ProposeMus
         )
         $0.setAttributedTitle(attributedString, for: .normal)
     }
-    private let shareTipLabel = DotoriLabel()
+    private let shareTipLabel = DotoriLabel(L10n.ProposeMusic.shareTipTitle, textColor: .neutral(.n20), font: .body2)
+        .set(\.numberOfLines, 0)
     private let urlTextField = DotoriSimpleTextField(placeholder: L10n.ProposeMusic.inputUrlPlaceholder)
     private let proposeButton = DotoriButton(text: L10n.ProposeMusic.proposeButtonTitle)
     private let proposeActivityView = UIActivityIndicatorView(style: .medium)
@@ -39,12 +40,16 @@ final class ProposeMusicViewController: BaseStoredModalViewController<ProposeMus
 
         MSGLayout.stackedLayout(self.contentView) {
             VStackView(spacing: 16) {
-                HStackView {
-                    proposeMusicLabel
+                VStackView(spacing: 4) {
+                    HStackView {
+                        proposeMusicLabel
 
-                    SpacerView()
+                        SpacerView()
 
-                    openYoutubeButton
+                        openYoutubeButton
+                    }
+
+                    shareTipLabel
                 }
 
                 VStackView(spacing: 8) {

@@ -2,11 +2,18 @@ import Foundation
 import JwtStoreInterface
 
 final class KeychainJwtStore: JwtStore {
+    private let bundleIdentifier: String = Bundle.main.bundleIdentifier ?? ""
+    private let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as? String ?? ""
+    private var accessGroup: String {
+        "\(appIdentifierPrefix)com.msg.Dotori.keychainGroup"
+    }
+
     func save(property: JwtStoreProperties, value: String) {
         let query: NSDictionary = [
             kSecClass: kSecClassGenericPassword,
             kSecAttrAccount: property.rawValue,
-            kSecValueData: value.data(using: .utf8, allowLossyConversion: false) ?? .init()
+            kSecValueData: value.data(using: .utf8, allowLossyConversion: false) ?? .init(),
+            kSecAttrAccessGroup: accessGroup
         ]
         SecItemDelete(query)
         SecItemAdd(query, nil)
@@ -17,7 +24,8 @@ final class KeychainJwtStore: JwtStore {
             kSecClass: kSecClassGenericPassword,
             kSecAttrAccount: property.rawValue,
             kSecReturnData: kCFBooleanTrue!,
-            kSecMatchLimit: kSecMatchLimitOne
+            kSecMatchLimit: kSecMatchLimitOne,
+            kSecAttrAccessGroup: accessGroup
         ]
         var dataTypeRef: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &dataTypeRef)
@@ -31,7 +39,8 @@ final class KeychainJwtStore: JwtStore {
     func delete(property: JwtStoreProperties) {
         let query: NSDictionary = [
             kSecClass: kSecClassGenericPassword,
-            kSecAttrAccount: property.rawValue
+            kSecAttrAccount: property.rawValue,
+            kSecAttrAccessGroup: accessGroup
         ]
         SecItemDelete(query)
     }

@@ -50,9 +50,29 @@ let targets: [Target] = [
             .core(target: .KeyValueStore),
             .core(target: .Networking),
             .core(target: .Database),
-            .core(target: .Timer)
+            .core(target: .Timer),
+            .target(name: "\(env.name)ShareExtension")
         ],
         settings: .settings(base: env.baseSetting)
+    ),
+    .init(
+        name: "\(env.name)ShareExtension",
+        platform: .iOS,
+        product: .appExtension,
+        bundleId: "\(env.organizationName).\(env.name).share",
+        deploymentTarget: env.deploymentTarget,
+        infoPlist: .file(path: "ShareExtension/Support/Info.plist"),
+        sources: ["ShareExtension/Sources/**"],
+        resources: ["ShareExtension/Resources/**"],
+        entitlements: "Support/Dotori.entitlements",
+        dependencies: [
+            .domain(target: .MusicDomain),
+            .userInterface(target: .DesignSystem),
+            .userInterface(target: .Localization),
+            .core(target: .JwtStore),
+            .core(target: .KeyValueStore),
+            .core(target: .Networking)
+        ]
     )
 ]
 

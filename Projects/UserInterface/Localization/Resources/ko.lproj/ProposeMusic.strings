@@ -6,7 +6,8 @@
   Copyright © 2023 com.msg. All rights reserved.
 */
 
-"propose_music_title" = "기상음악 신청";
+"propose_music_title" = "음악 신청";
+"share_tip_title" = "유튜브에서 '공유'버튼을 누르고 도토리 앱을 선택하면 바로 신청할 수 있습니다!";
 "input_url_placeholder" = "URL을 입력해주세요.";
 "propose_button_title" = "신청하기";
 "unavilable_propse_date" = "신청이 가능한 날이 아닙니다.";
