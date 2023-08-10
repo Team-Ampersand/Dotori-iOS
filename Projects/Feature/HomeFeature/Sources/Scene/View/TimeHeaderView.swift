@@ -10,6 +10,7 @@ final class TimeHeaderView: BaseView {
     private enum Metric {
         static let padding: CGFloat = 24
     }
+
     private let currentTimeLabel = DotoriLabel(
         L10n.Home.currentTimeTitle,
         textColor: .sub(.white),

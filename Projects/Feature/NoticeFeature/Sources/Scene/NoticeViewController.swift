@@ -14,6 +14,7 @@ final class NoticeViewController: BaseStoredViewController<NoticeStore> {
         static let horizontalPadding: CGFloat = 20
         static let spacing: CGFloat = 12
     }
+
     private let dotoriBarButton = DotoriBarButtonItem()
     private let entireTitleLabel = DotoriLabel(L10n.Notice.entireTitle, font: .subtitle1)
     private let editButton = DotoriOutlineButton(text: L10n.Notice.editButtonTitle)
@@ -28,6 +29,7 @@ final class NoticeViewController: BaseStoredViewController<NoticeStore> {
 
         writeOrRemoveButton
     }
+
     private let noticeTableView = UITableView()
         .set(\.backgroundColor, .clear)
         .set(\.separatorStyle, .none)
@@ -36,6 +38,7 @@ final class NoticeViewController: BaseStoredViewController<NoticeStore> {
         .then {
             $0.register(cellType: NoticeCell.self)
         }
+
     private let noticeRefreshControl = DotoriRefreshControl()
     private lazy var noticeTableAdapter = TableViewAdapter<GenericSectionModel<NoticeModel>>(
         tableView: noticeTableView
@@ -180,12 +183,12 @@ private extension NoticeViewController {
         let titleColor: UIColor = isEditMode ? .dotori(.system(.error)) : .dotori(.sub(.white))
         let backgroundColor = isEditMode ? UIColor.clear : .dotori(.primary(.p10))
         let highlightedBackgroundColor = isEditMode
-        ? backgroundColor.withAlphaComponent(0.1)
-        : backgroundColor.withAlphaComponent(0.8)
+            ? backgroundColor.withAlphaComponent(0.1)
+            : backgroundColor.withAlphaComponent(0.8)
         let borderColor = isEditMode ? UIColor.dotori(.system(.error)).cgColor : UIColor.clear.cgColor
         let contentInsets = isEditMode
-        ? UIEdgeInsets(top: 7.5, left: 13.5, bottom: 7.5, right: 13.5)
-        : .init(top: 7.5, left: 15.5, bottom: 7.5, right: 15.5)
+            ? UIEdgeInsets(top: 7.5, left: 13.5, bottom: 7.5, right: 13.5)
+            : .init(top: 7.5, left: 15.5, bottom: 7.5, right: 15.5)
 
         self.writeOrRemoveButton.setTitle(title, for: .normal)
         self.writeOrRemoveButton.setTitleColor(titleColor, for: .normal)

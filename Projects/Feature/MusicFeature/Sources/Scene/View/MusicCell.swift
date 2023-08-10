@@ -22,9 +22,9 @@ final class MusicCell: BaseTableViewCell<MusicModel> {
         image: .init(systemName: "photo")?
             .tintColor(color: .dotori(.primary(.p10)))
     )
-        .set(\.cornerRadius, 8)
-        .set(\.clipsToBounds, true)
-        .set(\.contentMode, .scaleAspectFit)
+    .set(\.cornerRadius, 8)
+    .set(\.clipsToBounds, true)
+    .set(\.contentMode, .scaleAspectFit)
     private let titleLabel = DotoriLabel(font: .smalltitle)
         .set(\.numberOfLines, 2)
     private let authorLabel = DotoriLabel(textColor: .neutral(.n20), font: .caption)

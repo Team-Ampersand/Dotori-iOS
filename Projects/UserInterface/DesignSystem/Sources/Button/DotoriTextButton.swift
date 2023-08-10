@@ -14,6 +14,7 @@ public final class DotoriTextButton: UIButton {
         self.imageView?.tintColor = .dotori(textColor)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

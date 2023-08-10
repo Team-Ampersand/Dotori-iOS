@@ -1,13 +1,13 @@
 import BaseFeature
 import Combine
-import Moordinator
-import XCTest
 @testable import HomeFeature
-@testable import TimerTesting
-@testable import SelfStudyDomainTesting
 @testable import MassageDomainTesting
 @testable import MealDomainTesting
+import Moordinator
+@testable import SelfStudyDomainTesting
+@testable import TimerTesting
 @testable import UserDomainTesting
+import XCTest
 
 final class HomeFeatureTests: XCTestCase {
     var repeatableTimer: RepeatableTimerStub!

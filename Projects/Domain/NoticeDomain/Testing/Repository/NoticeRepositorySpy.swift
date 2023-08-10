@@ -10,15 +10,16 @@ final class NoticeRepositorySpy: NoticeRepository {
 
     var fetchNoticeCallCount = 0
     var fetchNoticeHandler: (Int) async throws -> DetailNoticeEntity = { _ in
-            .init(
-                id: 1,
-                title: "",
-                content: "",
-                role: .member,
-                images: [],
-                createdDate: .init()
-            )
+        .init(
+            id: 1,
+            title: "",
+            content: "",
+            role: .member,
+            images: [],
+            createdDate: .init()
+        )
     }
+
     func fetchNotice(id: Int) async throws -> DetailNoticeEntity {
         fetchNoticeCallCount += 1
         return try await fetchNoticeHandler(id)

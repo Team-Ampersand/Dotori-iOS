@@ -27,6 +27,7 @@ final class FilterSelfStudySegmentedControl: BaseView {
         )
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -44,8 +45,8 @@ final class FilterSelfStudySegmentedControl: BaseView {
         self.subscription.removeAll()
         let buttons = self.items.enumerated().map {
             index == $0
-            ? makeSelectedButton(index: $0, title: $1)
-            : makeUnselectedButton(index: $0, title: $1)
+                ? makeSelectedButton(index: $0, title: $1)
+                : makeUnselectedButton(index: $0, title: $1)
         }
         self.buttonStackView.removeAllChildren()
         self.buttonStackView.addArrangedSubviews(views: buttons)

@@ -2,8 +2,8 @@ import BaseDomainInterface
 import BaseFeature
 import Combine
 import DesignSystem
-import MSGLayout
 import MassageDomainInterface
+import MSGLayout
 import UIKit
 
 final class MassageCell: BaseTableViewCell<MassageRankModel> {

@@ -25,10 +25,12 @@ final class MassageStore: BaseStore {
         var massageRankList: [MassageRankModel] = []
         var isRefreshing = false
     }
+
     enum Action {
         case viewDidLoad
         case fetchMassageRankList
     }
+
     enum Mutation {
         case updateMassageRankList([MassageRankModel])
         case updateIsRefreshing(Bool)

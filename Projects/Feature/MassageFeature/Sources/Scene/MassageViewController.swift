@@ -2,8 +2,8 @@ import BaseFeature
 import CombineUtility
 import DesignSystem
 import Localization
-import MSGLayout
 import MassageDomainInterface
+import MSGLayout
 import UIKit
 import UIKitUtil
 
@@ -17,6 +17,7 @@ final class MassageViewController: BaseStoredViewController<MassageStore> {
         .then {
             $0.register(cellType: MassageCell.self)
         }
+
     private let massageRefreshContorol = DotoriRefreshControl()
     private lazy var massageTableAdapter = TableViewAdapter<GenericSectionModel<MassageRankModel>>(
         tableView: massageTableView
@@ -25,6 +26,7 @@ final class MassageViewController: BaseStoredViewController<MassageStore> {
         cell.adapt(model: item)
         return cell
     }
+
     private let emptySelfStudyStackView = VStackView(spacing: 8) {
         DotoriIconView(
             size: .custom(.init(width: 73.5, height: 120)),

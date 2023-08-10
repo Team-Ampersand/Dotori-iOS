@@ -1,5 +1,5 @@
-import NetworkingInterface
 import MassageDomainInterface
+import NetworkingInterface
 
 final class RemoteMassageDataSourceImpl: RemoteMassageDataSource {
     private let networking: any Networking

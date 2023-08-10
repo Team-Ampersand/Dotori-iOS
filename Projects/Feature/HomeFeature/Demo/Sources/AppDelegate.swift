@@ -1,11 +1,11 @@
 import Combine
-import Inject
-import UIKit
 @testable import HomeFeature
-@testable import TimerTesting
-@testable import SelfStudyDomainTesting
+import Inject
 @testable import MassageDomainTesting
 @testable import MealDomainTesting
+@testable import SelfStudyDomainTesting
+@testable import TimerTesting
+import UIKit
 @testable import UserDomainTesting
 
 @main

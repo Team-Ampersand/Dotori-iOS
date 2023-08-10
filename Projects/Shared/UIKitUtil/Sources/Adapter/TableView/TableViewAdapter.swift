@@ -14,7 +14,6 @@ public final class TableViewAdapter<Section: SectionModelProtocol>:
     TableViewAdapterActionProtocol,
     UITableViewDelegate,
     UITableViewDataSource {
-
     public typealias Item = Section.Item
     private var sections: [Section] = []
     private let tableView: UITableView

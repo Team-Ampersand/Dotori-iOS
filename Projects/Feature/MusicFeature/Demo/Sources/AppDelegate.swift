@@ -1,7 +1,7 @@
 import Inject
-import UIKit
-@testable import MusicFeature
 @testable import MusicDomainTesting
+@testable import MusicFeature
+import UIKit
 @testable import UserDomainTesting
 
 @main
@@ -16,7 +16,15 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         let fetchMusicListUseCase = FetchMusicListUseCaseSpy()
         fetchMusicListUseCase.fetchMusicListHandler = { _ in
             [
-                .init(id: 1, url: "https://youtu.be/yg9sW237Seg", title: "제목", thumbnailUIImage: nil, username: "김김김", createdTime: .init(), stuNum: "1111")
+                .init(
+                    id: 1,
+                    url: "https://youtu.be/yg9sW237Seg",
+                    title: "제목",
+                    thumbnailUIImage: nil,
+                    username: "김김김",
+                    createdTime: .init(),
+                    stuNum: "1111"
+                )
             ]
         }
         let removeMusicUseCase = RemoveMusicUseCaseSpy()

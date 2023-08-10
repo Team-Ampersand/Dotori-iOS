@@ -1,6 +1,6 @@
+@testable import ConfirmationDialogFeature
 import Inject
 import UIKit
-@testable import ConfirmationDialogFeature
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {

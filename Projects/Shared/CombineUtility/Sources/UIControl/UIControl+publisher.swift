@@ -16,7 +16,7 @@ public extension UIControl {
         let event: UIControl.Event
 
         public func receive<S>(subscriber: S)
-        where S : Subscriber, Never == S.Failure, UIControl == S.Input {
+            where S : Subscriber, Never == S.Failure, UIControl == S.Input {
             let subscription = EventSubscription(
                 control: control,
                 subscrier: subscriber,
@@ -27,8 +27,7 @@ public extension UIControl {
     }
 
     fileprivate class EventSubscription<EventSubscriber: Subscriber>: Subscription
-    where EventSubscriber.Input == UIControl, EventSubscriber.Failure == Never {
-
+        where EventSubscriber.Input == UIControl, EventSubscriber.Failure == Never {
         let control: UIControl
         let event: UIControl.Event
         var subscriber: EventSubscriber?

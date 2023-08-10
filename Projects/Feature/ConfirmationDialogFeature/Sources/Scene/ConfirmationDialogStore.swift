@@ -20,10 +20,12 @@ final class ConfirmationDialogStore: BaseStore {
     struct State {
         var isLoading = false
     }
+
     enum Action {
         case cancelButtonDidTap
         case confirmButtonDidTap
     }
+
     enum Mutation {
         case updateIsLoading(Bool)
     }

@@ -1,7 +1,7 @@
 import BaseFeature
 import ConfirmationDialogFeature
-import DWebKit
 import DetailNoticeFeature
+import DWebKit
 import Moordinator
 import UIKit
 

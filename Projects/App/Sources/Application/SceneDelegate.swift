@@ -1,9 +1,8 @@
-import UIKit
 import Moordinator
 import RootFeature
+import UIKit
 
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
     var window: UIWindow?
     private let moordinatorWorker = MoordinatorWorker()
     private let rootRouter = RootRouter()

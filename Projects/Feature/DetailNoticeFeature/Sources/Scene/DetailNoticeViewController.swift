@@ -14,6 +14,7 @@ final class DetailNoticeViewController: BaseStoredViewController<DetailNoticeSto
     private enum Metric {
         static let horizontalPadding: CGFloat = 20
     }
+
     private lazy var rewriteBarButton = UIBarButtonItem(
         image: .Dotori.pen.tintColor(color: .dotori(.neutral(.n10)))
     )
@@ -43,15 +44,16 @@ final class DetailNoticeViewController: BaseStoredViewController<DetailNoticeSto
 
         titleLabel
     }
+
     private let contentLabel = DotoriLabel(font: .body1)
         .set(\.numberOfLines, 0)
         .set(\.clipsToBounds, true)
     private lazy var contentStackView = VStackView(spacing: 16) {
         contentLabel
     }
-        .margin(.axes(vertical: 12, horizontal: 16))
-        .set(\.backgroundColor, .dotori(.background(.bg)))
-        .set(\.cornerRadius, 8)
+    .margin(.axes(vertical: 12, horizontal: 16))
+    .set(\.backgroundColor, .dotori(.background(.bg)))
+    .set(\.cornerRadius, 8)
 
     override func setLayout() {
         MSGLayout.stackedScrollLayout(self.view) {

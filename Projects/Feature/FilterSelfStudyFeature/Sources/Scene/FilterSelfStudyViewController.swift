@@ -135,7 +135,7 @@ final class FilterSelfStudyViewController: BaseStoredModalViewController<FilterS
         sharedState
             .map(\.grade)
             .removeDuplicates()
-            .map { $0.map { $0 - 1} }
+            .map { $0.map { $0 - 1 } }
             .sink(with: gradeSegmentedControl, receiveValue: { segmentedControl, grade in
                 segmentedControl.updateSelectedIndex(index: grade)
             })

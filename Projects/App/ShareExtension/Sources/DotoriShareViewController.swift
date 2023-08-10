@@ -17,6 +17,7 @@ final class DotoriShareViewController: UIViewController {
         .then {
             $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         }
+
     private let proposeMusicLabel = DotoriLabel(L10n.ProposeMusic.proposeMusicTitle, font: .subtitle1)
     private let cancelButton = DotoriTextButton(L10n.Global.cancelButtonTitle, textColor: .neutral(.n20), font: .body2)
     private let thumbnailImageView = UIImageView()

@@ -1,7 +1,7 @@
-import ViolationDomainInterface
-import XCTest
 @testable import ViolationDomain
+import ViolationDomainInterface
 @testable import ViolationDomainTesting
+import XCTest
 
 final class FetchMyViolationListUseCaseTests: XCTestCase {
     var violationRepository: ViolationRepositorySpy!

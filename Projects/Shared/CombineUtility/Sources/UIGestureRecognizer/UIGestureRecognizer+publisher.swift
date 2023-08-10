@@ -32,7 +32,6 @@ extension UIGestureRecognizer {
         Combine.Subscription,
         UIGestureRecognizerDelegate
         where S.Input == G, S.Failure == Never {
-
         var subscriber: S?
         let gestureRecognizer: G
         let view: UIView
@@ -55,7 +54,7 @@ extension UIGestureRecognizer {
             view.removeGestureRecognizer(gestureRecognizer)
         }
 
-        func request(_ demand: Subscribers.Demand) { }
+        func request(_ demand: Subscribers.Demand) {}
 
         func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
             guard touch.view == self.view else {

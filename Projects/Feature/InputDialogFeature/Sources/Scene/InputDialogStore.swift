@@ -26,12 +26,14 @@ final class InputDialogStore: BaseStore {
         var inputText = ""
         var isLoading = false
     }
+
     enum Action {
         case updateInputText(String)
         case dimmedBackgroundViewDidTap
         case cancelButtonDidTap
         case confirmButtonDidTap
     }
+
     enum Mutation {
         case updateInputText(String)
         case updateIsLoading(Bool)

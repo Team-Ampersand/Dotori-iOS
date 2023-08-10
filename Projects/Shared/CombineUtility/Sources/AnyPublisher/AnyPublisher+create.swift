@@ -33,12 +33,14 @@ public extension Publishers {
 // MARK: - Create's Subscription
 private extension Publishers.Create {
     class Subscription<Downstream: Combine.Subscriber>: Combine.Subscription
-    where Output == Downstream.Input, Failure == Downstream.Failure {
+        where Output == Downstream.Input, Failure == Downstream.Failure {
         private let buffer: DemandBuffer<Downstream>
         private var cancelable: Cancellable?
 
-        init(factory: @escaping (Subscriber) -> Cancellable,
-             downstream: Downstream) {
+        init(
+            factory: @escaping (Subscriber) -> Cancellable,
+            downstream: Downstream
+        ) {
             self.buffer = DemandBuffer(subscriber: downstream)
 
             let subscriber = Subscriber(
@@ -65,8 +67,10 @@ public extension Publishers.Create {
         private let onValue: (Output) -> Void
         private let onCompletion: (Subscribers.Completion<Failure>) -> Void
 
-        fileprivate init(onValue: @escaping (Output) -> Void,
-                         onCompletion: @escaping (Subscribers.Completion<Failure>) -> Void) {
+        fileprivate init(
+            onValue: @escaping (Output) -> Void,
+            onCompletion: @escaping (Subscribers.Completion<Failure>) -> Void
+        ) {
             self.onValue = onValue
             self.onCompletion = onCompletion
         }

@@ -1,20 +1,22 @@
-import ProjectDescriptionHelpers
-import ProjectDescription
 import ConfigurationPlugin
 import DependencyPlugin
 import EnvironmentPlugin
 import Foundation
+import ProjectDescription
+import ProjectDescriptionHelpers
 
 let isCI = (ProcessInfo.processInfo.environment["TUIST_CI"] ?? "0") == "1" ? true : false
 
 let configurations: [Configuration] = .default
 
 let settings: Settings =
-    .settings(base: env.baseSetting,
-              configurations: configurations,
-              defaultSettings: .recommended)
+    .settings(
+        base: env.baseSetting,
+        configurations: configurations,
+        defaultSettings: .recommended
+    )
 
-let scripts: [TargetScript] = isCI ? [] : [.swiftLint]
+let scripts: [TargetScript] = isCI ? [] : [.swiftFormat, .swiftLint]
 
 let targets: [Target] = [
     .init(

@@ -1,7 +1,7 @@
-import MealDomainInterface
-import XCTest
-@testable import MealDomainTesting
 @testable import MealDomain
+import MealDomainInterface
+@testable import MealDomainTesting
+import XCTest
 
 final class FetchMealInfoUseCaseTests: XCTestCase {
     var mealRepository: MealRepositorySpy!

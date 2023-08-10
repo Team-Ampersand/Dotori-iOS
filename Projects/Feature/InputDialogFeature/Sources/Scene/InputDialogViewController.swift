@@ -24,6 +24,7 @@ final class InputDialogViewController: BaseStoredModalViewController<InputDialog
         self.inputTextField.placeholder = placeholder
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -109,8 +110,8 @@ final class InputDialogViewController: BaseStoredModalViewController<InputDialog
             .removeDuplicates()
             .sink(with: self, receiveValue: { owner, isLoading in
                 isLoading
-                ? owner.loadingIndicatorView.startAnimating()
-                : owner.loadingIndicatorView.stopAnimating()
+                    ? owner.loadingIndicatorView.startAnimating()
+                    : owner.loadingIndicatorView.stopAnimating()
 
                 let title = isLoading ? "" : L10n.Global.confirmButtonTitle
                 owner.confirmButton.setTitle(title, for: .normal)

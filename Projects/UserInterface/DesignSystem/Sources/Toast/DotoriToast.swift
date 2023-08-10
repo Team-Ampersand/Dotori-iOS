@@ -36,6 +36,7 @@ public final class DotoriToast: UIView {
         get { label.text }
         set { label.text = newValue }
     }
+
     private let color: UIColor
     private let duration: Duration
 
@@ -54,6 +55,7 @@ public final class DotoriToast: UIView {
         setupView()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

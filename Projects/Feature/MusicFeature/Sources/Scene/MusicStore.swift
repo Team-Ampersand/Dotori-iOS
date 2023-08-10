@@ -38,12 +38,14 @@ final class MusicStore: BaseStore {
         var isRefreshing = false
         var currentUserRole = UserRoleType.member
     }
+
     enum Action {
         case viewDidLoad
         case refresh
         case cellMeatballDidTap(music: MusicModel)
         case proposeMusicButtonDidTap
     }
+
     enum Mutation {
         case updateMusicList([MusicModel])
         case updateIsRefreshing(Bool)
@@ -130,13 +132,17 @@ private extension MusicStore {
             })
         ]
         if currentState.currentUserRole != .member {
-            actions.append(.init(title: L10n.Music.removeMusicTitle, style: .destructive, handler: { [removeMusicUseCase] _ in
-                Task.catching {
-                    try await removeMusicUseCase(musicID: music.id)
-                } catch: { @MainActor error in
-                    DotoriToast.makeToast(text: error.localizedDescription, style: .error)
+            actions.append(.init(
+                title: L10n.Music.removeMusicTitle,
+                style: .destructive,
+                handler: { [removeMusicUseCase] _ in
+                    Task.catching {
+                        try await removeMusicUseCase(musicID: music.id)
+                    } catch: { @MainActor error in
+                        DotoriToast.makeToast(text: error.localizedDescription, style: .error)
+                    }
                 }
-            }))
+            ))
         }
         actions.append(.init(title: L10n.Global.cancelButtonTitle, style: .cancel))
         return actions

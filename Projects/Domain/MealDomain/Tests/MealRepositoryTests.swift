@@ -1,9 +1,9 @@
 import Combine
+@testable import MealDomain
 import MealDomainInterface
+@testable import MealDomainTesting
 import Miniature
 import XCTest
-@testable import MealDomainTesting
-@testable import MealDomain
 
 final class MealRepositoryTests: XCTestCase {
     var remoteMealDataSource: RemoteMealDataSourceSpy!

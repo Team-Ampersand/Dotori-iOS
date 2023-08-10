@@ -7,11 +7,10 @@ open class BaseTableViewCell<Model>:
     AddViewable,
     SetLayoutable,
     ViewConfigurable {
-
     public typealias Model = Model
     public var model: Model?
 
-    public override init(
+    override public init(
         style: UITableViewCell.CellStyle,
         reuseIdentifier: String?
     ) {
@@ -21,7 +20,8 @@ open class BaseTableViewCell<Model>:
         configureView()
     }
 
-    required public init?(coder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

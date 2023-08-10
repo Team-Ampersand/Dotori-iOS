@@ -1,7 +1,7 @@
-import XCTest
 @testable import DetailNoticeFeature
 @testable import NoticeDomainTesting
 @testable import UserDomainTesting
+import XCTest
 
 final class DetailNoticeFeatureTests: XCTestCase {
     var fetchNoticeUseCase: FetchNoticeUseCaseSpy!

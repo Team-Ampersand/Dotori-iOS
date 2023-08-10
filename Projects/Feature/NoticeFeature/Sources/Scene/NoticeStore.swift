@@ -37,6 +37,7 @@ final class NoticeStore: BaseStore {
         var selectedNotice: Set<Int> = []
         var isRefreshing = false
     }
+
     enum Action {
         case viewDidLoad
         case fetchNoticeList
@@ -44,6 +45,7 @@ final class NoticeStore: BaseStore {
         case noticeDidSelect(Int)
         case noticeDidDeselect(Int)
     }
+
     enum Mutation {
         case updateNoticeList([NoticeModel])
         case updateCurrentUserRole(UserRoleType)
