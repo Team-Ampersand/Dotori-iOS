@@ -60,16 +60,16 @@ final class LocalDatabaseMock: LocalDatabase {
     }
 
     var deleteKeyCallCount = 0
-    func delete<Record: FetchableRecord & PersistableRecord>(
-        as record: Record.Type,
+    func delete(
+        as record: (some FetchableRecord & PersistableRecord).Type,
         key: any DatabaseValueConvertible
     ) throws {
         deleteKeyCallCount += 1
     }
 
     var deleteAllCallCount = 0
-    func deleteAll<Record: FetchableRecord & PersistableRecord>(
-        as record: Record.Type
+    func deleteAll(
+        as record: (some FetchableRecord & PersistableRecord).Type
     ) throws {
         deleteAllCallCount += 1
     }

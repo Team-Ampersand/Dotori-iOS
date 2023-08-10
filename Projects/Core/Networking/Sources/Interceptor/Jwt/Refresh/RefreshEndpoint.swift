@@ -24,7 +24,7 @@ extension RefreshEndpoint: DotoriEndpoint {
         .refreshToken
     }
 
-    var headers: [String : String]? {
+    var headers: [String: String]? {
         switch self {
         case let .refresh(refreshToken):
             return ["refreshToken": refreshToken]
