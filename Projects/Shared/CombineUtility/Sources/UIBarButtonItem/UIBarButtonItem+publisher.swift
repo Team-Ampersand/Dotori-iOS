@@ -1,6 +1,7 @@
 import Combine
 import UIKit
 
+// swiftlint: disable nesting
 public extension UIBarButtonItem {
     final class Subscription<SubscriberType: Subscriber, Input: UIBarButtonItem>: Combine.Subscription
         where SubscriberType.Input == Input {
@@ -41,6 +42,8 @@ public extension UIBarButtonItem {
         }
     }
 }
+
+// swiftlint: enable nesting
 
 public extension UIBarButtonItem {
     var tapPublisher: AnyPublisher<Void, Never> {

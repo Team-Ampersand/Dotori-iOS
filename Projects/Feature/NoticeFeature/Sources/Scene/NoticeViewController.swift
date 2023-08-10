@@ -117,7 +117,6 @@ final class NoticeViewController: BaseStoredViewController<NoticeStore> {
             .store(in: &subscription)
     }
 
-    // swiftlint: disable function_body_length
     override func bindState() {
         let sharedState = store.state.share()
             .receive(on: DispatchQueue.main)

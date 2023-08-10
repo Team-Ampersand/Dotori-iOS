@@ -13,6 +13,7 @@ public extension UIView {
 }
 
 extension UIGestureRecognizer {
+    // swiftlint: disable nesting
     public struct Publisher<G>: Combine.Publisher where G: UIGestureRecognizer {
         public typealias Output = G
         public typealias Failure = Never
@@ -63,4 +64,5 @@ extension UIGestureRecognizer {
             return true
         }
     }
+    // swiftlint: enable nesting
 }

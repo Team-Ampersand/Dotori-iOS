@@ -2,6 +2,7 @@ import Configure
 import UIKit
 
 public final class DotoriToast: UIView {
+    // swiftlint: disable nesting
     public enum Duration: Double {
         case short = 1.5
         case long = 3
@@ -14,7 +15,6 @@ public final class DotoriToast: UIView {
     }
 
     private enum Dimension {
-        // swiftlint: disable nesting blanket_disable_command
         enum Margin {
             static let horizontal: CGFloat = 16
             static let vertical: CGFloat = 66
@@ -27,6 +27,8 @@ public final class DotoriToast: UIView {
 
         static let viewSpacing: CGFloat = 12
     }
+
+    // swiftlint: enable nesting
 
     private let label = UILabel()
         .set(\.textColor, .dotori(.neutral(.n10)))
