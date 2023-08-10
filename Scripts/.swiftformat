@@ -1,5 +1,6 @@
 
 --exclude fastlane,Dependencies,Carthage
+--swiftversion 5.8
 
 # options
 --maxwidth 120
