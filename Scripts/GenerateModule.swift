@@ -1,7 +1,7 @@
 #!/usr/bin/swift
 import Foundation
 
-func handleSIGINT(_ signal: Int32) -> Void {
+func handleSIGINT(_ signal: Int32) {
     exit(0)
 }
 
@@ -37,7 +37,7 @@ func registerModuleDependency() {
         makeScaffold(target: .interface)
         targetString += ".\(MicroTargetType.interface), "
     }
-    if hasTesting { 
+    if hasTesting {
         makeScaffold(target: .testing)
         targetString += ".\(MicroTargetType.testing), "
     }
@@ -107,7 +107,7 @@ let project = Project.makeModule(
 
 """
     writeContentInFile(
-        path: currentPath + "Projects/\(layer.rawValue)/\(moduleName)/Project.swift", 
+        path: currentPath + "Projects/\(layer.rawValue)/\(moduleName)/Project.swift",
         content: projectSwift
     )
 }
@@ -118,14 +118,14 @@ func makeProjectDirectory() {
 
 func makeProjectScaffold(targetString: String) {
     _ = try? bash.run(
-        commandName: "tuist", 
+        commandName: "tuist",
         arguments: ["scaffold", "Module", "--name", "\(moduleName)", "--layer", "\(layer.rawValue)", "--target", "\(targetString)"]
     )
 }
 
 func makeScaffold(target: MicroTargetType) {
     _ = try? bash.run(
-        commandName: "tuist", 
+        commandName: "tuist",
         arguments: ["scaffold", "\(target.rawValue)", "--name", "\(moduleName)", "--layer", "\(layer.rawValue)"]
     )
 }
@@ -145,7 +145,7 @@ func updateFileContent(
     guard let readHandle = try? FileHandle(forReadingFrom: fileURL) else {
         fatalError("❌ Failed to find \(filePath)")
     }
-    guard let readData = try? readHandle.readToEnd() else { 
+    guard let readData = try? readHandle.readToEnd() else {
         fatalError("❌ Failed to find \(filePath)")
     }
     try? readHandle.close()
@@ -161,14 +161,13 @@ func updateFileContent(
     try? writeHandle.close()
 }
 
-
 // MARK: - Starting point
 
 print("Enter layer name\n(Feature | Domain | Core | Shared | UserInterface)", terminator: " : ")
 let layerInput = readLine()
-guard 
-    let layerInput, 
-    !layerInput.isEmpty ,
+guard
+    let layerInput,
+    !layerInput.isEmpty,
     let layerUnwrapping = LayerType(rawValue: layerInput)
 else {
     print("Layer is empty or invalid")
@@ -213,7 +212,6 @@ print("interface: \(hasInterface), testing: \(hasTesting), unitTests: \(hasUnitT
 print("------------------------------------------------------------------------------------------------------------------------")
 print("✅ Module is created successfully!")
 
-
 // MARK: - Bash
 protocol CommandExecuting {
     func run(commandName: String, arguments: [String]) throws -> String
@@ -229,7 +227,7 @@ struct Bash: CommandExecuting {
     }
 
     private func resolve(_ command: String) throws -> String {
-        guard var bashCommand = try? run("/bin/bash" , with: ["-l", "-c", "which \(command)"]) else {
+        guard var bashCommand = try? run("/bin/bash", with: ["-l", "-c", "which \(command)"]) else {
             throw BashError.commandNotFound(name: command)
         }
         bashCommand = bashCommand.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)
@@ -248,4 +246,3 @@ struct Bash: CommandExecuting {
         return output
     }
 }
-

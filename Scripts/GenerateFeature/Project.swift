@@ -1,9 +1,9 @@
-//import ProjectDescription
-//import ProjectDescriptionHelpers
+// import ProjectDescription
+// import ProjectDescriptionHelpers
 //
-//let project = Project.staticFramework(
+// let project = Project.staticFramework(
 //    name: "Feature",
 //    dependencies: [
 //        .Project.Features.Feature
 //    ]
-//)
+// )

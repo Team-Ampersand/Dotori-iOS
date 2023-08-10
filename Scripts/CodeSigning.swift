@@ -1,7 +1,7 @@
 #!/usr/bin/swift
 import Foundation
 
-func handleSIGINT(_ signal: Int32) -> Void {
+func handleSIGINT(_ signal: Int32) {
     exit(0)
 }
 
@@ -32,5 +32,3 @@ public extension SettingsDictionary {
 writeContentInFile(path: "Tuist/ProjectDescriptionHelpers/CodeSign.swift", content: codeSignContent)
 
 print("✅ Code Sign extension generated successfully!")
-
-
