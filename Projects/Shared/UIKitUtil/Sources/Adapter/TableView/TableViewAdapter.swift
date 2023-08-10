@@ -125,7 +125,7 @@ public final class TableViewAdapter<Section: SectionModelProtocol>:
 }
 
 public extension UITableView {
-    func setAdapter<Section: SectionModelProtocol>(adapter: TableViewAdapter<Section>) {
+    func setAdapter(adapter: TableViewAdapter<some SectionModelProtocol>) {
         self.delegate = adapter
         self.dataSource = adapter
         self.reloadData()

@@ -129,7 +129,7 @@ public final class CollectionViewAdapter<Section: SectionModelProtocol>:
 }
 
 public extension UICollectionView {
-    func setAdapter<Section: SectionModelProtocol>(adapter: CollectionViewAdapter<Section>) {
+    func setAdapter(adapter: CollectionViewAdapter<some SectionModelProtocol>) {
         self.delegate = adapter
         self.dataSource = adapter
         self.reloadData()
