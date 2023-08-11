@@ -10,6 +10,7 @@ fastlane/screenshots/screenshots.html
 fastlane/test_output
 fastlane/FastlaneRunner
 .env.default
+AppStoreAPIKey.json
 
 ### Git ###
 *.orig

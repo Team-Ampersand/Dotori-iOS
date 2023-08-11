@@ -15,14 +15,21 @@ env:
   ENCRYPTED_XCCONFIG_PATH: ${{ 'XCConfig.zip.gpg' }}
   DECRYPTED_XCCONFIG_PATH: ${{ 'XCConfig' }}
 
+  PROVISION_SECRET: ${{ secrets.PROVISION_SECRET }}
   ENCRYPTED_PROVISION_PATH: ${{ 'Tuist/Signing/Dotori.PROD.mobileprovision.gpg' }}
   DECRYPTED_PROVISION_PATH: ${{ 'Tuist/Signing/Dotori.PROD.mobileprovision' }}
 
+  MASTER_KEY_SECRET: ${{ secrets.MASTER_KEY_SECRET }}
   ENCRYPTED_MASTER_KEY_PATH: ${{ 'Tuist/master.key.gpg' }}
   DECRYPTED_MASTER_KEY_PATH: ${{ 'Tuist/master.key' }}
 
+  FASTLANE_SECRET: ${{ secrets.FASTLANE_SECRET }}
   ENCRYPTED_FASTLANE_ENV_PATH: ${{ 'fastlane/.env.default.gpg' }}
   DECRYPTED_FASTLANE_ENV_PATH: ${{ 'fastlane/.env.default' }}
+
+  APPSTORE_CONNECT_SECRET: ${{ secrets.APPSTORE_CONNECT_SECRET }}
+  ENCRYPTED_APPSTORE_CONNECT_PATH: ${{ 'fastlane/AppStoreAPIKey.json.gpg' }}
+  DECRYPTED_APPSTORE_CONNECT_PATH: ${{ 'fastlane/AppStoreAPIKey.json' }}
 
 jobs:
   distribute:
@@ -40,13 +47,32 @@ jobs:
           unzip XCConfig.zip
 
           # Provisioning Profile
-          gpg -d -o "$DECRYPTED_PROVISION_PATH" --pinentry-mode=loopback --passphrase "$XCCONFIG_SECRET" "$ENCRYPTED_PROVISION_PATH"
+          gpg -d -o "$DECRYPTED_PROVISION_PATH" --pinentry-mode=loopback --passphrase "$PROVISION_SECRET" "$ENCRYPTED_PROVISION_PATH"
 
           # master.key
-          gpg -d -o "$DECRYPTED_MASTER_KEY_PATH" --pinentry-mode=loopback --passphrase "$XCCONFIG_SECRET" "$ENCRYPTED_MASTER_KEY_PATH"
+          gpg -d -o "$DECRYPTED_MASTER_KEY_PATH" --pinentry-mode=loopback --passphrase "$MASTER_KEY_SECRET" "$ENCRYPTED_MASTER_KEY_PATH"
 
           # fastlane env
-          gpg -d -o "$DECRYPTED_FASTLANE_ENV_PATH" --pinentry-mode=loopback --passphrase "$XCCONFIG_SECRET" "$ENCRYPTED_FASTLANE_ENV_PATH"
+          gpg -d -o "$DECRYPTED_FASTLANE_ENV_PATH" --pinentry-mode=loopback --passphrase "$FASTLANE_SECRET" "$ENCRYPTED_FASTLANE_ENV_PATH"
+
+          # AppStore Connect API Key
+          gpg -d -o "$DECRYPTED_APPSTORE_CONNECT_PATH" --pinentry-mode=loopback --passphrase "$APPSTORE_CONNECT_SECRET" "$ENCRYPTED_APPSTORE_CONNECT_PATH"
+
+      - name: Install fastlane
+        run: brew install fastlane
 
       - name: Install tuist
         run: curl -Ls https://install.tuist.io | bash
+
+      - name: Install dependencies
+        run: tuist fetch
+
+      - name: Project generate
+        run: TUIST_ENV=CD tuist generate
+
+      - name: Update Release Note
+        run: |
+          echo "${{ github.event.inputs.changed }}" > fastlane/metadata/ko/release_notes.txt
+
+      - name: distribute
+        run: fastlane release version:"${{ github.event.inputs.version }}"

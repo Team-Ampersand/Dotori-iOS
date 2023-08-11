@@ -4,7 +4,7 @@ generate:
 
 ci_generate:
 	tuist fetch
-	TUIST_CI=1 tuist generate
+	TUIST_ENV=CI tuist generate
 
 clean:
 	rm -rf **/*.xcodeproj
