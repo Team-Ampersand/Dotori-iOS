@@ -1,0 +1,55 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Push a new release build to the App Store"
+  lane :release do |options|
+    version = options[:version]
+
+    build_number = get_info_plist_value(path: "./Projects/App/Support/Info.plist", key: "CFBundleVersion")
+    set_info_plist_value(path: "./Projects/App/Support/Info.plist", key: "CFBundleVersion", value: "#{build_number.to_i + 1}")
+    set_info_plist_value(path: "./Projects/App/Support/Info.plist", key: "CFBundleShortVersionString", value: version)
+    build_app(scheme: "Dotori-PROD")
+    upload_to_app_store(
+      app_version: version,
+      submit_for_review: true,
+      force: true,
+      automatic_release: true,
+      skip_metadata: false,
+      api_key_path: "fastlane/AppStoreAPIKey.json",
+      precheck_include_in_app_purchases: false,
+      submission_information: {
+        add_id_info_uses_idfa: false
+      }
+    )
+    discord_notifier(
+      webhook_url: ENV["WEBHOOK_URL"],
+      title: "🚀 도토리 iOS CD 성공",
+      thumbnail_url: "https://github.com/Team-Ampersand/Dotori-iOS/assets/74440939/5bcfc67c-37b2-42f6-8cef-7b544b0a5606",
+      description: "도토리 iOS #{version}을 앱스토어에 성공적으로 배포하였습니다 !"
+    )
+    set_github_release(
+      repository_name: "Team-Ampersand/Dotori-iOS",
+      api_token: ENV["GITHUB_TOKEN"],
+      name: "도토리 #{version}",
+      tag_name: version,
+      commitish: "master",
+      description: (File.read("./faselane/metadata/ko/release_notes.txt") rescue ""),
+      is_generate_release_notes: true
+    )
+  end
+end

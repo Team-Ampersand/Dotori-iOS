@@ -9,6 +9,8 @@ fastlane/screenshots/**/*.png
 fastlane/screenshots/screenshots.html
 fastlane/test_output
 fastlane/FastlaneRunner
+.env.default
+AppStoreAPIKey.json
 
 ### Git ###
 *.orig
@@ -120,3 +122,7 @@ Tuist/Dependencies
 Derived/
 *.xcworkspace
 *.xcodeproj
+*.p12
+*.cer
+*.mobileprovision
+master.key

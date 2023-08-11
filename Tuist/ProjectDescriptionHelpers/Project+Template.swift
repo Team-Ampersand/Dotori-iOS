@@ -4,8 +4,6 @@ import EnvironmentPlugin
 import Foundation
 import ProjectDescription
 
-let isCI = (ProcessInfo.processInfo.environment["TUIST_CI"] ?? "0") == "1" ? true : false
-
 public enum MicroFeatureTarget {
     case interface
     case testing
@@ -36,7 +34,7 @@ public extension Project {
         configurations: [Configuration] = [],
         resourceSynthesizers: [ResourceSynthesizer] = .default
     ) -> Project {
-        let scripts: [TargetScript] = isCI ? [] : [.swiftFormat, .swiftLint]
+        let scripts: [TargetScript] = generateEnvironment.scripts
         let ldFlagsSettings: SettingsDictionary = product == .framework ?
         ["OTHER_LDFLAGS": .string("$(inherited) -all_load")] :
         ["OTHER_LDFLAGS": .string("$(inherited)")]

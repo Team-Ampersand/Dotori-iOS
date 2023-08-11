@@ -5,8 +5,6 @@ import Foundation
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let isCI = (ProcessInfo.processInfo.environment["TUIST_CI"] ?? "0") == "1" ? true : false
-
 let configurations: [Configuration] = .default
 
 let settings: Settings =
@@ -16,7 +14,7 @@ let settings: Settings =
         defaultSettings: .recommended
     )
 
-let scripts: [TargetScript] = isCI ? [] : [.swiftFormat, .swiftLint]
+let scripts: [TargetScript] = generateEnvironment.scripts
 
 let targets: [Target] = [
     .init(
@@ -55,7 +53,10 @@ let targets: [Target] = [
             .core(target: .Timer),
             .target(name: "\(env.name)ShareExtension")
         ],
-        settings: .settings(base: env.baseSetting)
+        settings: .settings(
+            base: env.baseSetting
+                .merging(.codeSign)
+        )
     ),
     .init(
         name: "\(env.name)ShareExtension",
@@ -74,7 +75,11 @@ let targets: [Target] = [
             .core(target: .JwtStore),
             .core(target: .KeyValueStore),
             .core(target: .Networking)
-        ]
+        ],
+        settings: .settings(
+            base: env.baseSetting
+                .merging(.codeSign)
+        )
     )
 ]
 

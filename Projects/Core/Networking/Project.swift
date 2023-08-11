@@ -7,9 +7,7 @@ import ProjectDescriptionHelpers
 
 let name = ModulePaths.Core.Networking.rawValue
 
-let isCI = (ProcessInfo.processInfo.environment["TUIST_CI"] ?? "0") == "1" ? true : false
-
-let configurations: [Configuration] = isCI ?
+let configurations: [Configuration] = generateEnvironment == .ci ?
     .default :
     [
         .debug(name: .dev, xcconfig: .relativeToXCConfig(type: .dev, name: name)),
