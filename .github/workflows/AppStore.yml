@@ -1,0 +1,52 @@
+name: AppStore Submission
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release'
+        required: true
+      changed:
+        description: 'Changes in this version'
+        required: true
+
+env:
+  XCCONFIG_SECRET: ${{ secrets.XCCONFIG_SECRET }}
+  ENCRYPTED_XCCONFIG_PATH: ${{ 'XCConfig.zip.gpg' }}
+  DECRYPTED_XCCONFIG_PATH: ${{ 'XCConfig' }}
+
+  ENCRYPTED_PROVISION_PATH: ${{ 'Tuist/Signing/Dotori.PROD.mobileprovision.gpg' }}
+  DECRYPTED_PROVISION_PATH: ${{ 'Tuist/Signing/Dotori.PROD.mobileprovision' }}
+
+  ENCRYPTED_MASTER_KEY_PATH: ${{ 'Tuist/master.key.gpg' }}
+  DECRYPTED_MASTER_KEY_PATH: ${{ 'Tuist/master.key' }}
+
+  ENCRYPTED_FASTLANE_ENV_PATH: ${{ 'fastlane/.env.default.gpg' }}
+  DECRYPTED_FASTLANE_ENV_PATH: ${{ 'fastlane/.env.default' }}
+
+jobs:
+  distribute:
+    name: 🚀 App Store Submission
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Decode encrypted files
+        run: |
+          # XCConfig
+          rm -rf XCConfig
+          gpg -d -o "$DECRYPTED_XCCONFIG_PATH" --pinentry-mode=loopback --passphrase "$XCCONFIG_SECRET" "$ENCRYPTED_XCCONFIG_PATH"
+          unzip XCConfig.zip
+
+          # Provisioning Profile
+          gpg -d -o "$DECRYPTED_PROVISION_PATH" --pinentry-mode=loopback --passphrase "$XCCONFIG_SECRET" "$ENCRYPTED_PROVISION_PATH"
+
+          # master.key
+          gpg -d -o "$DECRYPTED_MASTER_KEY_PATH" --pinentry-mode=loopback --passphrase "$XCCONFIG_SECRET" "$ENCRYPTED_MASTER_KEY_PATH"
+
+          # fastlane env
+          gpg -d -o "$DECRYPTED_FASTLANE_ENV_PATH" --pinentry-mode=loopback --passphrase "$XCCONFIG_SECRET" "$ENCRYPTED_FASTLANE_ENV_PATH"
+
+      - name: Install tuist
+        run: curl -Ls https://install.tuist.io | bash

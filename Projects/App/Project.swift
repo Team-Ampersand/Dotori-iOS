@@ -53,7 +53,10 @@ let targets: [Target] = [
             .core(target: .Timer),
             .target(name: "\(env.name)ShareExtension")
         ],
-        settings: .settings(base: env.baseSetting)
+        settings: .settings(
+            base: env.baseSetting
+                .merging(.codeSign)
+        )
     ),
     .init(
         name: "\(env.name)ShareExtension",
@@ -72,7 +75,11 @@ let targets: [Target] = [
             .core(target: .JwtStore),
             .core(target: .KeyValueStore),
             .core(target: .Networking)
-        ]
+        ],
+        settings: .settings(
+            base: env.baseSetting
+                .merging(.codeSign)
+        )
     )
 ]
 
