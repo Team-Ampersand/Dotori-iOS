@@ -37,7 +37,7 @@ platform :ios do
       }
     )
     discord_notifier(
-      webhook_url: "https://discord.com/api/webhooks/1139535875546566686/HmyeqwRhRPcx6sQOLu7KTQD-RsNwBY-3G36f8sTizjx3FA1eiLuJgODcBVIEhG7gZb3z",
+      webhook_url: ENV["WEBHOOK_URL"],
       title: "🚀 도토리 iOS CD 성공",
       thumbnail_url: "https://github.com/Team-Ampersand/Dotori-iOS/assets/74440939/5bcfc67c-37b2-42f6-8cef-7b544b0a5606",
       description: "도토리 iOS #{version}을 앱스토어에 성공적으로 배포하였습니다 !"

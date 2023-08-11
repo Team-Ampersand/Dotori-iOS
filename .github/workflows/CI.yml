@@ -11,6 +11,10 @@ env:
   DOTORI_IOS_DISCORD_WEBHOOK: ${{ secrets.DOTORI_IOS_DISCORD_WEBHOOK }}
   DOTORI_IOS_ROLE: ${{ secrets.DOTORI_IOS_ROLE }}
 
+  MASTER_KEY_SECRET: ${{ secrets.MASTER_KEY_SECRET }}
+  ENCRYPTED_MASTER_KEY_PATH: ${{ 'Tuist/master.key.gpg' }}
+  DECRYPTED_MASTER_KEY_PATH: ${{ 'Tuist/master.key' }}
+
 jobs:
   prepare-dependency:
     name: ⚙️ Prepare for CI
@@ -58,6 +62,9 @@ jobs:
       with:
         path: ${{ env.CACHED_DEPENDENCY_PATHS }}
         key: ${{ needs.prepare-dependency.outputs.dependency_cache_key }}
+
+    - name: Decode master.key
+      run: gpg -d -o "$DECRYPTED_MASTER_KEY_PATH" --pinentry-mode=loopback --passphrase "$MASTER_KEY_SECRET" "$ENCRYPTED_MASTER_KEY_PATH"
 
     - name: Install dependencies
       if: steps.cache_dependencies.outputs.cache-hit != 'true'
