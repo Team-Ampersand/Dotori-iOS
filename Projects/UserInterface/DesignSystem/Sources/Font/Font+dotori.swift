@@ -1,7 +1,6 @@
 import UIKit
 
 public extension UIFont {
-    // swiftlint: disable identifier_name
     enum DotoriFontSystem: DotoriFontable {
         case h1
         case h2

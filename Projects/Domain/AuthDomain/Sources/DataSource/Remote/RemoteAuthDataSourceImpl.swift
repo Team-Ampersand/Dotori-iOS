@@ -21,7 +21,7 @@ final class RemoteAuthDataSourceImpl: RemoteAuthDataSource {
     }
 
     func networkIsConnected() async -> Bool {
-        return await withCheckedContinuation({ continuation in
+        return await withCheckedContinuation { continuation in
             let monitor = NWPathMonitor()
 
             monitor.pathUpdateHandler = { path in
@@ -36,6 +36,6 @@ final class RemoteAuthDataSourceImpl: RemoteAuthDataSource {
                 }
             }
             monitor.start(queue: DispatchQueue(label: "InternetConnectionMonitor"))
-        })
+        }
     }
 }

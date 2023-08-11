@@ -3,13 +3,13 @@ import Swinject
 
 public final class DatabaseAssembly: Assembly {
     public init() {}
-    // swiftlint : disable identifier_name
+    /// swiftlint : disable identifier_name
     public func assemble(container: Container) {
         container.register(LocalDatabase.self) { _ in
             GRDBLocalDatabase { migrator in
-            #if DEBUG
+                #if DEBUG
                 migrator.eraseDatabaseOnSchemaChange = true
-            #endif
+                #endif
 
                 migrator.registerMigration("v1.0.0") { db in
                     try db.create(table: "MealInfoLocalEntity") { table in

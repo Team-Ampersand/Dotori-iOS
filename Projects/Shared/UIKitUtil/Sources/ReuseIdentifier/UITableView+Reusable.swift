@@ -18,7 +18,7 @@ public extension UITableView {
         ) as? T else {
             fatalError(
                 "Failed to dequeue a cell with identifier \(cellType.reuseIdentifier) "
-                + "matching type \(cellType.self)."
+                    + "matching type \(cellType.self)."
             )
         }
         return cell
@@ -39,7 +39,7 @@ public extension UITableView {
         ) as? T? else {
             fatalError(
                 "Failed to dequeue a header/footer with identifier \(viewType.reuseIdentifier) "
-                + "matching type \(viewType.self)."
+                    + "matching type \(viewType.self)."
             )
         }
         return view

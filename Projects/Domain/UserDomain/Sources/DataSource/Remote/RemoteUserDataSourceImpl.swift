@@ -1,5 +1,5 @@
-import UserDomainInterface
 import NetworkingInterface
+import UserDomainInterface
 
 final class RemoteUserDataSourceImpl: RemoteUserDataSource {
     private let networking: any Networking

@@ -23,6 +23,7 @@ final class SigninStore: BaseStore {
         var email: String = ""
         var password: String = ""
     }
+
     enum Action: Equatable {
         case updateEmail(String)
         case updatePassword(String)
@@ -30,6 +31,7 @@ final class SigninStore: BaseStore {
         case renewalPasswordButtonDidTap
         case signinButtonDidTap
     }
+
     enum Mutation {
         case updateEmail(String)
         case updatePassword(String)

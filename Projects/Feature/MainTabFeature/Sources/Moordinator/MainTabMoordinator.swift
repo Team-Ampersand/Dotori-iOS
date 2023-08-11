@@ -101,7 +101,7 @@ private extension MainTabMoordinator {
             [homeTabbarItem, noticeTabbarItem, selfStudyTabbarItem, massageTabbarItem, musicTabbarItem].forEach {
                 $0.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: -5, right: 0)
             }
-        
+
             self.rootVC.setViewControllers([root1, root2, root3, root4, root5], animated: true)
         }
         return .multiple([

@@ -36,7 +36,7 @@ public extension Project {
         configurations: [Configuration] = [],
         resourceSynthesizers: [ResourceSynthesizer] = .default
     ) -> Project {
-        let scripts: [TargetScript] = isCI ? [] : [.swiftLint]
+        let scripts: [TargetScript] = isCI ? [] : [.swiftFormat, .swiftLint]
         let ldFlagsSettings: SettingsDictionary = product == .framework ?
         ["OTHER_LDFLAGS": .string("$(inherited) -all_load")] :
         ["OTHER_LDFLAGS": .string("$(inherited)")]

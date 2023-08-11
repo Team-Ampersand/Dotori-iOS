@@ -1,7 +1,7 @@
 import AuthDomainInterface
-import SignupFeature
-import RenewalPasswordFeature
 import Moordinator
+import RenewalPasswordFeature
+import SignupFeature
 
 struct SigninFactoryImpl: SigninFactory {
     private let signinUseCase: any SigninUseCase

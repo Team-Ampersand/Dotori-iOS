@@ -1,7 +1,7 @@
-import AuthDomainInterface
-import XCTest
 @testable import AuthDomain
+import AuthDomainInterface
 @testable import AuthDomainTesting
+import XCTest
 
 final class CheckIsLoggedInUseCaseTests: XCTestCase {
     var authRepository: AuthRepositorySpy!

@@ -38,11 +38,13 @@ final class DetailNoticeStore: BaseStore {
         var isLoading = false
         var currentUserRole = UserRoleType.member
     }
+
     enum Action {
         case viewDidLoad
         case viewWillAppear
         case removeBarButtonDidTap
     }
+
     enum Mutation {
         case updateDetailNotice(DetailNoticeModel)
         case updateIsLoading(Bool)

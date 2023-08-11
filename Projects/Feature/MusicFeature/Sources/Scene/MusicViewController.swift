@@ -25,6 +25,7 @@ final class MusicViewController: BaseStoredViewController<MusicStore> {
         .then {
             $0.register(cellType: MusicCell.self)
         }
+
     private let musicRefreshControl = DotoriRefreshControl()
         .set(\.isHidden, true)
     private lazy var musicTableAdapter = TableViewAdapter<GenericSectionModel<MusicModel>>(
@@ -35,6 +36,7 @@ final class MusicViewController: BaseStoredViewController<MusicStore> {
         cell.delegate = self
         return cell
     }
+
     private let emptyMusicStackView = VStackView(spacing: 8) {
         DotoriIconView(
             size: .custom(.init(width: 120, height: 120)),

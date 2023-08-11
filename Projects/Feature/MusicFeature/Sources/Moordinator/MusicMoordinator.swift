@@ -67,8 +67,8 @@ private extension MusicMoordinator {
         actions: [UIAlertAction]
     ) -> MoordinatorContributors {
         let style: UIAlertController.Style = (style == .actionSheet && UIDevice.current.userInterfaceIdiom == .pad)
-        ? .alert
-        : style
+            ? .alert
+            : style
         let alert = UIAlertController(title: title, message: message, preferredStyle: style)
         if !actions.isEmpty {
             actions.forEach(alert.addAction(_:))

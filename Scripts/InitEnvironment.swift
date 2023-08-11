@@ -1,7 +1,7 @@
 #!/usr/bin/swift
 import Foundation
 
-func handleSIGINT(_ signal: Int32) -> Void {
+func handleSIGINT(_ signal: Int32) {
     exit(0)
 }
 

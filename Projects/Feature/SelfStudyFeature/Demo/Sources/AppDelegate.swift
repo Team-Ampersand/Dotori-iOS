@@ -1,8 +1,8 @@
 import BaseDomainInterface
 import Inject
-import UIKit
-@testable import SelfStudyFeature
 @testable import SelfStudyDomainTesting
+@testable import SelfStudyFeature
+import UIKit
 @testable import UserDomainTesting
 
 @main

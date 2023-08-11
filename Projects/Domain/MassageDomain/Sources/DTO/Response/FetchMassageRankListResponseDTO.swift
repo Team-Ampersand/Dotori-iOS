@@ -1,6 +1,6 @@
 import BaseDomainInterface
-import MassageDomainInterface
 import Foundation
+import MassageDomainInterface
 
 struct FetchMassageRankListResponseDTO: Decodable {
     let list: [MassageRankResponseDTO]

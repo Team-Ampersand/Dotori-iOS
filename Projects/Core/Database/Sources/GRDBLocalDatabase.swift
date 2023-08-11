@@ -139,8 +139,8 @@ final class GRDBLocalDatabase: LocalDatabase {
         }
     }
 
-    func delete<Record: FetchableRecord & PersistableRecord>(
-        as record: Record.Type,
+    func delete(
+        as record: (some FetchableRecord & PersistableRecord).Type,
         key: any DatabaseValueConvertible
     ) throws {
         try dbQueue.write { db in
@@ -148,8 +148,8 @@ final class GRDBLocalDatabase: LocalDatabase {
         }
     }
 
-    func deleteAll<Record: FetchableRecord & PersistableRecord>(
-        as record: Record.Type
+    func deleteAll(
+        as record: (some FetchableRecord & PersistableRecord).Type
     ) throws {
         try dbQueue.write { db in
             _ = try record.deleteAll(db)

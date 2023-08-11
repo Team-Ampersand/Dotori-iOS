@@ -1,8 +1,8 @@
 import BaseDomainInterface
-import NoticeDomainInterface
-import XCTest
 @testable import NoticeDomain
+import NoticeDomainInterface
 @testable import NoticeDomainTesting
+import XCTest
 
 final class FetchNoticeListUseCaseTests: XCTestCase {
     var noticeRepository: NoticeRepositorySpy!

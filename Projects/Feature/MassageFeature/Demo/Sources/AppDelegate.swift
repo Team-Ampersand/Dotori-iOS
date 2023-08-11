@@ -1,7 +1,7 @@
-import UIKit
 import Inject
-@testable import MassageFeature
 @testable import MassageDomainTesting
+@testable import MassageFeature
+import UIKit
 @testable import UserDomainTesting
 
 @main

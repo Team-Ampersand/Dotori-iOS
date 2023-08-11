@@ -7,7 +7,6 @@ open class BaseStoredViewController<Store: BaseStore>:
     RoutedViewControllable,
     StoredViewControllable,
     StoreBindable {
-
     // MARK: - Properties
 
     public let store: Store
@@ -19,13 +18,14 @@ open class BaseStoredViewController<Store: BaseStore>:
         super.init(nibName: nil, bundle: nil)
     }
 
-    required public init?(coder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     // MARK: - LifeCycle
 
-    open override func viewDidLoad() {
+    override open func viewDidLoad() {
         bindAction()
         bindState()
         super.viewDidLoad()

@@ -5,7 +5,7 @@ public extension UIButton {
         let render = UIGraphicsImageRenderer(size: CGSize(width: 1.0, height: 1.0))
 
         let image = render.image { context in
-            if let color = color {
+            if let color {
                 color.setFill()
             } else {
                 UIColor.clear.setFill()

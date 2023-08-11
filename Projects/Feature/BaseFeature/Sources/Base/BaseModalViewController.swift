@@ -8,7 +8,6 @@ import UIKit
  addView() 메서드를 재정의할 때 꼭 super.addView()를 호출해주세요 !
  */
 open class BaseModalViewController: BaseViewController {
-
     // MARK: - Properties
 
     public var contentView = UIView()
@@ -18,7 +17,7 @@ open class BaseModalViewController: BaseViewController {
 
     // MARK: - LifeCycle
 
-    open override func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         if UITraitCollection.current.userInterfaceStyle == .light {
             view.backgroundColor = .init(red: 0.02, green: 0.03, blue: 0.17, alpha: 0.45)
@@ -27,12 +26,12 @@ open class BaseModalViewController: BaseViewController {
         }
     }
 
-    open override func viewWillAppear(_ animated: Bool) {
+    override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         modalAnimation()
     }
 
-    open override func addView() {
+    override open func addView() {
         view.addSubview(contentView)
     }
 

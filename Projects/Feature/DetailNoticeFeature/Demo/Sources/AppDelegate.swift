@@ -1,7 +1,7 @@
-import Inject
-import UIKit
 @testable import DetailNoticeFeature
+import Inject
 @testable import NoticeDomainTesting
+import UIKit
 @testable import UserDomainTesting
 
 @main

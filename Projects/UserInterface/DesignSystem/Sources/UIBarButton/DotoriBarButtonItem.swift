@@ -1,7 +1,7 @@
 import UIKit
 
 public final class DotoriBarButtonItem: UIBarButtonItem {
-    public override init() {
+    override public init() {
         super.init()
         self.title = "DOTORI"
         self.isEnabled = false
@@ -11,6 +11,7 @@ public final class DotoriBarButtonItem: UIBarButtonItem {
         ], for: .disabled)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

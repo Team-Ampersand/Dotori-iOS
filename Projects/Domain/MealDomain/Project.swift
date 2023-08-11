@@ -10,11 +10,11 @@ let isCI = (ProcessInfo.processInfo.environment["TUIST_CI"] ?? "0") == "1" ? tru
 
 let configurations: [Configuration] = isCI ?
     .default :
-[
-    .debug(name: .dev, xcconfig: .relativeToXCConfig(type: .dev, name: name)),
-    .debug(name: .stage, xcconfig: .relativeToXCConfig(type: .stage, name: name)),
-    .release(name: .prod, xcconfig: .relativeToXCConfig(type: .prod, name: name))
-]
+    [
+        .debug(name: .dev, xcconfig: .relativeToXCConfig(type: .dev, name: name)),
+        .debug(name: .stage, xcconfig: .relativeToXCConfig(type: .stage, name: name)),
+        .release(name: .prod, xcconfig: .relativeToXCConfig(type: .prod, name: name))
+    ]
 
 let project = Project.module(
     name: name,

@@ -24,6 +24,7 @@ final class SelfStudyCell: BaseTableViewCell<SelfStudyRankModel> {
         bindAction()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -82,7 +83,7 @@ final class SelfStudyCell: BaseTableViewCell<SelfStudyRankModel> {
 private extension SelfStudyCell {
     func bindAction() {
         appliedStudentCardView.attendanceCheckBoxPublisher
-            .compactMap { [weak self] (checked) -> (Int, Bool)? in
+            .compactMap { [weak self] checked -> (Int, Bool)? in
                 guard let id = self?.model?.id else { return nil }
                 return (id, checked)
             }

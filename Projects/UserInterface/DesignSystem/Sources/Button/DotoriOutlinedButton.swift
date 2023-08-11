@@ -2,9 +2,10 @@ import UIKit
 import UIKitUtil
 
 public final class DotoriOutlineButton: UIButton {
-    public override var isHighlighted: Bool {
+    override public var isHighlighted: Bool {
         didSet { setNeedsDisplay() }
     }
+
     private let text: String
 
     public init(text: String = "") {
@@ -13,15 +14,16 @@ public final class DotoriOutlineButton: UIButton {
         setupButton()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
     }
 
-    public override func draw(_ rect: CGRect) {
+    override public func draw(_ rect: CGRect) {
         super.draw(rect)
         setButtonColor()
     }

@@ -6,7 +6,8 @@ public final class DotoriIconButton: UIButton {
         self.setImage(image, for: .normal)
     }
 
-    required public init?(coder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

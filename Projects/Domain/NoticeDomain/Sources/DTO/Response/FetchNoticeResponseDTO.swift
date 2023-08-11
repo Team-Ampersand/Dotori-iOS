@@ -15,11 +15,6 @@ struct FetchNoticeResponseDTO: Decodable {
     struct BoardImage: Decodable {
         let id: Int
         let url: String
-
-        init(id: Int, url: String) {
-            self.id = id
-            self.url = url
-        }
     }
 }
 

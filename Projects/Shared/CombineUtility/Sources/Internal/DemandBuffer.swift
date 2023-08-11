@@ -47,7 +47,7 @@ class DemandBuffer<S: Subscriber> {
         lock.lock()
         defer { lock.unlock() }
 
-        if let newDemand = newDemand {
+        if let newDemand {
             demandState.requested += newDemand
         }
 
@@ -58,7 +58,7 @@ class DemandBuffer<S: Subscriber> {
             demandState.processed += 1
         }
 
-        if let completion = completion {
+        if let completion {
             buffer = []
             demandState = .init()
             self.completion = nil

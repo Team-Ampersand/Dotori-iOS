@@ -13,6 +13,7 @@ public extension UIView {
 }
 
 extension UIGestureRecognizer {
+    // swiftlint: disable nesting
     public struct Publisher<G>: Combine.Publisher where G: UIGestureRecognizer {
         public typealias Output = G
         public typealias Failure = Never
@@ -32,7 +33,6 @@ extension UIGestureRecognizer {
         Combine.Subscription,
         UIGestureRecognizerDelegate
         where S.Input == G, S.Failure == Never {
-
         var subscriber: S?
         let gestureRecognizer: G
         let view: UIView
@@ -55,7 +55,7 @@ extension UIGestureRecognizer {
             view.removeGestureRecognizer(gestureRecognizer)
         }
 
-        func request(_ demand: Subscribers.Demand) { }
+        func request(_ demand: Subscribers.Demand) {}
 
         func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
             guard touch.view == self.view else {
@@ -64,4 +64,5 @@ extension UIGestureRecognizer {
             return true
         }
     }
+    // swiftlint: enable nesting
 }

@@ -25,12 +25,14 @@ final class ProposeMusicStore: BaseStore {
         var url = ""
         var isLoading = false
     }
+
     enum Action {
         case updateURL(String)
         case proposeButtonDidTap
         case dimmedBackgroundDidTap
         case youtubeButtonDidTap
     }
+
     enum Mutation {
         case updateURL(String)
         case updateIsLoading(Bool)
