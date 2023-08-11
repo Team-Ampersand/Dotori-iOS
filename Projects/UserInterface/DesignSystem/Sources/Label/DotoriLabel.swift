@@ -4,7 +4,7 @@ import UIKit
 public final class DotoriLabel: UILabel {
     public var padding = UIEdgeInsets.all(0)
 
-    public override var intrinsicContentSize: CGSize {
+    override public var intrinsicContentSize: CGSize {
         var contentSize = super.intrinsicContentSize
         contentSize.height += padding.top + padding.bottom
         contentSize.width += padding.left + padding.right
@@ -23,10 +23,11 @@ public final class DotoriLabel: UILabel {
         self.textColor = .dotori(textColor)
     }
 
-    public override func drawText(in rect: CGRect) {
+    override public func drawText(in rect: CGRect) {
         super.drawText(in: rect.inset(by: padding))
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

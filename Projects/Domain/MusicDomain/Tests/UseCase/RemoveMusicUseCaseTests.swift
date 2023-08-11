@@ -1,7 +1,7 @@
-import MusicDomainInterface
-import XCTest
 @testable import MusicDomain
+import MusicDomainInterface
 @testable import MusicDomainTesting
+import XCTest
 
 final class RemoveMusicUseCaseTests: XCTestCase {
     var musicRepository: MusicRepositorySpy!

@@ -1,6 +1,6 @@
-import XCTest
-@testable import UserDomainTesting
 @testable import UserDomain
+@testable import UserDomainTesting
+import XCTest
 
 final class UserRepositoryTests: XCTestCase {
     var userRepository: UserRepositoryImpl!

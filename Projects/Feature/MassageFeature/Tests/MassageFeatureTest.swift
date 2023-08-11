@@ -1,9 +1,9 @@
 import Combine
 import MassageDomainInterface
-import XCTest
-@testable import MassageFeature
 @testable import MassageDomainTesting
+@testable import MassageFeature
 @testable import UserDomainTesting
+import XCTest
 
 final class MassageFeatureTests: XCTestCase {
     var fetchMassageRankListUseCase: FetchMassageRankListUseCaseSpy!

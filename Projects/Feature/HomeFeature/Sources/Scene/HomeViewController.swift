@@ -12,6 +12,7 @@ final class HomeViewController: BaseStoredViewController<HomeStore> {
         static let horizontalPadding: CGFloat = 20
         static let spacing: CGFloat = 12
     }
+
     private let dotoriBarButtonItem = DotoriBarButtonItem()
     private let myInfoImageView = UIImageView(image: .Dotori.personCircle)
     private lazy var myInfoBarButtonItem = UIBarButtonItem(customView: myInfoImageView)

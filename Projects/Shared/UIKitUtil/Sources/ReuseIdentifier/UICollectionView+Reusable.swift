@@ -19,7 +19,7 @@ public extension UICollectionView {
         guard let cell = dequeueCell as? T else {
             fatalError(
                 "Failed to dequeue a cell with identifier \(cellType.reuseIdentifier) "
-                + "matching type \(cellType.self)."
+                    + "matching type \(cellType.self)."
             )
         }
         return cell
@@ -49,7 +49,7 @@ public extension UICollectionView {
         guard let typedView = supplementaryView as? T else {
             fatalError(
                 "Failed to dequeue a supplementary view with identifier \(viewType.reuseIdentifier) "
-                + "matching type \(viewType.self)."
+                    + "matching type \(viewType.self)."
             )
         }
         return typedView

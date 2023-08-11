@@ -15,6 +15,7 @@ final class ProposeMusicViewController: BaseStoredModalViewController<ProposeMus
         )
         $0.setAttributedTitle(attributedString, for: .normal)
     }
+
     private let shareTipLabel = DotoriLabel(L10n.ProposeMusic.shareTipTitle, textColor: .neutral(.n20), font: .body2)
         .set(\.numberOfLines, 0)
     private let urlTextField = DotoriSimpleTextField(placeholder: L10n.ProposeMusic.inputUrlPlaceholder)
@@ -105,8 +106,8 @@ final class ProposeMusicViewController: BaseStoredModalViewController<ProposeMus
                 proposeButton.setTitle(proposeButtonTitle, for: .normal)
 
                 isLoading
-                ? proposeActivityView.startAnimating()
-                : proposeActivityView.stopAnimating()
+                    ? proposeActivityView.startAnimating()
+                    : proposeActivityView.stopAnimating()
             }
             .store(in: &subscription)
     }

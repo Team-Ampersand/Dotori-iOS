@@ -34,6 +34,7 @@ final class FilterSelfStudyStore: BaseStore {
         var `class`: Int?
         var gender: FilterGenderType?
     }
+
     enum Action {
         case updateName(String?)
         case updateGrade(Int?)
@@ -43,6 +44,7 @@ final class FilterSelfStudyStore: BaseStore {
         case resetButtonDidTap
         case dimmedBackgroundDidTap
     }
+
     enum Mutation {
         case updateName(String?)
         case updateGrade(Int?)

@@ -1,7 +1,7 @@
-import NoticeDomainInterface
-import XCTest
 @testable import NoticeDomain
+import NoticeDomainInterface
 @testable import NoticeDomainTesting
+import XCTest
 
 final class RemoveNoticeUseCaseTests: XCTestCase {
     var noticeRepository: NoticeRepositorySpy!

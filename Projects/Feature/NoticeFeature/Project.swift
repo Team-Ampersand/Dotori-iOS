@@ -1,6 +1,6 @@
+import DependencyPlugin
 import ProjectDescription
 import ProjectDescriptionHelpers
-import DependencyPlugin
 
 let project = Project.module(
     name: ModulePaths.Feature.NoticeFeature.rawValue,
@@ -15,7 +15,7 @@ let project = Project.module(
         .tests(module: .feature(.NoticeFeature), dependencies: [
             .feature(target: .NoticeFeature),
             .domain(target: .UserDomain, type: .testing),
-            .domain(target: .NoticeDomain, type: .testing),
+            .domain(target: .NoticeDomain, type: .testing)
         ]),
         .demo(module: .feature(.NoticeFeature), dependencies: [
             .feature(target: .NoticeFeature),

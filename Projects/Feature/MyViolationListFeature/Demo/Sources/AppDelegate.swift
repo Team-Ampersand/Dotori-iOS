@@ -1,6 +1,6 @@
 import Inject
-import UIKit
 @testable import MyViolationListFeature
+import UIKit
 @testable import ViolationDomainTesting
 
 @main

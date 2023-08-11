@@ -1,5 +1,5 @@
-import XCTest
 @testable import KeyValueStore
+import XCTest
 
 final class UserDefaultsKeyValueStoreTests: XCTestCase {
     var userDefaults: UserDefaults!
@@ -57,5 +57,4 @@ final class UserDefaultsKeyValueStoreTests: XCTestCase {
         // Then
         XCTAssertNil(loadedValue, "Loaded value should be nil after deletion")
     }
-
 }

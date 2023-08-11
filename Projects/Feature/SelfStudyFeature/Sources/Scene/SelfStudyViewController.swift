@@ -27,6 +27,7 @@ final class SelfStudyViewController: BaseStoredViewController<SelfStudyStore> {
         .then {
             $0.register(cellType: SelfStudyCell.self)
         }
+
     private let selfStudyRefreshContorol = DotoriRefreshControl()
     private lazy var selfStudyTableAdapter = TableViewAdapter<GenericSectionModel<SelfStudyRankModel>>(
         tableView: selfStudyTableView
@@ -38,6 +39,7 @@ final class SelfStudyViewController: BaseStoredViewController<SelfStudyStore> {
         cell.delegate = self
         return cell
     }
+
     private let emptySelfStudyStackView = VStackView(spacing: 8) {
         DotoriIconView(
             size: .custom(.init(width: 96, height: 77)),

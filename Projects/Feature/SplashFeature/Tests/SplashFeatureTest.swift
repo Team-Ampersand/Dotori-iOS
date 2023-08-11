@@ -1,9 +1,9 @@
+@testable import AuthDomainTesting
 import BaseFeature
 import Combine
 import Moordinator
-import XCTest
 @testable import SplashFeature
-@testable import AuthDomainTesting
+import XCTest
 
 final class SplashFeatureTests: XCTestCase {
     var checkIsLoggedInUseCase: CheckIsLoggedInUseCaseSpy!

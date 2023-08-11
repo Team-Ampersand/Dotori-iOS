@@ -1,6 +1,6 @@
 import Inject
-import UIKit
 @testable import InputDialogFeature
+import UIKit
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {

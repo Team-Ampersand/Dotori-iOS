@@ -1,7 +1,7 @@
+@testable import FilterSelfStudyFeature
 import Inject
 import UIKit
 import UIKitUtil
-@testable import FilterSelfStudyFeature
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {

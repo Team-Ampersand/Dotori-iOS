@@ -4,10 +4,10 @@ import Combine
 import Localization
 import Moordinator
 import NoticeDomainInterface
-import XCTest
-@testable import NoticeFeature
 @testable import NoticeDomainTesting
+@testable import NoticeFeature
 @testable import UserDomainTesting
+import XCTest
 
 final class NoticeFeatureTests: XCTestCase {
     var fetchNoticeListUseCase: FetchNoticeListUseCaseSpy!

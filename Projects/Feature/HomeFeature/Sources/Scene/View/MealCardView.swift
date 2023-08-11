@@ -18,6 +18,7 @@ final class MealCardView: BaseView {
     private enum Metric {
         static let padding: CGFloat = 24
     }
+
     private let mealTitleLabel = DotoriLabel(L10n.Home.mealTitle)
     private let prevDateButton = DotoriIconButton(image: .Dotori.chevronLeft)
         .set(\.backgroundColor, .dotori(.neutral(.n50)))
@@ -35,6 +36,7 @@ final class MealCardView: BaseView {
         currentDateLabel
         nextDateButton
     }
+
     private let mealPartTimeSegmentedControl = MealPartTimeSegmentedControl(items: MealPartTime.allCases.map(\.display))
         .set(\.selectedSegmentIndex, 0)
     private let mealContentStackView = MealContentStackView()

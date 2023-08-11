@@ -1,7 +1,7 @@
 import Inject
-import UIKit
-@testable import ProposeMusicFeature
 @testable import MusicDomainTesting
+@testable import ProposeMusicFeature
+import UIKit
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {

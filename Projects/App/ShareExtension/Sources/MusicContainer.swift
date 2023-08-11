@@ -1,8 +1,8 @@
-import Swinject
-import MusicDomain
 import JwtStore
-import Networking
 import KeyValueStore
+import MusicDomain
+import Networking
+import Swinject
 
 final class MusicContainer {
     static let shared = MusicContainer()

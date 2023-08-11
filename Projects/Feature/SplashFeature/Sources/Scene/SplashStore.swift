@@ -21,6 +21,7 @@ final class SplashStore: BaseStore {
     enum Action {
         case viewDidLoad
     }
+
     enum Mutation {}
 
     func mutate(state: State, action: Action) -> SideEffect<Mutation, Never> {

@@ -1,7 +1,7 @@
 import MusicDomainInterface
-import XCTest
-@testable import ProposeMusicFeature
 @testable import MusicDomainTesting
+@testable import ProposeMusicFeature
+import XCTest
 
 final class ProposeMusicFeatureTests: XCTestCase {
     private var proposeMusicUseCase: ProposeMusicUseCaseSpy!

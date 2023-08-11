@@ -12,6 +12,7 @@ final class MyViolationListViewController: BaseStoredModalViewController<MyViola
     private enum Metric {
         static let padding: CGFloat = 24
     }
+
     private let violationHistoryTitleLabel = DotoriLabel(L10n.ViolationHistory.violationTitle)
     private let xmarkButton = DotoriIconButton(image: .Dotori.xmark)
     private let violationHistoryTableView = UITableView()
@@ -23,6 +24,7 @@ final class MyViolationListViewController: BaseStoredModalViewController<MyViola
         .then {
             $0.register(cellType: ViolationCell.self)
         }
+
     private lazy var violationHistoryTableAdapter = TableViewAdapter<GenericSectionModel<ViolationModel>>(
         tableView: violationHistoryTableView
     ) { tableView, indexPath, item in
@@ -30,6 +32,7 @@ final class MyViolationListViewController: BaseStoredModalViewController<MyViola
         cell.adapt(model: item)
         return cell
     }
+
     private let emptyViolationLabel = DotoriLabel(
         L10n.ViolationHistory.emptyViolationTitle,
         textColor: .neutral(.n30),
@@ -110,8 +113,8 @@ final class MyViolationListViewController: BaseStoredModalViewController<MyViola
             .map { $0 == 0 }
             .sink(with: self, receiveValue: { owner, violationIsEmpty in
                 owner.violationHistoryTableView.backgroundColor = violationIsEmpty
-                ? .dotori(.background(.bg))
-                : .clear
+                    ? .dotori(.background(.bg))
+                    : .clear
                 owner.emptyViolationLabel.isHidden = !violationIsEmpty
             })
             .store(in: &subscription)

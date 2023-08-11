@@ -59,6 +59,7 @@ public final class AppliedStudentCardView: UIView {
         configureView()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

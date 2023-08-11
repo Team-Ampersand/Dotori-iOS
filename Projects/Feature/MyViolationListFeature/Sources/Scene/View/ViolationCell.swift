@@ -9,6 +9,7 @@ final class ViolationCell: BaseTableViewCell<ViolationModel> {
     private enum Metric {
         static let padding: CGFloat = 16
     }
+
     private let containerView = UIView()
         .set(\.backgroundColor, .dotori(.background(.bg)))
         .set(\.cornerRadius, 8)

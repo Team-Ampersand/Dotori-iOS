@@ -8,7 +8,8 @@ public struct DotoriLoggingInterceptor: InterceptorType {
     public func willRequest(_ request: URLRequest, endpoint: EndpointType) {
         let url = request.description
         let method = request.httpMethod ?? "unknown method"
-        var log = "----------------------------------------------------\n\n[\(method)] \(url)\n\n----------------------------------------------------\n"
+        var log =
+            "----------------------------------------------------\n\n[\(method)] \(url)\n\n----------------------------------------------------\n"
         log.append("API: \(endpoint)\n")
         if let headers = request.allHTTPHeaderFields, !headers.isEmpty {
             log.append("header: \(headers)\n")

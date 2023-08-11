@@ -1,7 +1,7 @@
-import ProjectDescription
-import ProjectDescriptionHelpers
 import DependencyPlugin
 import L10nPlugin
+import ProjectDescription
+import ProjectDescriptionHelpers
 
 let project = Project.makeModule(
     name: ModulePaths.UserInterface.Localization.rawValue,

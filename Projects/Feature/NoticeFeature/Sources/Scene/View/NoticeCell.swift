@@ -38,9 +38,9 @@ final class NoticeCell: BaseTableViewCell<NoticeModel> {
             contentLabel
         }
     }
-        .margin(.init(top: 12, left: 16, bottom: 12, right: 16))
-        .set(\.backgroundColor, .dotori(.neutral(.n50)))
-        .set(\.cornerRadius, 8)
+    .margin(.init(top: 12, left: 16, bottom: 12, right: 16))
+    .set(\.backgroundColor, .dotori(.neutral(.n50)))
+    .set(\.cornerRadius, 8)
 
     override func setLayout() {
         MSGLayout.stackedLayout(self.contentView) {
@@ -52,8 +52,8 @@ final class NoticeCell: BaseTableViewCell<NoticeModel> {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         self.contentStackView.layer.borderColor = selected
-        ? UIColor.dotori(.primary(.p10)).cgColor
-        : UIColor.clear.cgColor
+            ? UIColor.dotori(.primary(.p10)).cgColor
+            : UIColor.clear.cgColor
         self.contentStackView.layer.borderWidth = selected ? 2 : 0
     }
 

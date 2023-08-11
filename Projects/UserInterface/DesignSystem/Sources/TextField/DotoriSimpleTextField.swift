@@ -1,9 +1,10 @@
 import UIKit
 
 public final class DotoriSimpleTextField: UITextField {
-    public override var placeholder: String? {
+    override public var placeholder: String? {
         didSet { setNeedsDisplay() }
     }
+
     private var cleanrButtonWidth: CGFloat {
         clearButtonRect(forBounds: bounds).width
     }
@@ -14,11 +15,12 @@ public final class DotoriSimpleTextField: UITextField {
         setupTextField()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public override func becomeFirstResponder() -> Bool {
+    override public func becomeFirstResponder() -> Bool {
         let didBecomeFirstResponder = super.becomeFirstResponder()
         if didBecomeFirstResponder {
             self.layer.borderWidth = 1
@@ -27,7 +29,7 @@ public final class DotoriSimpleTextField: UITextField {
         return didBecomeFirstResponder
     }
 
-    public override func resignFirstResponder() -> Bool {
+    override public func resignFirstResponder() -> Bool {
         let didResignFirstResponder = super.resignFirstResponder()
         if didResignFirstResponder {
             self.layer.borderWidth = 0
@@ -36,50 +38,48 @@ public final class DotoriSimpleTextField: UITextField {
         return didResignFirstResponder
     }
 
-    public override func draw(_ rect: CGRect) {
+    override public func draw(_ rect: CGRect) {
         super.draw(rect)
         setPlaceholderTextColor()
     }
 
     ///  clearButton의 Bound에 관한 함수
     ///  clearButton 우측 마진을 주기 위해 사용
-    public override func clearButtonRect(forBounds bounds: CGRect) -> CGRect {
+    override public func clearButtonRect(forBounds bounds: CGRect) -> CGRect {
         let rect = super.clearButtonRect(forBounds: bounds)
         return rect.offsetBy(
             dx: -(
                 DotoriTextFieldProperty.Dimension.rightMargin
-                - DotoriTextFieldProperty.Dimension.clearButtonDefaultRightMargin
+                    - DotoriTextFieldProperty.Dimension.clearButtonDefaultRightMargin
             ),
             dy: 0
         )
     }
 
-    public override func textRect(forBounds bounds: CGRect) -> CGRect {
+    override public func textRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(
             by: UIEdgeInsets(
                 top: 0,
                 left: DotoriTextFieldProperty.Dimension.leftMargin,
                 bottom: 0,
-                right: (
-                    DotoriTextFieldProperty.Dimension.rightMargin
+                right:
+                DotoriTextFieldProperty.Dimension.rightMargin
                     + self.cleanrButtonWidth
                     + DotoriTextFieldProperty.Dimension.subviewSpacing
-                )
             )
         )
     }
 
-    public override func editingRect(forBounds bounds: CGRect) -> CGRect {
+    override public func editingRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(
             by: UIEdgeInsets(
                 top: 0,
                 left: DotoriTextFieldProperty.Dimension.leftMargin,
                 bottom: 0,
-                right: (
-                    DotoriTextFieldProperty.Dimension.rightMargin
+                right:
+                DotoriTextFieldProperty.Dimension.rightMargin
                     + self.cleanrButtonWidth
                     + DotoriTextFieldProperty.Dimension.subviewSpacing
-                )
             )
         )
     }

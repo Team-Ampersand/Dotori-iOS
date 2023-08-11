@@ -33,4 +33,3 @@ extension FetchSelfStudyRankListResponseDTO {
         self.list.map { $0.toDomain() }
     }
 }
-

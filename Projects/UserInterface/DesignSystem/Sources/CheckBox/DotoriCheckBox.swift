@@ -44,14 +44,14 @@ public final class DotoriCheckBox: UIControl {
     }
 
     // MARK: - handle touches
-    public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         self.isChecked.toggle()
         sendActions(for: .valueChanged)
     }
 
     // MARK: - Increase hit area
-    public override func point(
+    override public func point(
         inside point: CGPoint,
         with event: UIEvent?
     ) -> Bool {
@@ -64,7 +64,7 @@ public final class DotoriCheckBox: UIControl {
         return bounds.inset(by: insets).contains(point)
     }
 
-    public override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         checkedView.frame = CGRect(
             x: checkedViewInsets.left,
