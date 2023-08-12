@@ -42,7 +42,7 @@ env:
 jobs:
   distribute:
     name: 🚀 App Store Submission
-    runs-on: macos-latest
+    runs-on: baekteun-hosted
 
     steps:
       - uses: actions/checkout@v2
