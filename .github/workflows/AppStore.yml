@@ -11,6 +11,9 @@ on:
         required: true
 
 env:
+  KEYCHAIN: ${{ 'dotori.keychain' }}
+  CERTS_EXPORT_PWD: ${{ secrets.CERTS_EXPORT_PWD }}
+
   XCCONFIG_SECRET: ${{ secrets.XCCONFIG_SECRET }}
   ENCRYPTED_XCCONFIG_PATH: ${{ 'XCConfig.zip.gpg' }}
   DECRYPTED_XCCONFIG_PATH: ${{ 'XCConfig.zip' }}
@@ -58,6 +61,17 @@ jobs:
 
           # AppStore Connect API Key
           gpg -d -o "$DECRYPTED_APPSTORE_CONNECT_PATH" --pinentry-mode=loopback --passphrase "$APPSTORE_CONNECT_SECRET" "$ENCRYPTED_APPSTORE_CONNECT_PATH"
+
+      - name: Configure Keychain
+        run: |
+          security create-keychain -p "" "$KEYCHAIN" 
+          security list-keychains -s "$KEYCHAIN" 
+          security default-keychain -s "$KEYCHAIN" 
+          security unlock-keychain -p "" "$KEYCHAIN"
+
+          tuist signing decrypt
+          security import "Tuist/Signing/Dotori.p12" -k "$KEYCHAIN" -P "$CERTS_EXPORT_PWD" -A
+          security set-key-partition-list -S apple-tool:,apple: -s -k "" "$KEYCHAIN"
 
       - name: Install fastlane
         run: brew install fastlane
