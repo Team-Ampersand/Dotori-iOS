@@ -83,7 +83,7 @@ jobs:
           git checkout -b release/${{ github.event.inputs.version }}
 
       - name: Distribute
-        run: fastlane release version:"${{ github.event.inputs.version }}"
+        run: fastlane release version:${{ github.event.inputs.version }}
 
       - name: Commit and PR
         run: |
