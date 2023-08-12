@@ -55,7 +55,6 @@ let targets: [Target] = [
         ],
         settings: .settings(
             base: env.baseSetting
-                .merging(.codeSign)
         )
     ),
     .init(
@@ -78,7 +77,6 @@ let targets: [Target] = [
         ],
         settings: .settings(
             base: env.baseSetting
-                .merging(.codeSign)
         )
     )
 ]
