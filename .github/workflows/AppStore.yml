@@ -13,7 +13,7 @@ on:
 env:
   XCCONFIG_SECRET: ${{ secrets.XCCONFIG_SECRET }}
   ENCRYPTED_XCCONFIG_PATH: ${{ 'XCConfig.zip.gpg' }}
-  DECRYPTED_XCCONFIG_PATH: ${{ 'XCConfig' }}
+  DECRYPTED_XCCONFIG_PATH: ${{ 'XCConfig.zip' }}
 
   PROVISION_SECRET: ${{ secrets.PROVISION_SECRET }}
   ENCRYPTED_PROVISION_PATH: ${{ 'Tuist/Signing/Dotori.PROD.mobileprovision.gpg' }}
@@ -45,6 +45,7 @@ jobs:
           rm -rf XCConfig
           gpg -d -o "$DECRYPTED_XCCONFIG_PATH" --pinentry-mode=loopback --passphrase "$XCCONFIG_SECRET" "$ENCRYPTED_XCCONFIG_PATH"
           unzip XCConfig.zip
+          rm -rf XCConfig.zip
 
           # Provisioning Profile
           gpg -d -o "$DECRYPTED_PROVISION_PATH" --pinentry-mode=loopback --passphrase "$PROVISION_SECRET" "$ENCRYPTED_PROVISION_PATH"
@@ -74,5 +75,20 @@ jobs:
         run: |
           echo "${{ github.event.inputs.changed }}" > fastlane/metadata/ko/release_notes.txt
 
-      - name: distribute
+      - name: Release Branch Create
+        run: |
+          git config --global user.email 'Github-Ampersand'
+          git config --global user.email 'Ampersand.public@gmail.com'
+          git config pull.rebase false
+          git checkout -b "release/${{ github.event.inputs.version }}"
+
+      - name: Distribute
         run: fastlane release version:"${{ github.event.inputs.version }}"
+
+      - name: Commit and PR
+        run: |
+          git add .
+          git commit -m "📝 :: ${{ github.event.inputs.version }} released"
+          git push
+          gh pr create --repo Team-Ampersand/Dotori-iOS --title "🔀 :: ${{ github.event.inputs.version }} Release" -- body "${{ github.event.inputs.version }} version released" --base "master" --head "release/${{ github.event.inputs.version }}"
+
