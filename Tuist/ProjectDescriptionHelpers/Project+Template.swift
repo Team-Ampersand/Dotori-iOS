@@ -46,7 +46,6 @@ public extension Project {
 
         let settings: Settings = .settings(
             base: env.baseSetting
-                .merging(.codeSign)
                 .merging(settings)
                 .merging(ldFlagsSettings),
             configurations: configurations,

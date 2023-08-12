@@ -22,6 +22,11 @@ env:
   ENCRYPTED_PROVISION_PATH: ${{ 'Tuist/Signing/Dotori.PROD.mobileprovision.gpg' }}
   DECRYPTED_PROVISION_PATH: ${{ 'Tuist/Signing/Dotori.PROD.mobileprovision' }}
 
+  SHARE_PROVISION_SECRET: ${{ secrets.SHARE_PROVISION_SECRET }}
+  ENCRYPTED_SHARE_PROVISION_PATH: ${{ 'Tuist/Signing/DotoriShareExtension.PROD.mobileprovision.gpg' }}
+  DECRYPTED_SHARE_PROVISION_PATH: ${{ 'Tuist/Signing/DotoriShareExtension.PROD.mobileprovision' }}
+
+
   MASTER_KEY_SECRET: ${{ secrets.MASTER_KEY_SECRET }}
   ENCRYPTED_MASTER_KEY_PATH: ${{ 'Tuist/master.key.gpg' }}
   DECRYPTED_MASTER_KEY_PATH: ${{ 'Tuist/master.key' }}
@@ -52,6 +57,7 @@ jobs:
 
           # Provisioning Profile
           gpg -d -o "$DECRYPTED_PROVISION_PATH" --pinentry-mode=loopback --passphrase "$PROVISION_SECRET" "$ENCRYPTED_PROVISION_PATH"
+          gpg -d -o "$DECRYPTED_SHARE_PROVISION_PATH" --pinentry-mode=loopback --passphrase "$SHARE_PROVISION_SECRET" "$ENCRYPTED_SHARE_PROVISION_PATH"
 
           # master.key
           gpg -d -o "$DECRYPTED_MASTER_KEY_PATH" --pinentry-mode=loopback --passphrase "$MASTER_KEY_SECRET" "$ENCRYPTED_MASTER_KEY_PATH"
