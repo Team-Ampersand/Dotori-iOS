@@ -52,4 +52,15 @@ platform :ios do
       is_generate_release_notes: true
     )
   end
+
+  error do |lane, exception, options|
+    discord_notifier(
+      webhook_url: ENV["WEBHOOK_URL"],
+      title: "👾 도토리 iOS CD 실패..",
+      thumbnail_url: "https://github.com/Team-Ampersand/Dotori-iOS/assets/74440939/f3bcc050-4e98-4b07-ba13-cdedfed441ba",
+      success: false,
+      color: "#BB3639",
+      description: exception
+    )
+  end
 end
