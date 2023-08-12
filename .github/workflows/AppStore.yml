@@ -62,6 +62,9 @@ jobs:
           # AppStore Connect API Key
           gpg -d -o "$DECRYPTED_APPSTORE_CONNECT_PATH" --pinentry-mode=loopback --passphrase "$APPSTORE_CONNECT_SECRET" "$ENCRYPTED_APPSTORE_CONNECT_PATH"
 
+      - name: Install tuist
+        run: curl -Ls https://install.tuist.io | bash
+
       - name: Configure Keychain
         run: |
           security create-keychain -p "" "$KEYCHAIN" 
@@ -75,9 +78,6 @@ jobs:
 
       - name: Install fastlane
         run: brew install fastlane
-
-      - name: Install tuist
-        run: curl -Ls https://install.tuist.io | bash
 
       - name: Install dependencies
         run: tuist fetch
