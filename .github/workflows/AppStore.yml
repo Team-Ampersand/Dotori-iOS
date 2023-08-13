@@ -79,7 +79,10 @@ jobs:
           git checkout -b release/${{ github.event.inputs.version }}
 
       - name: Distribute
-        run: fastlane release version:${{ github.event.inputs.version }}
+        run: sh .github/workflows/AppStore/Deploy.sh
+        shell: bash
+        env:
+          VERSION: ${{ github.event.inputs.version }}
 
       - name: Commit and PR
         run: |
