@@ -3,6 +3,9 @@ excluded:
   - Dependencies
   - Carthage
 
+disabled_rules:
+  - void_function_in_ternary
+
 identifier_name:
   min_length: 1
   max_length: 60
