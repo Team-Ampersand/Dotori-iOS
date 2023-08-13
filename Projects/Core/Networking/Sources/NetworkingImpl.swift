@@ -35,7 +35,8 @@ private extension NetworkingImpl {
             else {
                 throw error
             }
-            throw dotoriEndpoint.errorMap[httpResponse.statusCode] ?? NetworkingError(statusCode: httpResponse.statusCode)
+            throw dotoriEndpoint
+                .errorMap[httpResponse.statusCode] ?? NetworkingError(statusCode: httpResponse.statusCode)
         }
     }
 }

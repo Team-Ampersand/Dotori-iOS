@@ -1,7 +1,7 @@
-import ViolationDomainInterface
-import XCTest
 @testable import ViolationDomain
+import ViolationDomainInterface
 @testable import ViolationDomainTesting
+import XCTest
 
 final class ViolationRepositoryTests: XCTestCase {
     var remoteViolationDataSource: RemoteViolationDataSourceSpy!

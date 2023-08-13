@@ -1,8 +1,8 @@
 import BaseDomainInterface
-import NoticeDomainInterface
-import XCTest
 @testable import NoticeDomain
+import NoticeDomainInterface
 @testable import NoticeDomainTesting
+import XCTest
 
 final class NoticeRepositoryTests: XCTestCase {
     var remoteNoticeDataSource: RemoteNoticeDataSourceSpy!
@@ -33,7 +33,14 @@ final class NoticeRepositoryTests: XCTestCase {
     func testFetchNotice() async throws {
         let date = Date()
         XCTAssertEqual(remoteNoticeDataSource.fetchNoticeCallCount, 0)
-        let expected = DetailNoticeEntity(id: 1, title: "title2", content: "contents", role: .member, images: [], createdDate: date)
+        let expected = DetailNoticeEntity(
+            id: 1,
+            title: "title2",
+            content: "contents",
+            role: .member,
+            images: [],
+            createdDate: date
+        )
         remoteNoticeDataSource.fetchNoticeHandler = { _ in expected }
 
         let actual = try await sut.fetchNotice(id: 1)

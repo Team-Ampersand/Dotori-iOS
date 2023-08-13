@@ -1,7 +1,7 @@
 #!/usr/bin/swift
  import Foundation
 
-func handleSIGINT(_ signal: Int32) -> Void {
+func handleSIGINT(_ signal: Int32) {
     exit(0)
 }
 
@@ -18,7 +18,7 @@ signal(SIGINT, handleSIGINT)
      guard let readHandle = try? FileHandle(forReadingFrom: fileURL) else {
          fatalError("❌ Failed to find \(filePath)")
      }
-     guard let readData = try? readHandle.readToEnd() else { 
+     guard let readData = try? readHandle.readToEnd() else {
          fatalError("❌ Failed to find \(filePath)")
      }
      try? readHandle.close()
@@ -74,4 +74,3 @@ signal(SIGINT, handleSIGINT)
  }
 
  registerDependency(name: dependencyName, package: packageName, url: dependencyURL, version: dependencyVersion)
-

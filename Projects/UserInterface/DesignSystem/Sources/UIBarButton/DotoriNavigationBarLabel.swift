@@ -8,6 +8,7 @@ public final class DotoriNavigationBarLabel: UIBarButtonItem {
         self.customView = titleLabel
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

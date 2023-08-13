@@ -1,5 +1,5 @@
-import XCTest
 @testable import FilterSelfStudyFeature
+import XCTest
 
 final class FilterSelfStudyFeatureTests: XCTestCase {
     var sut: FilterSelfStudyStore!

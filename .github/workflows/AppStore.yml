@@ -1,0 +1,114 @@
+name: AppStore Submission
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release'
+        required: true
+      changed:
+        description: 'Changes in this version'
+        required: true
+
+env:
+  KEYCHAIN: ${{ 'dotori.keychain' }}
+  CERTS_EXPORT_PWD: ${{ secrets.CERTS_EXPORT_PWD }}
+
+  XCCONFIG_SECRET: ${{ secrets.XCCONFIG_SECRET }}
+  ENCRYPTED_XCCONFIG_PATH: ${{ 'XCConfig.zip.gpg' }}
+  DECRYPTED_XCCONFIG_PATH: ${{ 'XCConfig.zip' }}
+
+  PROVISION_SECRET: ${{ secrets.PROVISION_SECRET }}
+  ENCRYPTED_PROVISION_PATH: ${{ 'Tuist/Signing/Dotori.PROD.mobileprovision.gpg' }}
+  DECRYPTED_PROVISION_PATH: ${{ 'Tuist/Signing/Dotori.PROD.mobileprovision' }}
+
+  SHARE_PROVISION_SECRET: ${{ secrets.SHARE_PROVISION_SECRET }}
+  ENCRYPTED_SHARE_PROVISION_PATH: ${{ 'Tuist/Signing/DotoriShareExtension.PROD.mobileprovision.gpg' }}
+  DECRYPTED_SHARE_PROVISION_PATH: ${{ 'Tuist/Signing/DotoriShareExtension.PROD.mobileprovision' }}
+
+
+  MASTER_KEY_SECRET: ${{ secrets.MASTER_KEY_SECRET }}
+  ENCRYPTED_MASTER_KEY_PATH: ${{ 'Tuist/master.key.gpg' }}
+  DECRYPTED_MASTER_KEY_PATH: ${{ 'Tuist/master.key' }}
+
+  FASTLANE_SECRET: ${{ secrets.FASTLANE_SECRET }}
+  ENCRYPTED_FASTLANE_ENV_PATH: ${{ 'fastlane/.env.default.gpg' }}
+  DECRYPTED_FASTLANE_ENV_PATH: ${{ 'fastlane/.env.default' }}
+
+  APPSTORE_CONNECT_SECRET: ${{ secrets.APPSTORE_CONNECT_SECRET }}
+  ENCRYPTED_APPSTORE_CONNECT_PATH: ${{ 'fastlane/AppStoreAPIKey.json.gpg' }}
+  DECRYPTED_APPSTORE_CONNECT_PATH: ${{ 'fastlane/AppStoreAPIKey.json' }}
+
+jobs:
+  distribute:
+    name: 🚀 App Store Submission
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Decode encrypted files
+        run: |
+          # XCConfig
+          rm -rf XCConfig
+          gpg -d -o "$DECRYPTED_XCCONFIG_PATH" --pinentry-mode=loopback --passphrase "$XCCONFIG_SECRET" "$ENCRYPTED_XCCONFIG_PATH"
+          unzip XCConfig.zip
+          rm -rf XCConfig.zip
+
+          # Provisioning Profile
+          gpg -d -o "$DECRYPTED_PROVISION_PATH" --pinentry-mode=loopback --passphrase "$PROVISION_SECRET" "$ENCRYPTED_PROVISION_PATH"
+          gpg -d -o "$DECRYPTED_SHARE_PROVISION_PATH" --pinentry-mode=loopback --passphrase "$SHARE_PROVISION_SECRET" "$ENCRYPTED_SHARE_PROVISION_PATH"
+
+          # master.key
+          gpg -d -o "$DECRYPTED_MASTER_KEY_PATH" --pinentry-mode=loopback --passphrase "$MASTER_KEY_SECRET" "$ENCRYPTED_MASTER_KEY_PATH"
+
+          # fastlane env
+          gpg -d -o "$DECRYPTED_FASTLANE_ENV_PATH" --pinentry-mode=loopback --passphrase "$FASTLANE_SECRET" "$ENCRYPTED_FASTLANE_ENV_PATH"
+
+          # AppStore Connect API Key
+          gpg -d -o "$DECRYPTED_APPSTORE_CONNECT_PATH" --pinentry-mode=loopback --passphrase "$APPSTORE_CONNECT_SECRET" "$ENCRYPTED_APPSTORE_CONNECT_PATH"
+
+      - name: Install tuist
+        run: curl -Ls https://install.tuist.io | bash
+
+      - name: Configure Keychain
+        run: |
+          security create-keychain -p "" "$KEYCHAIN" 
+          security list-keychains -s "$KEYCHAIN" 
+          security default-keychain -s "$KEYCHAIN" 
+          security unlock-keychain -p "" "$KEYCHAIN"
+
+          tuist signing decrypt
+          security import "Tuist/Signing/dotori.p12" -k "$KEYCHAIN" -P "$CERTS_EXPORT_PWD" -A
+          security set-key-partition-list -S apple-tool:,apple: -s -k "" "$KEYCHAIN"
+
+      - name: Install fastlane
+        run: brew install fastlane
+
+      - name: Install dependencies
+        run: tuist fetch
+
+      - name: Project generate
+        run: TUIST_ENV=CD tuist generate
+
+      - name: Update Release Note
+        run: |
+          echo "${{ github.event.inputs.changed }}" > fastlane/metadata/ko/release_notes.txt
+
+      - name: Release Branch Create
+        run: |
+          git config --global user.email 'Github-Ampersand'
+          git config --global user.email 'Ampersand.public@gmail.com'
+          git config pull.rebase false
+          git checkout -b release/${{ github.event.inputs.version }}
+
+      - name: Distribute
+        run: fastlane release version:${{ github.event.inputs.version }}
+
+      - name: Commit and PR
+        run: |
+          git add .
+          git commit -m "📝 :: ${{ github.event.inputs.version }} released"
+          git push
+          gh pr create --repo Team-Ampersand/Dotori-iOS --title "🔀 :: ${{ github.event.inputs.version }} Release" --body "${{ github.event.inputs.version }} version released" --base "master" --head "release/${{ github.event.inputs.version }}"
+

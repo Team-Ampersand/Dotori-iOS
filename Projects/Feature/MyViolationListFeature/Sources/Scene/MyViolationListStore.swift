@@ -1,7 +1,7 @@
 import BaseFeature
 import Combine
-import Store
 import Moordinator
+import Store
 import ViolationDomainInterface
 
 final class MyViolationListStore: BaseStore {
@@ -20,12 +20,14 @@ final class MyViolationListStore: BaseStore {
     struct State {
         var violationList = [ViolationModel]()
     }
+
     enum Action {
         case fetchMyViolationList
         case xmarkButtonDidTap
         case dimmedBackgroundDidTap
         case confirmButtonDidTap
     }
+
     enum Mutation {
         case updateViolationList([ViolationModel])
     }

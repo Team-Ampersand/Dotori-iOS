@@ -37,7 +37,7 @@ public struct TargetSpec: Configurable {
         copyFiles: [CopyFilesAction]? = nil,
         headers: Headers? = nil,
         entitlements: Path? = nil,
-        scripts: [TargetScript] = env.isCI ? [] : [.swiftLint],
+        scripts: [TargetScript] = generateEnvironment.scripts,
         dependencies: [TargetDependency] = [],
         settings: Settings? = nil,
         coreDataModels: [CoreDataModel] = [],
@@ -90,7 +90,6 @@ public struct TargetSpec: Configurable {
             dependencies: dependencies,
             settings: settings ?? .settings(
                 base: env.baseSetting
-                    .merging(.codeSign)
                     .merging((product ?? self.product) == .framework ? .allLoadLDFlages : .ldFlages),
                 configurations: .default,
                 defaultSettings: .recommended

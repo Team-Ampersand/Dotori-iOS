@@ -1,0 +1,24 @@
+excluded:
+  - fastlane
+  - Dependencies
+  - Carthage
+
+identifier_name:
+  min_length: 1
+  max_length: 60
+  allowed_symbols: [_]
+
+large_tuple:
+  warning: 3
+  error: 4
+
+line_length:
+  warning: 120
+  error: 120
+  ignores_urls: true
+  ignores_comments: true
+
+type_name:
+  min_length: 2
+  max_length: 60
+  allowed_symbols: [_]

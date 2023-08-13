@@ -11,7 +11,6 @@ open class BaseViewController:
     SetLayoutable,
     ViewControllerConfigurable,
     NavigationConfigurable {
-
     // MARK: - Properties
 
     private let viewDidLoadSubject = PassthroughSubject<Void, Never>()
@@ -21,7 +20,7 @@ open class BaseViewController:
     private let viewDidDisappearSubject = PassthroughSubject<Void, Never>()
     public var subscription = Set<AnyCancellable>()
 
-    open override func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .dotori(.background(.bg))
         addView()
@@ -31,22 +30,22 @@ open class BaseViewController:
         viewDidLoadSubject.send(())
     }
 
-    open override func viewWillAppear(_ animated: Bool) {
+    override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewWillAppearSubject.send(())
     }
 
-    open override func viewDidAppear(_ animated: Bool) {
+    override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         viewDidAppearSubject.send(())
     }
 
-    open override func viewWillDisappear(_ animated: Bool) {
+    override open func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         viewWillDisappearSubject.send(())
     }
 
-    open override func viewDidDisappear(_ animated: Bool) {
+    override open func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         viewDidDisappearSubject.send(())
     }

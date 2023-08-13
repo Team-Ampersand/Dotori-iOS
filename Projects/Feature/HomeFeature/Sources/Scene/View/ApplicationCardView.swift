@@ -15,6 +15,7 @@ protocol ApplicationCardViewStateProtocol {
     func updateApplyCount(current: Int, max: Int)
     func updateRecentRefresh(date: Date)
 }
+
 protocol ApplicationCardViewActionProtocol {
     var applyButtonDidTapPublisher: AnyPublisher<Void, Never> { get }
     var detailButtonDidTapPublisher: AnyPublisher<Void, Never> { get }
@@ -26,9 +27,14 @@ final class ApplicationCardView: BaseView {
         static let padding: CGFloat = 24
         static let spacing: CGFloat = 16
     }
+
     private let titleButton = DotoriTextButton().then {
-        $0.setImage(.init(systemName: "arrow.clockwise")?.resize(to: 16).withRenderingMode(.alwaysTemplate), for: .normal)
+        $0.setImage(
+            .init(systemName: "arrow.clockwise")?.resize(to: 16).withRenderingMode(.alwaysTemplate),
+            for: .normal
+        )
     }
+
     private let recentRefreshLabel = DotoriLabel(textColor: .neutral(.n30), font: .caption)
     private let loadingIndicatorView = UIActivityIndicatorView(style: .medium)
     private let chevronRightButton = DotoriTextButton(
@@ -42,6 +48,7 @@ final class ApplicationCardView: BaseView {
         SpacerView()
         chevronRightButton
     }
+
     private let applicationStatusLabel = DotoriLabel(font: .h2)
     private let applicationProgressView = UIProgressView()
         .set(\.cornerRadius, 8)
@@ -59,6 +66,7 @@ final class ApplicationCardView: BaseView {
         self.applicationStatusLabel.text = "0/\(maxApplyCount)"
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -113,8 +121,8 @@ extension ApplicationCardView: ApplicationCardViewStateProtocol {
         get { loadingIndicatorView.isAnimating }
         set {
             newValue ?
-            loadingIndicatorView.startAnimating() :
-            loadingIndicatorView.stopAnimating()
+                loadingIndicatorView.startAnimating() :
+                loadingIndicatorView.stopAnimating()
         }
     }
 

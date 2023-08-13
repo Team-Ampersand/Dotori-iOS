@@ -1,7 +1,7 @@
-import MassageDomainInterface
-import XCTest
 @testable import MassageDomain
+import MassageDomainInterface
 @testable import MassageDomainTesting
+import XCTest
 
 final class MassageRepositoryTests: XCTestCase {
     var remoteMassageDataSource: RemoteMassageDataSourceSpy!

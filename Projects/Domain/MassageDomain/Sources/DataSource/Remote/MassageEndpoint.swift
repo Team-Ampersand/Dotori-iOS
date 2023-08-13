@@ -51,7 +51,7 @@ extension MassageEndpoint: DotoriEndpoint {
         .accessToken
     }
 
-    public var errorMap: [Int : Error] {
+    public var errorMap: [Int: Error] {
         switch self {
         case .applyMassage:
             return [

@@ -8,12 +8,12 @@ public protocol CollectionViewViewAdapterActionProtocol {
     var modelSelected: AnyPublisher<Item, Never> { get }
     var modelDeselected: AnyPublisher<Item, Never> { get }
 }
+
 public final class CollectionViewAdapter<Section: SectionModelProtocol>:
     NSObject,
     CollectionViewViewAdapterActionProtocol,
     UICollectionViewDelegate,
     UICollectionViewDataSource {
-
     public typealias Item = Section.Item
     private var sections: [Section] = []
     private let collectionView: UICollectionView
@@ -56,7 +56,6 @@ public final class CollectionViewAdapter<Section: SectionModelProtocol>:
     ) {
         self.viewForSupplementaryElementOfKind = viewForSupplementaryElementOfKind
     }
-
 
     public var itemSelected: AnyPublisher<IndexPath, Never> {
         itemSelectedSubject.eraseToAnyPublisher()
@@ -130,7 +129,7 @@ public final class CollectionViewAdapter<Section: SectionModelProtocol>:
 }
 
 public extension UICollectionView {
-    func setAdapter<Section: SectionModelProtocol>(adapter: CollectionViewAdapter<Section>) {
+    func setAdapter(adapter: CollectionViewAdapter<some SectionModelProtocol>) {
         self.delegate = adapter
         self.dataSource = adapter
         self.reloadData()

@@ -30,7 +30,7 @@ private extension MusicEntity {
         guard let url = URL(string: url) else {
             return emptyModel
         }
-        return try await withCheckedThrowingContinuation({ continuation in
+        return try await withCheckedThrowingContinuation { continuation in
             provider.startFetchingMetadata(for: url) { metadata, error in
                 if error != nil {
                     continuation.resume(returning: emptyModel)
@@ -67,6 +67,6 @@ private extension MusicEntity {
                     }
                 )
             }
-        })
+        }
     }
 }

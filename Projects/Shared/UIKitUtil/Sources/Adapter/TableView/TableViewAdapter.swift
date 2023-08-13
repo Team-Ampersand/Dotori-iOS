@@ -14,7 +14,6 @@ public final class TableViewAdapter<Section: SectionModelProtocol>:
     TableViewAdapterActionProtocol,
     UITableViewDelegate,
     UITableViewDataSource {
-
     public typealias Item = Section.Item
     private var sections: [Section] = []
     private let tableView: UITableView
@@ -126,7 +125,7 @@ public final class TableViewAdapter<Section: SectionModelProtocol>:
 }
 
 public extension UITableView {
-    func setAdapter<Section: SectionModelProtocol>(adapter: TableViewAdapter<Section>) {
+    func setAdapter(adapter: TableViewAdapter<some SectionModelProtocol>) {
         self.delegate = adapter
         self.dataSource = adapter
         self.reloadData()

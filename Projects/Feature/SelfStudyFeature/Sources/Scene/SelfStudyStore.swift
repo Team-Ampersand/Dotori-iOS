@@ -33,6 +33,7 @@ final class SelfStudyStore: BaseStore {
         var isRefreshing = false
         var selfStudySearchRequestDTO: FetchSelfStudyRankSearchRequestDTO?
     }
+
     enum Action {
         case fetchSelfStudyRank
         case selfStudyCheckButtonDidTap(id: Int, isChecked: Bool)
@@ -40,6 +41,7 @@ final class SelfStudyStore: BaseStore {
         case filterButtonDidTap
         case updateSelfStudySearchRequestDTO(FetchSelfStudyRankSearchRequestDTO?)
     }
+
     enum Mutation {
         case updateSelfStudyRankList([SelfStudyRankModel])
         case updateSelfStudyCheck(id: Int, isChecked: Bool)
@@ -122,7 +124,7 @@ private extension SelfStudyStore {
 
     func filterButtonDidTap() -> SideEffect<Mutation, Never> {
         let filterRoutePath = DotoriRoutePath.filterSelfStudy { [weak self] name, grade, `class`, gender in
-            /// 모든 필드가 nil이라면 dto를 nil로
+            // 모든 필드가 nil이라면 dto를 nil로
             guard name != nil || grade != nil || `class` != nil || gender != nil else {
                 self?.send(.updateSelfStudySearchRequestDTO(nil))
                 return

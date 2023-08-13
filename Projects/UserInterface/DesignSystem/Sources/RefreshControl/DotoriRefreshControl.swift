@@ -7,7 +7,7 @@ public final class DotoriRefreshControl: UIRefreshControl {
         animation: AnimationAsset.dotoriLoading.animation
     )
 
-    public override init() {
+    override public init() {
         super.init()
         self.tintColor = .clear
         dotoriLoadingView.loopMode = .loop
@@ -22,11 +22,12 @@ public final class DotoriRefreshControl: UIRefreshControl {
         dotoriLoadingView.play()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public override func beginRefreshing() {
+    override public func beginRefreshing() {
         super.beginRefreshing()
         dotoriLoadingView.play()
     }

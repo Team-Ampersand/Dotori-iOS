@@ -1,8 +1,8 @@
 import Combine
-import ViolationDomainInterface
-import XCTest
 @testable import MyViolationListFeature
+import ViolationDomainInterface
 @testable import ViolationDomainTesting
+import XCTest
 
 final class MyViolationHistoryFeatureTests: XCTestCase {
     var fetchMyViolationListUseCase: FetchMyViolationListUseCaseSpy!

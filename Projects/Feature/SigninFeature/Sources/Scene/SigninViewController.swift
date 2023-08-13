@@ -10,10 +10,12 @@ import UtilityModule
 
 final class SigninViewController: BaseStoredViewController<SigninStore> {
     private let dotoriLogoImageView = UIImageView()
-        .set(\.image, .Dotori.dotoriSigninLogo
-            .withRenderingMode(.alwaysTemplate)
-            .withTintColor(.dotori(.primary(.p10)))
-            .resize(width: 182, height: 41)
+        .set(
+            \.image,
+            .Dotori.dotoriSigninLogo
+                .withRenderingMode(.alwaysTemplate)
+                .withTintColor(.dotori(.primary(.p10)))
+                .resize(width: 182, height: 41)
         )
     private let emailTextField = DotoriIconTextField(
         placeholder: L10n.Signin.emailPlaceholder,

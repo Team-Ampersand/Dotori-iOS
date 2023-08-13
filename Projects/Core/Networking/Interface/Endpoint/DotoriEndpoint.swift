@@ -6,27 +6,26 @@ public protocol DotoriEndpoint: EndpointType, JwtAuthorizable {
     var errorMap: [Int: Error] { get }
 }
 
-extension DotoriEndpoint {
-    public var baseURL: URL {
+public extension DotoriEndpoint {
+    var baseURL: URL {
         let baseURL = Bundle.module.object(forInfoDictionaryKey: "BASE_URL") as? String ?? ""
         return URL(
             string: "\(baseURL)/\(domain.rawValue)"
         ) ?? URL(string: "https://www.google.com")!
     }
 
-    public var validationCode: ClosedRange<Int> { 200...300 }
+    var validationCode: ClosedRange<Int> { 200...300 }
 
-    public var headers: [String: String]? {
+    var headers: [String: String]? {
         switch self {
-
         default:
             return ["Content-Type": "application/json"]
         }
     }
 
-    public var timeout: TimeInterval { 60 }
+    var timeout: TimeInterval { 60 }
 
-    public var errorMap: [Int: Error] { [:] }
+    var errorMap: [Int: Error] { [:] }
 }
 
 private class BundleFinder {}

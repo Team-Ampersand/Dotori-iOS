@@ -1,5 +1,5 @@
-import SelfStudyDomainInterface
 import NetworkingInterface
+import SelfStudyDomainInterface
 
 final class RemoteSelfStudyDataSourceImpl: RemoteSelfStudyDataSource {
     private let networking: any Networking

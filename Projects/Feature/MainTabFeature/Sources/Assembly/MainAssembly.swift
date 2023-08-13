@@ -1,9 +1,9 @@
-import Swinject
 import HomeFeature
 import MassageFeature
 import MusicFeature
 import NoticeFeature
 import SelfStudyFeature
+import Swinject
 
 public final class MainAssembly: Assembly {
     public init() {}

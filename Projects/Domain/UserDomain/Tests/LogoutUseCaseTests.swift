@@ -1,9 +1,9 @@
 import BaseDomainInterface
-import UserDomainInterface
-import XCTest
-@testable import UserDomainTesting
-@testable import UserDomain
 @testable import KeyValueStoreTesting
+@testable import UserDomain
+import UserDomainInterface
+@testable import UserDomainTesting
+import XCTest
 
 final class LogoutUseCaseTests: XCTestCase {
     var userRepository: UserRepositorySpy!

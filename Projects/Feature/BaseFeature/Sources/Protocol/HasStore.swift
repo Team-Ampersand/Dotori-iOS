@@ -7,8 +7,8 @@ public protocol HasStore: HasRouter {
     var store: Store { get }
 }
 
-extension HasStore {
-    public var router: any Router {
+public extension HasStore {
+    var router: any Router {
         store
     }
 }
