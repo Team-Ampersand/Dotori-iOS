@@ -42,7 +42,7 @@ env:
 jobs:
   distribute:
     name: 🚀 App Store Submission
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -71,19 +71,19 @@ jobs:
       - name: Install tuist
         run: curl -Ls https://install.tuist.io | bash
 
-      - name: Configure Keychain
-        run: |
-          security create-keychain -p "" "$KEYCHAIN" 
-          security list-keychains -s "$KEYCHAIN" 
-          security default-keychain -s "$KEYCHAIN" 
-          security unlock-keychain -p "" "$KEYCHAIN"
+      # - name: Configure Keychain
+      #   run: |
+      #     security create-keychain -p "" "$KEYCHAIN" 
+      #     security list-keychains -s "$KEYCHAIN" 
+      #     security default-keychain -s "$KEYCHAIN" 
+      #     security unlock-keychain -p "" "$KEYCHAIN"
 
-          tuist signing decrypt
-          security import "Tuist/Signing/dotori.p12" -k "$KEYCHAIN" -P "$CERTS_EXPORT_PWD" -A
-          security set-key-partition-list -S apple-tool:,apple: -s -k "" "$KEYCHAIN"
+      #     tuist signing decrypt
+      #     security import "Tuist/Signing/dotori.p12" -k "$KEYCHAIN" -P "$CERTS_EXPORT_PWD" -A
+      #     security set-key-partition-list -S apple-tool:,apple: -s -k "" "$KEYCHAIN"
 
       - name: Install fastlane
-        run: brew install fastlane
+        run: gem install fastlane
 
       - name: Install dependencies
         run: tuist fetch
