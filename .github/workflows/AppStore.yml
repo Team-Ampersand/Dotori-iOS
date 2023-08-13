@@ -48,39 +48,15 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Decode encrypted files
-        run: |
-          # XCConfig
-          rm -rf XCConfig
-          gpg -d -o "$DECRYPTED_XCCONFIG_PATH" --pinentry-mode=loopback --passphrase "$XCCONFIG_SECRET" "$ENCRYPTED_XCCONFIG_PATH"
-          unzip XCConfig.zip
-          rm -rf XCConfig.zip
-
-          # Provisioning Profile
-          gpg -d -o "$DECRYPTED_PROVISION_PATH" --pinentry-mode=loopback --passphrase "$PROVISION_SECRET" "$ENCRYPTED_PROVISION_PATH"
-          gpg -d -o "$DECRYPTED_SHARE_PROVISION_PATH" --pinentry-mode=loopback --passphrase "$SHARE_PROVISION_SECRET" "$ENCRYPTED_SHARE_PROVISION_PATH"
-
-          # master.key
-          gpg -d -o "$DECRYPTED_MASTER_KEY_PATH" --pinentry-mode=loopback --passphrase "$MASTER_KEY_SECRET" "$ENCRYPTED_MASTER_KEY_PATH"
-
-          # fastlane env
-          gpg -d -o "$DECRYPTED_FASTLANE_ENV_PATH" --pinentry-mode=loopback --passphrase "$FASTLANE_SECRET" "$ENCRYPTED_FASTLANE_ENV_PATH"
-
-          # AppStore Connect API Key
-          gpg -d -o "$DECRYPTED_APPSTORE_CONNECT_PATH" --pinentry-mode=loopback --passphrase "$APPSTORE_CONNECT_SECRET" "$ENCRYPTED_APPSTORE_CONNECT_PATH"
+        run: sh .github/workflows/AppStore/Decode.sh
+        shell: bash
 
       - name: Install tuist
         run: curl -Ls https://install.tuist.io | bash
 
       - name: Configure Keychain
-        run: |
-          security create-keychain -p "" "$KEYCHAIN" 
-          security list-keychains -s "$KEYCHAIN" 
-          security default-keychain -s "$KEYCHAIN" 
-          security unlock-keychain -p "" "$KEYCHAIN"
-
-          tuist signing decrypt
-          security import "Tuist/Signing/dotori.p12" -k "$KEYCHAIN" -P "$CERTS_EXPORT_PWD" -A
-          security set-key-partition-list -S apple-tool:,apple: -s -k "" "$KEYCHAIN"
+        run: sh .github/workflows/AppStore/Keychain.sh
+        shell: bash
 
       - name: Install fastlane
         run: brew install fastlane
