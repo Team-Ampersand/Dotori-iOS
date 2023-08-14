@@ -60,7 +60,7 @@ platform :ios do
       thumbnail_url: "https://github.com/Team-Ampersand/Dotori-iOS/assets/74440939/f3bcc050-4e98-4b07-ba13-cdedfed441ba",
       success: false,
       color: "#BB3639",
-      description: exception
+      description: "#{exception}"
     )
   end
 end
