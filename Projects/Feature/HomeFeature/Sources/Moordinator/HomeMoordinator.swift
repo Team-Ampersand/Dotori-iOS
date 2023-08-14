@@ -32,6 +32,7 @@ final class HomeMoordinator: Moordinator {
         self.inputDialogFactory = inputDialogFactory
     }
 
+    // swiftlint: disable cyclomatic_complexity
     func route(to path: RoutePath) -> MoordinatorContributors {
         guard let path = path.asDotori else { return .none }
         switch path {
@@ -72,6 +73,7 @@ final class HomeMoordinator: Moordinator {
         }
         return .none
     }
+    // swiftlint: enable cyclomatic_complexity
 }
 
 private extension HomeMoordinator {

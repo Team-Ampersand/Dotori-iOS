@@ -55,6 +55,7 @@ final class HomeViewController: BaseStoredViewController<HomeStore> {
         self.navigationItem.setRightBarButton(myInfoBarButtonItem, animated: true)
     }
 
+    // swiftlint: disable function_body_length
     override func bindAction() {
         viewDidLoadPublisher
             .map { Store.Action.viewDidLoad }
@@ -122,6 +123,9 @@ final class HomeViewController: BaseStoredViewController<HomeStore> {
             .store(in: &subscription)
     }
 
+    // swiftlint: enable function_body_length
+
+    // swiftlint: disable function_body_length
     override func bindState() {
         let sharedState = store.state.share()
             .receive(on: DispatchQueue.main)
@@ -222,4 +226,5 @@ final class HomeViewController: BaseStoredViewController<HomeStore> {
             .sink(receiveValue: massageApplicationCardView.updateRecentRefresh(date:))
             .store(in: &subscription)
     }
+    // swiftlint: enable function_body_length
 }
