@@ -18,7 +18,7 @@ env:
 jobs:
   prepare-dependency:
     name: ⚙️ Prepare for CI
-    runs-on: macos-latest
+    runs-on: macos-13
 
     steps:
       - uses: actions/checkout@v2
@@ -45,7 +45,7 @@ jobs:
 
   test:
     name: 🧪 Test
-    runs-on: macos-latest
+    runs-on: macos-13
     needs: prepare-dependency
 
     steps:
