@@ -78,7 +78,9 @@ final class HomeStore: BaseStore {
         case selfStudyDetailButtonDidTap
         case massageDetailButtonDidTap
         case applySelfStudyButtonDidTap
+        case selfStudySettingButtonDidTap
         case applyMassageButtonDidTap
+        case massageSettingButtonDidTap
         case refreshSelfStudyButtonDidTap
         case refreshMassageButtonDidTap
     }
@@ -120,8 +122,14 @@ extension HomeStore {
         case .applySelfStudyButtonDidTap:
             applySelfStudyButtonDidTap()
 
+        case .selfStudySettingButtonDidTap:
+            selfStudySettingButtonDidTap()
+
         case .applyMassageButtonDidTap:
             applyMassageButtonDidTap()
+
+        case .massageSettingButtonDidTap:
+            massageSettingButtonDidTap()
 
         case .refreshSelfStudyButtonDidTap:
             return fetchSelfStudyInfoSideEffect()
@@ -201,26 +209,6 @@ private extension HomeStore {
     }
 
     func applySelfStudyButtonDidTap() {
-        #warning("FIXME: 디자인 변경 대응 시 재활성화")
-//        guard currentState.currentUserRole == .member else {
-//            let inputDialogRoutePath = DotoriRoutePath.inputDialog(
-//                title: L10n.Home.selfStudyModifyLimitTitle,
-//                placeholder: "\(currentState.selfStudyInfo.1)",
-//                inputType: .number
-//            ) { [modifySelfStudyPersonnelUseCase, weak self] limit in
-//                do {
-//                    guard let limitInt = Int(limit) else { return }
-//                    try await modifySelfStudyPersonnelUseCase(limit: limitInt)
-//                    await DotoriToast.makeToast(text: L10n.Home.completeToModifySelfStudyLimitTitle, style: .success)
-//                    self?.send(.refreshSelfStudyButtonDidTap)
-//                } catch {
-//                    await DotoriToast.makeToast(text: error.localizedDescription, style: .error)
-//                }
-//            }
-//            route.send(inputDialogRoutePath)
-//            return
-//        }
-
         Task.catching {
             if self.currentState.selfStudyStatus == .applied {
                 let confirmRoutePath = DotoriRoutePath.confirmationDialog(
@@ -241,27 +229,25 @@ private extension HomeStore {
         }
     }
 
-    func applyMassageButtonDidTap() {
-        #warning("FIXME: 디자인 변경 대응 시 재활성화")
-//        guard currentState.currentUserRole == .member else {
-//            let inputDialogRoutePath = DotoriRoutePath.inputDialog(
-//                title: L10n.Home.massageModifyLimitTitle,
-//                placeholder: "\(currentState.massageInfo.1)",
-//                inputType: .number
-//            ) { [modifyMassagePersonnelUseCase, weak self] limit in
-//                do {
-//                    guard let limitInt = Int(limit) else { return }
-//                    try await modifyMassagePersonnelUseCase(limit: limitInt)
-//                    await DotoriToast.makeToast(text: L10n.Home.completeToModifyMassageLimitTitle, style: .success)
-//                    self?.send(.refreshMassageButtonDidTap)
-//                } catch {
-//                    await DotoriToast.makeToast(text: error.localizedDescription, style: .error)
-//                }
-//            }
-//            route.send(inputDialogRoutePath)
-//            return
-//        }
+    func selfStudySettingButtonDidTap() {
+        let inputDialogRoutePath = DotoriRoutePath.inputDialog(
+            title: L10n.Home.selfStudyModifyLimitTitle,
+            placeholder: "\(currentState.selfStudyInfo.1)",
+            inputType: .number
+        ) { [modifySelfStudyPersonnelUseCase, weak self] limit in
+            do {
+                guard let limitInt = Int(limit) else { return }
+                try await modifySelfStudyPersonnelUseCase(limit: limitInt)
+                await DotoriToast.makeToast(text: L10n.Home.completeToModifySelfStudyLimitTitle, style: .success)
+                self?.send(.refreshSelfStudyButtonDidTap)
+            } catch {
+                await DotoriToast.makeToast(text: error.localizedDescription, style: .error)
+            }
+        }
+        route.send(inputDialogRoutePath)
+    }
 
+    func applyMassageButtonDidTap() {
         Task.catching {
             if self.currentState.massageStatus == .applied {
                 let confirmRoutePath = DotoriRoutePath.confirmationDialog(
@@ -280,6 +266,24 @@ private extension HomeStore {
         } catch: { @MainActor error in
             DotoriToast.makeToast(text: error.localizedDescription, style: .error)
         }
+    }
+
+    func massageSettingButtonDidTap() {
+        let inputDialogRoutePath = DotoriRoutePath.inputDialog(
+            title: L10n.Home.massageModifyLimitTitle,
+            placeholder: "\(currentState.massageInfo.1)",
+            inputType: .number
+        ) { [modifyMassagePersonnelUseCase, weak self] limit in
+            do {
+                guard let limitInt = Int(limit) else { return }
+                try await modifyMassagePersonnelUseCase(limit: limitInt)
+                await DotoriToast.makeToast(text: L10n.Home.completeToModifyMassageLimitTitle, style: .success)
+                self?.send(.refreshMassageButtonDidTap)
+            } catch {
+                await DotoriToast.makeToast(text: error.localizedDescription, style: .error)
+            }
+        }
+        route.send(inputDialogRoutePath)
     }
 }
 

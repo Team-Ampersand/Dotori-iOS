@@ -93,6 +93,16 @@ final class HomeViewController: BaseStoredViewController<HomeStore> {
             .sink(receiveValue: store.send(_:))
             .store(in: &subscription)
 
+        selfStudyApplicationCardView.refreshButtonDidTapPublisher
+            .map { Store.Action.refreshSelfStudyButtonDidTap }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+
+        selfStudyApplicationCardView.settingButtonDidTpaPublisher
+            .map { Store.Action.selfStudySettingButtonDidTap }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+
         massageApplicationCardView.detailButtonDidTapPublisher
             .map { Store.Action.massageDetailButtonDidTap }
             .sink(receiveValue: store.send(_:))
@@ -103,13 +113,13 @@ final class HomeViewController: BaseStoredViewController<HomeStore> {
             .sink(receiveValue: store.send(_:))
             .store(in: &subscription)
 
-        selfStudyApplicationCardView.refreshButtonDidTapPublisher
-            .map { Store.Action.refreshSelfStudyButtonDidTap }
+        massageApplicationCardView.refreshButtonDidTapPublisher
+            .map { Store.Action.refreshMassageButtonDidTap }
             .sink(receiveValue: store.send(_:))
             .store(in: &subscription)
 
-        massageApplicationCardView.refreshButtonDidTapPublisher
-            .map { Store.Action.refreshMassageButtonDidTap }
+        massageApplicationCardView.settingButtonDidTpaPublisher
+            .map { Store.Action.massageSettingButtonDidTap }
             .sink(receiveValue: store.send(_:))
             .store(in: &subscription)
 
@@ -162,15 +172,17 @@ final class HomeViewController: BaseStoredViewController<HomeStore> {
         sharedState
             .map(\.loadingState)
             .removeDuplicates()
-            .map { $0.contains(.selfStudy) }
-            .assign(to: \.isLoading, on: selfStudyApplicationCardView)
+            .filter { $0.contains(.selfStudy) }
+            .map { _ in }
+            .sink(receiveValue: selfStudyApplicationCardView.loading)
             .store(in: &subscription)
 
         sharedState
             .map(\.loadingState)
             .removeDuplicates()
-            .map { $0.contains(.massage) }
-            .assign(to: \.isLoading, on: massageApplicationCardView)
+            .filter { $0.contains(.massage) }
+            .map { _ in }
+            .sink(receiveValue: massageApplicationCardView.loading)
             .store(in: &subscription)
 
         sharedState
@@ -216,14 +228,21 @@ final class HomeViewController: BaseStoredViewController<HomeStore> {
 
         sharedState
             .map(\.selfStudyRefreshDate)
-            .removeDuplicates()
             .sink(receiveValue: selfStudyApplicationCardView.updateRecentRefresh(date:))
             .store(in: &subscription)
 
         sharedState
             .map(\.massageRefreshDate)
-            .removeDuplicates()
             .sink(receiveValue: massageApplicationCardView.updateRecentRefresh(date:))
+            .store(in: &subscription)
+
+        sharedState
+            .map(\.currentUserRole)
+            .removeDuplicates()
+            .sink { [selfStudyApplicationCardView, massageApplicationCardView] userRole in
+                selfStudyApplicationCardView.updateUserRole(userRole: userRole)
+                massageApplicationCardView.updateUserRole(userRole: userRole)
+            }
             .store(in: &subscription)
     }
     // swiftlint: enable function_body_length

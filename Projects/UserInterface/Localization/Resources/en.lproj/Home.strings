@@ -43,3 +43,6 @@
 "complete_to_modify_massage_limit_title" = "Complete to modify Massage limit";
 "withdrawal_title" = "Withdrawal";
 "really_withdrawal_title" = "Are you sure you want to withdrawal Dotori?";
+"previous_hour_title" = "%@h ago";
+"previous_minuate_title" = "%@m ago";
+"previous_second_title" = "%@s ago";

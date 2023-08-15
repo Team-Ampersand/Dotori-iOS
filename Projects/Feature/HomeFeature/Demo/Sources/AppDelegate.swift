@@ -27,6 +27,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         let fetchMassageInfoUseCase: FetchMassageInfoUseCaseSpy = .init()
         let fetchMealInfoUseCase: FetchMealInfoUseCaseSpy = .init()
         let loadCurrentUserRoleUseCase: LoadCurrentUserRoleUseCaseSpy = .init()
+        loadCurrentUserRoleUseCase.loadCurrentUserRoleReturn = .developer
         let applySelfStudyUseCase: ApplySelfStudyUseCaseSpy = .init()
         let cancelSelfStudyUseCase = CancelSelfStudyUseCaseSpy()
         let modifySelfStudyPersonnelUseCase = ModifySelfStudyPersonnelUseCaseSpy()

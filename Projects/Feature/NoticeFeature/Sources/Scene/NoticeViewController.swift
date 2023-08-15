@@ -173,7 +173,6 @@ final class NoticeViewController: BaseStoredViewController<NoticeStore> {
             })
             .store(in: &subscription)
     }
-    // swiftlint: enable function_body_length
 }
 
 private extension NoticeViewController {

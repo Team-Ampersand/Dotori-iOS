@@ -1,3 +1,5 @@
+import Anim
+import BaseDomainInterface
 import BaseFeature
 import Combine
 import CombineUtility
@@ -9,17 +11,19 @@ import MSGLayout
 import UIKit
 
 protocol ApplicationCardViewStateProtocol {
-    var isLoading: Bool { get }
     var buttonTitle: String { get }
     var buttonIsEnabled: Bool { get }
     func updateApplyCount(current: Int, max: Int)
+    func loading()
     func updateRecentRefresh(date: Date)
+    func updateUserRole(userRole: UserRoleType)
 }
 
 protocol ApplicationCardViewActionProtocol {
     var applyButtonDidTapPublisher: AnyPublisher<Void, Never> { get }
     var detailButtonDidTapPublisher: AnyPublisher<Void, Never> { get }
     var refreshButtonDidTapPublisher: AnyPublisher<Void, Never> { get }
+    var settingButtonDidTpaPublisher: AnyPublisher<Void, Never> { get }
 }
 
 final class ApplicationCardView: BaseView {
@@ -28,28 +32,29 @@ final class ApplicationCardView: BaseView {
         static let spacing: CGFloat = 16
     }
 
-    private let titleButton = DotoriTextButton().then {
-        $0.setImage(
-            .init(systemName: "arrow.clockwise")?.resize(to: 16).withRenderingMode(.alwaysTemplate),
-            for: .normal
-        )
-    }
-
-    private let recentRefreshLabel = DotoriLabel(textColor: .neutral(.n30), font: .caption)
+    private let titleButton = DotoriTextButton()
+        .set(\.semanticContentAttribute, .forceRightToLeft)
     private let loadingIndicatorView = UIActivityIndicatorView(style: .medium)
-    private let chevronRightButton = DotoriTextButton(
-        ">",
-        textColor: .neutral(.n20),
-        font: .caption
+    private let refreshButton = DotoriIconButton(
+        image: .Dotori.refresh.tintColor(color: .dotori(.neutral(.n10)))
     )
-    private lazy var headerStackView = HStackView(spacing: 4) {
+    private let chevronRightButton = DotoriIconButton(
+        image: .Dotori.miniChevronRight.tintColor(color: .dotori(.neutral(.n10)))
+    )
+    private lazy var headerStackView = HStackView(spacing: 16) {
         titleButton
+
         loadingIndicatorView
+
         SpacerView()
+
+        refreshButton
+
         chevronRightButton
     }
 
-    private let applicationStatusLabel = DotoriLabel(font: .h2)
+    private let applicationCountStatusLabel = DotoriLabel(font: .h2)
+    private let recentRefreshLabel = DotoriLabel(textColor: .neutral(.n20), font: .caption)
     private let applicationProgressView = UIProgressView()
         .set(\.cornerRadius, 8)
         .set(\.clipsToBounds, true)
@@ -63,7 +68,7 @@ final class ApplicationCardView: BaseView {
         super.init()
         self.titleButton.setTitle(title, for: .normal)
         self.applyButton.setTitle(applyText, for: .normal)
-        self.applicationStatusLabel.text = "0/\(maxApplyCount)"
+        self.applicationCountStatusLabel.text = "0/\(maxApplyCount)"
     }
 
     @available(*, unavailable)
@@ -74,8 +79,8 @@ final class ApplicationCardView: BaseView {
     override func addView() {
         self.addSubviews {
             headerStackView
+            applicationCountStatusLabel
             recentRefreshLabel
-            applicationStatusLabel
             applicationProgressView
             applyButton
         }
@@ -87,18 +92,18 @@ final class ApplicationCardView: BaseView {
                 .top(.toSuperview(), .equal(Metric.padding))
                 .horizontal(.toSuperview(), .equal(Metric.padding))
 
-            recentRefreshLabel.layout
-                .top(.to(headerStackView).bottom, .equal(2))
-                .leading(.to(headerStackView).leading, .equal(4))
-
-            applicationStatusLabel.layout
+            applicationCountStatusLabel.layout
                 .centerX(.toSuperview())
-                .top(.to(recentRefreshLabel).bottom, .equal(Metric.spacing))
+                .top(.to(headerStackView).bottom, .equal(Metric.spacing))
+
+            recentRefreshLabel.layout
+                .leading(.to(applicationCountStatusLabel).trailing, .equal(8))
+                .bottom(.to(applicationProgressView).top, .equal(-24))
 
             applicationProgressView.layout
                 .centerX(.toSuperview())
                 .height(20)
-                .top(.to(applicationStatusLabel).bottom, .equal(Metric.spacing))
+                .top(.to(applicationCountStatusLabel).bottom, .equal(Metric.spacing))
                 .horizontal(.toSuperview(), .equal(Metric.padding))
 
             applyButton.layout
@@ -117,15 +122,6 @@ final class ApplicationCardView: BaseView {
 }
 
 extension ApplicationCardView: ApplicationCardViewStateProtocol {
-    var isLoading: Bool {
-        get { loadingIndicatorView.isAnimating }
-        set {
-            newValue ?
-                loadingIndicatorView.startAnimating() :
-                loadingIndicatorView.stopAnimating()
-        }
-    }
-
     var buttonTitle: String {
         get { applyButton.titleLabel?.text ?? "" }
         set { applyButton.setTitle(newValue, for: .normal) }
@@ -136,19 +132,37 @@ extension ApplicationCardView: ApplicationCardViewStateProtocol {
         set { applyButton.isEnabled = newValue }
     }
 
+    func loading() {
+        // 360도 회전을 위한 2번 실행 (360도로 1번 실행하면 애니메이션 실행 안됨)
+        refreshButton.anim(anim: .rotate(0.3, angle: .pi, reversed: true))
+        refreshButton.anim(anim: .rotate(0.3, angle: .pi, reversed: true))
+    }
+
     func updateApplyCount(current: Int, max: Int) {
         let newProgress = Float(current) / Float(max)
 
-        UIView.animate(withDuration: 0.4) {
+        UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.4, delay: 0) {
             self.applicationProgressView.setProgress(newProgress, animated: true)
             self.applicationProgressView.progressTintColor = self.toBarColor(current: current, max: max)
         }
 
-        self.applicationStatusLabel.text = "\(current)/\(max)"
+        self.applicationCountStatusLabel.text = "\(current)/\(max)"
     }
 
     func updateRecentRefresh(date: Date) {
-        self.recentRefreshLabel.text = L10n.Home.recentRefreshDate(date.toStringWithCustomFormat("HH:mm:ss"))
+        let recentRefreshText = self.recentRefreshDateText(date: date)
+        self.recentRefreshLabel.text = recentRefreshText
+    }
+
+    func updateUserRole(userRole: UserRoleType) {
+        if userRole != .member {
+            titleButton.setImage(
+                .Dotori.setting.tintColor(color: .dotori(.neutral(.n10))),
+                for: .normal
+            )
+        } else {
+            titleButton.setImage(nil, for: .normal)
+        }
     }
 }
 
@@ -162,6 +176,10 @@ extension ApplicationCardView: ApplicationCardViewActionProtocol {
     }
 
     var refreshButtonDidTapPublisher: AnyPublisher<Void, Never> {
+        refreshButton.tapPublisher
+    }
+
+    var settingButtonDidTpaPublisher: AnyPublisher<Void, Never> {
         titleButton.tapPublisher
     }
 }
@@ -175,6 +193,22 @@ private extension ApplicationCardView {
             return .dotori(.sub(.yellow))
         } else {
             return .dotori(.sub(.red))
+        }
+    }
+
+    func recentRefreshDateText(date: Date) -> String {
+        let currentDate = Date()
+        let diffInterval = currentDate.timeIntervalSince(date)
+        let diffSecond = Int(diffInterval)
+        let diffMinute = diffSecond / 60
+        let diffHour = diffMinute / 60
+
+        if diffHour > 0 {
+            return L10n.Home.previousHourTitle(diffHour)
+        } else if diffMinute > 0 {
+            return L10n.Home.previousMinuateTitle(diffMinute)
+        } else {
+            return L10n.Home.previousSecondTitle(diffSecond)
         }
     }
 }
