@@ -226,13 +226,11 @@ final class HomeViewController: BaseStoredViewController<HomeStore> {
 
         sharedState
             .map(\.selfStudyRefreshDate)
-            .removeDuplicates()
             .sink(receiveValue: selfStudyApplicationCardView.updateRecentRefresh(date:))
             .store(in: &subscription)
 
         sharedState
             .map(\.massageRefreshDate)
-            .removeDuplicates()
             .sink(receiveValue: massageApplicationCardView.updateRecentRefresh(date:))
             .store(in: &subscription)
 

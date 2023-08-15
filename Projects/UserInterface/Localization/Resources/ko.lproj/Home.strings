@@ -43,3 +43,6 @@
 "complete_to_modify_massage_limit_title" = "안마의자 인원 수정 완료";
 "withdrawal_title" = "회원탈퇴";
 "really_withdrawal_title" = "정말로 도토리를 회원탈퇴 하시겠습니까?";
+"previous_hour_title" = "%@시간 전";
+"previous_minuate_title" = "%@분 전";
+"previous_second_title" = "%@초 전";

@@ -53,6 +53,7 @@ final class ApplicationCardView: BaseView {
     }
 
     private let applicationCountStatusLabel = DotoriLabel(font: .h2)
+    private let recentRefreshLabel = DotoriLabel(textColor: .neutral(.n20), font: .caption)
     private let applicationProgressView = UIProgressView()
         .set(\.cornerRadius, 8)
         .set(\.clipsToBounds, true)
@@ -78,6 +79,7 @@ final class ApplicationCardView: BaseView {
         self.addSubviews {
             headerStackView
             applicationCountStatusLabel
+            recentRefreshLabel
             applicationProgressView
             applyButton
         }
@@ -92,6 +94,10 @@ final class ApplicationCardView: BaseView {
             applicationCountStatusLabel.layout
                 .centerX(.toSuperview())
                 .top(.to(headerStackView).bottom, .equal(Metric.spacing))
+
+            recentRefreshLabel.layout
+                .leading(.to(applicationCountStatusLabel).trailing, .equal(8))
+                .bottom(.to(applicationProgressView).top, .equal(-24))
 
             applicationProgressView.layout
                 .centerX(.toSuperview())
@@ -146,8 +152,8 @@ extension ApplicationCardView: ApplicationCardViewStateProtocol {
     }
 
     func updateRecentRefresh(date: Date) {
-        let currentDate = Date()
-        
+        let recentRefreshText = self.recentRefreshDateText(date: date)
+        self.recentRefreshLabel.text = recentRefreshText
     }
 
     func updateUserRole(userRole: UserRoleType) {
@@ -189,6 +195,22 @@ private extension ApplicationCardView {
             return .dotori(.sub(.yellow))
         } else {
             return .dotori(.sub(.red))
+        }
+    }
+
+    func recentRefreshDateText(date: Date) -> String {
+        let currentDate = Date()
+        let diffInterval = currentDate.timeIntervalSince(date)
+        let diffSecond = Int(diffInterval)
+        let diffMinute = diffSecond / 60
+        let diffHour = diffMinute / 60
+
+        if diffHour > 0 {
+            return L10n.Home.previousHourTitle(diffHour)
+        } else if diffMinute > 0 {
+            return L10n.Home.previousMinuateTitle(diffMinute)
+        } else {
+            return L10n.Home.previousSecondTitle(diffSecond)
         }
     }
 }
