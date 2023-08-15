@@ -21,9 +21,6 @@ jobs:
     runs-on: masos-latest
 
     steps:
-      - name: Select Xcode
-        run: sudo xcode-select -s "/Applications/Xcode_14.3.app"
-
       - uses: actions/checkout@v2
 
       - name: Install tuist
@@ -53,8 +50,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      with:
-        xcode-version: latest
+
+    - name: Select Xcode
+      run: sudo xcode-select -s "/Applications/Xcode_14.3.app"
 
     - name: Install tuist
       run: curl -Ls https://install.tuist.io | bash
