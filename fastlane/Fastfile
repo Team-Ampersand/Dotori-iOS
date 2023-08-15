@@ -38,7 +38,7 @@ platform :ios do
     )
     discord_notifier(
       webhook_url: ENV["WEBHOOK_URL"],
-      title: "🚀 도토리 iOS CD 성공",
+      title: "🚀 도토리 iOS 배포 자동화 성공",
       thumbnail_url: "https://github.com/Team-Ampersand/Dotori-iOS/assets/74440939/5bcfc67c-37b2-42f6-8cef-7b544b0a5606",
       description: "도토리 iOS #{version}을 앱스토어에 성공적으로 배포하였습니다 !"
     )
@@ -56,7 +56,7 @@ platform :ios do
   error do |lane, exception, options|
     discord_notifier(
       webhook_url: ENV["WEBHOOK_URL"],
-      title: "👾 도토리 iOS CD 실패..",
+      title: "👾 도토리 iOS 배포 자동화 실패..",
       thumbnail_url: "https://github.com/Team-Ampersand/Dotori-iOS/assets/74440939/f3bcc050-4e98-4b07-ba13-cdedfed441ba",
       success: false,
       color: "#BB3639",
