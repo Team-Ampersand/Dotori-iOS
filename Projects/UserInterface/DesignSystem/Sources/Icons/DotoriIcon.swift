@@ -26,6 +26,8 @@ public extension UIImage {
         public static let meatBall = DesignSystemAsset.DotoriIcon.meatBall.image
         public static let men = DesignSystemAsset.DotoriIcon.men.image
         public static let music = DesignSystemAsset.DotoriIcon.music.image
+        public static let miniChevronLeft = DesignSystemAsset.DotoriIcon.miniChevronLeft.image
+        public static let miniChevronRight = DesignSystemAsset.DotoriIcon.miniChevronRight.image
         public static let pen = DesignSystemAsset.DotoriIcon.pen.image
         public static let person = DesignSystemAsset.DotoriIcon.person.image
         public static let personCircle = DesignSystemAsset.DotoriIcon.personCircle.image

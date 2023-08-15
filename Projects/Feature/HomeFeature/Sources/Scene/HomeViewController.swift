@@ -172,15 +172,17 @@ final class HomeViewController: BaseStoredViewController<HomeStore> {
         sharedState
             .map(\.loadingState)
             .removeDuplicates()
-            .map { $0.contains(.selfStudy) }
-            .assign(to: \.isLoading, on: selfStudyApplicationCardView)
+            .filter { $0.contains(.selfStudy) }
+            .map { _ in }
+            .sink(receiveValue: selfStudyApplicationCardView.loading)
             .store(in: &subscription)
 
         sharedState
             .map(\.loadingState)
             .removeDuplicates()
-            .map { $0.contains(.massage) }
-            .assign(to: \.isLoading, on: massageApplicationCardView)
+            .filter { $0.contains(.massage) }
+            .map { _ in }
+            .sink(receiveValue: massageApplicationCardView.loading)
             .store(in: &subscription)
 
         sharedState

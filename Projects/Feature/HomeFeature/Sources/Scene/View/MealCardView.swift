@@ -20,17 +20,21 @@ final class MealCardView: BaseView {
     }
 
     private let mealTitleLabel = DotoriLabel(L10n.Home.mealTitle)
-    private let prevDateButton = DotoriIconButton(image: .Dotori.chevronLeft)
-        .set(\.backgroundColor, .dotori(.neutral(.n50)))
-        .set(\.cornerRadius, 11)
+    private let prevDateButton = DotoriIconButton(
+        image: .Dotori.miniChevronLeft.tintColor(color: .dotori(.neutral(.n20)))
+    )
+    .set(\.backgroundColor, .dotori(.neutral(.n50)))
+    .set(\.cornerRadius, 11)
     private let currentDateLabel = DotoriLabel(
         Date().toStringWithCustomFormat("yyyy.MM.dd (EEEEE)"),
         textColor: .neutral(.n20),
         font: .body2
     )
-    private let nextDateButton = DotoriIconButton(image: .Dotori.chevronRight)
-        .set(\.backgroundColor, .dotori(.neutral(.n50)))
-        .set(\.cornerRadius, 11)
+    private let nextDateButton = DotoriIconButton(
+        image: .Dotori.miniChevronRight.tintColor(color: .dotori(.neutral(.n20)))
+    )
+    .set(\.backgroundColor, .dotori(.neutral(.n50)))
+    .set(\.cornerRadius, 11)
     private lazy var dateStackView = HStackView(spacing: 8) {
         prevDateButton
         currentDateLabel
@@ -56,8 +60,8 @@ final class MealCardView: BaseView {
                 .top(.toSuperview(), .equal(Metric.padding))
                 .leading(.toSuperview(), .equal(Metric.padding))
 
-            [prevDateButton, nextDateButton]
-                .map { $0.layout.size(28) }
+//            [prevDateButton, nextDateButton]
+//                .map { $0.layout.size(28) }
 
             dateStackView.layout
                 .top(.toSuperview(), .equal(Metric.padding))

@@ -1,3 +1,4 @@
+import Anim
 import BaseDomainInterface
 import BaseFeature
 import Combine
@@ -10,10 +11,10 @@ import MSGLayout
 import UIKit
 
 protocol ApplicationCardViewStateProtocol {
-    var isLoading: Bool { get }
     var buttonTitle: String { get }
     var buttonIsEnabled: Bool { get }
     func updateApplyCount(current: Int, max: Int)
+    func loading()
     func updateRecentRefresh(date: Date)
     func updateUserRole(userRole: UserRoleType)
 }
@@ -38,7 +39,7 @@ final class ApplicationCardView: BaseView {
         image: .Dotori.refresh.tintColor(color: .dotori(.neutral(.n10)))
     )
     private let chevronRightButton = DotoriIconButton(
-        image: .Dotori.chevronRight.tintColor(color: .dotori(.neutral(.n10)))
+        image: .Dotori.miniChevronRight.tintColor(color: .dotori(.neutral(.n10)))
     )
     private lazy var headerStackView = HStackView(spacing: 16) {
         titleButton
@@ -121,15 +122,6 @@ final class ApplicationCardView: BaseView {
 }
 
 extension ApplicationCardView: ApplicationCardViewStateProtocol {
-    var isLoading: Bool {
-        get { loadingIndicatorView.isAnimating }
-        set {
-            newValue ?
-                loadingIndicatorView.startAnimating() :
-                loadingIndicatorView.stopAnimating()
-        }
-    }
-
     var buttonTitle: String {
         get { applyButton.titleLabel?.text ?? "" }
         set { applyButton.setTitle(newValue, for: .normal) }
@@ -138,6 +130,12 @@ extension ApplicationCardView: ApplicationCardViewStateProtocol {
     var buttonIsEnabled: Bool {
         get { applyButton.isEnabled }
         set { applyButton.isEnabled = newValue }
+    }
+
+    func loading() {
+        // 360도 회전을 위한 2번 실행 (360도로 1번 실행하면 애니메이션 실행 안됨)
+        refreshButton.anim(anim: .rotate(0.3, angle: .pi, reversed: true))
+        refreshButton.anim(anim: .rotate(0.3, angle: .pi, reversed: true))
     }
 
     func updateApplyCount(current: Int, max: Int) {
