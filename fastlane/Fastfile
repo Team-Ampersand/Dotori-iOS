@@ -48,7 +48,7 @@ platform :ios do
       name: "도토리 #{version}",
       tag_name: version,
       commitish: "master",
-      description: (File.read("./faselane/metadata/ko/release_notes.txt") rescue ""),
+      description: (File.read("metadata/ko/release_notes.txt") rescue ""),
       is_generate_release_notes: true
     )
   end
