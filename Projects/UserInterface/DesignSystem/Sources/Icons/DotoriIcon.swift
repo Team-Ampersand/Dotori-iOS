@@ -31,8 +31,10 @@ public extension UIImage {
         public static let personCircle = DesignSystemAsset.DotoriIcon.personCircle.image
         public static let personRectangle = DesignSystemAsset.DotoriIcon.personRectangle.image
         public static let plus = DesignSystemAsset.DotoriIcon.plus.image
+        public static let refresh = DesignSystemAsset.DotoriIcon.refresh.image
         public static let search = DesignSystemAsset.DotoriIcon.search.image
         public static let secondMedal = DesignSystemAsset.DotoriIcon.secondMedal.image
+        public static let setting = DesignSystemAsset.DotoriIcon.setting.image
         public static let shortcut = DesignSystemAsset.DotoriIcon.shortcut.image
         public static let smallMen = DesignSystemAsset.DotoriIcon.smallMen.image
         public static let smallWomen = DesignSystemAsset.DotoriIcon.smallWomen.image
