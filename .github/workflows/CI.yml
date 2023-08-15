@@ -18,7 +18,7 @@ env:
 jobs:
   prepare-dependency:
     name: ⚙️ Prepare for CI
-    runs-on: masos-latest
+    runs-on: macos-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -50,6 +50,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
+    - name: Select Xcode
+      run: sudo xcode-select -s "/Applications/Xcode_14.3.app"
 
     - name: Install tuist
       run: curl -Ls https://install.tuist.io | bash
