@@ -1,5 +1,4 @@
 import Anim
-import BaseDomainInterface
 import BaseFeature
 import CombineUtility
 import Configure
