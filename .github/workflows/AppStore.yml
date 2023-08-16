@@ -54,9 +54,9 @@ jobs:
       - name: Install tuist
         run: curl -Ls https://install.tuist.io | bash
 
-      # - name: Configure Keychain
-      #   run: sh .github/workflows/AppStore/Keychain.sh
-      #   shell: bash
+      - name: Configure Keychain
+        run: sh .github/workflows/AppStore/Keychain.sh
+        shell: bash
 
       - name: Install fastlane
         run: brew install fastlane
