@@ -148,42 +148,51 @@ private extension DotoriShareViewController {
             return
         }
         for input in extensionInput where input.attachments?.isEmpty == false {
-            let itemProviders = input.attachments ?? []
-
-            for itemProvider in itemProviders
-                where itemProvider.hasItemConformingToTypeIdentifier("public.url") {
-                itemProvider.loadItem(forTypeIdentifier: "public.url", options: nil) { [weak self] item, error in
-                    guard let self, let url = item as? URL, error == nil else {
-                        self?.hideExtension { _ in
-                            self?.extensionContext?.cancelRequest(
-                                withError: NSError(domain: "Invalid URL Input", code: 3)
-                            )
+            for itemProvider in input.attachments ?? [] {
+                switch itemProvider.registeredTypeIdentifiers.first ?? "" {
+                case UTType.url.identifier:
+                    itemProvider.loadItem(
+                        forTypeIdentifier: UTType.url.identifier,
+                        options: nil
+                    ) { [weak self] item, error in
+                        guard let self, let url = item as? URL, error == nil else {
+                            self?.hideExtension { _ in
+                                self?.extensionContext?.cancelRequest(
+                                    withError: NSError(domain: "Invalid URL Input", code: 3)
+                                )
+                            }
+                            return
                         }
-                        return
+                        self.bindInputURL(url: url)
                     }
-                    self.bindInputURL(url: url)
-                }
-            }
 
-            for itemProvider in itemProviders
-                where itemProvider.hasItemConformingToTypeIdentifier("public.plain-text") {
-                itemProvider.loadItem(
-                    forTypeIdentifier: "public.plain-text",
-                    options: nil
-                ) { [weak self] item, error in
-                    guard let self,
-                          let urlString = item as? String,
-                          let url = URL(string: urlString),
-                          error == nil
-                    else {
-                        self?.hideExtension { _ in
-                            self?.extensionContext?.cancelRequest(
-                                withError: NSError(domain: "Invalid URL Input", code: 3)
-                            )
+                case UTType.plainText.identifier:
+                    itemProvider.loadItem(
+                        forTypeIdentifier: UTType.plainText.identifier,
+                        options: nil
+                    ) { [weak self] item, error in
+                        guard let self,
+                              let urlString = item as? String,
+                              let url = URL(string: urlString),
+                              error == nil
+                        else {
+                            self?.hideExtension { _ in
+                                self?.extensionContext?.cancelRequest(
+                                    withError: NSError(domain: "Invalid URL Input", code: 3)
+                                )
+                            }
+                            return
                         }
-                        return
+                        self.bindInputURL(url: url)
                     }
-                    self.bindInputURL(url: url)
+
+                default:
+                    self.hideExtension { _ in
+                        self.extensionContext?.cancelRequest(
+                            withError: NSError(domain: "Invalid URL Input", code: 3)
+                        )
+                    }
+                    return
                 }
             }
         }
