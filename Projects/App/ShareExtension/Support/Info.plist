@@ -28,6 +28,8 @@
 		<dict>
 			<key>NSExtensionActivationRule</key>
 			<dict>
+				<key>NSExtensionActivationSupportsText</key>
+				<true/>
 				<key>NSExtensionActivationDictionaryVersion</key>
 				<integer>1</integer>
 				<key>NSExtensionActivationSupportsWebURLWithMaxCount</key>
