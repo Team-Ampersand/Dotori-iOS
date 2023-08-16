@@ -51,7 +51,7 @@ let targets: [Target] = [
             .core(target: .Networking),
             .core(target: .Database),
             .core(target: .Timer),
-            .target(name: "\(env.name)ShareExtension")
+            // .target(name: "\(env.name)ShareExtension")
         ],
         settings: .settings(
             base: env.baseSetting
