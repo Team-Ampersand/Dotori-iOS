@@ -85,9 +85,8 @@ jobs:
           VERSION: ${{ github.event.inputs.version }}
 
       - name: Commit and PR
-        run: |
-          git add .
-          git commit -m "📝 :: ${{ github.event.inputs.version }} released"
-          git push -u origin release/${{ github.event.inputs.version }}
-          gh pr create --repo Team-Ampersand/Dotori-iOS --title "🔀 :: ${{ github.event.inputs.version }} Release" --body "${{ github.event.inputs.version }} version released" --base "master" --head "release/${{ github.event.inputs.version }}" --assignee @me --label "🌏 Deploy"
+        run: sh .github/workflows/AppStore/ReleasePR.sh
+        shell: bash
+        env:
+          VERSION: ${{ github.event.inputs.version }}
 
