@@ -4,6 +4,8 @@ security create-keychain -p "" "$KEYCHAIN"
 security list-keychains -s "$KEYCHAIN" 
 security default-keychain -s "$KEYCHAIN" 
 security unlock-keychain -p "" "$KEYCHAIN"
+security set-keychain-settings -lut 3600
+security list-keychains
 
 tuist signing decrypt
 security import "Tuist/Signing/dotori.p12" -k "$KEYCHAIN" -P "$CERTS_EXPORT_PWD" -A
