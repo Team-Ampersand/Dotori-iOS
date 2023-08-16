@@ -106,9 +106,7 @@ private extension DotoriShareViewController {
     func bindAction() {
         cancelButton.tapPublisher
             .sink(with: self, receiveValue: { owner, _ in
-                owner.hideExtension { _ in
-                    owner.extensionContext?.cancelRequest(withError: NSError(domain: "Share Canceled", code: 1))
-                }
+                owner.cancelRequest("Share cancelled", code: 1)
             })
             .store(in: &subscription)
 
@@ -122,11 +120,7 @@ private extension DotoriShareViewController {
                             owner.extensionContext?.completeRequest(returningItems: nil)
                         }
                     } catch {
-                        owner.hideExtension { _ in
-                            owner.extensionContext?.cancelRequest(
-                                withError: NSError(domain: "Jwt Token is expired", code: 6)
-                            )
-                        }
+                        owner.cancelRequest("Jwt Token is expired", code: 6)
                     }
                 }
             })
@@ -142,59 +136,54 @@ private extension DotoriShareViewController {
         }, completion: completion)
     }
 
+    func cancelRequest(_ errorMessage: String, code: Int) {
+        self.hideExtension { _ in
+            let error = NSError(domain: errorMessage, code: code)
+            self.extensionContext?.cancelRequest(withError: error)
+        }
+    }
+
     func bindExtensionInput() {
         guard let extensionInput = extensionContext?.inputItems as? [NSExtensionItem] else {
-            self.extensionContext?.cancelRequest(withError: NSError(domain: "Invalid Inputs", code: 2))
+            self.cancelRequest("Invalid Inputs", code: 2)
             return
         }
         for input in extensionInput where input.attachments?.isEmpty == false {
             for itemProvider in input.attachments ?? [] {
-                switch itemProvider.registeredTypeIdentifiers.first ?? "" {
-                case UTType.url.identifier:
-                    itemProvider.loadItem(
-                        forTypeIdentifier: UTType.url.identifier,
-                        options: nil
-                    ) { [weak self] item, error in
-                        guard let self, let url = item as? URL, error == nil else {
-                            self?.hideExtension { _ in
-                                self?.extensionContext?.cancelRequest(
-                                    withError: NSError(domain: "Invalid URL Input", code: 3)
-                                )
-                            }
-                            return
-                        }
-                        self.bindInputURL(url: url)
-                    }
-
-                case UTType.plainText.identifier:
-                    itemProvider.loadItem(
-                        forTypeIdentifier: UTType.plainText.identifier,
-                        options: nil
-                    ) { [weak self] item, error in
-                        guard let self,
-                              let urlString = item as? String,
-                              let url = URL(string: urlString),
-                              error == nil
-                        else {
-                            self?.hideExtension { _ in
-                                self?.extensionContext?.cancelRequest(
-                                    withError: NSError(domain: "Invalid URL Input", code: 3)
-                                )
-                            }
-                            return
-                        }
-                        self.bindInputURL(url: url)
-                    }
-
-                default:
-                    self.hideExtension { _ in
-                        self.extensionContext?.cancelRequest(
-                            withError: NSError(domain: "Invalid URL Input", code: 3)
-                        )
-                    }
+                guard let typeIdentifier = itemProvider.registeredTypeIdentifiers.first else {
+                    self.cancelRequest("Invalid URL Input", code: 3)
                     return
                 }
+
+                itemProvider.loadItem(forTypeIdentifier: typeIdentifier) { [weak self] item, error in
+                    guard error == nil else {
+                        self?.cancelRequest("Invalid URL Input", code: 3)
+                        return
+                    }
+                    self?.handleLoadedItem(item, typeIdentifier: typeIdentifier)
+                }
             }
+        }
+    }
+
+    func handleLoadedItem(_ item: NSSecureCoding?, typeIdentifier: String) {
+        switch typeIdentifier {
+        case UTType.url.identifier:
+            guard let url = item as? URL else {
+                self.cancelRequest("Invalid URL Input", code: 3)
+                return
+            }
+            self.bindInputURL(url: url)
+
+        case UTType.plainText.identifier:
+            guard let urlString = item as? String, let url = URL(string: urlString) else {
+                self.cancelRequest("Invalid URL Input", code: 3)
+                return
+            }
+            self.bindInputURL(url: url)
+            
+        default:
+            self.cancelRequest("Invalid URL Input", code: 3)
         }
     }
 
@@ -213,21 +202,13 @@ private extension DotoriShareViewController {
         let provider = LPMetadataProvider()
         provider.startFetchingMetadata(for: url) { [weak owner = self] metadata, error in
             guard let owner, let metadata, error == nil else {
-                owner?.hideExtension { _ in
-                    owner?.extensionContext?.cancelRequest(
-                        withError: NSError(domain: "Invalid Youtube Metadata", code: 4)
-                    )
-                }
+                owner?.cancelRequest("Invalid Youtube Metadata", code: 4)
                 return
             }
 
             metadata.imageProvider?.loadObject(ofClass: UIImage.self) { image, error in
                 guard let image = image as? UIImage, error == nil else {
-                    owner.hideExtension { _ in
-                        owner.extensionContext?.cancelRequest(
-                            withError: NSError(domain: "Invalid Youtube Thumbnail Image", code: 5)
-                        )
-                    }
+                    owner.cancelRequest("Invalid Youtube Thumbnail Image", code: 5)
                     return
                 }
 
