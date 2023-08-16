@@ -23,7 +23,14 @@ platform :ios do
     build_number = get_info_plist_value(path: "./Projects/App/Support/Info.plist", key: "CFBundleVersion")
     set_info_plist_value(path: "./Projects/App/Support/Info.plist", key: "CFBundleVersion", value: "#{build_number.to_i + 1}")
     set_info_plist_value(path: "./Projects/App/Support/Info.plist", key: "CFBundleShortVersionString", value: version)
-    build_app(scheme: "Dotori-PROD")
+    build_app(
+      scheme: "Dotori-PROD",
+      export_method: "app-store",
+      export_options: {
+        "com.msg.Dotori": "Dotori CD",
+        "com.msg.Dotori.share": "Dotori Share Profile"
+      }
+    )
     upload_to_app_store(
       app_version: version,
       submit_for_review: true,
