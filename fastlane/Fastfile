@@ -20,6 +20,20 @@ platform :ios do
   lane :release do |options|
     version = options[:version]
 
+    create_keychain(
+        name: "dotori",
+        password: "",
+        default_keychain: true,
+        unlock: true,
+        timeout: 3600,
+        lock_when_sleeps: false
+    )
+    match(
+        type: "appstore",
+        readonly: true,
+        keychain_name: "dotori",
+        keychain_password: ""
+    )
     build_number = get_info_plist_value(path: "./Projects/App/Support/Info.plist", key: "CFBundleVersion")
     set_info_plist_value(path: "./Projects/App/Support/Info.plist", key: "CFBundleVersion", value: "#{build_number.to_i + 1}")
     set_info_plist_value(path: "./Projects/App/Support/Info.plist", key: "CFBundleShortVersionString", value: version)
