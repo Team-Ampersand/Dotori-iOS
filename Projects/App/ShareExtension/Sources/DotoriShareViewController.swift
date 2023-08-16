@@ -181,7 +181,7 @@ private extension DotoriShareViewController {
                 return
             }
             self.bindInputURL(url: url)
-            
+
         default:
             self.cancelRequest("Invalid URL Input", code: 3)
         }
