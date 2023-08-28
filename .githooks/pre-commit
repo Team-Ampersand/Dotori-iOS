@@ -2,8 +2,6 @@
 
 FORMAT=$(which swiftformat)
 
-echo "ASDF"
-
 if [[ -e "${FORMAT}" ]]; then
     echo "🚀  SwiftFormat 시작..."
     echo "🔍  SwiftFormat 적용 경로: $(pwd)/Projects"
