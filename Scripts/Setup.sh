@@ -26,5 +26,5 @@ else
   curl -Ls https://install.tuist.io | bash
 fi
 
-git config --local include.path .gitconfig
+git config --local include.path ../.gitconfig
 chmod 777 .githooks/*
