@@ -6,7 +6,7 @@ echo "ASDF"
 
 if [[ -e "${FORMAT}" ]]; then
     echo "🚀  SwiftFormat 시작..."
-    echo "🔍  SwiftFormat 적용 경로: $(pwd)"
+    echo "🔍  SwiftFormat 적용 경로: $(pwd)/Projects"
 else
     echo "SwiftFormat이 존재하지 않습니다, 설치해주세요 ! 'brew install swiftformat'"
     exit 1
@@ -15,7 +15,7 @@ fi
 RESULT=$($FORMAT ./Projects --config Scripts/.swiftformat)
 
 if [ "$RESULT" == '' ]; then
-  printf "✨ SwiftFormat 적용을 완료했습니다 !! 🎉 \n"
+  printf "\n 🎉 SwiftFormat 적용을 완료했습니다 !! \n"
 else
   echo ""
 	printf "❌ SwiftFormat Failed 아래 내용을 확인해주세요 \n"
