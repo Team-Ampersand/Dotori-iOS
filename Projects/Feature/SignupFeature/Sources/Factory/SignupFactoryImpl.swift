@@ -2,6 +2,7 @@ import AuthDomainInterface
 import BaseFeature
 import DesignSystem
 import DWebKit
+import SignupFeatureInterface
 import UIKit
 
 struct SignupFactoryImpl: SignupFactory {

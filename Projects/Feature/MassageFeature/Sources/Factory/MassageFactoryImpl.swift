@@ -1,4 +1,5 @@
 import MassageDomainInterface
+import MassageFeatureInterface
 import Moordinator
 import UserDomainInterface
 

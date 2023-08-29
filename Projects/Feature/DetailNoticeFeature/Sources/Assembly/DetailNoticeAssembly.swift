@@ -1,3 +1,4 @@
+import DetailNoticeFeatureInterface
 import NoticeDomainInterface
 import Swinject
 import UserDomainInterface

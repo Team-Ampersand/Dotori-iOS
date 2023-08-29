@@ -1,6 +1,7 @@
 import BaseFeature
-import ConfirmationDialogFeature
-import DetailNoticeFeature
+import BaseFeatureInterface
+import ConfirmationDialogFeatureInterface
+import DetailNoticeFeatureInterface
 import DWebKit
 import Moordinator
 import UIKit
@@ -66,7 +67,7 @@ private extension NoticeMoordinator {
         return .one(
             .contribute(
                 withNextPresentable: viewController,
-                withNextRouter: viewController.store
+                withNextRouter: viewController.router
             )
         )
     }

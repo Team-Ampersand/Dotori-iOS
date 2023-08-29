@@ -1,7 +1,6 @@
-import ConfirmationDialogFeature
-import MainTabFeature
-import SigninFeature
-import SplashFeature
+import MainTabFeatureInterface
+import SigninFeatureInterface
+import SplashFeatureInterface
 import Swinject
 
 public final class RootAssembly: Assembly {

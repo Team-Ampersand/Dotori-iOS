@@ -1,5 +1,6 @@
 import Moordinator
 import MusicDomainInterface
+import MusicFeatureInterface
 import ProposeMusicFeature
 import UserDomainInterface
 

@@ -1,8 +1,8 @@
 import BaseFeature
 import DesignSystem
 import Moordinator
-import RenewalPasswordFeature
-import SignupFeature
+import RenewalPasswordFeatureInterface
+import SignupFeatureInterface
 import UIKit
 
 final class SigninMoordinator: Moordinator {

@@ -1,7 +1,6 @@
-import BaseFeature
 import Moordinator
 import UIKit
 
-public protocol RenewalPasswordFactory {
+public protocol SignupFactory {
     func makeViewController(signinHandler: @escaping () -> Void) -> UIViewController
 }

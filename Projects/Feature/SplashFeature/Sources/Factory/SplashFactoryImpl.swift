@@ -1,5 +1,7 @@
 import AuthDomainInterface
 import BaseFeature
+import BaseFeatureInterface
+import SplashFeatureInterface
 import UIKit
 
 final class SplashFactoryImpl: SplashFactory {
@@ -9,7 +11,7 @@ final class SplashFactoryImpl: SplashFactory {
         self.checkIsLoggedInUseCase = checkIsLoggedInUseCase
     }
 
-    func makeViewController() -> any StoredViewControllable {
+    func makeViewController() -> any RoutedViewControllable {
         let store = SplashStore(checkIsLoggedInUseCase: checkIsLoggedInUseCase)
         return SplashViewController(store: store)
     }

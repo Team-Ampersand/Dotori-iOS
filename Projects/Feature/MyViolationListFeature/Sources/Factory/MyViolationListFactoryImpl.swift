@@ -1,4 +1,5 @@
 import BaseFeature
+import BaseFeatureInterface
 import MyViolationListFeatureInterface
 import ViolationDomainInterface
 

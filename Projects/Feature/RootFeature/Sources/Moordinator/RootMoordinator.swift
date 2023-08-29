@@ -1,9 +1,10 @@
 import BaseFeature
+import BaseFeatureInterface
 import Combine
-import MainTabFeature
+import MainTabFeatureInterface
 import Moordinator
-import SigninFeature
-import SplashFeature
+import SigninFeatureInterface
+import SplashFeatureInterface
 import UIKit
 import UIKitUtil
 

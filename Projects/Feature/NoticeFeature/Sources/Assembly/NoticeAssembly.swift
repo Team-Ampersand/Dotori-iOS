@@ -1,6 +1,7 @@
 import ConfirmationDialogFeature
-import DetailNoticeFeature
+import DetailNoticeFeatureInterface
 import NoticeDomainInterface
+import NoticeFeatureInterface
 import Swinject
 import UserDomainInterface
 

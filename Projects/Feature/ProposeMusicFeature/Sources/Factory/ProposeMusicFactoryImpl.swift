@@ -1,5 +1,7 @@
 import BaseFeature
+import BaseFeatureInterface
 import MusicDomainInterface
+import ProposeMusicFeatureInterface
 import UIKit
 
 struct ProposeMusicFactoryImpl: ProposeMusicFactory {
@@ -9,7 +11,7 @@ struct ProposeMusicFactoryImpl: ProposeMusicFactory {
         self.proposeMusicUseCase = proposeMusicUseCase
     }
 
-    func makeViewController() -> any StoredViewControllable {
+    func makeViewController() -> any RoutedViewControllable {
         let store = ProposeMusicStore(
             proposeMusicUseCase: proposeMusicUseCase
         )

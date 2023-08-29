@@ -1,5 +1,6 @@
+import BaseFeatureInterface
 import Moordinator
 
-public protocol MainFactory {
+public protocol MusicFactory {
     func makeMoordinator() -> Moordinator
 }

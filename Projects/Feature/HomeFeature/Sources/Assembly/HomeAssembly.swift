@@ -1,4 +1,5 @@
 import ConfirmationDialogFeatureInterface
+import HomeFeatureInterface
 import InputDialogFeatureInterface
 import MassageDomainInterface
 import MealDomainInterface

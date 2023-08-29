@@ -1,7 +1,7 @@
 import BaseFeature
 import Localization
 import Moordinator
-import ProposeMusicFeature
+import ProposeMusicFeatureInterface
 import UIKit
 import UIKitUtil
 
@@ -85,7 +85,7 @@ private extension MusicMoordinator {
         return .one(
             .contribute(
                 withNextPresentable: viewController,
-                withNextRouter: viewController.store
+                withNextRouter: viewController.router
             )
         )
     }
