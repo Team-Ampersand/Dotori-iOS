@@ -26,3 +26,6 @@ init:
 
 signing:
 	swift Scripts/CodeSigning.swift
+
+setup:
+	sh Scripts/Setup.sh
