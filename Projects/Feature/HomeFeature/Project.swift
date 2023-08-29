@@ -5,12 +5,16 @@ import ProjectDescriptionHelpers
 let project = Project.module(
     name: ModulePaths.Feature.HomeFeature.rawValue,
     targets: [
+        .interface(module: .feature(.HomeFeature), dependencies: [
+            .feature(target: .BaseFeature, type: .interface)
+        ]),
         .implements(
             module: .feature(.HomeFeature),
             dependencies: [
                 .feature(target: .BaseFeature),
-                .feature(target: .ConfirmationDialogFeature),
-                .feature(target: .MyViolationListFeature),
+                .feature(target: .HomeFeature, type: .interface),
+                .feature(target: .ConfirmationDialogFeature, type: .interface),
+                .feature(target: .MyViolationListFeature, type: .interface),
                 .feature(target: .InputDialogFeature, type: .interface),
                 .domain(target: .SelfStudyDomain, type: .interface),
                 .domain(target: .MassageDomain, type: .interface),

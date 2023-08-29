@@ -28,24 +28,9 @@ let targets: [Target] = [
         resources: ["Resources/**"],
         entitlements: "Support/Dotori.entitlements",
         scripts: scripts,
-        dependencies: [
-            .feature(target: .RootFeature),
-            .feature(target: .SplashFeature),
-            .feature(target: .SigninFeature),
-            .feature(target: .MainTabFeature),
-            .feature(target: .SignupFeature),
-            .feature(target: .RenewalPasswordFeature),
-            .feature(target: .ConfirmationDialogFeature),
-            .feature(target: .InputDialogFeature),
-            .feature(target: .FilterSelfStudyFeature),
-            .domain(target: .AuthDomain),
-            .domain(target: .UserDomain),
-            .domain(target: .SelfStudyDomain),
-            .domain(target: .MassageDomain),
-            .domain(target: .MealDomain),
-            .domain(target: .NoticeDomain),
-            .domain(target: .ViolationDomain),
-            .domain(target: .MusicDomain),
+        dependencies: ModulePaths.Feature.allCases.map { TargetDependency.feature(target: $0) }
+        + ModulePaths.Domain.allCases.map { TargetDependency.domain(target: $0) }
+        + [
             .core(target: .JwtStore),
             .core(target: .KeyValueStore),
             .core(target: .Networking),
