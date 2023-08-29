@@ -1,4 +1,6 @@
 import BaseFeature
+import BaseFeatureInterface
+import ConfirmationDialogFeatureInterface
 import UIKit
 
 final class ConfirmationDialogFactoryImpl: ConfirmationDialogFactory {
@@ -6,7 +8,7 @@ final class ConfirmationDialogFactoryImpl: ConfirmationDialogFactory {
         title: String,
         description: String,
         confirmAction: @escaping () async -> Void
-    ) -> any StoredViewControllable {
+    ) -> any RoutedViewControllable {
         let store = ConfirmationDialogStore(confirmAction: confirmAction)
         return ConfirmationDialogViewController(
             title: title,

@@ -1,4 +1,4 @@
-import BaseFeature
+import BaseFeatureInterface
 import UIKit
 
 public protocol ConfirmationDialogFactory {
@@ -6,5 +6,5 @@ public protocol ConfirmationDialogFactory {
         title: String,
         description: String,
         confirmAction: @escaping () async -> Void
-    ) -> any StoredViewControllable
+    ) -> any RoutedViewControllable
 }
