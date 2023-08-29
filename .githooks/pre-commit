@@ -13,26 +13,29 @@ fi
 RESULT=$($FORMAT ./Projects --config Scripts/.swiftformat)
 
 if [ "$RESULT" == '' ]; then
-  printf "\n 🎉 SwiftFormat 적용을 완료했습니다 !! \n"
+    printf "\n 🎉 SwiftFormat 적용을 완료했습니다 !! \n"
 else
-  echo ""
-	printf "❌ SwiftFormat Failed 아래 내용을 확인해주세요 \n"
-  while read -r line; do
-    FILEPATH=$(echo $line | cut -d : -f 1)
-    L=$(echo $line | cut -d : -f 2)
-    C=$(echo $line | cut -d : -f 3)
-    TYPE=$(echo $line | cut -d : -f 4 | cut -c 2-)
-    MESSAGE=$(echo $line | cut -d : -f 5 | cut -c 2-)
-    DESCRIPTION=$(echo $line | cut -d : -f 6 | cut -c 2-)
-    if [ $TYPE == 'warning' ]; then
-      printf "\n 🚧  $TYPE\n"
-    elif [ $TYPE == 'error' ]; then
-      printf "\n 🚨  $TYPE\n"
-    fi
-    printf "    ✅ $FILEPATH:$L:$C\n"
-    printf "    📌 $MESSAGE: - $DESCRIPTION\n"
-  done <<< "$RESULT"
+    echo ""
+    printf "❌ SwiftFormat Failed 아래 내용을 확인해주세요 \n"
+    while read -r line; do
+        FILEPATH=$(echo $line | cut -d : -f 1)
+        L=$(echo $line | cut -d : -f 2)
+      	C=$(echo $line | cut -d : -f 3)
+    	TYPE=$(echo $line | cut -d : -f 4 | cut -c 2-)
+    	MESSAGE=$(echo $line | cut -d : -f 5 | cut -c 2-)
+    	DESCRIPTION=$(echo $line | cut -d : -f 6 | cut -c 2-)
+    	if [ $TYPE == 'warning' ]; then
+      	    printf "\n 🚧  $TYPE\n"
+            printf "    $FILEPATH:$L:$C\n"
+      	    printf "    📌  $MESSAGE: - $DESCRIPTION\n"
+      	    exit 0
+    	elif [ $TYPE == 'error' ]; then
+      	    printf "\n 🚨  $TYPE\n"
+    	fi
+        printf "    ✅ $FILEPATH:$L:$C\n"
+	printf "    📌 $MESSAGE: - $DESCRIPTION\n"
+    done <<< "$RESULT"
 
-  printf "\n 🚑 커밋실패!! SwiftFormat 실행이 실패하였습니다 🥺 \n"
-  exit 1
+    printf "\n 🚑 커밋실패!! SwiftFormat 실행이 실패하였습니다 🥺 \n"
+    exit 1
 fi
