@@ -86,7 +86,7 @@ private extension NoticeMoordinator {
         return .one(
             .contribute(
                 withNextPresentable: viewController,
-                withNextRouter: viewController.store
+                withNextRouter: viewController.router
             )
         )
     }

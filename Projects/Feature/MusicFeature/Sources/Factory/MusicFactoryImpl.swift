@@ -2,6 +2,7 @@ import Moordinator
 import MusicDomainInterface
 import MusicFeatureInterface
 import ProposeMusicFeature
+import ProposeMusicFeatureInterface
 import UserDomainInterface
 
 struct MusicFactoryImpl: MusicFactory {

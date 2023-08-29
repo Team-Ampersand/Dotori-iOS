@@ -45,7 +45,7 @@ public final class RootMoordinator: Moordinator {
             return .one(
                 .contribute(
                     withNextPresentable: splashViewController,
-                    withNextRouter: splashViewController.store
+                    withNextRouter: splashViewController.router
                 )
             )
 

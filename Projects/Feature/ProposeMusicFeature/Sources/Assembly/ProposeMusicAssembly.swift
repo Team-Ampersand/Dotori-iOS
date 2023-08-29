@@ -1,4 +1,5 @@
 import MusicDomainInterface
+import ProposeMusicFeatureInterface
 import Swinject
 
 public final class ProposeMusicAssembly: Assembly {

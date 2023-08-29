@@ -29,15 +29,15 @@ let targets: [Target] = [
         entitlements: "Support/Dotori.entitlements",
         scripts: scripts,
         dependencies: ModulePaths.Feature.allCases.map { TargetDependency.feature(target: $0) }
-        + ModulePaths.Domain.allCases.map { TargetDependency.domain(target: $0) }
-        + [
-            .core(target: .JwtStore),
-            .core(target: .KeyValueStore),
-            .core(target: .Networking),
-            .core(target: .Database),
-            .core(target: .Timer),
-            .target(name: "\(env.name)ShareExtension")
-        ],
+            + ModulePaths.Domain.allCases.map { TargetDependency.domain(target: $0) }
+            + [
+                .core(target: .JwtStore),
+                .core(target: .KeyValueStore),
+                .core(target: .Networking),
+                .core(target: .Database),
+                .core(target: .Timer),
+                .target(name: "\(env.name)ShareExtension")
+            ],
         settings: .settings(
             base: env.baseSetting
         )

@@ -1,4 +1,4 @@
-import ConfirmationDialogFeature
+import ConfirmationDialogFeatureInterface
 import DetailNoticeFeatureInterface
 import NoticeDomainInterface
 import NoticeFeatureInterface
