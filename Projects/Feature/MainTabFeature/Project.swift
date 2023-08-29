@@ -9,8 +9,8 @@ let project = Project.module(
             .feature(target: .BaseFeature, type: .interface)
         ]),
         .implements(module: .feature(.MainTabFeature), dependencies: [
+            .feature(target: .BaseFeature),
             .feature(target: .MainTabFeature, type: .interface),
-            .feature(target: .BaseFeature, type: .interface),
             .feature(target: .HomeFeature, type: .interface),
             .feature(target: .NoticeFeature, type: .interface),
             .feature(target: .SelfStudyFeature, type: .interface),
