@@ -1,11 +1,11 @@
 import BaseFeature
 import BaseFeatureInterface
-import ConfirmationDialogFeature
+import ConfirmationDialogFeatureInterface
 import DWebKit
 import InputDialogFeatureInterface
 import Localization
 import Moordinator
-import MyViolationListFeature
+import MyViolationListFeatureInterface
 import TimerInterface
 import UIKit
 import UIKitUtil
@@ -90,7 +90,7 @@ private extension HomeMoordinator {
         self.rootVC.topViewController?.modalPresent(viewController)
         return .one(.contribute(
             withNextPresentable: viewController,
-            withNextRouter: viewController.store
+            withNextRouter: viewController.router
         ))
     }
 
@@ -108,7 +108,7 @@ private extension HomeMoordinator {
         return .one(
             .contribute(
                 withNextPresentable: viewController,
-                withNextRouter: viewController.store
+                withNextRouter: viewController.router
             )
         )
     }

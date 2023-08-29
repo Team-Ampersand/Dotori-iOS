@@ -1,9 +1,9 @@
-import ConfirmationDialogFeature
+import ConfirmationDialogFeatureInterface
 import InputDialogFeatureInterface
 import MassageDomainInterface
 import MealDomainInterface
 import Moordinator
-import MyViolationListFeature
+import MyViolationListFeatureInterface
 import SelfStudyDomainInterface
 import TimerInterface
 import UserDomainInterface

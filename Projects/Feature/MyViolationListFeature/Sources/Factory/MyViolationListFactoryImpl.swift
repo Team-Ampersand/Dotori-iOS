@@ -1,4 +1,5 @@
 import BaseFeature
+import MyViolationListFeatureInterface
 import ViolationDomainInterface
 
 struct MyViolationListFactoryImpl: MyViolationListFactory {
@@ -8,7 +9,7 @@ struct MyViolationListFactoryImpl: MyViolationListFactory {
         self.fetchMyViolationListUseCase = fetchMyViolationListUseCase
     }
 
-    func makeViewController() -> any StoredViewControllable {
+    func makeViewController() -> any RoutedViewControllable {
         let store = MyViolationListStore(
             fetchMyViolationListUseCase: fetchMyViolationListUseCase
         )
