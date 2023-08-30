@@ -5,8 +5,12 @@ import ProjectDescriptionHelpers
 let project = Project.module(
     name: ModulePaths.Feature.MassageFeature.rawValue,
     targets: [
+        .interface(module: .feature(.MassageFeature), dependencies: [
+            .feature(target: .BaseFeature, type: .interface)
+        ]),
         .implements(module: .feature(.MassageFeature), dependencies: [
             .feature(target: .BaseFeature),
+            .feature(target: .MassageFeature, type: .interface),
             .domain(target: .MassageDomain, type: .interface),
             .domain(target: .UserDomain, type: .interface)
         ]),

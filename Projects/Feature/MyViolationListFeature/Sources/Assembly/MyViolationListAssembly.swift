@@ -1,3 +1,4 @@
+import MyViolationListFeatureInterface
 import Swinject
 import ViolationDomainInterface
 

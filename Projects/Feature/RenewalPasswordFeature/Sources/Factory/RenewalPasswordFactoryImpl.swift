@@ -1,6 +1,7 @@
 import AuthDomainInterface
 import DWebKit
 import Moordinator
+import RenewalPasswordFeatureInterface
 import UIKit
 
 struct RenewalPasswordFactoryImpl: RenewalPasswordFactory {

@@ -1,4 +1,5 @@
 import AuthDomainInterface
+import SplashFeatureInterface
 import Swinject
 
 public final class SplashAssembly: Assembly {

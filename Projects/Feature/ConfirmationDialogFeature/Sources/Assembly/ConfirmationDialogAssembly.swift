@@ -1,3 +1,4 @@
+import ConfirmationDialogFeatureInterface
 import Swinject
 
 public final class ConfirmationDialogAssembly: Assembly {

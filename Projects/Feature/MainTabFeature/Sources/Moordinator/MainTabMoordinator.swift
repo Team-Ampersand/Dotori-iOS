@@ -1,10 +1,10 @@
 import BaseFeature
-import HomeFeature
-import MassageFeature
+import HomeFeatureInterface
+import MassageFeatureInterface
 import Moordinator
-import MusicFeature
-import NoticeFeature
-import SelfStudyFeature
+import MusicFeatureInterface
+import NoticeFeatureInterface
+import SelfStudyFeatureInterface
 import UIKit
 
 final class MainTabMoordinator: Moordinator {

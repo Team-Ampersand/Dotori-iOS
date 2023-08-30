@@ -1,8 +1,9 @@
-import HomeFeature
-import MassageFeature
-import MusicFeature
-import NoticeFeature
-import SelfStudyFeature
+import HomeFeatureInterface
+import MainTabFeatureInterface
+import MassageFeatureInterface
+import MusicFeatureInterface
+import NoticeFeatureInterface
+import SelfStudyFeatureInterface
 import Swinject
 
 public final class MainAssembly: Assembly {

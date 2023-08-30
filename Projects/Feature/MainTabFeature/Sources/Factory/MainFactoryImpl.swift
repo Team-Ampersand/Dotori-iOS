@@ -1,9 +1,10 @@
-import HomeFeature
-import MassageFeature
+import HomeFeatureInterface
+import MainTabFeatureInterface
+import MassageFeatureInterface
 import Moordinator
-import MusicFeature
-import NoticeFeature
-import SelfStudyFeature
+import MusicFeatureInterface
+import NoticeFeatureInterface
+import SelfStudyFeatureInterface
 
 struct MainFactoryImpl: MainFactory {
     private let homeFactory: any HomeFactory

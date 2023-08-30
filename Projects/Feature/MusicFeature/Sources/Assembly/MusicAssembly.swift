@@ -1,5 +1,6 @@
 import MusicDomainInterface
-import ProposeMusicFeature
+import MusicFeatureInterface
+import ProposeMusicFeatureInterface
 import Swinject
 import UserDomainInterface
 

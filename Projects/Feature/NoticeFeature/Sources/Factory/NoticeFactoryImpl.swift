@@ -1,7 +1,8 @@
-import ConfirmationDialogFeature
-import DetailNoticeFeature
+import ConfirmationDialogFeatureInterface
+import DetailNoticeFeatureInterface
 import Moordinator
 import NoticeDomainInterface
+import NoticeFeatureInterface
 import UserDomainInterface
 
 struct NoticeFactoryImpl: NoticeFactory {

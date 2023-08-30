@@ -1,9 +1,10 @@
 import BaseFeature
+import BaseFeatureInterface
 import Combine
-import MainTabFeature
+import MainTabFeatureInterface
 import Moordinator
-import SigninFeature
-import SplashFeature
+import SigninFeatureInterface
+import SplashFeatureInterface
 import UIKit
 import UIKitUtil
 
@@ -44,7 +45,7 @@ public final class RootMoordinator: Moordinator {
             return .one(
                 .contribute(
                     withNextPresentable: splashViewController,
-                    withNextRouter: splashViewController.store
+                    withNextRouter: splashViewController.router
                 )
             )
 

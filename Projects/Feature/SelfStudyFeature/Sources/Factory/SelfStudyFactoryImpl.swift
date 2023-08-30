@@ -1,6 +1,7 @@
 import FilterSelfStudyFeatureInterface
 import Moordinator
 import SelfStudyDomainInterface
+import SelfStudyFeatureInterface
 import UserDomainInterface
 
 struct SelfStudyFactoryImpl: SelfStudyFactory {

@@ -1,4 +1,6 @@
 import BaseFeature
+import BaseFeatureInterface
+import DetailNoticeFeatureInterface
 import NoticeDomainInterface
 import UIKit
 import UserDomainInterface
@@ -18,7 +20,7 @@ struct DetailNoticeFactoryImpl: DetailNoticeFactory {
         self.loadCurrentUserRoleUseCase = loadCurrentUserRoleUseCase
     }
 
-    func makeViewController(noticeID: Int) -> any StoredViewControllable {
+    func makeViewController(noticeID: Int) -> any RoutedViewControllable {
         let store = DetailNoticeStore(
             noticeID: noticeID,
             fetchNoticeUseCase: fetchNoticeUseCase,

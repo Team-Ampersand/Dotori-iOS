@@ -1,6 +1,6 @@
+import BaseFeatureInterface
 import Moordinator
-import UIKit
 
-public protocol HomeFactory {
+public protocol MainFactory {
     func makeMoordinator() -> Moordinator
 }

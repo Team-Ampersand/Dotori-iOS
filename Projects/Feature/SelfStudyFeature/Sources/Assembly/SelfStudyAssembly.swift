@@ -1,5 +1,6 @@
 import FilterSelfStudyFeatureInterface
 import SelfStudyDomainInterface
+import SelfStudyFeatureInterface
 import Swinject
 import UserDomainInterface
 
