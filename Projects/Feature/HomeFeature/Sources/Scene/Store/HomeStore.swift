@@ -221,7 +221,7 @@ private extension HomeStore {
                 self.route.send(confirmRoutePath)
             } else {
                 try await self.applySelfStudyUseCase()
-                await DotoriToast.makeToast(text: L10n.Home.completeToApplyMassageTitle, style: .success)
+                await DotoriToast.makeToast(text: L10n.Home.completeToApplySelfStudyTitle, style: .success)
             }
             self.send(.refreshSelfStudyButtonDidTap)
         } catch: { @MainActor error in
