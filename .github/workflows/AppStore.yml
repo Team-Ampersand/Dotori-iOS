@@ -73,7 +73,7 @@ jobs:
 
       - name: Release Branch Create
         run: |
-          git config --global user.email 'Github-Ampersand'
+          git config --global user.name 'Github-Ampersand'
           git config --global user.email 'Ampersand.public@gmail.com'
           git config pull.rebase false
           git checkout -b release/${{ github.event.inputs.version }}
