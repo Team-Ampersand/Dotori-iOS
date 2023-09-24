@@ -18,7 +18,7 @@ public extension GenerateEnvironment {
             return []
 
         case .dev:
-            return [.swiftFormat, .swiftLint]
+            return [.swiftLint]
         }
     }
 }
