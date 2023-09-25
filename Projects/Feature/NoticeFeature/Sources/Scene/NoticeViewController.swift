@@ -80,6 +80,7 @@ final class NoticeViewController: BaseStoredViewController<NoticeStore> {
 
     override func configureNavigation() {
         self.navigationItem.setLeftBarButton(dotoriBarButton, animated: true)
+        self.navigationItem.configDotoriBackButton()
         self.view.backgroundColor = .dotori(.background(.card))
     }
 
