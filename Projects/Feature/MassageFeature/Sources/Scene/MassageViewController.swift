@@ -63,8 +63,8 @@ final class MassageViewController: BaseStoredViewController<MassageStore> {
     }
 
     override func bindAction() {
-        viewDidLoadPublisher
-            .map { Store.Action.viewDidLoad }
+        viewWillAppearPublisher
+            .map { Store.Action.viewWillAppear }
             .sink(receiveValue: store.send(_:))
             .store(in: &subscription)
 
