@@ -77,7 +77,7 @@ final class SelfStudyViewController: BaseStoredViewController<SelfStudyStore> {
     }
 
     override func bindAction() {
-        viewDidLoadPublisher
+        viewWillAppearPublisher
             .merge(with: selfStudyRefreshContorol.controlPublisher(for: .valueChanged).map { _ in })
             .map { Store.Action.fetchSelfStudyRank }
             .sink(receiveValue: store.send(_:))
