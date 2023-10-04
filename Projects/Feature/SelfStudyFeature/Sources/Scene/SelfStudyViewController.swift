@@ -103,11 +103,9 @@ final class SelfStudyViewController: BaseStoredViewController<SelfStudyStore> {
         sharedState
             .map(\.selfStudyRankList)
             .map(\.isEmpty)
+            .not()
             .removeDuplicates()
-            .sink(with: self, receiveValue: { owner, selfStudyIsEmpty in
-                owner.selfStudyTableView.isHidden = selfStudyIsEmpty
-                owner.emptySelfStudyStackView.isHidden = !selfStudyIsEmpty
-            })
+            .assign(to: \.isHidden, on: emptySelfStudyStackView)
             .store(in: &subscription)
 
         sharedState
