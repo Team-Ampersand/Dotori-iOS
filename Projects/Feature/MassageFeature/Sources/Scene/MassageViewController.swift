@@ -11,7 +11,6 @@ final class MassageViewController: BaseStoredViewController<MassageStore> {
     private let massageNavigationBarLabel = DotoriNavigationBarLabel(text: L10n.Massage.massageTitle)
     private let massageTableView = UITableView()
         .set(\.backgroundColor, .clear)
-        .set(\.isHidden, true)
         .set(\.separatorStyle, .none)
         .set(\.sectionHeaderHeight, 0)
         .then {
@@ -63,8 +62,8 @@ final class MassageViewController: BaseStoredViewController<MassageStore> {
     }
 
     override func bindAction() {
-        viewDidLoadPublisher
-            .map { Store.Action.viewDidLoad }
+        viewWillAppearPublisher
+            .map { Store.Action.viewWillAppear }
             .sink(receiveValue: store.send(_:))
             .store(in: &subscription)
 
@@ -96,11 +95,9 @@ final class MassageViewController: BaseStoredViewController<MassageStore> {
         sharedState
             .map(\.massageRankList)
             .map(\.isEmpty)
+            .not()
             .removeDuplicates()
-            .sink(with: self, receiveValue: { owner, massageIsEmpty in
-                owner.massageTableView.isHidden = massageIsEmpty
-                owner.emptySelfStudyStackView.isHidden = !massageIsEmpty
-            })
+            .assign(to: \.isHidden, on: emptySelfStudyStackView)
             .store(in: &subscription)
     }
 }

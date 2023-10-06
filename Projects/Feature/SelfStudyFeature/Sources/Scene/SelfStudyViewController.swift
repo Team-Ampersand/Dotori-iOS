@@ -23,7 +23,6 @@ final class SelfStudyViewController: BaseStoredViewController<SelfStudyStore> {
         .set(\.separatorStyle, .none)
         .set(\.sectionHeaderHeight, 0)
         .set(\.sectionFooterHeight, 0)
-        .set(\.isHidden, true)
         .then {
             $0.register(cellType: SelfStudyCell.self)
         }
@@ -77,7 +76,7 @@ final class SelfStudyViewController: BaseStoredViewController<SelfStudyStore> {
     }
 
     override func bindAction() {
-        viewDidLoadPublisher
+        viewWillAppearPublisher
             .merge(with: selfStudyRefreshContorol.controlPublisher(for: .valueChanged).map { _ in })
             .map { Store.Action.fetchSelfStudyRank }
             .sink(receiveValue: store.send(_:))
@@ -103,11 +102,9 @@ final class SelfStudyViewController: BaseStoredViewController<SelfStudyStore> {
         sharedState
             .map(\.selfStudyRankList)
             .map(\.isEmpty)
+            .not()
             .removeDuplicates()
-            .sink(with: self, receiveValue: { owner, selfStudyIsEmpty in
-                owner.selfStudyTableView.isHidden = selfStudyIsEmpty
-                owner.emptySelfStudyStackView.isHidden = !selfStudyIsEmpty
-            })
+            .assign(to: \.isHidden, on: emptySelfStudyStackView)
             .store(in: &subscription)
 
         sharedState

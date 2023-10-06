@@ -27,7 +27,7 @@ final class MassageStore: BaseStore {
     }
 
     enum Action {
-        case viewDidLoad
+        case viewWillAppear
         case fetchMassageRankList
     }
 
@@ -40,8 +40,8 @@ final class MassageStore: BaseStore {
 extension MassageStore {
     func mutate(state: State, action: Action) -> SideEffect<Mutation, Never> {
         switch action {
-        case .viewDidLoad:
-            return viewDidLoad()
+        case .viewWillAppear:
+            return viewWillAppear()
 
         case .fetchMassageRankList:
             return fetchMassageRankList()
@@ -66,7 +66,7 @@ extension MassageStore {
 
 // MARK: - Mutate
 private extension MassageStore {
-    func viewDidLoad() -> SideEffect<Mutation, Never> {
+    func viewWillAppear() -> SideEffect<Mutation, Never> {
         return self.fetchMassageRankList()
     }
 
