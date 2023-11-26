@@ -17,34 +17,16 @@ final class SigninViewController: BaseStoredViewController<SigninStore> {
                 .withTintColor(.dotori(.primary(.p10)))
                 .resize(width: 182, height: 41)
         )
-    private let emailTextField = DotoriIconTextField(
-        placeholder: L10n.Signin.emailPlaceholder,
-        icon: .Dotori.person
-    )
-    private let passwordTextField = DotoriIconTextField(
-        placeholder: L10n.Signin.passwordPlaceholder,
-        icon: .Dotori.lock
-    )
-    .set(\.isSecureTextEntry, true)
-    private let renewalPasswordButton = DotoriTextButton(
-        L10n.Signin.findPasswordButtonTitle,
+    private let dotoriSubTitle = DotoriLabel(
+        "광주소프트웨어마이스터고\n기숙사 관리 시스템, DOTORI",
         textColor: .neutral(.n20),
-        font: .body2
+        font: .subtitle2
     )
-    private let signinButton = DotoriButton(text: L10n.Signin.loginButtonTitle)
-        .set(\.contentEdgeInsets, .vertical(16))
-    private let signupButton = DotoriTextButton(
-        L10n.Signin.signupButtonTitle,
-        textColor: .neutral(.n20),
-        font: .body2
-    ).then {
-        let signupString = NSMutableAttributedString(string: $0.titleLabel?.text ?? "")
-        signupString.setColorForText(
-            textToFind: L10n.Signin.signupTitle,
-            withColor: .dotori(.primary(.p10))
-        )
-        $0.setAttributedTitle(signupString, for: .normal)
-    }
+    private let signinButton = GAuthButton(
+        auth: .signin,
+        color: .colored,
+        rounded: .default
+    )
 
     override func addView() {
         view.addSubviews {
