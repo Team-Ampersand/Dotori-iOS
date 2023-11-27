@@ -13,7 +13,8 @@ let project = Project.module(
             .feature(target: .SigninFeature, type: .interface),
             .feature(target: .SignupFeature, type: .interface),
             .feature(target: .RenewalPasswordFeature, type: .interface),
-            .domain(target: .AuthDomain, type: .interface)
+            .domain(target: .AuthDomain, type: .interface),
+            .SPM.GAuthSignin
         ]),
         .tests(module: .feature(.SigninFeature), dependencies: [
             .feature(target: .SigninFeature)

@@ -5,6 +5,7 @@ let dependencies = Dependencies(
     carthage: nil,
     swiftPackageManager: SwiftPackageManagerDependencies(
         [
+            .remote(url: "https://github.com/GSM-MSG/GAuthSignin-Swift", requirement: .exact("0.0.3")),
             .remote(url: "https://github.com/airbnb/lottie-ios.git", requirement: .exact("4.2.0")),
             .remote(url: "https://github.com/kean/Nuke.git", requirement: .exact("12.1.4")),
             .remote(url: "https://github.com/GSM-MSG/Anim.git", requirement: .exact("1.1.0")),
@@ -22,7 +23,8 @@ let dependencies = Dependencies(
         ],
         productTypes: [
             "Moordinator": .framework,
-            "CombineMiniature": .framework
+            "CombineMiniature": .framework,
+            "GAuthSignin": .framework
         ],
         baseSettings: .settings(
             configurations: [
