@@ -6,8 +6,7 @@ let project = Project.module(
     name: ModulePaths.Feature.SigninFeature.rawValue,
     targets: [
         .interface(module: .feature(.SigninFeature), dependencies: [
-            .feature(target: .BaseFeature, type: .interface),
-            .SPM.GAuthSignin
+            .feature(target: .BaseFeature, type: .interface)
         ]),
         .implements(module: .feature(.SigninFeature), dependencies: [
             .feature(target: .BaseFeature),
