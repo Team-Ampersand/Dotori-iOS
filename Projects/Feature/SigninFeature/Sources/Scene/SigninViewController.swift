@@ -48,7 +48,7 @@ final class SigninViewController: BaseStoredViewController<SigninStore> {
 
             dotoriSubTitle.layout
                 .centerX(.toSuperview())
-                .top(.to(dotoriLogoImageView).bottom, .equal(21))
+                .top(.to(dotoriLogoImageView).bottom, .equal(20))
 
             signinButton.layout
                 .centerX(.toSuperview())
