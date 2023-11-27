@@ -43,7 +43,7 @@ final class SigninViewController: BaseStoredViewController<SigninStore> {
         MSGLayout.buildLayout {
             dotoriLogoImageView.layout
                 .centerX(.toSuperview())
-                .top(.to(view.safeAreaLayoutGuide).top, .equal(233))
+                .top(.to(view.safeAreaLayoutGuide).top, .equal(200))
                 .height(41)
 
             dotoriSubTitle.layout
@@ -53,7 +53,7 @@ final class SigninViewController: BaseStoredViewController<SigninStore> {
             signinButton.layout
                 .centerX(.toSuperview())
                 .horizontal(.toSuperview(), .equal(20))
-                .bottom(.to(view.safeAreaLayoutGuide), .equal(-60))
+                .bottom(.to(view.safeAreaLayoutGuide), .equal(-32))
                 .height(50)
         }
     }
