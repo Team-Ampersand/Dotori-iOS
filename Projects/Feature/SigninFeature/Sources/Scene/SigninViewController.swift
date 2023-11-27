@@ -13,7 +13,7 @@ final class SigninViewController: BaseStoredViewController<SigninStore> {
     private let dotoriLogoImageView = UIImageView()
         .set(
             \.image,
-              .Dotori.dotoriSigninLogo
+            .Dotori.dotoriSigninLogo
                 .withRenderingMode(.alwaysTemplate)
                 .withTintColor(.dotori(.primary(.p10)))
                 .resize(width: 182, height: 41)
