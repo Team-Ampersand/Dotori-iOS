@@ -66,13 +66,14 @@ private extension JwtInterceptor {
     func saveToken(tokenDTO: JwtTokenDTO) {
         jwtStore.save(property: .accessToken, value: tokenDTO.accessToken)
         jwtStore.save(property: .refreshToken, value: tokenDTO.refreshToken)
-        jwtStore.save(property: .accessExpiresAt, value: tokenDTO.expiresAt)
+        jwtStore.save(property: .accessExp, value: tokenDTO.accessExp)
+        jwtStore.save(property: .refreshExp, value: tokenDTO.refreshExp)
     }
 
     func checkTokenIsExpired() -> Bool {
-        let expired = jwtStore.load(property: .accessExpiresAt)
+        let accessExp = jwtStore.load(property: .accessExp)
             .toDateWithCustomFormat("yyyy-MM-dd'T'HH:mm:ss")
-        return Date() > expired
+        return Date() > accessExp
     }
 
     func reissueToken(
