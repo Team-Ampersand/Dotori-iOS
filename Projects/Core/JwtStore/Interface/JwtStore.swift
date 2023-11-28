@@ -1,7 +1,8 @@
 public enum JwtStoreProperties: String {
     case accessToken = "ACCESS-TOKEN"
     case refreshToken = "REFRESH-TOKEN"
-    case accessExpiresAt = "ACCESS-EXPIRES-AT"
+    case accessExp = "ACCESS-EXP"
+    case refreshExp = "REFRESH-EXP"
 }
 
 public protocol JwtStore {

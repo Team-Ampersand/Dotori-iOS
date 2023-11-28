@@ -13,7 +13,8 @@ final class LocalAuthDataSourceImpl: LocalAuthDataSource {
         JwtTokenEntity(
             accessToken: jwtStore.load(property: .accessToken),
             refreshToken: jwtStore.load(property: .refreshToken),
-            expiresAt: jwtStore.load(property: .accessExpiresAt)
+            accessExp: jwtStore.load(property: .accessExp),
+            refreshExp: jwtStore.load(property: .refreshExp)
         )
     }
 
