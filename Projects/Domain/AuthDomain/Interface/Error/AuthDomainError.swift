@@ -5,7 +5,7 @@ public enum AuthDomainError: Error {
     case unknown
 
     // MARK: Signin
-    case invalidPassword
+    case codeExpired
 
     // MARK: Refresh
     case refreshTokenExpired
@@ -17,7 +17,7 @@ extension AuthDomainError: LocalizedError {
         case .unknown:
             return L10n.Global.unknownError
 
-        case .invalidPassword:
+        case .codeExpired:
             return L10n.Signin.invalidPasswordError
 
         case .refreshTokenExpired:
