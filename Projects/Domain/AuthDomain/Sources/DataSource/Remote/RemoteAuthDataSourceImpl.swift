@@ -13,7 +13,7 @@ final class RemoteAuthDataSourceImpl: RemoteAuthDataSource {
     }
 
     func signin(req: SigninRequestDTO) async throws {
-        try await networking.request(AuthEndpoint.signin(email: req.email, password: req.password))
+        try await networking.request(AuthEndpoint.signin(code: req.code))
     }
 
     func tokenRefresh() async throws {

@@ -28,6 +28,7 @@ final class LocalUserDataSourceImpl: LocalUserDataSource {
     func logout() {
         jwtStore.delete(property: .accessToken)
         jwtStore.delete(property: .refreshToken)
-        jwtStore.delete(property: .accessExpiresAt)
+        jwtStore.delete(property: .accessExp)
+        jwtStore.delete(property: .refreshExp)
     }
 }

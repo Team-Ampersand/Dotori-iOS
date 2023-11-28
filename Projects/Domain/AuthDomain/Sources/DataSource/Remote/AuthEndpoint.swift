@@ -3,7 +3,7 @@ import Emdpoint
 import NetworkingInterface
 
 public enum AuthEndpoint {
-    case signin(email: String, password: String)
+    case signin(code: String)
     case refresh
 }
 
@@ -24,10 +24,9 @@ extension AuthEndpoint: DotoriEndpoint {
 
     public var task: HTTPTask {
         switch self {
-        case let .signin(email, password):
+        case let .signin(code):
             return .requestParameters(body: [
-                "email": email,
-                "password": password
+                "code": code
             ])
 
         default:
@@ -49,8 +48,8 @@ extension AuthEndpoint: DotoriEndpoint {
         switch self {
         case .signin:
             return [
-                400: AuthDomainError.invalidPassword,
-                409: AuthDomainError.invalidPassword,
+                401: AuthDomainError.codeExpired,
+                404: AuthDomainError.codeExpired,
                 500: AuthDomainError.unknown
             ]
 
