@@ -18,7 +18,7 @@ extension AuthDomainError: LocalizedError {
             return L10n.Global.unknownError
 
         case .codeExpired:
-            return L10n.Signin.invalidPasswordError
+            return L10n.Signin.codeExpiredError
 
         case .refreshTokenExpired:
             return L10n.Signin.refreshTokenExpired
