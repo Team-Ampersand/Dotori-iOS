@@ -20,33 +20,23 @@ final class SigninStore: BaseStore {
     }
 
     struct State: Equatable {
-        var email: String = ""
-        var password: String = ""
+        var code: String = ""
     }
 
     enum Action: Equatable {
-        case updateEmail(String)
-        case updatePassword(String)
         case signupButtonDidTap
         case renewalPasswordButtonDidTap
         case signinButtonDidTap
     }
 
     enum Mutation {
-        case updateEmail(String)
-        case updatePassword(String)
+        case updateCode(String)
     }
 
     let stateSubject = CurrentValueSubject<State, Never>(State())
 
     func mutate(state: State, action: Action) -> SideEffect<Mutation, Never> {
         switch action {
-        case let .updateEmail(email):
-            return .just(.updateEmail(email))
-
-        case let .updatePassword(password):
-            return .just(.updatePassword(password))
-
         case .signupButtonDidTap:
             route.send(DotoriRoutePath.signup)
 
@@ -54,7 +44,7 @@ final class SigninStore: BaseStore {
             route.send(DotoriRoutePath.renewalPassword)
 
         case .signinButtonDidTap:
-            signinButtonDidTap(email: state.email, password: state.password)
+            signinButtonDidTap(code: state.code)
 
         default:
             return .none
@@ -65,17 +55,14 @@ final class SigninStore: BaseStore {
     func reduce(state: State, mutate: Mutation) -> State {
         var newState = state
         switch mutate {
-        case let .updateEmail(email):
-            newState.email = email
-
-        case let .updatePassword(password):
-            newState.password = password
+        case let .updateCode(code):
+            newState.code = code
         }
         return newState
     }
 
-    func signinButtonDidTap(email: String, password: String) {
-        let req = SigninRequestDTO(email: email, password: password)
+    func signinButtonDidTap(code: String) {
+        let req = SigninRequestDTO(code: code)
 
         Task.catching {
             try await self.signinUseCase.execute(req: req)
