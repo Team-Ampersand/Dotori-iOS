@@ -20,7 +20,6 @@ final class SigninStore: BaseStore {
     }
 
     struct State {}
-    
     enum Action {
         case signupButtonDidTap
         case renewalPasswordButtonDidTap
