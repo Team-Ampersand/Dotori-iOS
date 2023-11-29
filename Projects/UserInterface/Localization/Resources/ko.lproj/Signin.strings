@@ -10,5 +10,5 @@
 "signup_title" = "회원가입";
 "signup_button_title" = "Dotori가 처음이라면? 회원가입";
 "find_password_button_title" = "비밀번호 찾기";
-"code_Expired_error" = "만료된 코드입니다.";
+"code_expired_error" = "만료된 코드입니다.";
 "refresh_token_expired" = "리프레시토큰이 만료되었습니다.";
