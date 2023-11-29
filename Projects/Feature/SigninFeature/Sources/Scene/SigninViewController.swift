@@ -70,8 +70,9 @@ final class SigninViewController: BaseStoredViewController<SigninStore> {
         signinButton.prepare(
             clientID: Bundle.main.object(forInfoDictionaryKey: "CLIENT_ID") as? String ?? "",
             redirectURI: Bundle.main.object(forInfoDictionaryKey: "REDIRECT_URI") as? String ?? "",
-            presenting: self) { code in
-                self.store.signin(code: code)
-            }
+            presenting: self
+        ) { [weak self] code in
+            self?.store.signin(code: code)
+        }
     }
 }
