@@ -46,7 +46,7 @@ final class SigninStore: BaseStore {
         }
         return .none
     }
-    
+
     func reduce(state: State, mutate: Mutation) -> State {}
 
     func signinButtonDidTap(code: String) {

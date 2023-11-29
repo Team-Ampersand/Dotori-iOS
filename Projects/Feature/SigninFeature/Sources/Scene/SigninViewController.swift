@@ -13,7 +13,7 @@ final class SigninViewController: BaseStoredViewController<SigninStore> {
     private let dotoriLogoImageView = UIImageView()
         .set(
             \.image,
-            .Dotori.dotoriSigninLogo
+             .Dotori.dotoriSigninLogo
                 .withRenderingMode(.alwaysTemplate)
                 .withTintColor(.dotori(.primary(.p10)))
                 .resize(width: 182, height: 41)
@@ -67,9 +67,11 @@ final class SigninViewController: BaseStoredViewController<SigninStore> {
     }
 
     override func bindAction() {
-        signinButton.tapPublisher
-            .map { Store.Action.signinButtonDidTap }
-            .sink(receiveValue: store.send(_:))
-            .store(in: &subscription)
+        signinButton.prepare(
+            clientID: Bundle.main.object(forInfoDictionaryKey: "CLIENT_ID") as? String ?? "",
+            redirectURI: Bundle.main.object(forInfoDictionaryKey: "REDIRECT_URI") as? String ?? "",
+            presenting: self) { code in
+                self.store.signinButtonDidTap(code: code)
+            }
     }
 }
