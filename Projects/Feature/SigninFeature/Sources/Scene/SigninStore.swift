@@ -19,19 +19,15 @@ final class SigninStore: BaseStore {
         self.signinUseCase = signinUseCase
     }
 
-    struct State: Equatable {
-        var code: String = ""
-    }
-
-    enum Action: Equatable {
+    struct State {}
+    
+    enum Action {
         case signupButtonDidTap
         case renewalPasswordButtonDidTap
-        case signinButtonDidTap
+        case signinButtonDidTap(String)
     }
 
-    enum Mutation {
-        case updateCode(String)
-    }
+    enum Mutation {}
 
     let stateSubject = CurrentValueSubject<State, Never>(State())
 
@@ -43,23 +39,16 @@ final class SigninStore: BaseStore {
         case .renewalPasswordButtonDidTap:
             route.send(DotoriRoutePath.renewalPassword)
 
-        case .signinButtonDidTap:
-            signinButtonDidTap(code: state.code)
+        case let .signinButtonDidTap(code):
+            signinButtonDidTap(code: code)
 
         default:
             return .none
         }
         return .none
     }
-
-    func reduce(state: State, mutate: Mutation) -> State {
-        var newState = state
-        switch mutate {
-        case let .updateCode(code):
-            newState.code = code
-        }
-        return newState
-    }
+    
+    func reduce(state: State, mutate: Mutation) -> State {}
 
     func signinButtonDidTap(code: String) {
         let req = SigninRequestDTO(code: code)
