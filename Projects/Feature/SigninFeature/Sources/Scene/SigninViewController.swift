@@ -71,7 +71,7 @@ final class SigninViewController: BaseStoredViewController<SigninStore> {
             clientID: Bundle.main.object(forInfoDictionaryKey: "CLIENT_ID") as? String ?? "",
             redirectURI: Bundle.main.object(forInfoDictionaryKey: "REDIRECT_URI") as? String ?? "",
             presenting: self) { code in
-                self.store.signinButtonDidTap(code: code)
+                self.store.signin(code: code)
             }
     }
 }

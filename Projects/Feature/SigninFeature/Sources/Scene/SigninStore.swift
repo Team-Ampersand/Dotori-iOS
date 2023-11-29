@@ -23,7 +23,7 @@ final class SigninStore: BaseStore {
     enum Action {
         case signupButtonDidTap
         case renewalPasswordButtonDidTap
-        case signinButtonDidTap(String)
+        case signin(String)
     }
 
     enum Mutation {}
@@ -38,8 +38,8 @@ final class SigninStore: BaseStore {
         case .renewalPasswordButtonDidTap:
             route.send(DotoriRoutePath.renewalPassword)
 
-        case let .signinButtonDidTap(code):
-            signinButtonDidTap(code: code)
+        case let .signin(code):
+            signin(code: code)
 
         default:
             return .none
@@ -49,7 +49,7 @@ final class SigninStore: BaseStore {
 
     func reduce(state: State, mutate: Mutation) -> State {}
 
-    func signinButtonDidTap(code: String) {
+    func signin(code: String) {
         let req = SigninRequestDTO(code: code)
 
         Task.catching {
