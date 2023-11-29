@@ -23,7 +23,9 @@ let project = Project.module(
             spec: .init(
                 infoPlist: .extendingDefault(
                     with: [
-                        "BASE_URL": .string("$(BASE_URL)")
+                        "BASE_URL": .string("$(BASE_URL)"),
+                        "CLIENT_ID": .string("$(CLIENT_ID"),
+                        "REDIRECT_URI": .string("$(REDIRECT_URI")
                     ]
                 ),
                 dependencies: [
