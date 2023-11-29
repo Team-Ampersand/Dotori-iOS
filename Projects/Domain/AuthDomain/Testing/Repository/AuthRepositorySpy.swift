@@ -14,7 +14,8 @@ final class AuthRepositorySpy: AuthRepository {
     var loadJwtTokenReturn: JwtTokenEntity = .init(
         accessToken: "access",
         refreshToken: "refresh",
-        expiresAt: "expires"
+        accessExp: "accessExp",
+        refreshExp: "refreshExp"
     )
     func loadJwtToken() -> JwtTokenEntity {
         loadJwtTokenCallCount += 1
