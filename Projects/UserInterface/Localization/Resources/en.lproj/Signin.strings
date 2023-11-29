@@ -10,5 +10,5 @@
 "signup_title" = "Signup";
 "signup_button_title" = "New to Dotori? Signup";
 "find_password_button_title" = "Find Password";
-"code_Expired_error" = "This code has expired.";
+"code_expired_error" = "This code has expired.";
 "refresh_token_expired" = "RefreshToken is expired.";
