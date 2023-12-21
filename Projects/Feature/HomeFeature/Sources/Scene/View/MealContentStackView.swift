@@ -20,9 +20,20 @@ final class MealContentStackView: UIStackView {
 
     public func updateContent(meals: [String]) {
         self.removeAllChildren()
-
-        guard !meals.isEmpty else { return }
-        let mealViews = meals.map { DotoriLabel($0) }
+        
+        var mealViews: [DotoriLabel] = []
+        
+        if meals.isEmpty {
+            mealViews.append(DotoriLabel("급식이 없습니다."))
+            mealViews.append(DotoriLabel(""))
+            mealViews.append(DotoriLabel(""))
+            mealViews.append(DotoriLabel(""))
+            mealViews.append(DotoriLabel(""))
+            mealViews.append(DotoriLabel(""))
+            mealViews.append(DotoriLabel(""))
+        } else {
+           mealViews = meals.map { DotoriLabel($0) }
+        }
         mealViews.forEach { view in
             view.alpha = 0.0
             self.addArrangedSubview(view)
