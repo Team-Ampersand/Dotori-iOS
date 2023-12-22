@@ -30,7 +30,7 @@ final class MealContentStackView: UIStackView {
             mealViews.append(DotoriLabel(""))
             mealViews.append(DotoriLabel(""))
         } else {
-           mealViews = meals.map { DotoriLabel($0) }
+            mealViews = meals.map { DotoriLabel($0) }
         }
         mealViews.forEach { view in
             view.alpha = 0.0
