@@ -20,7 +20,6 @@ final class MealContentStackView: UIStackView {
 
     public func updateContent(meals: [String]) {
         self.removeAllChildren()
-        
         var mealViews: [DotoriLabel] = []
         
         if meals.isEmpty {
