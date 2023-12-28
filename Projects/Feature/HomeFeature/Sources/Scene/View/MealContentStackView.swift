@@ -23,12 +23,7 @@ final class MealContentStackView: UIStackView {
         var mealViews: [DotoriLabel] = []
         if meals.isEmpty {
             mealViews.append(DotoriLabel("급식이 없습니다."))
-            mealViews.append(DotoriLabel(""))
-            mealViews.append(DotoriLabel(""))
-            mealViews.append(DotoriLabel(""))
-            mealViews.append(DotoriLabel(""))
-            mealViews.append(DotoriLabel(""))
-            mealViews.append(DotoriLabel(""))
+            mealViews.append(contentsOf: Array(repeating: DotoriLabel(""), count: 7))
         } else {
             mealViews = meals.map { DotoriLabel($0) }
         }
