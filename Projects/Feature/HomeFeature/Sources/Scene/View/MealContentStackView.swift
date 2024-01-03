@@ -17,17 +17,16 @@ final class MealContentStackView: UIStackView {
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     public func updateContent(meals: [String]) {
         self.removeAllChildren()
-        let mealViews: [DotoriLabel] = if meals.isEmpty {
-            [DotoriLabel("급식이 없습니다.")] + (1...6).map { _ in DotoriLabel("") }
+        var mealViews: [DotoriLabel] = []
+        
+        if meals.isEmpty {
+            let emptyLabels = (1...6).map { _ in DotoriLabel("") }
+            mealViews.append(DotoriLabel("급식이 없습니다."))
+            mealViews.append(contentsOf: emptyLabels)
         } else {
-            meals.map { DotoriLabel($0) }
-        }
-        mealViews.forEach { view in
-            view.alpha = 0.0
-            self.addArrangedSubview(view)
+            mealViews = meals.map { DotoriLabel($0) }
         }
         
         for (index, view) in mealViews.enumerated() {
