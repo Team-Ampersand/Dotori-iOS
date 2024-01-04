@@ -2,12 +2,12 @@ import BaseFeature
 import CombineUtility
 import Configure
 import DesignSystem
+import GAuthSignin
 import GlobalThirdPartyLibrary
 import Localization
 import MSGLayout
 import UIKit
 import UtilityModule
-import GAuthSignin
 
 final class SigninViewController: BaseStoredViewController<SigninStore> {
     private let dotoriLogoImageView = UIImageView()
@@ -23,8 +23,8 @@ final class SigninViewController: BaseStoredViewController<SigninStore> {
         textColor: .neutral(.n20),
         font: .subtitle2
     )
-        .set(\.numberOfLines, 0)
-        .set(\.textAlignment, .center)
+    .set(\.numberOfLines, 0)
+    .set(\.textAlignment, .center)
     private let signinButton = GAuthButton(
         auth: .signin,
         color: .colored,
