@@ -49,7 +49,7 @@ func registerModuleDependency() {
     if hasTesting {
         makeScaffold(target: .testing)
         let interfaceDependency = ".\(layerPrefix)(target: .\(moduleName), type: .interface)"
-        targetString += ",\n\(tab(2)).testing(module: \(moduleEnum), dependencies: \n\(tab(3))\(interfaceDependency)\n\(tab(2)))"
+        targetString += ",\n\(tab(2)).testing(module: \(moduleEnum), dependencies: [\n\(tab(3))\(interfaceDependency)\n\(tab(2))])"
     }
     if hasUnitTests {
         makeScaffold(target: .unitTest)
@@ -71,7 +71,7 @@ func registerModuleDependency() {
 func tab(_ count: Int) -> String {
     var tabString = ""
     for _ in 0..<count {
-        tabString += "\t\t"
+        tabString += "\t"
     }
     return tabString
 }
