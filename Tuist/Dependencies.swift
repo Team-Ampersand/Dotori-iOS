@@ -23,8 +23,7 @@ let dependencies = Dependencies(
         ],
         productTypes: [
             "Moordinator": .framework,
-            "CombineMiniature": .framework,
-            "GAuthSignin": .framework
+            "CombineMiniature": .framework
         ],
         baseSettings: .settings(
             configurations: [
