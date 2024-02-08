@@ -2,7 +2,6 @@ import BaseFeature
 import CombineUtility
 import Configure
 import DesignSystem
-import GAuthSignin
 import GlobalThirdPartyLibrary
 import Localization
 import MSGLayout
@@ -18,24 +17,43 @@ final class SigninViewController: BaseStoredViewController<SigninStore> {
                 .withTintColor(.dotori(.primary(.p10)))
                 .resize(width: 182, height: 41)
         )
-    private let dotoriSubTitle = DotoriLabel(
-        "광주소프트웨어마이스터고\n기숙사 관리 시스템, DOTORI",
+    private let emailTextField = DotoriIconTextField(
+        placeholder: L10n.Signin.emailPlaceholder,
+        icon: .Dotori.person
+    )
+    private let passwordTextField = DotoriIconTextField(
+        placeholder: L10n.Signin.passwordPlaceholder,
+        icon: .Dotori.lock
+    )
+    .set(\.isSecureTextEntry, true)
+    private let renewalPasswordButton = DotoriTextButton(
+        L10n.Signin.findPasswordButtonTitle,
         textColor: .neutral(.n20),
-        font: .subtitle2
+        font: .body2
     )
-    .set(\.numberOfLines, 0)
-    .set(\.textAlignment, .center)
-    private let signinButton = GAuthButton(
-        auth: .signin,
-        color: .colored,
-        rounded: .default
-    )
+    private let signinButton = DotoriButton(text: L10n.Signin.loginButtonTitle)
+        .set(\.contentEdgeInsets, .vertical(16))
+    private let signupButton = DotoriTextButton(
+        L10n.Signin.signupButtonTitle,
+        textColor: .neutral(.n20),
+        font: .body2
+    ).then {
+        let signupString = NSMutableAttributedString(string: $0.titleLabel?.text ?? "")
+        signupString.setColorForText(
+            textToFind: L10n.Signin.signupTitle,
+            withColor: .dotori(.primary(.p10))
+        )
+        $0.setAttributedTitle(signupString, for: .normal)
+    }
 
     override func addView() {
         view.addSubviews {
             dotoriLogoImageView
-            dotoriSubTitle
+            emailTextField
+            passwordTextField
+            renewalPasswordButton
             signinButton
+            signupButton
         }
     }
 
@@ -43,30 +61,63 @@ final class SigninViewController: BaseStoredViewController<SigninStore> {
         MSGLayout.buildLayout {
             dotoriLogoImageView.layout
                 .centerX(.toSuperview())
-                .top(.to(view.safeAreaLayoutGuide).top, .equal(200))
+                .top(.to(view.safeAreaLayoutGuide).top, .equal(20))
                 .height(41)
 
-            dotoriSubTitle.layout
+            emailTextField.layout
                 .centerX(.toSuperview())
-                .top(.to(dotoriLogoImageView).bottom, .equal(20))
+                .horizontal(.toSuperview(), .equal(20))
+                .top(.to(dotoriLogoImageView).bottom, .equal(30))
+
+            passwordTextField.layout
+                .centerX(.toSuperview())
+                .horizontal(.toSuperview(), .equal(20))
+                .top(.to(emailTextField).bottom, .equal(8))
+
+            renewalPasswordButton.layout
+                .trailing(.to(passwordTextField).trailing)
+                .top(.to(passwordTextField).bottom, .equal(8))
 
             signinButton.layout
                 .centerX(.toSuperview())
                 .horizontal(.toSuperview(), .equal(20))
-                .bottom(.to(view.safeAreaLayoutGuide), .equal(-32))
-                .height(50)
+                .top(.to(renewalPasswordButton).bottom, .equal(32))
+
+            signupButton.layout
+                .centerX(.toSuperview())
+                .top(.to(signinButton).bottom, .equal(16))
         }
     }
 
     override func configureViewController() {
-        self.view.backgroundColor = .dotori(.background(.card))
+        view.backgroundColor = .dotori(.background(.card))
     }
 
     override func configureNavigation() {
-        self.navigationItem.title = L10n.Signin.loginNavigationTitle
+        navigationItem.title = L10n.Signin.loginNavigationTitle
     }
 
     override func bindAction() {
+        emailTextField.textPublisher
+            .map(Store.Action.updateEmail)
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+
+        passwordTextField.textPublisher
+            .map(Store.Action.updatePassword)
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+
+        signupButton.tapPublisher
+            .map { Store.Action.signupButtonDidTap }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+
+        renewalPasswordButton.tapPublisher
+            .map { Store.Action.renewalPasswordButtonDidTap }
+            .sink(receiveValue: store.send(_:))
+            .store(in: &subscription)
+
         signinButton.tapPublisher
             .map { Store.Action.signinButtonDidTap }
             .sink(receiveValue: store.send(_:))
