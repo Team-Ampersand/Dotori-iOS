@@ -17,13 +17,6 @@ final class SigninViewController: BaseStoredViewController<SigninStore> {
                 .withTintColor(.dotori(.primary(.p10)))
                 .resize(width: 182, height: 41)
         )
-    private let dotoriSubTitle = DotoriLabel(
-        "광주소프트웨어마이스터고\n기숙사 관리 시스템, DOTORI",
-        textColor: .neutral(.n20),
-        font: .subtitle2
-    )
-    .set(\.numberOfLines, 0)
-    .set(\.textAlignment, .center)
     private let emailTextField = DotoriIconTextField(
         placeholder: L10n.Signin.emailPlaceholder,
         icon: .Dotori.person
