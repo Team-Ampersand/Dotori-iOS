@@ -10,8 +10,7 @@ let project = Project.module(
         ]),
         .implements(module: .domain(.AuthDomain), dependencies: [
             .domain(target: .AuthDomain, type: .interface),
-            .domain(target: .BaseDomain),
-            .SPM.GAuthSignin
+            .domain(target: .BaseDomain)
         ]),
         .testing(module: .domain(.AuthDomain), dependencies: [
             .domain(target: .AuthDomain, type: .interface)
