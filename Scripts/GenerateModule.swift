@@ -49,7 +49,7 @@ func registerModuleDependency() {
     if hasTesting {
         makeScaffold(target: .testing)
         let interfaceDependency = ".\(layerPrefix)(target: .\(moduleName), type: .interface)"
-        targetString += ",\n\(tab(2)).testing(module: \(moduleEnum), dependencies: \n\(tab(3))\(interfaceDependency)\n\(tab(2)))"
+        targetString += ",\n\(tab(2)).testing(module: \(moduleEnum), dependencies: [\n\(tab(3))\(interfaceDependency)\n\(tab(2))])"
     }
     if hasUnitTests {
         makeScaffold(target: .unitTest)
@@ -65,13 +65,13 @@ func registerModuleDependency() {
     }
     targetString += "\n\(tab(1))]"
     makeProjectSwift(targetString: targetString)
-    makeProjectScaffold(targetString: targetString)
+    makeProjectScaffold()
 }
 
 func tab(_ count: Int) -> String {
     var tabString = ""
     for _ in 0..<count {
-        tabString += "\t\t"
+        tabString += "\t"
     }
     return tabString
 }
@@ -110,9 +110,9 @@ func makeDirectories(_ paths: [String]) {
 
 func makeProjectSwift(targetString: String) {
     let projectSwift = """
+import DependencyPlugin
 import ProjectDescription
 import ProjectDescriptionHelpers
-import DependencyPlugin
 
 let project = Project.module(
     name: ModulePaths.\(layer.rawValue).\(moduleName).rawValue,
@@ -130,10 +130,10 @@ func makeProjectDirectory() {
     makeDirectory(path: currentPath + "Projects/\(layer.rawValue)/\(moduleName)")
 }
 
-func makeProjectScaffold(targetString: String) {
+func makeProjectScaffold() {
     _ = try? bash.run(
         commandName: "tuist",
-        arguments: ["scaffold", "Module", "--name", "\(moduleName)", "--layer", "\(layer.rawValue)", "--target", "\(targetString)"]
+        arguments: ["scaffold", "Module", "--name", "\(moduleName)", "--layer", "\(layer.rawValue)"]
     )
 }
 
