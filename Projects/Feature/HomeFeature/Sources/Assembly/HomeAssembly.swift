@@ -1,4 +1,5 @@
 import ConfirmationDialogFeatureInterface
+import ProfileImageFeatureInterface
 import HomeFeatureInterface
 import InputDialogFeatureInterface
 import MassageDomainInterface
@@ -29,6 +30,7 @@ public final class HomeAssembly: Assembly {
                 logoutUseCase: resolver.resolve(LogoutUseCase.self)!,
                 withdrawalUseCase: resolver.resolve(WithdrawalUseCase.self)!,
                 confirmationDialogFactory: resolver.resolve(ConfirmationDialogFactory.self)!,
+                profileImageFactory: resolver.resolve(ProfileImageFactory.self)!,
                 myViolationListFactory: resolver.resolve(MyViolationListFactory.self)!,
                 inputDialogFactory: resolver.resolve(InputDialogFactory.self)!
             )

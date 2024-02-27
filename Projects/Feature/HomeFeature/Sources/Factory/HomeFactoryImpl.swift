@@ -1,4 +1,5 @@
 import ConfirmationDialogFeatureInterface
+import ProfileImageFeatureInterface
 import HomeFeatureInterface
 import InputDialogFeatureInterface
 import MassageDomainInterface
@@ -25,6 +26,7 @@ struct HomeFactoryImpl: HomeFactory {
     private let withdrawalUseCase: any WithdrawalUseCase
     private let confirmationDialogFactory: any ConfirmationDialogFactory
     private let myViolationListFactory: any MyViolationListFactory
+    private let profileImageFactory: any ProfileImageFactory
     private let inputDialogFactory: any InputDialogFactory
 
     init(
@@ -42,6 +44,7 @@ struct HomeFactoryImpl: HomeFactory {
         logoutUseCase: any LogoutUseCase,
         withdrawalUseCase: any WithdrawalUseCase,
         confirmationDialogFactory: any ConfirmationDialogFactory,
+        profileImageFactory: any ProfileImageFactory,
         myViolationListFactory: any MyViolationListFactory,
         inputDialogFactory: any InputDialogFactory
     ) {
@@ -59,6 +62,7 @@ struct HomeFactoryImpl: HomeFactory {
         self.logoutUseCase = logoutUseCase
         self.withdrawalUseCase = withdrawalUseCase
         self.confirmationDialogFactory = confirmationDialogFactory
+        self.profileImageFactory = profileImageFactory
         self.myViolationListFactory = myViolationListFactory
         self.inputDialogFactory = inputDialogFactory
     }
@@ -83,7 +87,8 @@ struct HomeFactoryImpl: HomeFactory {
         return HomeMoordinator(
             homeViewController: homeViewController,
             confirmationDialogFactory: confirmationDialogFactory,
-            myViolationListFactory: myViolationListFactory,
+            myViolationListFactory: myViolationListFactory, 
+            profileImageFactory: profileImageFactory,
             inputDialogFactory: inputDialogFactory
         )
     }

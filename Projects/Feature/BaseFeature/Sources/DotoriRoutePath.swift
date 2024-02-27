@@ -36,6 +36,7 @@ public enum DotoriRoutePath: RoutePath {
     case home
     case myInfoActionSheet
     case myViolationList
+    case profileImage
 
     // MARK: Notice
     case notice

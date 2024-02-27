@@ -1,4 +1,5 @@
 import BaseFeature
+import ProfileImageFeatureInterface
 import BaseFeatureInterface
 import ConfirmationDialogFeatureInterface
 import DWebKit
@@ -15,6 +16,7 @@ final class HomeMoordinator: Moordinator {
     private let homeViewController: any StoredViewControllable
     private let confirmationDialogFactory: any ConfirmationDialogFactory
     private let myViolationListFactory: any MyViolationListFactory
+    private let profileImageFactory: any ProfileImageFactory
     private let inputDialogFactory: any InputDialogFactory
     var root: Presentable {
         rootVC
@@ -24,11 +26,13 @@ final class HomeMoordinator: Moordinator {
         homeViewController: any StoredViewControllable,
         confirmationDialogFactory: any ConfirmationDialogFactory,
         myViolationListFactory: any MyViolationListFactory,
+        profileImageFactory: any ProfileImageFactory,
         inputDialogFactory: any InputDialogFactory
     ) {
         self.homeViewController = homeViewController
         self.confirmationDialogFactory = confirmationDialogFactory
         self.myViolationListFactory = myViolationListFactory
+        self.profileImageFactory = profileImageFactory
         self.inputDialogFactory = inputDialogFactory
     }
 
@@ -49,6 +53,9 @@ final class HomeMoordinator: Moordinator {
             return .one(.forwardToParent(with: DotoriRoutePath.massage))
 
         case .myViolationList:
+            return presentToMyViolationList()
+            
+        case .profileImage:
             return presentToMyViolationList()
 
         case let .confirmationDialog(title, description, confirmAction):
@@ -87,6 +94,15 @@ private extension HomeMoordinator {
 
     func presentToMyViolationList() -> MoordinatorContributors {
         let viewController = myViolationListFactory.makeViewController()
+        self.rootVC.topViewController?.modalPresent(viewController)
+        return .one(.contribute(
+            withNextPresentable: viewController,
+            withNextRouter: viewController.router
+        ))
+    }
+    
+    func presentToProfileImage() -> MoordinatorContributors {
+        let viewController = profileImageFactory.makeViewController()
         self.rootVC.topViewController?.modalPresent(viewController)
         return .one(.contribute(
             withNextPresentable: viewController,
