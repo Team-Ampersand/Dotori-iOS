@@ -1,11 +1,11 @@
 import ConfirmationDialogFeatureInterface
-import ProfileImageFeatureInterface
 import HomeFeatureInterface
 import InputDialogFeatureInterface
 import MassageDomainInterface
 import MealDomainInterface
 import Moordinator
 import MyViolationListFeatureInterface
+import ProfileImageFeatureInterface
 import SelfStudyDomainInterface
 import Swinject
 import TimerInterface

@@ -1,5 +1,4 @@
 import BaseFeature
-import ProfileImageFeatureInterface
 import BaseFeatureInterface
 import ConfirmationDialogFeatureInterface
 import DWebKit
@@ -7,6 +6,7 @@ import InputDialogFeatureInterface
 import Localization
 import Moordinator
 import MyViolationListFeatureInterface
+import ProfileImageFeatureInterface
 import TimerInterface
 import UIKit
 import UIKitUtil
@@ -54,7 +54,7 @@ final class HomeMoordinator: Moordinator {
 
         case .myViolationList:
             return presentToMyViolationList()
-            
+
         case .profileImage:
             return presentToMyViolationList()
 
@@ -100,7 +100,7 @@ private extension HomeMoordinator {
             withNextRouter: viewController.router
         ))
     }
-    
+
     func presentToProfileImage() -> MoordinatorContributors {
         let viewController = profileImageFactory.makeViewController()
         self.rootVC.topViewController?.modalPresent(viewController)

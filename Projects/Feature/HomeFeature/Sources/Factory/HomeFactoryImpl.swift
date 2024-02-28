@@ -1,11 +1,11 @@
 import ConfirmationDialogFeatureInterface
-import ProfileImageFeatureInterface
 import HomeFeatureInterface
 import InputDialogFeatureInterface
 import MassageDomainInterface
 import MealDomainInterface
 import Moordinator
 import MyViolationListFeatureInterface
+import ProfileImageFeatureInterface
 import SelfStudyDomainInterface
 import TimerInterface
 import UserDomainInterface
@@ -87,7 +87,7 @@ struct HomeFactoryImpl: HomeFactory {
         return HomeMoordinator(
             homeViewController: homeViewController,
             confirmationDialogFactory: confirmationDialogFactory,
-            myViolationListFactory: myViolationListFactory, 
+            myViolationListFactory: myViolationListFactory,
             profileImageFactory: profileImageFactory,
             inputDialogFactory: inputDialogFactory
         )
