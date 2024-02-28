@@ -5,3 +5,6 @@
   Created by 박준서 on 2/11/24.
   Copyright © 2024 com.msg. All rights reserved.
 */
+
+"select_profile_image" = "프로필 이미지 선택";
+"edit_image" = "이미지 편집";
