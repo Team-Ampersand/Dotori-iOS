@@ -18,6 +18,7 @@ import MyViolationListFeature
 import Networking
 import NoticeDomain
 import NoticeFeature
+import ProfileImageFeature
 import ProposeMusicFeature
 import RenewalPasswordFeature
 import RootFeature
@@ -51,6 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             HomeAssembly(),
             InputDialogAssembly(),
             MyViolationListAssembly(),
+            ProfileImageAssembly(),
             NoticeAssembly(),
             DetailNoticeAssembly(),
             SelfStudyAssembly(),
