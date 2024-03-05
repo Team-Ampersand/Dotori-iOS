@@ -13,7 +13,6 @@ final class ProfileImageViewController: BaseStoredModalViewController<ProfileIma
     }
     private let editProfileTitleLabel = DotoriLabel(L10n.ProfileImage.selectProfileImage)
     private let xmarkButton = DotoriIconButton(image: .Dotori.xmark)
-    
     private let addImageButton = {
         var configuration = UIButton.Configuration.filled()
         configuration.image = UIImage(systemName: "camera.fill")
@@ -32,15 +31,12 @@ final class ProfileImageViewController: BaseStoredModalViewController<ProfileIma
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
     private let addImageLabel = DotoriLabel(L10n.ProfileImage.addProfileImage)
     private let editButton = DotoriButton(text: L10n.Global.editButtonTitle)
     private let confirmButton = DotoriButton(text: L10n.Global.confirmButtonTitle)
-    
     override func addView() {
         super.addView()
     }
-    
     override func setLayout() {
         MSGLayout.buildLayout {
             contentView.layout
@@ -66,45 +62,45 @@ final class ProfileImageViewController: BaseStoredModalViewController<ProfileIma
         }
         .distribution(.fill)
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         view.setNeedsLayout()
         addImageButton.addDashedBorder()
     }
-    
+
     override func bindAction() {
         //        viewWillAppearPublisher
         //            .map { Store.Action.fetchMyViolationList }
         //            .sink(receiveValue: store.send(_:))
         //            .store(in: &subscription)
-        
+
         xmarkButton.tapPublisher
             .map { Store.Action.xmarkButtonDidTap }
             .sink(receiveValue: store.send(_:))
             .store(in: &subscription)
-        
+
         view.tapGesturePublisher()
             .map { _ in Store.Action.dimmedBackgroundDidTap }
             .sink(receiveValue: store.send(_:))
             .store(in: &subscription)
-        
+
         confirmButton.tapPublisher
             .map { Store.Action.confirmButtonDidTap }
             .sink(receiveValue: store.send(_:))
             .store(in: &subscription)
     }
-    
+
     override func bindState() {
         let sharedState = store.state.share()
             .receive(on: DispatchQueue.main)
-        
+
         //        sharedState
         //            .map(\.violationList)
         //            .map { [GenericSectionModel(items: $0)] }
         //            .sink(receiveValue: violationHistoryTableAdapter.updateSections(sections:))
         //            .store(in: &subscription)
-        
+
         //        sharedState
         //            .map(\.violationList)
         //            .map(\.count)
