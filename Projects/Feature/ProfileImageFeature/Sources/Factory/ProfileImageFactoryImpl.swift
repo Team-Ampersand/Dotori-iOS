@@ -1,9 +1,29 @@
-//
-//  ProfileImageFactoryImpl.swift
-//  ProfileImageFeatureInterface
-//
-//  Created by 박준서 on 2/27/24.
-//  Copyright © 2024 com.msg. All rights reserved.
-//
+import BaseFeature
+import BaseFeatureInterface
+import ProfileImageFeatureInterface
+import UserDomainInterface
 
-import Foundation
+struct ProfileImageFactoryImpl: ProfileImageFactory {
+    private let addProfileImageUseCase: any AddProfileImageUseCase
+    private let editProfileImageUseCase: any EditProfileImageUseCase
+    private let deleteProfileImageUseCase: any DeleteProfileImageUseCase
+
+    init(
+        addProfileImageUseCase: any AddProfileImageUseCase,
+        editProfileImageUseCase: any EditProfileImageUseCase,
+        deleteProfileImageUseCase: any DeleteProfileImageUseCase
+    ) {
+        self.addProfileImageUseCase = addProfileImageUseCase
+        self.editProfileImageUseCase = editProfileImageUseCase
+        self.deleteProfileImageUseCase = deleteProfileImageUseCase
+    }
+
+    func makeViewController() -> any RoutedViewControllable {
+        let store = ProfileImageStore(
+            addProfileImageUseCase: addProfileImageUseCase,
+            editProfileImageUseCase: editProfileImageUseCase,
+            deleteProfileImageUseCase: deleteProfileImageUseCase
+        )
+        return ProfileImageViewController(store: store)
+    }
+}

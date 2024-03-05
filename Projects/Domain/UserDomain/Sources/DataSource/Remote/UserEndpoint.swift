@@ -3,6 +3,9 @@ import NetworkingInterface
 
 public enum UserEndpoint {
     case withdrawal
+    case addProfileImage
+    case editProfileImage
+    case deleteProfileImage
 }
 
 extension UserEndpoint: DotoriEndpoint {
@@ -14,6 +17,12 @@ extension UserEndpoint: DotoriEndpoint {
         switch self {
         case .withdrawal:
             return .delete("/withdrawal")
+        case .addProfileImage:
+            return .post("/profileImage")
+        case .editProfileImage:
+            return .patch("/profileImage")
+        case .deleteProfileImage:
+            return .delete("/profileImage")
         }
     }
 

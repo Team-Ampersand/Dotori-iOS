@@ -1,9 +1,16 @@
-//
-//  ProfileImageAssembly.swift
-//  ProfileImageFeatureInterface
-//
-//  Created by 박준서 on 2/27/24.
-//  Copyright © 2024 com.msg. All rights reserved.
-//
+import ProfileImageFeatureInterface
+import Swinject
+import UserDomainInterface
 
-import Foundation
+public final class ProfileImageAssembly: Assembly {
+    public init() {}
+    public func assemble(container: Container) {
+        container.register(ProfileImageFactory.self) { resolver in
+            ProfileImageFactoryImpl(
+                addProfileImageUseCase: resolver.resolve(AddProfileImageUseCase.self)!,
+                editProfileImageUseCase: resolver.resolve(EditProfileImageUseCase.self)!,
+                deleteProfileImageUseCase: resolver.resolve(DeleteProfileImageUseCase.self)!
+            )
+        }
+    }
+}

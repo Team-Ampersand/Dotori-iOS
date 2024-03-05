@@ -38,5 +38,21 @@ public final class UserDomainAssembly: Assembly {
         container.register(WithdrawalUseCase.self) { resolver in
             WithdrawalUseCaseImpl(userRepository: resolver.resolve(UserRepository.self)!)
         }
+
+        container.register(DeleteProfileImageUseCase.self) { resolver in
+            DeleteProfileImageUseCaseImpl(userRepository: resolver.resolve(UserRepository.self)!)
+        }
+
+        container.register(AddProfileImageUseCase.self) { resolver in
+            AddProfileImageUseCaseImpl(userRepository: resolver.resolve(UserRepository.self)!)
+        }
+
+        container.register(EditProfileImageUseCase.self) { resolver in
+            EditProfileImageUseCaseImpl(userRepository: resolver.resolve(UserRepository.self)!)
+        }
+
+        container.register(DeleteProfileImageUseCase.self) { resolver in
+            DeleteProfileImageUseCaseImpl(userRepository: resolver.resolve(UserRepository.self)!)
+        }
     }
 }

@@ -11,4 +11,16 @@ final class RemoteUserDataSourceImpl: RemoteUserDataSource {
     func withdrawal() async throws {
         try await networking.request(UserEndpoint.withdrawal)
     }
+
+    func addProfileImage() async throws {
+        try await networking.request(UserEndpoint.addProfileImage)
+    }
+
+    func editProfileImage() async throws {
+        try await networking.request(UserEndpoint.editProfileImage)
+    }
+
+    func deleteProfileImage() async throws {
+        try await networking.request(UserEndpoint.deleteProfileImage)
+    }
 }

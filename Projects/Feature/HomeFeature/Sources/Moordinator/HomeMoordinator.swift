@@ -56,7 +56,7 @@ final class HomeMoordinator: Moordinator {
             return presentToMyViolationList()
 
         case .profileImage:
-            return presentToMyViolationList()
+            return presentToProfileImage()
 
         case let .confirmationDialog(title, description, confirmAction):
             return presentToConfirmationDialog(title: title, description: description, confirmAction: confirmAction)

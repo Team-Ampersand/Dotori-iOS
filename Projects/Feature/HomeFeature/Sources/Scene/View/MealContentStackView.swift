@@ -12,10 +12,12 @@ final class MealContentStackView: UIStackView {
         self.isLayoutMarginsRelativeArrangement = true
         self.alignment = .leading
     }
+
     @available(*, unavailable)
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
     public func updateContent(meals: [String]) {
         self.removeAllChildren()
         var mealViews: [DotoriLabel] = []

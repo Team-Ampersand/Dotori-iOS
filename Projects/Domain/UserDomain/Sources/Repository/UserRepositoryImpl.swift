@@ -25,4 +25,16 @@ final class UserRepositoryImpl: UserRepository {
     func withdrawal() async throws {
         try await remoteUserDataSource.withdrawal()
     }
+
+    func addProfileImage(image: Data) async throws {
+        try await remoteUserDataSource.addProfileImage()
+    }
+
+    func editProfileImage(image: Data) async throws {
+        try await remoteUserDataSource.editProfileImage()
+    }
+
+    func deleteProfileImage(image: Data) async throws {
+        try await remoteUserDataSource.deleteProfileImage()
+    }
 }
