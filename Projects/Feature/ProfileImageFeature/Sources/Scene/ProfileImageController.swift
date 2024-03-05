@@ -11,6 +11,7 @@ final class ProfileImageViewController: BaseStoredModalViewController<ProfileIma
     private enum Metric {
         static let padding: CGFloat = 24
     }
+
     private let editProfileTitleLabel = DotoriLabel(L10n.ProfileImage.selectProfileImage)
     private let xmarkButton = DotoriIconButton(image: .Dotori.xmark)
     private let addImageButton = {
@@ -31,12 +32,14 @@ final class ProfileImageViewController: BaseStoredModalViewController<ProfileIma
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+
     private let addImageLabel = DotoriLabel(L10n.ProfileImage.addImage)
     private let editButton = DotoriButton(text: L10n.Global.editButtonTitle)
     private let confirmButton = DotoriButton(text: L10n.Global.confirmButtonTitle)
     override func addView() {
         super.addView()
     }
+
     override func setLayout() {
         MSGLayout.buildLayout {
             contentView.layout
