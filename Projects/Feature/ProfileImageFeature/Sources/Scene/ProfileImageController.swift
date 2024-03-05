@@ -31,7 +31,7 @@ final class ProfileImageViewController: BaseStoredModalViewController<ProfileIma
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    private let addImageLabel = DotoriLabel(L10n.ProfileImage.addProfileImage)
+    private let addImageLabel = DotoriLabel(L10n.ProfileImage.addImage)
     private let editButton = DotoriButton(text: L10n.Global.editButtonTitle)
     private let confirmButton = DotoriButton(text: L10n.Global.confirmButtonTitle)
     override func addView() {
