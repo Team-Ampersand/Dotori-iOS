@@ -2,7 +2,7 @@ import Foundation
 
 public enum JwtTokenType: String {
     case accessToken = "Authorization"
-    case refreshToken = "refreshToken"
+    case refreshToken = "Refresh-Token"
     case none
 }
 
