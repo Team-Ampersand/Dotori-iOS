@@ -28,7 +28,7 @@ extension FetchMusicListResponseDTO.MusicResponseDTO {
             id: id,
             url: url,
             username: username,
-            createdTime: createdTime.toDateWithCustomFormat("yyyy-MM-dd'T'HH:mm:ss.SSS"),
+            createdTime: createdTime.toDateWithCustomFormat("yyyy-MM-dd'T'HH:mm:ss"),
             stuNum: stuNum
         )
     }
