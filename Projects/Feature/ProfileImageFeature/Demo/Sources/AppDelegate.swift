@@ -12,14 +12,13 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-
+        let fetchProfileImageUseCase = FetchProfileImageUseCaseSpy()
         let addProfileImageUseCase = AddProfileImageUseCaseSpy()
-        let editProfileImageUseCase = EditProfileImageUseCaseSpy()
         let deleteProfileImageUseCase = DeleteProfileImageUseCaseSpy()
 
         let store = ProfileImageStore(
+            fetchProfileImageUseCase: fetchProfileImageUseCase,
             addProfileImageUseCase: addProfileImageUseCase,
-            editProfileImageUseCase: editProfileImageUseCase,
             deleteProfileImageUseCase: deleteProfileImageUseCase
         )
 
