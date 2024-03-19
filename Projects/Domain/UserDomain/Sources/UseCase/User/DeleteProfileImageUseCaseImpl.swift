@@ -8,7 +8,7 @@ struct DeleteProfileImageUseCaseImpl: DeleteProfileImageUseCase {
         self.userRepository = userRepository
     }
 
-    func callAsFunction(profileImage: Data) async throws {
-        try await userRepository.deleteProfileImage(image: profileImage)
+    func callAsFunction() async throws {
+        try await userRepository.deleteProfileImage()
     }
 }
