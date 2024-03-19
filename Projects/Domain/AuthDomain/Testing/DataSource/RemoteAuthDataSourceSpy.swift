@@ -12,7 +12,7 @@ final class RemoteAuthDataSourceSpy: RemoteAuthDataSource {
     }
 
     var networkIsConnectedCallCount = 0
-    var networkIsConnectedReturn: Bool = .init()
+    var networkIsConnectedReturn: Bool = false
     func networkIsConnected() async -> Bool {
         networkIsConnectedCallCount += 1
         return networkIsConnectedReturn

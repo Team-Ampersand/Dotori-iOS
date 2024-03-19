@@ -13,7 +13,7 @@ final class LocalAuthDataSourceSpy: LocalAuthDataSource {
     }
 
     var checkTokenIsExistCallCount = 0
-    var checkTokenIsExistReturn: Bool = .init()
+    var checkTokenIsExistReturn: Bool = false
     func checkTokenIsExist() -> Bool {
         checkTokenIsExistCallCount += 1
         return checkTokenIsExistReturn
