@@ -9,3 +9,5 @@
 "select_profile_image" = "Select Profile Image";
 "edit_image" = "Edit Image";
 "add_image" = "Add Image";
+"success_to_add_profileImage_title" = "Complete to add profileImage";
+"success_to_delete_profileImage_title" = "Complete to delete profileImage";
