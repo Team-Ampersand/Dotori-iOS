@@ -6,6 +6,7 @@ final class UserRepositoryTests: XCTestCase {
     var userRepository: UserRepositoryImpl!
     var remoteUserDataSourceSpy: RemoteUserDataSourceSpy!
     var localUserDataSourceSpy: LocalUserDataSourceSpy!
+    var remoteHomeDataSourceSpy: RemoteHomeDataSourceSpy!
 
     override func setUp() {
         super.setUp()
@@ -13,7 +14,8 @@ final class UserRepositoryTests: XCTestCase {
         localUserDataSourceSpy = LocalUserDataSourceSpy()
         userRepository = UserRepositoryImpl(
             localUserDataSource: localUserDataSourceSpy,
-            remoteUserDataSource: remoteUserDataSourceSpy
+            remoteUserDataSource: remoteUserDataSourceSpy,
+            remoteHomeDataSource: remoteHomeDataSourceSpy
         )
     }
 
