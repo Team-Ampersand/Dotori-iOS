@@ -11,7 +11,8 @@ let project = Project.module(
         .implements(module: .feature(.ProfileImageFeature), dependencies: [
             .feature(target: .BaseFeature),
             .feature(target: .ProfileImageFeature, type: .interface),
-            .domain(target: .UserDomain, type: .interface)
+            .domain(target: .UserDomain, type: .interface),
+            .SPM.YPImagePicker
         ]),
         .tests(module: .feature(.ProfileImageFeature), dependencies: [
             .feature(target: .ProfileImageFeature),
