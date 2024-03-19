@@ -1,5 +1,5 @@
 import Foundation
 
 public protocol DeleteProfileImageUseCase {
-    func callAsFunction(profileImage: Data) async throws
+    func callAsFunction() async throws
 }
