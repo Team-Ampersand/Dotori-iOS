@@ -1,10 +1,10 @@
 import Emdpoint
+import Foundation
 import NetworkingInterface
 
 public enum UserEndpoint {
     case withdrawal
-    case addProfileImage
-    case editProfileImage
+    case addProfileImage(profileImage: Data)
     case deleteProfileImage
 }
 
@@ -19,8 +19,6 @@ extension UserEndpoint: DotoriEndpoint {
             return .delete("/withdrawal")
         case .addProfileImage:
             return .post("/profileImage")
-        case .editProfileImage:
-            return .patch("/profileImage")
         case .deleteProfileImage:
             return .delete("/profileImage")
         }
@@ -28,6 +26,14 @@ extension UserEndpoint: DotoriEndpoint {
 
     public var task: HTTPTask {
         switch self {
+        case let .addProfileImage(profileImage):
+            return .uploadMultipart([
+                MultiPartFormData(
+                    field: "image",
+                    data: profileImage,
+                    fileName: "image.png"
+                )
+            ])
         default:
             return .requestPlain
         }
@@ -44,6 +50,16 @@ extension UserEndpoint: DotoriEndpoint {
         switch self {
         default:
             return [:]
+        }
+    }
+
+    public var headers: [String: String]? {
+        switch self {
+        case let .addProfileImage(profileImage):
+            return
+                [:]
+        default:
+            return ["Content-Type": "application/json"]
         }
     }
 }
