@@ -9,6 +9,6 @@ struct AddProfileImageUseCaseImpl: AddProfileImageUseCase {
     }
 
     func callAsFunction(profileImage: Data) async throws {
-        try await userRepository.addProfileImage(image: profileImage)
+        try await userRepository.addProfileImage(profileImage: profileImage)
     }
 }
