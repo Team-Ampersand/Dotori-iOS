@@ -1,9 +1,35 @@
-//
-//  SigninUseCaseTests.swift
-//  AuthDomainTests
-//
-//  Created by 정윤서 on 3/19/24.
-//  Copyright © 2024 com.msg. All rights reserved.
-//
+@testable import AuthDomain
+import AuthDomainInterface
+@testable import AuthDomainTesting
+import XCTest
 
-import Foundation
+final class SigninUseCaseTests: XCTestCase {
+    var authRepository: AuthRepositorySpy!
+    var sut: SigninUseCaseImpl!
+
+    override func setUp() {
+        authRepository = .init()
+        sut = .init(authRepository: authRepository)
+    }
+
+    override func tearDown() {
+        authRepository = nil
+        sut = nil
+    }
+
+    func test_Signin_When_ReqNil() async throws {
+        try await sut.execute(req: .init(email: "", password: ""))
+
+        XCTAssertEqual(authRepository.signinCallCount, 1)
+    }
+
+    func test_Signin() async throws {
+        try await sut.execute(req: .init(
+                email: "s00000@gsm.hs.kr",
+                password: "12345678"
+            )
+        )
+
+        XCTAssertEqual(authRepository.signinCallCount, 1)
+    }
+}
