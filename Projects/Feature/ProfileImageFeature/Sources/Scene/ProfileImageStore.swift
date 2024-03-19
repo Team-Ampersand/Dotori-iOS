@@ -1,5 +1,8 @@
 import BaseFeature
 import Combine
+import DesignSystem
+import Foundation
+import Localization
 import Moordinator
 import Store
 import UserDomainInterface
@@ -9,53 +12,66 @@ final class ProfileImageStore: BaseStore {
     var subscription: Set<AnyCancellable> = .init()
     var initialState: State
     var stateSubject: CurrentValueSubject<State, Never>
-
+    private let fetchProfileImageUseCase: any FetchProfileImageUseCase
     private let addProfileImageUseCase: any AddProfileImageUseCase
-    private let editProfileImageUseCase: any EditProfileImageUseCase
     private let deleteProfileImageUseCase: any DeleteProfileImageUseCase
 
     init(
+        fetchProfileImageUseCase: any FetchProfileImageUseCase,
         addProfileImageUseCase: any AddProfileImageUseCase,
-        editProfileImageUseCase: any EditProfileImageUseCase,
         deleteProfileImageUseCase: any DeleteProfileImageUseCase
     ) {
         self.initialState = .init()
         self.stateSubject = .init(initialState)
+        self.fetchProfileImageUseCase = fetchProfileImageUseCase
         self.addProfileImageUseCase = addProfileImageUseCase
-        self.editProfileImageUseCase = editProfileImageUseCase
         self.deleteProfileImageUseCase = deleteProfileImageUseCase
     }
 
     struct State {
-//        var violationList = [ViolationModel]()
+        var fetchedProfileImage: String?
+        var profileImage: Data?
+        var isLoading = false
     }
 
     enum Action {
-        ///        case fetchMyViolationList
+        case fetchProfileImageCase
         case xmarkButtonDidTap
+        ///        case imageButtonDidTap
+        case deleteProfileImageButtonDidTap
         case dimmedBackgroundDidTap
         case confirmButtonDidTap
+        case addProfileImage(Data)
     }
 
     enum Mutation {
-//        case updateViolationList([ViolationModel])
+        case fetchProfileImage(String)
+        case updateIsLoading(Bool)
+        case addProfileImage(Data)
     }
 }
 
 extension ProfileImageStore {
     func mutate(state: State, action: Action) -> SideEffect<Mutation, Never> {
         switch action {
-//        case .fetchMyViolationList:
-//            return SideEffect<[ViolationModel], Error>
-//                .tryAsync { [fetchMyViolationListUseCase] in
-//                    try await fetchMyViolationListUseCase()
-//                }
-//                .map(Mutation.updateViolationList)
-//                .eraseToSideEffect()
-//                .catchToNever()
-
-        case .xmarkButtonDidTap, .dimmedBackgroundDidTap, .confirmButtonDidTap:
+        case .fetchProfileImageCase:
+            return SideEffect<String, Error>
+                .tryAsync { [fetchProfileImageUseCase] in
+                    try await fetchProfileImageUseCase()
+                }
+                .map(Mutation.fetchProfileImage)
+                .eraseToSideEffect()
+                .catchToNever()
+//        case .imageButtonDidTap:
+//            route.send(DotoriRoutePath.ypImagePicker)
+        case .xmarkButtonDidTap, .dimmedBackgroundDidTap:
             route.send(DotoriRoutePath.dismiss)
+        case .confirmButtonDidTap:
+            return confirmButtonDidTap()
+        case let .addProfileImage(profileImage):
+            return .just(Mutation.addProfileImage(profileImage))
+        case .deleteProfileImageButtonDidTap:
+            return deleteProfileImageButtonDidTap()
         }
         return .none
     }
@@ -65,9 +81,69 @@ extension ProfileImageStore {
     func reduce(state: State, mutate: Mutation) -> State {
         var newState = state
         switch mutate {
-//        case let .updateViolationList(violationList):
-//            newState.violationList = violationList
+        case let .fetchProfileImage(fetchedProfileImage):
+            newState.fetchedProfileImage = fetchedProfileImage
+        case let .updateIsLoading(isLoading):
+            newState.isLoading = isLoading
+        case let .addProfileImage(profileImage):
+            newState.profileImage = profileImage
         }
         return newState
+    }
+}
+
+extension ProfileImageStore {
+    func confirmButtonDidTap() -> SideEffect<Mutation, Never> {
+        let addProfileImageEffect = SideEffect<Void, Error>
+            .tryAsync { [profileImage = currentState.profileImage, addProfileImageUseCase] in
+                if let profileImage {
+                    try await addProfileImageUseCase(profileImage: profileImage)
+                }
+            }
+            .handleEvents(receiveOutput: { [route] _ in
+                DotoriToast.makeToast(text: L10n.ProfileImage.successToAddProfileImageTitle, style: .success)
+                route.send(DotoriRoutePath.dismiss)
+            })
+            .eraseToSideEffect()
+            .catchMap { error in
+                DotoriToast.makeToast(text: error.localizedDescription, style: .error)
+            }
+            .flatMap { SideEffect<Mutation, Never>.none }
+            .eraseToSideEffect()
+        return self.makeLoadingSideEffect(addProfileImageEffect)
+    }
+
+    func deleteProfileImageButtonDidTap() -> SideEffect<Mutation, Never> {
+        let deleteProfileImageEffect = SideEffect<Void, Error>
+            .tryAsync { [deleteProfileImageUseCase] in
+                try await deleteProfileImageUseCase()
+            }
+            .handleEvents(receiveOutput: { [route] _ in
+                DotoriToast.makeToast(text: L10n.ProfileImage.successToDeleteProfileImageTitle, style: .success)
+                route.send(DotoriRoutePath.dismiss)
+            })
+            .eraseToSideEffect()
+            .catchMap { error in
+                DotoriToast.makeToast(text: error.localizedDescription, style: .error)
+            }
+            .flatMap { SideEffect<Mutation, Never>.none }
+            .eraseToSideEffect()
+        return self.makeLoadingSideEffect(deleteProfileImageEffect)
+    }
+}
+
+// MARK: - Reusable
+private extension ProfileImageStore {
+    func makeLoadingSideEffect(
+        _ publisher: SideEffect<Mutation, Never>
+    ) -> SideEffect<Mutation, Never> {
+        let startLoadingPublisher = SideEffect<Mutation, Never>
+            .just(Mutation.updateIsLoading(true))
+        let endLoadingPublisher = SideEffect<Mutation, Never>
+            .just(Mutation.updateIsLoading(false))
+        return startLoadingPublisher
+            .append(publisher)
+            .append(endLoadingPublisher)
+            .eraseToSideEffect()
     }
 }
