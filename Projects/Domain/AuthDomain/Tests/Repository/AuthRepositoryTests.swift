@@ -54,7 +54,7 @@ final class AuthRepositoryTests: XCTestCase {
         XCTAssertEqual(remoteAuthDataSource.tokenRefreshCallCount, 1)
     }
 
-    func checkTokenIsExist() {
+    func test_checkTokenIsExist() {
         let expected = Bool()
         XCTAssertEqual(localAuthDataSource.checkTokenIsExistCallCount, 0)
 
@@ -64,7 +64,7 @@ final class AuthRepositoryTests: XCTestCase {
         XCTAssertEqual(actual, expected)
     }
 
-    func networkIsConnected() async {
+    func test_networkIsConnected() async {
         let expected = Bool()
         XCTAssertEqual(remoteAuthDataSource.networkIsConnectedCallCount, 0)
 
