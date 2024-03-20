@@ -1,10 +1,10 @@
 import UserDomainInterface
 
 final class FetchProfileImageUseCaseSpy: FetchProfileImageUseCase {
-    var fetchUserInfoCallCount = 0
-    var profileImage: String = ""
-    func callAsFunction() -> String {
-        fetchUserInfoCallCount += 1
-        return profileImage
+    var fetchProfileImageCallCount = 0
+    var fetchProfileImageHandler: () async throws -> String = { "" }
+    func callAsFunction() async throws -> String {
+        fetchProfileImageCallCount += 1
+        return try await fetchProfileImageHandler()
     }
 }
