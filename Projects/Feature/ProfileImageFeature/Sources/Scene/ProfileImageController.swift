@@ -16,7 +16,6 @@ final class ProfileImageViewController: BaseStoredModalViewController<ProfileIma
         static let padding: CGFloat = 24
     }
 
-    let pipeline = ImagePipeline.shared
     private var editProfileTitleLabel = DotoriLabel(L10n.ProfileImage.selectProfileImage)
     private let xmarkButton = DotoriIconButton(image: .Dotori.xmark)
     private let addImageButton = {
@@ -43,9 +42,9 @@ final class ProfileImageViewController: BaseStoredModalViewController<ProfileIma
         .set(\.cornerRadius, 5)
         .set(\.clipsToBounds, true)
         .set(\.tintColor, .dotori(.system(.error)))
+        .set(\.isHidden, true)
+        .set(\.isEnabled, false)
         .then { $0.setImage(UIImage(systemName: "trash"), for: .normal) }
-        .then { $0.isEnabled = false }
-        .then { $0.isHidden = true }
 
     private let confirmButton = DotoriButton(text: L10n.Global.confirmButtonTitle)
 
@@ -61,7 +60,7 @@ final class ProfileImageViewController: BaseStoredModalViewController<ProfileIma
         present(imagePicker, animated: true, completion: nil)
 
         imagePicker.didFinishPicking {
-            [addImageButton, editProfileTitleLabel, deleteProfileImageButton, store] items, _ in
+            [addImageButton, deleteProfileImageButton, store] items, _ in
 
             if let photo = items.singlePhoto {
                 if var configuration = addImageButton.configuration {
@@ -78,7 +77,7 @@ final class ProfileImageViewController: BaseStoredModalViewController<ProfileIma
                     deleteProfileImageButton.isHidden = true
                     deleteProfileImageButton.isEnabled = true
                     DispatchQueue.main.async {
-                        addImageButton.removeDashedBorder()
+                        addImageButton.removeAllSublayers()
                         addImageButton.setNeedsDisplay()
                     }
                 }
@@ -98,6 +97,7 @@ final class ProfileImageViewController: BaseStoredModalViewController<ProfileIma
             contentView.layout
                 .center(.toSuperview())
                 .horizontal(.toSuperview(), .equal(20))
+
             deleteProfileImageButton.layout
                 .top(.toSuperview(), .equal(74))
                 .trailing(.toSuperview(), .equal(-36))
@@ -108,11 +108,14 @@ final class ProfileImageViewController: BaseStoredModalViewController<ProfileIma
             VStackView(spacing: 16) {
                 HStackView {
                     editProfileTitleLabel
+
                     xmarkButton
                 }
+
                 addImageButton
                     .width(272)
                     .height(266)
+
                 confirmButton
             }
             .margin(.all(Metric.padding))
@@ -129,7 +132,7 @@ final class ProfileImageViewController: BaseStoredModalViewController<ProfileIma
 
     override func bindAction() {
         viewWillAppearPublisher
-            .map { Store.Action.fetchProfileImageCase }
+            .map { Store.Action.fetchProfileImage }
             .sink(receiveValue: store.send(_:))
             .store(in: &subscription)
 
@@ -165,38 +168,31 @@ final class ProfileImageViewController: BaseStoredModalViewController<ProfileIma
             .receive(on: DispatchQueue.main)
 
         sharedState
-            .compactMap(\.fetchedProfileImage)
-            .sink(with: self, receiveValue: { owner, fetchedProfileImage in
+            .compactMap(\.fetchedCurrentProfileImageURL)
+            .sink(with: self, receiveValue: { owner, fetchedCurrentProfileImageURL in
                 let request = ImageRequest(
-                    url: URL(string: fetchedProfileImage),
+                    url: URL(string: fetchedCurrentProfileImageURL),
                     priority: .high,
                     options: [.reloadIgnoringCachedData]
                 )
 
                 Task {
                     do {
-                        let image = try await self.pipeline.image(for: request)
-                        self.addImageButton.configuration?.background.image = image
+                        let image = try await ImagePipeline.shared.image(for: request)
+                        owner.addImageButton.configuration?.background.image = image
                         DispatchQueue.main.async {
-                            self.addImageButton.removeDashedBorder()
-                            self.addImageButton.setNeedsDisplay()
+                            owner.addImageButton.removeAllSublayers()
+                            owner.addImageButton.setNeedsDisplay()
                         }
-                        self.editProfileTitleLabel.text = L10n.ProfileImage.editImage
-                        self.deleteProfileImageButton.isHidden = false
-                        self.deleteProfileImageButton.isEnabled = true
+                        owner.editProfileTitleLabel.text = L10n.ProfileImage.editImage
+                        owner.deleteProfileImageButton.isHidden = false
+                        owner.deleteProfileImageButton.isEnabled = true
                     }
                 }
                 owner.addImageButton.isEnabled = false
                 owner.addImageButton.configuration?.image = nil
                 owner.addImageButton.configuration?.title = nil
             })
-            .store(in: &subscription)
-
-        sharedState
-            .map(\.profileImage)
-            .removeDuplicates()
-            .sink { [weak self] profileImage in
-            }
             .store(in: &subscription)
     }
 }
