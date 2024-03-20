@@ -4,7 +4,7 @@ public extension UIView {
     func addDashedBorder() {
         let color: UIColor = .dotori(.primary(.p10))
 
-        let shapeLayer:CAShapeLayer = CAShapeLayer()
+        let shapeLayer: CAShapeLayer = CAShapeLayer()
         let frameSize = self.frame.size
         let shapeRect = CGRect(x: 0, y: 0, width: frameSize.width, height: frameSize.height)
 
@@ -20,7 +20,7 @@ public extension UIView {
         self.layer.addSublayer(shapeLayer)
     }
 
-    func removeDashedBorder() {
+    func removeAllSublayers() {
         self.layer.sublayers?.forEach { layer in
             if layer is CAShapeLayer {
                 layer.removeFromSuperlayer()
