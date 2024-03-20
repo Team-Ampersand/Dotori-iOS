@@ -26,7 +26,7 @@ final class ProfileMoordinator: Moordinator {
     func route(to path: RoutePath) -> MoordinatorContributors {
         guard let path = path.asDotori else { return .none }
         switch path {
-        case .ypImagePicker:
+        case .imagePicker:
             return presentToYPImagePicker()
         default:
             return .none
