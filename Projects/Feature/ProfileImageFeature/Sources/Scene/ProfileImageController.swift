@@ -18,24 +18,22 @@ final class ProfileImageViewController: BaseStoredModalViewController<ProfileIma
 
     private var editProfileTitleLabel = DotoriLabel(L10n.ProfileImage.selectProfileImage)
     private let xmarkButton = DotoriIconButton(image: .Dotori.xmark)
-    private let addImageButton = {
-        var configuration = UIButton.Configuration.filled()
-        configuration.image = UIImage(systemName: "camera.fill")
-        configuration.imagePlacement = .top
-        configuration.imagePadding = 10
-        configuration.background.backgroundColor = .dotori(.background(.bg))
-        configuration.title = L10n.ProfileImage.addImage
-        configuration.titleAlignment = .center
-        configuration.attributedTitle?.foregroundColor = .dotori(.neutral(.n20))
-        configuration.attributedTitle?.font = .dotori(.caption)
-        configuration.baseForegroundColor = .dotori(.primary(.p30))
-        configuration.background.cornerRadius = 8
-        configuration.contentInsets = NSDirectionalEdgeInsets(top: 112, leading: 108, bottom: 104, trailing: 108)
-        let button = UIButton(configuration: configuration)
-        button.imageView?.contentMode = .scaleAspectFill
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
+
+    private let addImageButton = UIButton().then {
+        $0.configuration = UIButton.Configuration.filled()
+        $0.configuration?.image = UIImage(systemName: "camera.fill")
+        $0.configuration?.imagePlacement = .top
+        $0.configuration?.imagePadding = 10
+        $0.configuration?.background.backgroundColor = .dotori(.background(.bg))
+        $0.configuration?.title = L10n.ProfileImage.addImage
+        $0.configuration?.titleAlignment = .center
+        $0.configuration?.attributedTitle?.foregroundColor = .dotori(.neutral(.n20))
+        $0.configuration?.attributedTitle?.font = .dotori(.caption)
+        $0.configuration?.baseForegroundColor = .dotori(.primary(.p30))
+        $0.configuration?.background.cornerRadius = 8
+        $0.configuration?.contentInsets = NSDirectionalEdgeInsets(top: 112, leading: 108, bottom: 104, trailing: 108)
+        $0.imageView?.contentMode = .scaleAspectFit
+    }
 
     private let deleteProfileImageButton = UIButton()
         .set(\.backgroundColor, .dotori(.background(.bg)))
