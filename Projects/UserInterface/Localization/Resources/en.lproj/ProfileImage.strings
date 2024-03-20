@@ -1,11 +1,3 @@
-/* 
-  ProfileImage.strings
-  Localization
-
-  Created by 박준서 on 2/11/24.
-  Copyright © 2024 com.msg. All rights reserved.
-*/
-
 "select_profile_image" = "Select Profile Image";
 "edit_image" = "Edit Image";
 "add_image" = "Add Image";
