@@ -31,12 +31,9 @@ final class UserRepositorySpy: UserRepository {
     }
 
     var fetchUserInfoCallCount = 0
-    var fetchUserInfoHandler: () async throws -> ProfileImageEntity = {
-        fatalError()
-    }
-
-    func fetchProfileImage() async throws -> ProfileImageEntity {
+    var profileImageReturn: String = ""
+    func fetchProfileImage() async throws -> String {
         fetchUserInfoCallCount += 1
-        return try await fetchUserInfoHandler()
+        return profileImageReturn
     }
 }
