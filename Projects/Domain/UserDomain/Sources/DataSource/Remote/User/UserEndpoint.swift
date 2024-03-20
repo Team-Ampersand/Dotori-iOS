@@ -17,8 +17,10 @@ extension UserEndpoint: DotoriEndpoint {
         switch self {
         case .withdrawal:
             return .delete("/withdrawal")
+
         case .addProfileImage:
             return .post("/profileImage")
+
         case .deleteProfileImage:
             return .delete("/profileImage")
         }
@@ -34,6 +36,7 @@ extension UserEndpoint: DotoriEndpoint {
                     fileName: "image.png"
                 )
             ])
+
         default:
             return .requestPlain
         }
@@ -56,8 +59,7 @@ extension UserEndpoint: DotoriEndpoint {
     public var headers: [String: String]? {
         switch self {
         case let .addProfileImage(profileImage):
-            return
-                [:]
+            return [:]
         default:
             return ["Content-Type": "application/json"]
         }

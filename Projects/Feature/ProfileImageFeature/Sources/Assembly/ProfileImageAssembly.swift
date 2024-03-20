@@ -4,6 +4,7 @@ import UserDomainInterface
 
 public final class ProfileImageAssembly: Assembly {
     public init() {}
+
     public func assemble(container: Container) {
         container.register(ProfileImageFactory.self) { resolver in
             ProfileImageFactoryImpl(
