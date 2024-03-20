@@ -63,7 +63,7 @@ public enum DotoriRoutePath: RoutePath {
     case youtubeByID(id: String)
 
     // MARK: ProfileImage
-    case ypImagePicker
+    case imagePicker
 }
 
 public extension RoutePath {
