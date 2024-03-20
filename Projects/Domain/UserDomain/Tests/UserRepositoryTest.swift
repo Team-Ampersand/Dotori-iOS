@@ -12,6 +12,8 @@ final class UserRepositoryTests: XCTestCase {
         super.setUp()
         remoteUserDataSourceSpy = .init()
         localUserDataSourceSpy = LocalUserDataSourceSpy()
+        remoteUserDataSourceSpy = RemoteUserDataSourceSpy()
+        remoteHomeDataSourceSpy = RemoteHomeDataSourceSpy()
         userRepository = UserRepositoryImpl(
             localUserDataSource: localUserDataSourceSpy,
             remoteUserDataSource: remoteUserDataSourceSpy,
@@ -23,6 +25,7 @@ final class UserRepositoryTests: XCTestCase {
         userRepository = nil
         localUserDataSourceSpy = nil
         remoteUserDataSourceSpy = nil
+        remoteHomeDataSourceSpy = nil
         super.tearDown()
     }
 
