@@ -4,6 +4,7 @@ import DesignSystem
 import Foundation
 import Localization
 import Moordinator
+import Nuke
 import Store
 import UserDomainInterface
 
@@ -29,8 +30,10 @@ final class ProfileImageStore: BaseStore {
     }
 
     struct State {
-        var fetchedProfileImage: String?
-        var profileImage: Data?
+        // MARK: - For Fetched ProfileImage
+        var fetchedCurrentProfileImageURL: String?
+        // MARK: - For Selected ProfileImage
+        var selectedProfileImage: Data?
         var isLoading = false
     }
 
@@ -82,11 +85,11 @@ extension ProfileImageStore {
         var newState = state
         switch mutate {
         case let .fetchProfileImage(fetchedProfileImage):
-            newState.fetchedProfileImage = fetchedProfileImage
+            newState.fetchedCurrentProfileImageURL = fetchedProfileImage
         case let .updateIsLoading(isLoading):
             newState.isLoading = isLoading
         case let .addProfileImage(profileImage):
-            newState.profileImage = profileImage
+            newState.selectedProfileImage = profileImage
         }
         return newState
     }
@@ -95,7 +98,7 @@ extension ProfileImageStore {
 extension ProfileImageStore {
     func confirmButtonDidTap() -> SideEffect<Mutation, Never> {
         let addProfileImageEffect = SideEffect<Void, Error>
-            .tryAsync { [profileImage = currentState.profileImage, addProfileImageUseCase] in
+            .tryAsync { [profileImage = currentState.selectedProfileImage, addProfileImageUseCase] in
                 if let profileImage {
                     try await addProfileImageUseCase(profileImage: profileImage)
                 }
