@@ -35,7 +35,7 @@ final class ProfileImageStore: BaseStore {
     }
 
     enum Action {
-        case fetchProfileImageCase
+        case fetchProfileImage
         case xmarkButtonDidTap
         ///        case imageButtonDidTap
         case deleteProfileImageButtonDidTap
@@ -54,7 +54,7 @@ final class ProfileImageStore: BaseStore {
 extension ProfileImageStore {
     func mutate(state: State, action: Action) -> SideEffect<Mutation, Never> {
         switch action {
-        case .fetchProfileImageCase:
+        case .fetchProfileImage:
             return SideEffect<String, Error>
                 .tryAsync { [fetchProfileImageUseCase] in
                     try await fetchProfileImageUseCase()
