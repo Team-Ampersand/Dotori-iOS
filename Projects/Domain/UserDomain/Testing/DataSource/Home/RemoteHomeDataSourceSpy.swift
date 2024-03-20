@@ -3,13 +3,13 @@ import Foundation
 import UserDomainInterface
 
 final class RemoteHomeDataSourceSpy: RemoteHomeDataSource {
-    var fetchUserInfoCallCount = 0
-    var fetchUserInfoHandler: () async throws -> String = {
+    var fetchProfileImageCallCount = 0
+    var fetchProfileImageHandler: () async throws -> String = {
         fatalError()
     }
 
     func fetchProfileImage() async throws -> String {
-        fetchUserInfoCallCount += 1
-        return try await fetchUserInfoHandler()
+        fetchProfileImageCallCount += 1
+        return try await fetchProfileImageHandler()
     }
 }
