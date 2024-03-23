@@ -17,6 +17,7 @@ let project = Project.module(
                 .feature(target: .MyViolationListFeature, type: .interface),
                 .feature(target: .InputDialogFeature, type: .interface),
                 .feature(target: .ProfileImageFeature, type: .interface),
+                .feature(target: .ImagePickerFeature, type: .interface),
                 .domain(target: .SelfStudyDomain, type: .interface),
                 .domain(target: .MassageDomain, type: .interface),
                 .domain(target: .MealDomain, type: .interface),
