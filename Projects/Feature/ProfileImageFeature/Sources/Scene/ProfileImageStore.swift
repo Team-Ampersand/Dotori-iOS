@@ -6,6 +6,7 @@ import Localization
 import Moordinator
 import Store
 import UserDomainInterface
+import YPImagePicker
 
 final class ProfileImageStore: BaseStore {
     var route: PassthroughSubject<RoutePath, Never> = .init()
@@ -31,6 +32,7 @@ final class ProfileImageStore: BaseStore {
     struct State {
         // MARK: - For Fetched ProfileImage
         var fetchedCurrentProfileImageURL: String?
+
         // MARK: - For Selected ProfileImage
         var selectedProfileImage: Data?
         var isLoading = false
@@ -39,7 +41,7 @@ final class ProfileImageStore: BaseStore {
     enum Action {
         case fetchProfileImage
         case xmarkButtonDidTap
-        ///        case imageButtonDidTap
+        case addImageButtonDidTap
         case deleteProfileImageButtonDidTap
         case dimmedBackgroundDidTap
         case confirmButtonDidTap
@@ -64,10 +66,16 @@ extension ProfileImageStore {
                 .map(Mutation.fetchProfileImage)
                 .eraseToSideEffect()
                 .catchToNever()
-//        case .imageButtonDidTap:
-//            route.send(DotoriRoutePath.ypImagePicker)
+        case .addImageButtonDidTap:
+            let path = DotoriRoutePath.imagePicker { [weak self] profileImage in
+                let dismissPath = DotoriRoutePath.dismiss {
+                    self?.send(Action.addProfileImage(profileImage))
+                }
+                self?.route.send(dismissPath)
+            }
+            route.send(path)
         case .xmarkButtonDidTap, .dimmedBackgroundDidTap:
-            route.send(DotoriRoutePath.dismiss)
+            route.send(DotoriRoutePath.dismiss())
         case .confirmButtonDidTap:
             return confirmButtonDidTap()
         case let .addProfileImage(profileImage):
@@ -87,8 +95,8 @@ extension ProfileImageStore {
             newState.fetchedCurrentProfileImageURL = fetchedProfileImage
         case let .updateIsLoading(isLoading):
             newState.isLoading = isLoading
-        case let .addProfileImage(profileImage):
-            newState.selectedProfileImage = profileImage
+        case let .addProfileImage(selectedProfileImage):
+            newState.selectedProfileImage = selectedProfileImage
         }
         return newState
     }
@@ -104,7 +112,7 @@ extension ProfileImageStore {
             }
             .handleEvents(receiveOutput: { [route] _ in
                 DotoriToast.makeToast(text: L10n.ProfileImage.successToAddProfileImageTitle, style: .success)
-                route.send(DotoriRoutePath.dismiss)
+                route.send(DotoriRoutePath.dismiss())
             })
             .eraseToSideEffect()
             .catchMap { error in
@@ -122,7 +130,7 @@ extension ProfileImageStore {
             }
             .handleEvents(receiveOutput: { [route] _ in
                 DotoriToast.makeToast(text: L10n.ProfileImage.successToDeleteProfileImageTitle, style: .success)
-                route.send(DotoriRoutePath.dismiss)
+                route.send(DotoriRoutePath.dismiss())
             })
             .eraseToSideEffect()
             .catchMap { error in
