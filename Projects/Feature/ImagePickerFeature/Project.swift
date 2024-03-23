@@ -12,9 +12,6 @@ let project = Project.module(
             .feature(target: .BaseFeature),
             .feature(target: .ImagePickerFeature, type: .interface)
         ]),
-        .testing(module: .feature(.ImagePickerFeature), dependencies: [
-            .feature(target: .ImagePickerFeature, type: .interface)
-        ]),
         .tests(module: .feature(.ImagePickerFeature), dependencies: [
             .feature(target: .ImagePickerFeature)
         ]),
