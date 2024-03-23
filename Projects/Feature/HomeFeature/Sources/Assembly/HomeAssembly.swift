@@ -1,5 +1,6 @@
 import ConfirmationDialogFeatureInterface
 import HomeFeatureInterface
+import ImagePickerFeatureInterface
 import InputDialogFeatureInterface
 import MassageDomainInterface
 import MealDomainInterface
@@ -32,7 +33,8 @@ public final class HomeAssembly: Assembly {
                 confirmationDialogFactory: resolver.resolve(ConfirmationDialogFactory.self)!,
                 profileImageFactory: resolver.resolve(ProfileImageFactory.self)!,
                 myViolationListFactory: resolver.resolve(MyViolationListFactory.self)!,
-                inputDialogFactory: resolver.resolve(InputDialogFactory.self)!
+                inputDialogFactory: resolver.resolve(InputDialogFactory.self)!,
+                imagePickerFactory: resolver.resolve(ImagePickerFactory.self)!
             )
         }
     }
