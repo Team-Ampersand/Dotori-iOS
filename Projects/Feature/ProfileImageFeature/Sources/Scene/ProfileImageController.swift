@@ -196,16 +196,16 @@ final class ProfileImageViewController: BaseStoredModalViewController<ProfileIma
             .compactMap(\.selectedProfileImage)
             .sink(with: self, receiveValue: { owner, selectedProfileImage in
                 owner.addImageButton.configuration?.background.image = UIImage(data: selectedProfileImage)
-                DispatchQueue.main.async {
-                    owner.addImageButton.removeAllSublayers()
-                    owner.addImageButton.setNeedsDisplay()
-                }
                 owner.editProfileTitleLabel.text = L10n.ProfileImage.addImage
                 owner.deleteProfileImageButton.isHidden = true
                 owner.deleteProfileImageButton.isEnabled = false
                 owner.addImageButton.isEnabled = false
                 owner.addImageButton.configuration?.image = nil
                 owner.addImageButton.configuration?.title = nil
+                DispatchQueue.main.async {
+                    owner.addImageButton.removeAllSublayers()
+                    owner.addImageButton.setNeedsDisplay()
+                }
             })
             .store(in: &subscription)
     }
