@@ -1,5 +1,6 @@
 import ConfirmationDialogFeatureInterface
 import HomeFeatureInterface
+import ImagePickerFeatureInterface
 import InputDialogFeatureInterface
 import MassageDomainInterface
 import MealDomainInterface
@@ -28,6 +29,7 @@ struct HomeFactoryImpl: HomeFactory {
     private let myViolationListFactory: any MyViolationListFactory
     private let profileImageFactory: any ProfileImageFactory
     private let inputDialogFactory: any InputDialogFactory
+    private let imagePickerFactory: any ImagePickerFactory
 
     init(
         repeatableTimer: any RepeatableTimer,
@@ -46,7 +48,8 @@ struct HomeFactoryImpl: HomeFactory {
         confirmationDialogFactory: any ConfirmationDialogFactory,
         profileImageFactory: any ProfileImageFactory,
         myViolationListFactory: any MyViolationListFactory,
-        inputDialogFactory: any InputDialogFactory
+        inputDialogFactory: any InputDialogFactory,
+        imagePickerFactory: any ImagePickerFactory
     ) {
         self.repeatableTimer = repeatableTimer
         self.fetchSelfStudyInfoUseCase = fetchSelfStudyInfoUseCase
@@ -65,6 +68,7 @@ struct HomeFactoryImpl: HomeFactory {
         self.profileImageFactory = profileImageFactory
         self.myViolationListFactory = myViolationListFactory
         self.inputDialogFactory = inputDialogFactory
+        self.imagePickerFactory = imagePickerFactory
     }
 
     func makeMoordinator() -> Moordinator {
@@ -89,7 +93,8 @@ struct HomeFactoryImpl: HomeFactory {
             confirmationDialogFactory: confirmationDialogFactory,
             myViolationListFactory: myViolationListFactory,
             profileImageFactory: profileImageFactory,
-            inputDialogFactory: inputDialogFactory
+            inputDialogFactory: inputDialogFactory,
+            imagePickerFactory: imagePickerFactory
         )
     }
 }
