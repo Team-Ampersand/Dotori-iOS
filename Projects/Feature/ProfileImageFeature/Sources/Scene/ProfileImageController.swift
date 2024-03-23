@@ -140,9 +140,8 @@ final class ProfileImageViewController: BaseStoredModalViewController<ProfileIma
             .store(in: &subscription)
 
         addImageButton.tapPublisher
-            .sink { [weak self] _ in
-                self?.addImageButtonTapped()
-            }
+            .map { Store.Action.addImageButtonDidTap }
+            .sink(receiveValue: store.send(_:))
             .store(in: &subscription)
 
         deleteProfileImageButton.tapPublisher
@@ -187,6 +186,23 @@ final class ProfileImageViewController: BaseStoredModalViewController<ProfileIma
                         owner.deleteProfileImageButton.isEnabled = true
                     }
                 }
+                owner.addImageButton.isEnabled = false
+                owner.addImageButton.configuration?.image = nil
+                owner.addImageButton.configuration?.title = nil
+            })
+            .store(in: &subscription)
+
+        sharedState
+            .compactMap(\.selectedProfileImage)
+            .sink(with: self, receiveValue: { owner, selectedProfileImage in
+                owner.addImageButton.configuration?.background.image = UIImage(data: selectedProfileImage)
+                DispatchQueue.main.async {
+                    owner.addImageButton.removeAllSublayers()
+                    owner.addImageButton.setNeedsDisplay()
+                }
+                owner.editProfileTitleLabel.text = L10n.ProfileImage.addImage
+                owner.deleteProfileImageButton.isHidden = true
+                owner.deleteProfileImageButton.isEnabled = false
                 owner.addImageButton.isEnabled = false
                 owner.addImageButton.configuration?.image = nil
                 owner.addImageButton.configuration?.title = nil
