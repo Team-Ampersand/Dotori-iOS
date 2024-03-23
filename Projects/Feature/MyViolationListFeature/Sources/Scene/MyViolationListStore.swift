@@ -46,7 +46,7 @@ extension MyViolationListStore {
                 .catchToNever()
 
         case .xmarkButtonDidTap, .dimmedBackgroundDidTap, .confirmButtonDidTap:
-            route.send(DotoriRoutePath.dismiss)
+            route.send(DotoriRoutePath.dismiss())
         }
         return .none
     }

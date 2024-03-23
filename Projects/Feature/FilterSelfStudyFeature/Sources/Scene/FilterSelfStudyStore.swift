@@ -84,7 +84,7 @@ extension FilterSelfStudyStore {
                 currentState.class,
                 currentState.gender?.rawValue
             )
-            route.send(DotoriRoutePath.dismiss)
+            route.send(DotoriRoutePath.dismiss())
 
         case .resetButtonDidTap:
             return .merge(
@@ -95,7 +95,7 @@ extension FilterSelfStudyStore {
             )
 
         case .dimmedBackgroundDidTap:
-            route.send(DotoriRoutePath.dismiss)
+            route.send(DotoriRoutePath.dismiss())
         }
         return .none
     }

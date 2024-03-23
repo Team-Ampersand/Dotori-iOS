@@ -49,7 +49,7 @@ extension ProposeMusicStore {
             return self.proposeButtonDidTap()
 
         case .dimmedBackgroundDidTap:
-            route.send(DotoriRoutePath.dismiss)
+            route.send(DotoriRoutePath.dismiss())
 
         case .youtubeButtonDidTap:
             route.send(DotoriRoutePath.youtube)
@@ -80,7 +80,7 @@ private extension ProposeMusicStore {
             }
             .handleEvents(receiveOutput: { [route] _ in
                 DotoriToast.makeToast(text: L10n.ProposeMusic.successToProposeTitle, style: .success)
-                route.send(DotoriRoutePath.dismiss)
+                route.send(DotoriRoutePath.dismiss())
             })
             .eraseToSideEffect()
             .catchMap { error in
