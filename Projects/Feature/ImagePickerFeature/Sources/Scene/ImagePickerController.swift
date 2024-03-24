@@ -27,7 +27,8 @@ final class ImagePickerController: YPImagePicker, RoutedViewControllable {
         config.library.defaultMultipleSelection = false
         config.showsCrop = .rectangle(ratio: 4/4)
         self.init(configuration: config, closure: closure)
-        self.didFinishPicking { [closure] items, cancelled in
+        self.didFinishPicking { [weak self] items, cancelled in
+            guard let self else { return }
             if cancelled {
                 self.router.route.send(DotoriRoutePath.dismiss)
             }
