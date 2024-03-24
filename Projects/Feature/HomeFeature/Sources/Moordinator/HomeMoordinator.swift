@@ -69,7 +69,7 @@ final class HomeMoordinator: Moordinator {
         case let .confirmationDialog(title, description, confirmAction):
             return presentToConfirmationDialog(title: title, description: description, confirmAction: confirmAction)
         case .dismiss:
-            self.rootVC.dismiss(animated: true)
+            self.rootVC.visibleViewController?.dismiss(animated: true)
 
         case let .dismissWithCompletion(completion):
             self.rootVC.visibleViewController?.dismiss(animated: true, completion: completion)
