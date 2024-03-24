@@ -29,7 +29,7 @@ final class ImagePickerController: YPImagePicker, RoutedViewControllable {
         self.init(configuration: config, closure: closure)
         self.didFinishPicking { [closure] items, cancelled in
             if cancelled {
-                self.router.route.send(DotoriRoutePath.dismiss())
+                self.router.route.send(DotoriRoutePath.dismiss)
             }
             if let photo = items.singlePhoto,
                let imageData = photo.image.jpegData(compressionQuality: 0.6) {

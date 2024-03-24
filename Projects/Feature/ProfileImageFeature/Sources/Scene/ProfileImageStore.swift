@@ -68,14 +68,14 @@ extension ProfileImageStore {
                 .catchToNever()
         case .addImageButtonDidTap:
             let path = DotoriRoutePath.imagePicker { [weak self] profileImage in
-                let dismissPath = DotoriRoutePath.dismiss {
+                let dismissPath = DotoriRoutePath.dismissWithCompletion {
                     self?.send(Action.addProfileImage(profileImage))
                 }
                 self?.route.send(dismissPath)
             }
             route.send(path)
         case .xmarkButtonDidTap, .dimmedBackgroundDidTap:
-            route.send(DotoriRoutePath.dismiss())
+            route.send(DotoriRoutePath.dismiss)
         case .confirmButtonDidTap:
             return confirmButtonDidTap()
         case let .addProfileImage(profileImage):
@@ -112,7 +112,7 @@ extension ProfileImageStore {
             }
             .handleEvents(receiveOutput: { [route] _ in
                 DotoriToast.makeToast(text: L10n.ProfileImage.successToAddProfileImageTitle, style: .success)
-                route.send(DotoriRoutePath.dismiss())
+                route.send(DotoriRoutePath.dismiss)
             })
             .eraseToSideEffect()
             .catchMap { error in
@@ -130,7 +130,7 @@ extension ProfileImageStore {
             }
             .handleEvents(receiveOutput: { [route] _ in
                 DotoriToast.makeToast(text: L10n.ProfileImage.successToDeleteProfileImageTitle, style: .success)
-                route.send(DotoriRoutePath.dismiss())
+                route.send(DotoriRoutePath.dismiss)
             })
             .eraseToSideEffect()
             .catchMap { error in

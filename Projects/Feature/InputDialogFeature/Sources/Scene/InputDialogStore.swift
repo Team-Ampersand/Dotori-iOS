@@ -47,7 +47,7 @@ extension InputDialogStore {
             return self.updateInputText(inputText: inputText)
 
         case .dimmedBackgroundViewDidTap, .cancelButtonDidTap:
-            route.send(DotoriRoutePath.dismiss())
+            route.send(DotoriRoutePath.dismiss)
 
         case .confirmButtonDidTap:
             let confirmEffect = SideEffect<Void, Never>
@@ -55,7 +55,7 @@ extension InputDialogStore {
                     await confirmAction(inputText)
                 }
                 .handleEvents(receiveOutput: { [route] in
-                    route.send(DotoriRoutePath.dismiss())
+                    route.send(DotoriRoutePath.dismiss)
                 })
                 .flatMap { SideEffect<Mutation, Never>.none }
                 .eraseToSideEffect()
