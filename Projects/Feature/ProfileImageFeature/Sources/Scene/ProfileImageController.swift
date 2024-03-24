@@ -20,18 +20,7 @@ final class ProfileImageViewController: BaseStoredModalViewController<ProfileIma
     private let xmarkButton = DotoriIconButton(image: .Dotori.xmark)
 
     private let addImageButton = UIButton().then {
-        $0.configuration = UIButton.Configuration.filled()
-        $0.configuration?.image = UIImage(systemName: "camera.fill")
-        $0.configuration?.imagePlacement = .top
-        $0.configuration?.imagePadding = 10
-        $0.configuration?.background.backgroundColor = .dotori(.background(.bg))
-        $0.configuration?.title = L10n.ProfileImage.addImage
-        $0.configuration?.titleAlignment = .center
-        $0.configuration?.attributedTitle?.foregroundColor = .dotori(.neutral(.n20))
-        $0.configuration?.attributedTitle?.font = .dotori(.caption)
-        $0.configuration?.baseForegroundColor = .dotori(.primary(.p30))
-        $0.configuration?.background.cornerRadius = 8
-        $0.configuration?.contentInsets = NSDirectionalEdgeInsets(top: 112, leading: 108, bottom: 104, trailing: 108)
+        $0.configuration = AddImageButtonConfigutionGenerater.generate()
         $0.imageView?.contentMode = .scaleAspectFit
     }
 
@@ -45,44 +34,6 @@ final class ProfileImageViewController: BaseStoredModalViewController<ProfileIma
         .then { $0.setImage(UIImage(systemName: "trash"), for: .normal) }
 
     private let confirmButton = DotoriButton(text: L10n.Global.confirmButtonTitle)
-
-    func addImageButtonTapped() {
-        var configuration = YPImagePickerConfiguration()
-        configuration.startOnScreen = .library
-        configuration.library.maxNumberOfItems = 1
-        configuration.library.mediaType = .photo
-        configuration.library.defaultMultipleSelection = false
-        configuration.showsCrop = .rectangle(ratio: 4/4)
-
-        let imagePicker = YPImagePicker(configuration: configuration)
-        present(imagePicker, animated: true, completion: nil)
-
-        imagePicker.didFinishPicking {
-            [addImageButton, deleteProfileImageButton, store] items, _ in
-
-            if let photo = items.singlePhoto {
-                if var configuration = addImageButton.configuration {
-                    configuration.background.image = photo.image
-                    configuration.image = nil
-                    configuration.title = nil
-                    addImageButton.imageView?.contentMode = .scaleAspectFill
-                    addImageButton.configuration = configuration
-                }
-                imagePicker.dismiss(animated: true) {
-                    if let imageData = photo.image.jpegData(compressionQuality: 0.8) {
-                        store.send(.addProfileImage(imageData))
-                    }
-                    deleteProfileImageButton.isHidden = true
-                    deleteProfileImageButton.isEnabled = true
-                    DispatchQueue.main.async {
-                        addImageButton.removeAllSublayers()
-                        addImageButton.setNeedsDisplay()
-                    }
-                }
-            }
-            imagePicker.dismiss(animated: true) {}
-        }
-    }
 
     override func addView() {
         super.addView()
@@ -178,7 +129,7 @@ final class ProfileImageViewController: BaseStoredModalViewController<ProfileIma
                         let image = try await ImagePipeline.shared.image(for: request)
                         owner.addImageButton.configuration?.background.image = image
                         DispatchQueue.main.async {
-                            owner.addImageButton.removeAllSublayers()
+                            owner.addImageButton.removeDashedBorder()
                             owner.addImageButton.setNeedsDisplay()
                         }
                         owner.editProfileTitleLabel.text = L10n.ProfileImage.editImage
@@ -203,7 +154,7 @@ final class ProfileImageViewController: BaseStoredModalViewController<ProfileIma
                 owner.addImageButton.configuration?.image = nil
                 owner.addImageButton.configuration?.title = nil
                 DispatchQueue.main.async {
-                    owner.addImageButton.removeAllSublayers()
+                    owner.addImageButton.removeDashedBorder()
                     owner.addImageButton.setNeedsDisplay()
                 }
             })
