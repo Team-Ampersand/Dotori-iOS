@@ -19,12 +19,4 @@ public extension UIView {
 
         self.layer.addSublayer(shapeLayer)
     }
-
-    func removeAllSublayers() {
-        self.layer.sublayers?.forEach { layer in
-            if layer is CAShapeLayer {
-                layer.removeFromSuperlayer()
-            }
-        }
-    }
 }
