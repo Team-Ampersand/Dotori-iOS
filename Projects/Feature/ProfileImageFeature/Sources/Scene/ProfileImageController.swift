@@ -62,6 +62,8 @@ final class ProfileImageViewController: BaseStoredModalViewController<ProfileIma
                 }
 
                 addImageButton
+                    .width(272)
+                    .height(266)
 
                 confirmButton
             }
