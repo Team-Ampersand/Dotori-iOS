@@ -113,7 +113,7 @@ private extension DetailNoticeStore {
         ) { [removeNoticeUseCase, noticeID, route] in
             do {
                 try await removeNoticeUseCase(id: noticeID)
-                route.send(DotoriRoutePath.dismiss())
+                route.send(DotoriRoutePath.dismiss)
                 route.send(DotoriRoutePath.pop)
                 await DotoriToast.makeToast(text: L10n.Notice.completeToRemoveNotice, style: .success)
             } catch {
