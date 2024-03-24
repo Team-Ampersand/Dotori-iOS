@@ -21,7 +21,8 @@ public enum DotoriRoutePath: RoutePath {
         inputType: DialogInputType,
         confirmAction: (String) async -> Void
     )
-    case dismiss(completion: () -> Void = {})
+    case dismiss
+    case dismissWithCompletion(completion: () -> Void = {})
     case pop
 
     // MARK: Auth
@@ -62,7 +63,6 @@ public enum DotoriRoutePath: RoutePath {
     case youtube
     case youtubeByID(id: String)
 
-    // MARK: ProfileImage
     case imagePicker(completion: (Data) -> Void)
 }
 
