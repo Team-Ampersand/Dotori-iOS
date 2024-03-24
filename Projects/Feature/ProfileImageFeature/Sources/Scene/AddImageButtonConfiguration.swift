@@ -11,10 +11,9 @@ import UIKitUtil
 import UserDomainInterface
 import YPImagePicker
 
-public enum AddImageButtonConfigutionGenerater {
-    public static func generate() -> UIButton.Configuration {
+enum AddImageButtonConfigutionGenerater {
+    static func generate() -> UIButton.Configuration {
         var configuration = UIButton.Configuration.filled()
-        configuration = UIButton.Configuration.filled()
         configuration.image = UIImage(systemName: "camera.fill")
         configuration.imagePlacement = .top
         configuration.imagePadding = 10
