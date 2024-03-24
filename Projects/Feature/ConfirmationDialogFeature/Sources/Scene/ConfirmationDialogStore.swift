@@ -33,7 +33,7 @@ final class ConfirmationDialogStore: BaseStore {
     func mutate(state: State, action: Action) -> SideEffect<Mutation, Never> {
         switch action {
         case .cancelButtonDidTap:
-            route.send(DotoriRoutePath.dismiss())
+            route.send(DotoriRoutePath.dismiss)
 
         case .confirmButtonDidTap:
             let confirmEffect = SideEffect<Void, Never>
@@ -41,7 +41,7 @@ final class ConfirmationDialogStore: BaseStore {
                     await confirmAction()
                 }
                 .handleEvents(receiveOutput: { [route] in
-                    route.send(DotoriRoutePath.dismiss())
+                    route.send(DotoriRoutePath.dismiss)
                 })
                 .flatMap { SideEffect<Mutation, Never>.none }
                 .eraseToSideEffect()
