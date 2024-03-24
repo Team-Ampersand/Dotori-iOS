@@ -8,7 +8,6 @@ import Localization
 import Moordinator
 import MSGLayout
 import Nuke
-import ProfileImageFeature
 import UIKit
 import UIKitUtil
 import UserDomainInterface
