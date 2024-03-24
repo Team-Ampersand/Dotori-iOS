@@ -62,8 +62,6 @@ final class ProfileImageViewController: BaseStoredModalViewController<ProfileIma
                 }
 
                 addImageButton
-                    .width(272)
-                    .height(266)
 
                 confirmButton
             }
@@ -129,7 +127,7 @@ final class ProfileImageViewController: BaseStoredModalViewController<ProfileIma
                         let image = try await ImagePipeline.shared.image(for: request)
                         owner.addImageButton.configuration?.background.image = image
                         DispatchQueue.main.async {
-                            owner.addImageButton.removeDashedBorder()
+                            owner.addImageButton.removeAllSublayers()
                             owner.addImageButton.setNeedsDisplay()
                         }
                         owner.editProfileTitleLabel.text = L10n.ProfileImage.editImage
@@ -154,7 +152,7 @@ final class ProfileImageViewController: BaseStoredModalViewController<ProfileIma
                 owner.addImageButton.configuration?.image = nil
                 owner.addImageButton.configuration?.title = nil
                 DispatchQueue.main.async {
-                    owner.addImageButton.removeDashedBorder()
+                    owner.addImageButton.removeAllSublayers()
                     owner.addImageButton.setNeedsDisplay()
                 }
             })
