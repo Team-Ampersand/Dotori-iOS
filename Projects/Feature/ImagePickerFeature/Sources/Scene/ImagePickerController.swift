@@ -10,7 +10,6 @@ import MSGLayout
 import Nuke
 import UIKit
 import UIKitUtil
-import UserDomainInterface
 import YPImagePicker
 
 final class ImagePickerController: YPImagePicker, RoutedViewControllable {
