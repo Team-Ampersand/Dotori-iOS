@@ -4,6 +4,7 @@ import Database
 import DetailNoticeFeature
 import FilterSelfStudyFeature
 import HomeFeature
+import ImagePickerFeature
 import InputDialogFeature
 import IQKeyboardManagerSwift
 import JwtStore
@@ -18,6 +19,7 @@ import MyViolationListFeature
 import Networking
 import NoticeDomain
 import NoticeFeature
+import ProfileImageFeature
 import ProposeMusicFeature
 import RenewalPasswordFeature
 import RootFeature
@@ -51,6 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             HomeAssembly(),
             InputDialogAssembly(),
             MyViolationListAssembly(),
+            ProfileImageAssembly(),
             NoticeAssembly(),
             DetailNoticeAssembly(),
             SelfStudyAssembly(),
@@ -71,7 +74,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             MassageDomainAssembly(),
             ViolationDomainAssembly(),
             MealDomainAssembly(),
-            NoticeDomainAssembly()
+            NoticeDomainAssembly(),
+            ImagePickerAssembly()
         ], container: AppDelegate.container)
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.enableAutoToolbar = true

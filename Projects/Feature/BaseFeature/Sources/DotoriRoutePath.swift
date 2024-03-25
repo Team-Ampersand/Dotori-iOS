@@ -22,6 +22,7 @@ public enum DotoriRoutePath: RoutePath {
         confirmAction: (String) async -> Void
     )
     case dismiss
+    case dismissWithCompletion(completion: () -> Void = {})
     case pop
 
     // MARK: Auth
@@ -36,6 +37,7 @@ public enum DotoriRoutePath: RoutePath {
     case home
     case myInfoActionSheet
     case myViolationList
+    case profileImage
 
     // MARK: Notice
     case notice
@@ -60,6 +62,8 @@ public enum DotoriRoutePath: RoutePath {
     case proposeMusic
     case youtube
     case youtubeByID(id: String)
+
+    case imagePicker(completion: (Data) -> Void)
 }
 
 public extension RoutePath {

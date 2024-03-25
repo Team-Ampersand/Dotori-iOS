@@ -1,0 +1,5 @@
+"select_profile_image" = "프로필 이미지 선택";
+"edit_image" = "이미지 편집";
+"add_image" = "이미지 추가";
+"success_to_add_profileImage_title" = "성공적으로 프로필 이미지를 추가하였습니다.";
+"success_to_delete_profileImage_title" = "성공적으로 프로필 이미지를 삭제하였습니다.";

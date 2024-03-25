@@ -2,10 +2,12 @@ import BaseFeature
 import BaseFeatureInterface
 import ConfirmationDialogFeatureInterface
 import DWebKit
+import ImagePickerFeatureInterface
 import InputDialogFeatureInterface
 import Localization
 import Moordinator
 import MyViolationListFeatureInterface
+import ProfileImageFeatureInterface
 import TimerInterface
 import UIKit
 import UIKitUtil
@@ -15,7 +17,10 @@ final class HomeMoordinator: Moordinator {
     private let homeViewController: any StoredViewControllable
     private let confirmationDialogFactory: any ConfirmationDialogFactory
     private let myViolationListFactory: any MyViolationListFactory
+    private let profileImageFactory: any ProfileImageFactory
     private let inputDialogFactory: any InputDialogFactory
+    private let imagePickerFactory: any ImagePickerFactory
+
     var root: Presentable {
         rootVC
     }
@@ -24,12 +29,16 @@ final class HomeMoordinator: Moordinator {
         homeViewController: any StoredViewControllable,
         confirmationDialogFactory: any ConfirmationDialogFactory,
         myViolationListFactory: any MyViolationListFactory,
-        inputDialogFactory: any InputDialogFactory
+        profileImageFactory: any ProfileImageFactory,
+        inputDialogFactory: any InputDialogFactory,
+        imagePickerFactory: any ImagePickerFactory
     ) {
         self.homeViewController = homeViewController
         self.confirmationDialogFactory = confirmationDialogFactory
         self.myViolationListFactory = myViolationListFactory
+        self.profileImageFactory = profileImageFactory
         self.inputDialogFactory = inputDialogFactory
+        self.imagePickerFactory = imagePickerFactory
     }
 
     // swiftlint: disable cyclomatic_complexity
@@ -51,11 +60,19 @@ final class HomeMoordinator: Moordinator {
         case .myViolationList:
             return presentToMyViolationList()
 
+        case .profileImage:
+            return presentToProfileImage()
+
+        case let .imagePicker(completion):
+            return presentToImagePicker(completion: completion)
+
         case let .confirmationDialog(title, description, confirmAction):
             return presentToConfirmationDialog(title: title, description: description, confirmAction: confirmAction)
-
         case .dismiss:
-            self.rootVC.presentedViewController?.dismiss(animated: true)
+            self.rootVC.visibleViewController?.dismiss(animated: true)
+
+        case let .dismissWithCompletion(completion):
+            self.rootVC.visibleViewController?.dismiss(animated: true, completion: completion)
 
         case .signin:
             return .end(DotoriRoutePath.signin)
@@ -88,6 +105,24 @@ private extension HomeMoordinator {
     func presentToMyViolationList() -> MoordinatorContributors {
         let viewController = myViolationListFactory.makeViewController()
         self.rootVC.topViewController?.modalPresent(viewController)
+        return .one(.contribute(
+            withNextPresentable: viewController,
+            withNextRouter: viewController.router
+        ))
+    }
+
+    func presentToProfileImage() -> MoordinatorContributors {
+        let viewController = profileImageFactory.makeViewController()
+        self.rootVC.topViewController?.modalPresent(viewController)
+        return .one(.contribute(
+            withNextPresentable: viewController,
+            withNextRouter: viewController.router
+        ))
+    }
+
+    func presentToImagePicker(completion: @escaping (Data) -> Void) -> MoordinatorContributors {
+        let viewController = imagePickerFactory.makeViewController(completion: completion)
+        rootVC.visibleViewController?.present(viewController, animated: true)
         return .one(.contribute(
             withNextPresentable: viewController,
             withNextRouter: viewController.router

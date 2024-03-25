@@ -19,10 +19,15 @@ public final class UserDomainAssembly: Assembly {
             RemoteUserDataSourceImpl(networking: resolver.resolve(Networking.self)!)
         }
 
+        container.register(RemoteHomeDataSource.self) { resolver in
+            RemoteHomeDataSourceImpl(networking: resolver.resolve(Networking.self)!)
+        }
+
         container.register(UserRepository.self) { resolver in
             UserRepositoryImpl(
                 localUserDataSource: resolver.resolve(LocalUserDataSource.self)!,
-                remoteUserDataSource: resolver.resolve(RemoteUserDataSource.self)!
+                remoteUserDataSource: resolver.resolve(RemoteUserDataSource.self)!,
+                remoteHomeDataSource: resolver.resolve(RemoteHomeDataSource.self)!
             )
         }
         .inObjectScope(.container)
@@ -37,6 +42,18 @@ public final class UserDomainAssembly: Assembly {
 
         container.register(WithdrawalUseCase.self) { resolver in
             WithdrawalUseCaseImpl(userRepository: resolver.resolve(UserRepository.self)!)
+        }
+
+        container.register(AddProfileImageUseCase.self) { resolver in
+            AddProfileImageUseCaseImpl(userRepository: resolver.resolve(UserRepository.self)!)
+        }
+
+        container.register(DeleteProfileImageUseCase.self) { resolver in
+            DeleteProfileImageUseCaseImpl(userRepository: resolver.resolve(UserRepository.self)!)
+        }
+
+        container.register(FetchProfileImageUseCase.self) { resolver in
+            FetchProfileImageUseCaseImpl(userRepository: resolver.resolve(UserRepository.self)!)
         }
     }
 }

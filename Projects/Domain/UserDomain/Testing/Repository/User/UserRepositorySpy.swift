@@ -19,4 +19,21 @@ final class UserRepositorySpy: UserRepository {
     func withdrawal() async throws {
         withdrawalCallCount += 1
     }
+
+    var addProfileImageCallCount = 0
+    func addProfileImage(profileImage: Data) async throws {
+        addProfileImageCallCount += 1
+    }
+
+    var deleteProfileImageCallCount = 0
+    func deleteProfileImage() async throws {
+        deleteProfileImageCallCount += 1
+    }
+
+    var fetchUserInfoCallCount = 0
+    var profileImageReturn: String = ""
+    func fetchProfileImage() async throws -> String {
+        fetchUserInfoCallCount += 1
+        return profileImageReturn
+    }
 }

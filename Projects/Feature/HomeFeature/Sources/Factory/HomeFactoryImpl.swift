@@ -1,10 +1,12 @@
 import ConfirmationDialogFeatureInterface
 import HomeFeatureInterface
+import ImagePickerFeatureInterface
 import InputDialogFeatureInterface
 import MassageDomainInterface
 import MealDomainInterface
 import Moordinator
 import MyViolationListFeatureInterface
+import ProfileImageFeatureInterface
 import SelfStudyDomainInterface
 import TimerInterface
 import UserDomainInterface
@@ -25,7 +27,9 @@ struct HomeFactoryImpl: HomeFactory {
     private let withdrawalUseCase: any WithdrawalUseCase
     private let confirmationDialogFactory: any ConfirmationDialogFactory
     private let myViolationListFactory: any MyViolationListFactory
+    private let profileImageFactory: any ProfileImageFactory
     private let inputDialogFactory: any InputDialogFactory
+    private let imagePickerFactory: any ImagePickerFactory
 
     init(
         repeatableTimer: any RepeatableTimer,
@@ -42,8 +46,10 @@ struct HomeFactoryImpl: HomeFactory {
         logoutUseCase: any LogoutUseCase,
         withdrawalUseCase: any WithdrawalUseCase,
         confirmationDialogFactory: any ConfirmationDialogFactory,
+        profileImageFactory: any ProfileImageFactory,
         myViolationListFactory: any MyViolationListFactory,
-        inputDialogFactory: any InputDialogFactory
+        inputDialogFactory: any InputDialogFactory,
+        imagePickerFactory: any ImagePickerFactory
     ) {
         self.repeatableTimer = repeatableTimer
         self.fetchSelfStudyInfoUseCase = fetchSelfStudyInfoUseCase
@@ -59,8 +65,10 @@ struct HomeFactoryImpl: HomeFactory {
         self.logoutUseCase = logoutUseCase
         self.withdrawalUseCase = withdrawalUseCase
         self.confirmationDialogFactory = confirmationDialogFactory
+        self.profileImageFactory = profileImageFactory
         self.myViolationListFactory = myViolationListFactory
         self.inputDialogFactory = inputDialogFactory
+        self.imagePickerFactory = imagePickerFactory
     }
 
     func makeMoordinator() -> Moordinator {
@@ -84,7 +92,9 @@ struct HomeFactoryImpl: HomeFactory {
             homeViewController: homeViewController,
             confirmationDialogFactory: confirmationDialogFactory,
             myViolationListFactory: myViolationListFactory,
-            inputDialogFactory: inputDialogFactory
+            profileImageFactory: profileImageFactory,
+            inputDialogFactory: inputDialogFactory,
+            imagePickerFactory: imagePickerFactory
         )
     }
 }

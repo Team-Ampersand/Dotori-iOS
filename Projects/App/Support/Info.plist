@@ -26,6 +26,12 @@
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>프로필 사진 설정을 위해 카메라를 사용해도 될까요 ?</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>프로필 사진 설정을 위해 사진 보관함을 사용해도 될까요?</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>프로필 사진 설정을 위해 사진 보관함을 사용해도 될까요?</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
