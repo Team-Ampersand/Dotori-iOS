@@ -8,6 +8,7 @@ public struct SelfStudyRankEntity: Equatable {
     public let memberName: String
     public let gender: GenderType
     public let selfStudyCheck: Bool
+    public let profileImage: String?
 
     public init(
         id: Int,
@@ -15,7 +16,8 @@ public struct SelfStudyRankEntity: Equatable {
         stuNum: String,
         memberName: String,
         gender: GenderType,
-        selfStudyCheck: Bool
+        selfStudyCheck: Bool,
+        profileImage: String
     ) {
         self.id = id
         self.rank = rank
@@ -23,5 +25,6 @@ public struct SelfStudyRankEntity: Equatable {
         self.memberName = memberName
         self.gender = gender
         self.selfStudyCheck = selfStudyCheck
+        self.profileImage = profileImage
     }
 }
