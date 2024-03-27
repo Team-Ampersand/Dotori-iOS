@@ -3,6 +3,7 @@ import BaseFeature
 import Combine
 import DesignSystem
 import MSGLayout
+import Nuke
 import SelfStudyDomainInterface
 import UIKit
 
@@ -31,6 +32,7 @@ final class SelfStudyCell: BaseTableViewCell<SelfStudyRankModel> {
 
     override func prepareForReuse() {
         super.prepareForReuse()
+        appliedStudentCardView.cancelImageDownload()
         guard model == nil else { return }
         subscription.removeAll()
     }
@@ -69,7 +71,8 @@ final class SelfStudyCell: BaseTableViewCell<SelfStudyRankModel> {
                 name: model.memberName,
                 gender: model.gender == .man ? .man : .woman,
                 stuNum: model.stuNum,
-                isChecked: model.selfStudyCheck
+                isChecked: model.selfStudyCheck,
+                profileImage: model.profileImage ?? ""
             )
         )
         self.medalImageView.image = self.rankToImage(rank: model.rank)
