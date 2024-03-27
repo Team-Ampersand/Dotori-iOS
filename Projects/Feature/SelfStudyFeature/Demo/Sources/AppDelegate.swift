@@ -16,9 +16,33 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         let fetchSelfStudyRankListUseCase = FetchSelfStudyRankListUseCaseSpy()
         fetchSelfStudyRankListUseCase.fetchSelfStudyRankListReturn = [
-            .init(id: 1, rank: 1, stuNum: "3107", memberName: "김준", gender: .man, selfStudyCheck: false),
-            .init(id: 2, rank: 2, stuNum: "3216", memberName: "전승원", gender: .man, selfStudyCheck: true),
-            .init(id: 3, rank: 3, stuNum: "3111", memberName: "선민재", gender: .woman, selfStudyCheck: false)
+            .init(
+                id: 1,
+                rank: 1,
+                stuNum: "3107",
+                memberName: "김준",
+                gender: .man,
+                selfStudyCheck: false,
+                profileImage: ""
+            ),
+            .init(
+                id: 2,
+                rank: 2,
+                stuNum: "3216",
+                memberName: "전승원",
+                gender: .man,
+                selfStudyCheck: true,
+                profileImage: ""
+            ),
+            .init(
+                id: 3,
+                rank: 3,
+                stuNum: "3111",
+                memberName: "선민재",
+                gender: .woman,
+                selfStudyCheck: false,
+                profileImage: ""
+            )
         ]
         let loadCurrentUserRoleUseCase = LoadCurrentUserRoleUseCaseSpy()
         let checkSelfStudyMemberUseCase = CheckSelfStudyMemberUseCaseSpy()
