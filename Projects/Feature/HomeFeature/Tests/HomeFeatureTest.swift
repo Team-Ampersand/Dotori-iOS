@@ -29,6 +29,7 @@ final class HomeFeatureTests: XCTestCase {
 
     override func setUp() {
         repeatableTimer = .init()
+        fetchProfileImageUseCase = .init()
         fetchSelfStudyInfoUseCase = .init()
         fetchMassageInfoUseCase = .init()
         fetchMealInfoUseCase = .init()
