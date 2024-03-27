@@ -13,6 +13,7 @@ import UserDomainInterface
 
 struct HomeFactoryImpl: HomeFactory {
     private let repeatableTimer: any RepeatableTimer
+    private let fetchProfileImageUseCase: any FetchProfileImageUseCase
     private let fetchSelfStudyInfoUseCase: any FetchSelfStudyInfoUseCase
     private let fetchMassageInfoUseCase: any FetchMassageInfoUseCase
     private let fetchMealInfoUseCase: any FetchMealInfoUseCase
@@ -33,6 +34,7 @@ struct HomeFactoryImpl: HomeFactory {
 
     init(
         repeatableTimer: any RepeatableTimer,
+        fetchProfileImageUseCase: any FetchProfileImageUseCase,
         fetchSelfStudyInfoUseCase: any FetchSelfStudyInfoUseCase,
         fetchMassageInfoUseCase: any FetchMassageInfoUseCase,
         fetchMealInfoUseCase: any FetchMealInfoUseCase,
@@ -52,6 +54,7 @@ struct HomeFactoryImpl: HomeFactory {
         imagePickerFactory: any ImagePickerFactory
     ) {
         self.repeatableTimer = repeatableTimer
+        self.fetchProfileImageUseCase = fetchProfileImageUseCase
         self.fetchSelfStudyInfoUseCase = fetchSelfStudyInfoUseCase
         self.fetchMassageInfoUseCase = fetchMassageInfoUseCase
         self.fetchMealInfoUseCase = fetchMealInfoUseCase
@@ -74,6 +77,7 @@ struct HomeFactoryImpl: HomeFactory {
     func makeMoordinator() -> Moordinator {
         let homeStore = HomeStore(
             repeatableTimer: repeatableTimer,
+            fetchProfileImageUseCase: fetchProfileImageUseCase,
             fetchSelfStudyInfoUseCase: fetchSelfStudyInfoUseCase,
             fetchMassageInfoUseCase: fetchMassageInfoUseCase,
             fetchMealInfoUseCase: fetchMealInfoUseCase,
