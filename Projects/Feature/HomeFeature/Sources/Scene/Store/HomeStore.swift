@@ -24,6 +24,7 @@ final class HomeStore: BaseStore {
     var initialState: State
     var stateSubject: CurrentValueSubject<State, Never>
     private let repeatableTimer: any RepeatableTimer
+    private let fetchProfileImageUseCase: any FetchProfileImageUseCase
     private let fetchSelfStudyInfoUseCase: any FetchSelfStudyInfoUseCase
     private let fetchMassageInfoUseCase: any FetchMassageInfoUseCase
     private let fetchMealInfoUseCase: any FetchMealInfoUseCase
@@ -39,6 +40,7 @@ final class HomeStore: BaseStore {
 
     init(
         repeatableTimer: any RepeatableTimer,
+        fetchProfileImageUseCase: any FetchProfileImageUseCase,
         fetchSelfStudyInfoUseCase: any FetchSelfStudyInfoUseCase,
         fetchMassageInfoUseCase: any FetchMassageInfoUseCase,
         fetchMealInfoUseCase: any FetchMealInfoUseCase,
@@ -55,6 +57,7 @@ final class HomeStore: BaseStore {
         self.initialState = .init()
         self.stateSubject = .init(initialState)
         self.repeatableTimer = repeatableTimer
+        self.fetchProfileImageUseCase = fetchProfileImageUseCase
         self.fetchSelfStudyInfoUseCase = fetchSelfStudyInfoUseCase
         self.fetchMassageInfoUseCase = fetchMassageInfoUseCase
         self.fetchMealInfoUseCase = fetchMealInfoUseCase
@@ -155,6 +158,7 @@ private extension HomeStore {
             .setFailureType(to: Never.self)
             .map(Mutation.updateCurrentUserRole)
             .eraseToSideEffect()
+        let profileImagePublisher = self.fetchProfileImageSideEffect()
 
         let selfStudyPublisher = self.fetchSelfStudyInfoSideEffect()
 
@@ -163,6 +167,7 @@ private extension HomeStore {
         let mealPublisher = self.fetchMealSideEffect(date: currentState.selectedMealDate)
 
         return .merge(
+            profileImagePublisher,
             timerPublisher,
             userRolePublisher,
             selfStudyPublisher,
@@ -291,6 +296,22 @@ private extension HomeStore {
 }
 
 private extension HomeStore {
+    func fetchProfileImageSideEffect() -> SideEffect<Mutation, Never> {
+        let profileImagePublisher = SideEffect<String, Error>
+            .tryAsync {
+                try await self.fetchProfileImageUseCase()
+            }
+            .flatMap { profileImage in
+                SideEffect.merge(
+                    .just(Mutation.updateProfileImage(profileImage))
+                )
+                .setFailureType(to: Never.self)
+            }
+            .eraseToSideEffect()
+            .catchToNever()
+        return profileImagePublisher
+    }
+
     func fetchSelfStudyInfoSideEffect() -> SideEffect<Mutation, Never> {
         let selfStudyPublisher = SideEffect<SelfStudyInfoModel, Never>
             .tryAsync {
