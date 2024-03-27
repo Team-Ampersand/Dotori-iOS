@@ -6,12 +6,13 @@ struct FetchSelfStudyRankListResponseDTO: Decodable {
     let list: [SelfStudyRankResponseDTO]
 
     struct SelfStudyRankResponseDTO: Decodable {
-        let id: Int
         let rank: Int
+        let id: Int
         let stuNum: String
         let memberName: String
         let gender: GenderType
         let selfStudyCheck: Bool
+        let profileImage: String?
     }
 }
 
@@ -23,7 +24,8 @@ extension FetchSelfStudyRankListResponseDTO.SelfStudyRankResponseDTO {
             stuNum: stuNum,
             memberName: memberName,
             gender: gender,
-            selfStudyCheck: selfStudyCheck
+            selfStudyCheck: selfStudyCheck,
+            profileImage: profileImage ?? ""
         )
     }
 }
