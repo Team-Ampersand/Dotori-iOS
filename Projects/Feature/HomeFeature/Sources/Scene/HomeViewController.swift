@@ -5,6 +5,7 @@ import DateUtility
 import DesignSystem
 import Localization
 import MSGLayout
+import Nuke
 import UIKit
 
 final class HomeViewController: BaseStoredViewController<HomeStore> {
@@ -15,6 +16,8 @@ final class HomeViewController: BaseStoredViewController<HomeStore> {
 
     private let dotoriBarButtonItem = DotoriBarButtonItem()
     private let myInfoImageView = UIImageView(image: .Dotori.personCircle)
+        .set(\.cornerRadius, 16)
+        .set(\.clipsToBounds, true)
     private lazy var myInfoBarButtonItem = UIBarButtonItem(customView: myInfoImageView)
     private let timeHeaderView = TimeHeaderView()
     private let selfStudyApplicationCardView = ApplicationCardView(
@@ -139,6 +142,30 @@ final class HomeViewController: BaseStoredViewController<HomeStore> {
     override func bindState() {
         let sharedState = store.state.share()
             .receive(on: DispatchQueue.main)
+
+        sharedState
+            .map(\.profileImageUrl)
+            .sink(with: self, receiveValue: { owner, profileImageURL in
+                guard let profileImageURL,
+                      let imageURL = URL(string: profileImageURL)
+                else {
+                    owner.myInfoImageView.image = .Dotori.personCircle
+                    return
+                }
+
+                let request = ImageRequest(
+                    url: URL(string: profileImageURL),
+                    priority: .high,
+                    options: [.reloadIgnoringCachedData]
+                )
+                Task {
+                    do {
+                        let image = try await ImagePipeline.shared.image(for: request)
+                        owner.myInfoImageView.image = image
+                    }
+                }
+            })
+            .store(in: &subscription)
 
         sharedState
             .map(\.selfStudyInfo)
