@@ -17,7 +17,8 @@ public final class HomeAssembly: Assembly {
     public func assemble(container: Container) {
         container.register(HomeFactory.self) { resolver in
             HomeFactoryImpl(
-                repeatableTimer: resolver.resolve(RepeatableTimer.self)!,
+                repeatableTimer: resolver.resolve(RepeatableTimer.self)!, 
+                fetchProfileImageUseCase: resolver.resolve(FetchProfileImageUseCase.self)!,
                 fetchSelfStudyInfoUseCase: resolver.resolve(FetchSelfStudyInfoUseCase.self)!,
                 fetchMassageInfoUseCase: resolver.resolve(FetchMassageInfoUseCase.self)!,
                 fetchMealInfoUseCase: resolver.resolve(FetchMealInfoUseCase.self)!,
