@@ -45,7 +45,14 @@ final class MassageRepositoryTests: XCTestCase {
     func testFetchMassageRankList() async throws {
         XCTAssertEqual(remoteMassageDataSource.fetchMassageRankListCallCount, 0)
         let expected = [
-            MassageRankModel(id: 1, rank: 2, stuNum: "3218", memberName: "전승원", gender: .man)
+            MassageRankModel(
+                id: 1,
+                rank: 2,
+                stuNum: "3218",
+                memberName: "전승원",
+                gender: .man,
+                profileImage: ""
+            )
         ]
         remoteMassageDataSource.fetchMassageRankListHandler = { expected }
 
