@@ -8,18 +8,18 @@ import XCTest
 final class SigninFeatureTests: XCTestCase {
     var signinUseCase: SigninUseCaseSpy!
     var sut: SigninStore!
-    var subscriptions: Set<AnyCancellable>!
+    var subscription: Set<AnyCancellable>!
 
     override func setUp() {
         signinUseCase = .init()
         sut = .init(signinUseCase: signinUseCase)
-        subscriptions = .init()
+        subscription = .init()
     }
 
     override func tearDown() {
         signinUseCase = nil
         sut = nil
-        subscriptions = nil
+        subscription = nil
     }
 
     func testSigninButtonDidTap() {
@@ -31,6 +31,24 @@ final class SigninFeatureTests: XCTestCase {
         sut.send(.updatePassword(password))
         XCTAssertEqual(sut.currentState.password, password)
 
+        let expectation = XCTestExpectation(description: "route expectation")
+
+        var mainRoutePath: RoutePath?
+        sut.route.sink { routePath in
+            mainRoutePath = routePath
+            expectation.fulfill()
+        }
+        .store(in: &subscription)
+
         sut.send(.signinButtonDidTap)
+
+        wait(for: [expectation], timeout: 1.0)
+        guard
+            let mainRoutePath = mainRoutePath?.asDotori,
+            case .main = mainRoutePath
+        else {
+            XCTFail("mainRoutePath is not DotoriRoutePath.main")
+            return
+        }
     }
 }
