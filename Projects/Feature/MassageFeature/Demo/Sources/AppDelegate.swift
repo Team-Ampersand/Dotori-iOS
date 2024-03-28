@@ -16,9 +16,9 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         let fetchMassageRankListUseCase = FetchMassageRankListUseCaseSpy()
         fetchMassageRankListUseCase.fetchMassageRankListHandler = {
             [
-                .init(id: 1, rank: 1, stuNum: "1234", memberName: "대충이름", gender: .man),
-                .init(id: 2, rank: 2, stuNum: "1235", memberName: "대이충름", gender: .man),
-                .init(id: 3, rank: 3, stuNum: "1236", memberName: "이름대충", gender: .woman)
+                .init(id: 1, rank: 1, stuNum: "1234", memberName: "대충이름", gender: .man, profileImage: ""),
+                .init(id: 2, rank: 2, stuNum: "1235", memberName: "대이충름", gender: .man, profileImage: ""),
+                .init(id: 3, rank: 3, stuNum: "1236", memberName: "이름대충", gender: .woman, profileImage: "")
             ]
         }
         let store = MassageStore(
