@@ -16,7 +16,8 @@ let project = Project.module(
             .domain(target: .AuthDomain, type: .interface)
         ]),
         .tests(module: .feature(.SigninFeature), dependencies: [
-            .feature(target: .SigninFeature)
+            .feature(target: .SigninFeature),
+            .domain(target: .AuthDomain, type: .testing)
         ])
     ]
 )
