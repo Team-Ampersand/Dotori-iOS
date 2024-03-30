@@ -17,7 +17,7 @@ public struct SelfStudyRankEntity: Equatable {
         memberName: String,
         gender: GenderType,
         selfStudyCheck: Bool,
-        profileImage: String
+        profileImage: String?
     ) {
         self.id = id
         self.rank = rank

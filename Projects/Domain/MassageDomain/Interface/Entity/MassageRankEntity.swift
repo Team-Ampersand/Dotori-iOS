@@ -10,7 +10,7 @@ public struct MassageRankEntity: Equatable {
     public let profileImage: String?
 
     public init(
-        id: Int, rank: Int, stuNum: String, memberName: String, gender: GenderType, profileImage: String
+        id: Int, rank: Int, stuNum: String, memberName: String, gender: GenderType, profileImage: String?
     ) {
         self.id = id
         self.rank = rank
