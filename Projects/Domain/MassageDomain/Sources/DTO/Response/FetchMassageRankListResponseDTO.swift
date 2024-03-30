@@ -30,7 +30,7 @@ extension FetchMassageRankListResponseDTO.MassageRankResponseDTO {
             stuNum: stuNum,
             memberName: memberName,
             gender: gender,
-            profileImage: profileImage ?? ""
+            profileImage: profileImage
         )
     }
 }

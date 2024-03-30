@@ -25,7 +25,7 @@ extension FetchSelfStudyRankListResponseDTO.SelfStudyRankResponseDTO {
             memberName: memberName,
             gender: gender,
             selfStudyCheck: selfStudyCheck,
-            profileImage: profileImage ?? ""
+            profileImage: profileImage
         )
     }
 }

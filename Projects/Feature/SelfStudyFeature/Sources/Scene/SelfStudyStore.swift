@@ -155,7 +155,7 @@ private extension SelfStudyStore {
                 memberName: $0.memberName,
                 gender: $0.gender,
                 selfStudyCheck: isChecked,
-                profileImage: $0.profileImage ?? ""
+                profileImage: $0.profileImage
             )
         }
     }
