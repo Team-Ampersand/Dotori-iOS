@@ -12,7 +12,6 @@ final class MassageCell: BaseTableViewCell<MassageRankModel> {
     override func prepareForReuse() {
         super.prepareForReuse()
         appliedStudentCardView.cancelImageDownload()
-        guard model == nil else { return }
     }
 
     override func addView() {
@@ -43,7 +42,7 @@ final class MassageCell: BaseTableViewCell<MassageRankModel> {
                 gender: model.gender == .man ? .man : .woman,
                 stuNum: model.stuNum,
                 isChecked: false,
-                profileImage: ""
+                profileImage: model.profileImage
             )
         )
     }
