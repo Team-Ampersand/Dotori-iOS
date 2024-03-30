@@ -22,7 +22,7 @@ public struct AppliedStudentViewModel: Equatable {
         gender: Gender,
         stuNum: String,
         isChecked: Bool,
-        profileImage: String
+        profileImage: String?
     ) {
         self.rank = rank
         self.name = name
@@ -43,7 +43,8 @@ public final class AppliedStudentCardView: UIView {
     private let attendanceCheckBox = DotoriCheckBox()
         .set(\.isHidden, true)
     private let userImageView = DotoriIconView(
-        size: .custom(.init(width: 64, height: 64))
+        size: .custom(.init(width: 64, height: 64)),
+        image: .Dotori.personRectangle
     )
     private let nameLabel = DotoriLabel(textColor: .neutral(.n10), font: .body1)
     private let genderImageView = DotoriIconView(
