@@ -34,10 +34,11 @@ final class AuthRepositoryTests: XCTestCase {
 
     func test_loadJwtToken() {
         let expected = JwtTokenEntity(
-            accessToken: "access",
-            refreshToken: "refresh",
-            expiresAt: "expires"
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            expiresAt: "expiresAt"
         )
+        localAuthDataSource.loadJwtTokenReturn = expected
         XCTAssertEqual(localAuthDataSource.loadJwtTokenCallCount, 0)
 
         let actual = sut.loadJwtToken()
@@ -55,7 +56,7 @@ final class AuthRepositoryTests: XCTestCase {
     }
 
     func test_checkTokenIsExist() {
-        let expected = Bool()
+        let expected = false
         XCTAssertEqual(localAuthDataSource.checkTokenIsExistCallCount, 0)
 
         let actual = sut.checkTokenIsExist()
@@ -65,7 +66,7 @@ final class AuthRepositoryTests: XCTestCase {
     }
 
     func test_networkIsConnected() async {
-        let expected = Bool()
+        let expected = false
         XCTAssertEqual(remoteAuthDataSource.networkIsConnectedCallCount, 0)
 
         let actual = await sut.networkIsConnected()

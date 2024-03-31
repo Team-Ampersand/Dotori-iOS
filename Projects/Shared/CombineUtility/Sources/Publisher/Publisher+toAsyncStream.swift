@@ -1,7 +1,7 @@
 import Combine
 
 extension Publisher where Failure == Never {
-    func toAsyncStream(subscription: inout Set<AnyCancellable>) -> AsyncStream<Output> {
+    public func toAsyncStream(subscription: inout Set<AnyCancellable>) -> AsyncStream<Output> {
         AsyncStream { continuation in
             self.sink { output in
                 continuation.yield(output)
