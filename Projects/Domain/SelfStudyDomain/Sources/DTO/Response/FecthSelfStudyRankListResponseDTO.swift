@@ -6,8 +6,8 @@ struct FetchSelfStudyRankListResponseDTO: Decodable {
     let list: [SelfStudyRankResponseDTO]
 
     struct SelfStudyRankResponseDTO: Decodable {
-        let rank: Int
         let id: Int
+        let rank: Int
         let stuNum: String
         let memberName: String
         let gender: GenderType
