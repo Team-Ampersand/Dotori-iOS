@@ -154,9 +154,8 @@ final class HomeViewController: BaseStoredViewController<HomeStore> {
                 }
 
                 let request = ImageRequest(
-                    url: URL(string: profileImageURL),
-                    priority: .high,
-                    options: [.reloadIgnoringCachedData]
+                    url: imageURL,
+                    priority: .high
                 )
                 Task {
                     do {
