@@ -94,8 +94,7 @@ public final class AppliedStudentCardView: UIView {
 
         let request = ImageRequest(
             url: imageURL,
-            priority: .high,
-            options: [.reloadIgnoringCachedData]
+            priority: .high
         )
 
         imageTask = Task {
