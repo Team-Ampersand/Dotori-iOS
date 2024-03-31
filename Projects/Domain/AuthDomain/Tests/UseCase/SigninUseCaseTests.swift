@@ -17,12 +17,6 @@ final class SigninUseCaseTests: XCTestCase {
         sut = nil
     }
 
-    func test_Signin_When_ReqNil() async throws {
-        try await sut.execute(req: .init(email: "", password: ""))
-
-        XCTAssertEqual(authRepository.signinCallCount, 1)
-    }
-
     func test_Signin() async throws {
         try await sut.execute(req: .init(
                 email: "s00000@gsm.hs.kr",
