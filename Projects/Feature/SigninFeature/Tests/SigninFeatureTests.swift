@@ -22,7 +22,7 @@ final class SigninFeatureTests: XCTestCase {
         subscription = nil
     }
 
-    func testSigninButtonDidTap() {
+    func testSigninButtonDidTap() async throws {
         let email = "s00000@gsm.hs.kr"
         sut.send(.updateEmail(email))
         XCTAssertEqual(sut.currentState.email, email)
@@ -31,24 +31,17 @@ final class SigninFeatureTests: XCTestCase {
         sut.send(.updatePassword(password))
         XCTAssertEqual(sut.currentState.password, password)
 
-        let expectation = XCTestExpectation(description: "route expectation")
-
-        var mainRoutePath: RoutePath?
-        sut.route.sink { routePath in
-            mainRoutePath = routePath
-            expectation.fulfill()
-        }
-        .store(in: &subscription)
+        let routeStream = sut.route.toAsyncStream(subscription: &subscription)
 
         sut.send(.signinButtonDidTap)
 
-        wait(for: [expectation], timeout: 1.0)
-        guard
-            let mainRoutePath = mainRoutePath?.asDotori,
-            case .main = mainRoutePath
-        else {
-            XCTFail("mainRoutePath is not DotoriRoutePath.main")
-            return
+        for await routePath in routeStream.prefix(1) {
+            guard let mainRoutePath = routePath.asDotori,
+                  case .main = mainRoutePath
+            else {
+                XCTFail("mainRoutePath is not DotoriRoutePath.main")
+                return
+            }
         }
     }
 }
