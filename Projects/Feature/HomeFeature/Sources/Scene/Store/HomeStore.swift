@@ -301,9 +301,7 @@ private extension HomeStore {
             .tryAsync {
                 try await self.fetchProfileImageUseCase()
             }
-            .map { profileImage in
-                Mutation.updateProfileImage(profileImage)
-            }
+            .map(Mutation.updateProfileImage)
             .eraseToSideEffect()
             .catchToNever()
         return profileImagePublisher
