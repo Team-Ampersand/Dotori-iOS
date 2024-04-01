@@ -99,10 +99,10 @@ public final class AppliedStudentCardView: UIView {
             priority: .high
         )
         
-        imageTask = Task {
+        imageTask = Task.detached {
             let image = try await ImagePipeline.shared.image(for: request)
             guard !Task.isCancelled else { return }
-            DispatchQueue.main.async {
+            await MainActor.run { 
                 self.userImageView.image = image
             }
         }
