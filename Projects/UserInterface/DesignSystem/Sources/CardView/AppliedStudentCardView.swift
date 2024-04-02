@@ -1,5 +1,6 @@
 import Combine
 import MSGLayout
+import Nuke
 import UIKit
 
 public struct AppliedStudentViewModel: Equatable {
@@ -8,18 +9,27 @@ public struct AppliedStudentViewModel: Equatable {
     public let gender: Gender
     public let stuNum: String
     public let isChecked: Bool
+    public let profileImage: String?
 
     public enum Gender {
         case man
         case woman
     }
 
-    public init(rank: Int, name: String, gender: Gender, stuNum: String, isChecked: Bool) {
+    public init(
+        rank: Int,
+        name: String,
+        gender: Gender,
+        stuNum: String,
+        isChecked: Bool,
+        profileImage: String?
+    ) {
         self.rank = rank
         self.name = name
         self.gender = gender
         self.stuNum = stuNum
         self.isChecked = isChecked
+        self.profileImage = profileImage
     }
 }
 
@@ -28,6 +38,7 @@ public protocol AppliedStudentCardViewActionProtocol {
 }
 
 public final class AppliedStudentCardView: UIView {
+    private var imageTask: Task<Void, Error>?
     private let rankLabel = DotoriLabel(textColor: .neutral(.n20), font: .caption)
     private let attendanceCheckBox = DotoriCheckBox()
         .set(\.isHidden, true)
@@ -35,6 +46,8 @@ public final class AppliedStudentCardView: UIView {
         size: .custom(.init(width: 64, height: 64)),
         image: .Dotori.personRectangle
     )
+    .set(\.cornerRadius, 8)
+    .set(\.clipsToBounds, true)
     private let nameLabel = DotoriLabel(textColor: .neutral(.n10), font: .body1)
     private let genderImageView = DotoriIconView(
         size: .custom(.init(width: 16, height: 16)),
@@ -67,16 +80,41 @@ public final class AppliedStudentCardView: UIView {
     public func updateContent(
         with viewModel: AppliedStudentViewModel
     ) {
-        rankLabel.text = "\(viewModel.rank)"
-        nameLabel.text = viewModel.name
-        genderImageView.image = (viewModel.gender == .man ? UIImage.Dotori.men : .Dotori.women)
+        self.rankLabel.text = "\(viewModel.rank)"
+        self.nameLabel.text = viewModel.name
+        self.genderImageView.image = (viewModel.gender == .man ? UIImage.Dotori.men : .Dotori.women)
             .withTintColor(.dotori(.neutral(.n10)), renderingMode: .alwaysOriginal)
-        stuNumLabel.text = viewModel.stuNum
-        attendanceCheckBox.isChecked = viewModel.isChecked
+        self.stuNumLabel.text = viewModel.stuNum
+        self.attendanceCheckBox.isChecked = viewModel.isChecked
+
+        guard let profileImageURL = viewModel.profileImage,
+              let imageURL = URL(string: profileImageURL)
+        else {
+            self.userImageView.image = .Dotori.personRectangle
+            return
+        }
+
+        let request = ImageRequest(
+            url: imageURL,
+            priority: .high
+        )
+
+        imageTask = Task.detached {
+            let image = try await ImagePipeline.shared.image(for: request)
+            guard !Task.isCancelled else { return }
+            await MainActor.run {
+                self.userImageView.image = image
+            }
+        }
     }
 
     public func setIsHiddenAttendanceCheckBox(_ isHidden: Bool) {
         attendanceCheckBox.isHidden = isHidden
+    }
+
+    public func cancelImageDownload() {
+        imageTask?.cancel()
+        imageTask = nil
     }
 }
 
@@ -103,7 +141,6 @@ private extension AppliedStudentCardView {
                 .top(.toSuperview(), .equal(28))
                 .bottom(.toSuperview(), .equal(-28))
         }
-
         self.backgroundColor = .dotori(.background(.card))
         self.cornerRadius = 16
         DotoriShadow.cardShadow(card: self)

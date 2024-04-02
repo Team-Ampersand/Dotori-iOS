@@ -28,7 +28,14 @@ final class MassageFeatureTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Test_Fetch_Massage_Rank_List")
         expectation.expectedFulfillmentCount = 2
         let expectedMassageRankList = [
-            MassageRankModel(id: 1, rank: 1, stuNum: "2222", memberName: "익명", gender: .woman)
+            MassageRankModel(
+                id: 1,
+                rank: 1,
+                stuNum: "2222",
+                memberName: "익명",
+                gender: .woman,
+                profileImage: ""
+            )
         ]
         fetchMassageRankListUseCase.fetchMassageRankListHandler = { expectedMassageRankList }
 

@@ -18,6 +18,7 @@ public final class HomeAssembly: Assembly {
         container.register(HomeFactory.self) { resolver in
             HomeFactoryImpl(
                 repeatableTimer: resolver.resolve(RepeatableTimer.self)!,
+                fetchProfileImageUseCase: resolver.resolve(FetchProfileImageUseCase.self)!,
                 fetchSelfStudyInfoUseCase: resolver.resolve(FetchSelfStudyInfoUseCase.self)!,
                 fetchMassageInfoUseCase: resolver.resolve(FetchMassageInfoUseCase.self)!,
                 fetchMealInfoUseCase: resolver.resolve(FetchMealInfoUseCase.self)!,

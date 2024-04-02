@@ -19,7 +19,15 @@ final class FetchSelfStudyRankListUseCaseTests: XCTestCase {
 
     func testFetchSelfStudyRankList_When_ReqNil() async throws {
         let expected = [
-            SelfStudyRankModel(id: 1, rank: 1, stuNum: "3218", memberName: "김준", gender: .man, selfStudyCheck: true)
+            SelfStudyRankModel(
+                id: 1,
+                rank: 1,
+                stuNum: "3218",
+                memberName: "김준",
+                gender: .man,
+                selfStudyCheck: true,
+                profileImage: ""
+            )
         ]
         selfStudyRepository.fetchSelfStudyRankListReturn = expected
 
@@ -31,7 +39,15 @@ final class FetchSelfStudyRankListUseCaseTests: XCTestCase {
 
     func testFetchSelfStudyRankList() async throws {
         let expected = [
-            SelfStudyRankModel(id: 1, rank: 1, stuNum: "3218", memberName: "김준", gender: .man, selfStudyCheck: true)
+            SelfStudyRankModel(
+                id: 1,
+                rank: 1,
+                stuNum: "3218",
+                memberName: "김준",
+                gender: .man,
+                selfStudyCheck: true,
+                profileImage: ""
+            )
         ]
         selfStudyRepository.fetchSelfStudyRankSearchReturn = expected
 

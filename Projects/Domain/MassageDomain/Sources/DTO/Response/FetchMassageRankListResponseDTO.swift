@@ -11,6 +11,7 @@ struct FetchMassageRankListResponseDTO: Decodable {
         let stuNum: String
         let memberName: String
         let gender: GenderType
+        let profileImage: String?
     }
 }
 
@@ -23,6 +24,13 @@ extension FetchMassageRankListResponseDTO {
 
 extension FetchMassageRankListResponseDTO.MassageRankResponseDTO {
     func toDomain() -> MassageRankEntity {
-        MassageRankEntity(id: id, rank: rank, stuNum: stuNum, memberName: memberName, gender: gender)
+        MassageRankEntity(
+            id: id,
+            rank: rank,
+            stuNum: stuNum,
+            memberName: memberName,
+            gender: gender,
+            profileImage: profileImage
+        )
     }
 }

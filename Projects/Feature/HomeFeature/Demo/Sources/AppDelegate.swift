@@ -23,6 +23,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
                 .autoconnect()
                 .eraseToAnyPublisher()
         }
+        let fetchProfileImageUseCase: FetchProfileImageUseCaseSpy = .init()
         let fetchSelfStudyInfoUseCase: FetchSelfStudyInfoUseCaseSpy = .init()
         let fetchMassageInfoUseCase: FetchMassageInfoUseCaseSpy = .init()
         let fetchMealInfoUseCase: FetchMealInfoUseCaseSpy = .init()
@@ -38,6 +39,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         let withdrawalUseCase = WithdrawalUseCaseSpy()
         let store = HomeStore(
             repeatableTimer: repeatableTimerStub,
+            fetchProfileImageUseCase: fetchProfileImageUseCase,
             fetchSelfStudyInfoUseCase: fetchSelfStudyInfoUseCase,
             fetchMassageInfoUseCase: fetchMassageInfoUseCase,
             fetchMealInfoUseCase: fetchMealInfoUseCase,

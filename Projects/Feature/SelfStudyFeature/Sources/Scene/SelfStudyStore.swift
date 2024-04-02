@@ -154,7 +154,8 @@ private extension SelfStudyStore {
                 stuNum: $0.stuNum,
                 memberName: $0.memberName,
                 gender: $0.gender,
-                selfStudyCheck: isChecked
+                selfStudyCheck: isChecked,
+                profileImage: $0.profileImage
             )
         }
     }
