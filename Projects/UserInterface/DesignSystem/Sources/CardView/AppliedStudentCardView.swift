@@ -10,12 +10,12 @@ public struct AppliedStudentViewModel: Equatable {
     public let stuNum: String
     public let isChecked: Bool
     public let profileImage: String?
-    
+
     public enum Gender {
         case man
         case woman
     }
-    
+
     public init(
         rank: Int,
         name: String,
@@ -46,8 +46,8 @@ public final class AppliedStudentCardView: UIView {
         size: .custom(.init(width: 64, height: 64)),
         image: .Dotori.personRectangle
     )
-        .set(\.cornerRadius, 8)
-        .set(\.clipsToBounds, true)
+    .set(\.cornerRadius, 8)
+    .set(\.clipsToBounds, true)
     private let nameLabel = DotoriLabel(textColor: .neutral(.n10), font: .body1)
     private let genderImageView = DotoriIconView(
         size: .custom(.init(width: 16, height: 16)),
@@ -56,27 +56,27 @@ public final class AppliedStudentCardView: UIView {
     private let stuNumLabel = DotoriLabel(textColor: .neutral(.n20), font: .caption)
     private lazy var profileStackView = VStackView(spacing: 8) {
         userImageView
-        
+
         HStackView(spacing: 2) {
             nameLabel
-            
+
             genderImageView
         }
         .alignment(.center)
-        
+
         stuNumLabel
     }.alignment(.center)
-    
+
     public init() {
         super.init(frame: .zero)
         configureView()
     }
-    
+
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     public func updateContent(
         with viewModel: AppliedStudentViewModel
     ) {
@@ -86,32 +86,32 @@ public final class AppliedStudentCardView: UIView {
             .withTintColor(.dotori(.neutral(.n10)), renderingMode: .alwaysOriginal)
         self.stuNumLabel.text = viewModel.stuNum
         self.attendanceCheckBox.isChecked = viewModel.isChecked
-        
+
         guard let profileImageURL = viewModel.profileImage,
               let imageURL = URL(string: profileImageURL)
         else {
             self.userImageView.image = .Dotori.personRectangle
             return
         }
-        
+
         let request = ImageRequest(
             url: imageURL,
             priority: .high
         )
-        
+
         imageTask = Task.detached {
             let image = try await ImagePipeline.shared.image(for: request)
             guard !Task.isCancelled else { return }
-            await MainActor.run { 
+            await MainActor.run {
                 self.userImageView.image = image
             }
         }
     }
-    
+
     public func setIsHiddenAttendanceCheckBox(_ isHidden: Bool) {
         attendanceCheckBox.isHidden = isHidden
     }
-    
+
     public func cancelImageDownload() {
         imageTask?.cancel()
         imageTask = nil
@@ -125,17 +125,17 @@ private extension AppliedStudentCardView {
             attendanceCheckBox
             profileStackView
         }
-        
+
         MSGLayout.buildLayout {
             rankLabel.layout
                 .top(.toSuperview(), .equal(12))
                 .leading(.toSuperview(), .equal(16))
-            
+
             attendanceCheckBox.layout
                 .top(.toSuperview(), .equal(12))
                 .trailing(.toSuperview(), .equal(-12))
                 .size(24)
-            
+
             profileStackView.layout
                 .centerX(.toSuperview())
                 .top(.toSuperview(), .equal(28))
