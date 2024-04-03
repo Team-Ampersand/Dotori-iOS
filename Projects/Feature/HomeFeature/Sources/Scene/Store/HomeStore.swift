@@ -37,7 +37,7 @@ final class HomeStore: BaseStore {
     private let modifyMassagePersonnelUseCase: any ModifyMassagePersonnelUseCase
     private let logoutUseCase: any LogoutUseCase
     private let withdrawalUseCase: any WithdrawalUseCase
-    
+
     init(
         repeatableTimer: any RepeatableTimer,
         fetchProfileImageUseCase: any FetchProfileImageUseCase,
@@ -71,7 +71,7 @@ final class HomeStore: BaseStore {
         self.logoutUseCase = logoutUseCase
         self.withdrawalUseCase = withdrawalUseCase
     }
-    
+
     enum Action: Equatable {
         case viewDidLoad
         case myInfoButtonDidTap
@@ -95,48 +95,48 @@ extension HomeStore {
         switch action {
         case .viewDidLoad:
             return viewDidLoad()
-            
+
         case .myInfoButtonDidTap:
             return myInfoButtonDidTap()
-            
+
         case .prevDateButtonDidTap:
             let prevDate = currentState.selectedMealDate.addingTimeInterval(-86400)
             return .merge(
                 .just(.updateSelectedMealDate(prevDate)),
                 self.fetchMealSideEffect(date: prevDate)
             )
-            
+
         case .nextDateButtonDidTap:
             let nextDate = currentState.selectedMealDate.addingTimeInterval(86400)
             return .merge(
                 .just(.updateSelectedMealDate(nextDate)),
                 self.fetchMealSideEffect(date: nextDate)
             )
-            
+
         case let .mealTypeDidChanged(type):
             return .just(.updateSelectedMealType(type))
-            
+
         case .selfStudyDetailButtonDidTap:
             route.send(DotoriRoutePath.selfStudy)
-            
+
         case .massageDetailButtonDidTap:
             route.send(DotoriRoutePath.massage)
-            
+
         case .applySelfStudyButtonDidTap:
             applySelfStudyButtonDidTap()
-            
+
         case .selfStudySettingButtonDidTap:
             selfStudySettingButtonDidTap()
-            
+
         case .applyMassageButtonDidTap:
             applyMassageButtonDidTap()
-            
+
         case .massageSettingButtonDidTap:
             massageSettingButtonDidTap()
-            
+
         case .refreshSelfStudyButtonDidTap:
             return fetchSelfStudyInfoSideEffect()
-            
+
         case .refreshMassageButtonDidTap:
             return fetchMassageInfoSideEffect()
         }
@@ -151,7 +151,7 @@ private extension HomeStore {
         let timerPublisher = repeatableTimer.repeatPublisher(every: 1.0)
             .map(Mutation.updateCurrentTime)
             .eraseToSideEffect()
-        
+
         let userRolePublisher = SideEffect
             .just(try? loadCurrentUserRoleUseCase())
             .replaceNil(with: .member)
@@ -159,13 +159,13 @@ private extension HomeStore {
             .map(Mutation.updateCurrentUserRole)
             .eraseToSideEffect()
         let profileImagePublisher = self.fetchProfileImageSideEffect()
-        
+
         let selfStudyPublisher = self.fetchSelfStudyInfoSideEffect()
-        
+
         let massagePublisher = self.fetchMassageInfoSideEffect()
-        
+
         let mealPublisher = self.fetchMealSideEffect(date: currentState.selectedMealDate)
-        
+
         return .merge(
             profileImagePublisher,
             timerPublisher,
@@ -177,7 +177,7 @@ private extension HomeStore {
         .subscribe(on: DispatchQueue.global())
         .eraseToSideEffect()
     }
-    
+
     func myInfoButtonDidTap() -> SideEffect<Mutation, Never> {
         let alertPath = DotoriRoutePath.alert(style: .actionSheet, actions: [
             .init(title: L10n.Home.profileEditButtonTitle, style: .default) { [route] _ in
@@ -215,7 +215,7 @@ private extension HomeStore {
         self.route.send(alertPath)
         return .none
     }
-    
+
     func applySelfStudyButtonDidTap() {
         Task.catching {
             if self.currentState.selfStudyStatus == .applied {
@@ -236,7 +236,7 @@ private extension HomeStore {
             DotoriToast.makeToast(text: error.localizedDescription, style: .error)
         }
     }
-    
+
     func selfStudySettingButtonDidTap() {
         let inputDialogRoutePath = DotoriRoutePath.inputDialog(
             title: L10n.Home.selfStudyModifyLimitTitle,
@@ -254,7 +254,7 @@ private extension HomeStore {
         }
         route.send(inputDialogRoutePath)
     }
-    
+
     func applyMassageButtonDidTap() {
         Task.catching {
             if self.currentState.massageStatus == .applied {
@@ -275,7 +275,7 @@ private extension HomeStore {
             DotoriToast.makeToast(text: error.localizedDescription, style: .error)
         }
     }
-    
+
     func massageSettingButtonDidTap() {
         let inputDialogRoutePath = DotoriRoutePath.inputDialog(
             title: L10n.Home.massageModifyLimitTitle,
@@ -306,7 +306,7 @@ private extension HomeStore {
             .catchToNever()
         return profileImagePublisher
     }
-    
+
     func fetchSelfStudyInfoSideEffect() -> SideEffect<Mutation, Never> {
         let selfStudyPublisher = SideEffect<SelfStudyInfoModel, Never>
             .tryAsync {
@@ -324,7 +324,7 @@ private extension HomeStore {
             .catchToNever()
         return makeLoadingSideEffect(selfStudyPublisher, loadingState: .selfStudy)
     }
-    
+
     func fetchMassageInfoSideEffect() -> SideEffect<Mutation, Never> {
         let massagePublisher = SideEffect<MassageInfoModel, Never>
             .tryAsync {
@@ -342,7 +342,7 @@ private extension HomeStore {
             .catchToNever()
         return makeLoadingSideEffect(massagePublisher, loadingState: .massage)
     }
-    
+
     func fetchMealSideEffect(date: Date) -> SideEffect<Mutation, Never> {
         return self.fetchMealInfoUseCase(date: date)
             .toAnyPublisher()
@@ -350,10 +350,10 @@ private extension HomeStore {
                 switch status {
                 case let .loading(mealInfo):
                     return Mutation.updateMealInfo(mealInfo ?? [])
-                    
+
                 case let .completed(mealInfo):
                     return Mutation.updateMealInfo(mealInfo)
-                    
+
                 default:
                     return nil
                 }
