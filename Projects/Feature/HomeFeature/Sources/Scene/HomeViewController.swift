@@ -15,7 +15,8 @@ final class HomeViewController: BaseStoredViewController<HomeStore> {
     }
 
     private let dotoriBarButtonItem = DotoriBarButtonItem()
-    private let myInfoImageView = UIImageView(image: .Dotori.personCircle)
+    private let myInfoImageView = UIImageView()
+        .set(\.image, .Dotori.personCircle)
         .set(\.cornerRadius, 16)
         .set(\.clipsToBounds, true)
     private lazy var myInfoBarButtonItem = UIBarButtonItem(customView: myInfoImageView)
@@ -144,27 +145,15 @@ final class HomeViewController: BaseStoredViewController<HomeStore> {
             .receive(on: DispatchQueue.main)
 
         sharedState
-            .map(\.profileImageUrl)
-            .sink(with: self, receiveValue: { owner, profileImageURL in
-                guard let profileImageURL,
-                      let imageURL = URL(string: profileImageURL)
-                else {
-                    owner.myInfoImageView.image = .Dotori.personCircle
-                    return
-                }
-
-                let request = ImageRequest(
-                    url: URL(string: profileImageURL),
-                    priority: .high,
-                    options: [.reloadIgnoringCachedData]
-                )
-                Task {
-                    do {
-                        let image = try await ImagePipeline.shared.image(for: request)
-                        owner.myInfoImageView.image = image
-                    }
-                }
-            })
+            .compactMap(\.profileImageUrl)
+            .compactMap { URL(string: $0) }
+            .catchToNever()
+            .map { ImageRequest(url: $0, priority: .high) }
+            .setFailureType(to: Error.self)
+            .tryAsyncMap { try await ImagePipeline.shared.image(for: $0) }
+            .catchToNever()
+            .map(Optional.init)
+            .assign(to: \.image, on: myInfoImageView)
             .store(in: &subscription)
 
         sharedState

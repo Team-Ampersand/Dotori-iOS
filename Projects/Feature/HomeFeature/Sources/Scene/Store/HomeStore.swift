@@ -301,12 +301,7 @@ private extension HomeStore {
             .tryAsync {
                 try await self.fetchProfileImageUseCase()
             }
-            .flatMap { profileImage in
-                SideEffect.merge(
-                    .just(Mutation.updateProfileImage(profileImage))
-                )
-                .setFailureType(to: Never.self)
-            }
+            .map(Mutation.updateProfileImage)
             .eraseToSideEffect()
             .catchToNever()
         return profileImagePublisher

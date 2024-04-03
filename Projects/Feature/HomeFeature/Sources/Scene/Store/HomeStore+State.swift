@@ -10,7 +10,7 @@ extension HomeStore {
     struct State {
         var currentTime: Date = .init()
         var currentUserRole: UserRoleType = .member
-        var profileImageUrl: String? = ""
+        var profileImageUrl: String?
         var selfStudyInfo: (Int, Int) = (0, 0)
         var massageInfo: (Int, Int) = (0, 0)
         var selectedMealDate: Date = Date()
