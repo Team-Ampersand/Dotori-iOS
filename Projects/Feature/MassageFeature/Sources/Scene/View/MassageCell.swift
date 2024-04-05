@@ -9,6 +9,11 @@ import UIKit
 final class MassageCell: BaseTableViewCell<MassageRankModel> {
     private let appliedStudentCardView = AppliedStudentCardView()
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        appliedStudentCardView.cancelImageDownload()
+    }
+
     override func addView() {
         contentView.addSubviews {
             appliedStudentCardView
@@ -36,7 +41,8 @@ final class MassageCell: BaseTableViewCell<MassageRankModel> {
                 name: model.memberName,
                 gender: model.gender == .man ? .man : .woman,
                 stuNum: model.stuNum,
-                isChecked: false
+                isChecked: false,
+                profileImage: model.profileImage
             )
         )
     }

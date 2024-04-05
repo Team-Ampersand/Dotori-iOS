@@ -20,7 +20,14 @@ final class FetchMassageRankListUseCaseTests: XCTestCase {
     func testFetchMassageInfo() async throws {
         XCTAssertEqual(massageRepository.fetchMassageRankListCallCount, 0)
         let expected = [
-            MassageRankModel(id: 1, rank: 2, stuNum: "1111", memberName: "김시훈", gender: .man)
+            MassageRankModel(
+                id: 1,
+                rank: 2,
+                stuNum: "1111",
+                memberName: "김시훈",
+                gender: .man,
+                profileImage: ""
+            )
         ]
         massageRepository.fetchMassageRankListHandler = { expected }
 

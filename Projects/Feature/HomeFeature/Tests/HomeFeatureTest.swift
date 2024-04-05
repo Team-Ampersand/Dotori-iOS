@@ -11,6 +11,7 @@ import XCTest
 
 final class HomeFeatureTests: XCTestCase {
     var repeatableTimer: RepeatableTimerStub!
+    var fetchProfileImageUseCase: FetchProfileImageUseCaseSpy!
     var fetchSelfStudyInfoUseCase: FetchSelfStudyInfoUseCaseSpy!
     var fetchMassageInfoUseCase: FetchMassageInfoUseCaseSpy!
     var fetchMealInfoUseCase: FetchMealInfoUseCaseSpy!
@@ -28,6 +29,7 @@ final class HomeFeatureTests: XCTestCase {
 
     override func setUp() {
         repeatableTimer = .init()
+        fetchProfileImageUseCase = .init()
         fetchSelfStudyInfoUseCase = .init()
         fetchMassageInfoUseCase = .init()
         fetchMealInfoUseCase = .init()
@@ -42,6 +44,7 @@ final class HomeFeatureTests: XCTestCase {
         withdrawalUseCase = .init()
         sut = .init(
             repeatableTimer: repeatableTimer,
+            fetchProfileImageUseCase: fetchProfileImageUseCase,
             fetchSelfStudyInfoUseCase: fetchSelfStudyInfoUseCase,
             fetchMassageInfoUseCase: fetchMassageInfoUseCase,
             fetchMealInfoUseCase: fetchMealInfoUseCase,
@@ -60,6 +63,7 @@ final class HomeFeatureTests: XCTestCase {
 
     override func tearDown() {
         repeatableTimer = nil
+        fetchProfileImageUseCase = nil
         fetchSelfStudyInfoUseCase = nil
         fetchMassageInfoUseCase = nil
         fetchMealInfoUseCase = nil

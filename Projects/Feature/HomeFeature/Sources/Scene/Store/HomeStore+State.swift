@@ -10,6 +10,7 @@ extension HomeStore {
     struct State {
         var currentTime: Date = .init()
         var currentUserRole: UserRoleType = .member
+        var profileImageUrl: String?
         var selfStudyInfo: (Int, Int) = (0, 0)
         var massageInfo: (Int, Int) = (0, 0)
         var selectedMealDate: Date = Date()
@@ -29,6 +30,7 @@ extension HomeStore {
     enum Mutation {
         case updateCurrentTime(Date)
         case updateCurrentUserRole(UserRoleType)
+        case updateProfileImage(String)
         case updateSelfStudyInfo((Int, Int))
         case updateMassageInfo((Int, Int))
         case updateSelectedMealDate(Date)
@@ -54,6 +56,9 @@ extension HomeStore {
 
         case let .updateCurrentUserRole(userRole):
             newState.currentUserRole = userRole
+
+        case let .updateProfileImage(profileImageUrl):
+            newState.profileImageUrl = profileImageUrl
 
         case let .updateSelfStudyInfo(selfStudyInfo):
             newState.selfStudyInfo = selfStudyInfo

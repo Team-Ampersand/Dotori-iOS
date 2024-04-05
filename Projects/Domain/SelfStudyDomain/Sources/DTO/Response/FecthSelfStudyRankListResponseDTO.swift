@@ -12,6 +12,7 @@ struct FetchSelfStudyRankListResponseDTO: Decodable {
         let memberName: String
         let gender: GenderType
         let selfStudyCheck: Bool
+        let profileImage: String?
     }
 }
 
@@ -23,7 +24,8 @@ extension FetchSelfStudyRankListResponseDTO.SelfStudyRankResponseDTO {
             stuNum: stuNum,
             memberName: memberName,
             gender: gender,
-            selfStudyCheck: selfStudyCheck
+            selfStudyCheck: selfStudyCheck,
+            profileImage: profileImage
         )
     }
 }
