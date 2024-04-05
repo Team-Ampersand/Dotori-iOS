@@ -1,0 +1,167 @@
+{
+  "pins" : [
+    {
+      "identity" : "anim",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/GSM-MSG/Anim.git",
+      "state" : {
+        "revision" : "af643ad132b62f46af804f9a59766fd1ab59be83",
+        "version" : "1.1.0"
+      }
+    },
+    {
+      "identity" : "configure",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/GSM-MSG/Configure.git",
+      "state" : {
+        "revision" : "60784ac8215d0c42b8b1d0964743dc5abadb39bd",
+        "version" : "1.0.1"
+      }
+    },
+    {
+      "identity" : "emdpoint",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/GSM-MSG/Emdpoint.git",
+      "state" : {
+        "revision" : "38fdc843517ec1dbc593d9d80f440dff5629dc7f",
+        "version" : "3.5.0"
+      }
+    },
+    {
+      "identity" : "grdb.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/groue/GRDB.swift.git",
+      "state" : {
+        "revision" : "77b85bed259b7f107710a0b78c439b1c5839dc45",
+        "version" : "6.26.0"
+      }
+    },
+    {
+      "identity" : "inject",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/krzysztofzablocki/Inject.git",
+      "state" : {
+        "revision" : "d394c5327141ba490a13080147af7228ee77aa59",
+        "version" : "1.4.0"
+      }
+    },
+    {
+      "identity" : "iqkeyboardmanager",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/hackiftekhar/IQKeyboardManager.git",
+      "state" : {
+        "revision" : "c00b1ae9fa1ad8af4465bb6ca901f6943fc98eba",
+        "version" : "6.5.16"
+      }
+    },
+    {
+      "identity" : "lottie-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/airbnb/lottie-ios.git",
+      "state" : {
+        "revision" : "7fe8b6f697ae7db4bf0df270119592cb5d502848",
+        "version" : "4.4.1"
+      }
+    },
+    {
+      "identity" : "miniature",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/GSM-MSG/Miniature.git",
+      "state" : {
+        "revision" : "cf81bfdb2355a096253080969b8cfda02adeaf63",
+        "version" : "1.3.1"
+      }
+    },
+    {
+      "identity" : "moordinator",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/GSM-MSG/Moordinator.git",
+      "state" : {
+        "revision" : "bdad57eef28eeb9340f91b7ead0bb8f55a122d62",
+        "version" : "2.2.0"
+      }
+    },
+    {
+      "identity" : "msglayout",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/GSM-MSG/MSGLayout.git",
+      "state" : {
+        "revision" : "86810bb67d31570531e0e94b840d959cb0760a22",
+        "version" : "1.3.0"
+      }
+    },
+    {
+      "identity" : "neiswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/baekteun/NeiSwift.git",
+      "state" : {
+        "revision" : "b97342fc54412dfc7d976682e6cb7ed05588245f",
+        "version" : "2.0.2"
+      }
+    },
+    {
+      "identity" : "nuke",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kean/Nuke.git",
+      "state" : {
+        "revision" : "4625c73ea00a9fb4b4f3e28d95d0021a44af7e59",
+        "version" : "12.5.0"
+      }
+    },
+    {
+      "identity" : "prynttrimmerview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/HHK1/PryntTrimmerView",
+      "state" : {
+        "revision" : "ac1b60a22c7e6a6514de7a66d2f3d5b537c956d5",
+        "version" : "4.0.2"
+      }
+    },
+    {
+      "identity" : "rxswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ReactiveX/RxSwift.git",
+      "state" : {
+        "revision" : "9dcaa4b333db437b0fbfaf453fad29069044a8b4",
+        "version" : "6.6.0"
+      }
+    },
+    {
+      "identity" : "stevia",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/freshOS/Stevia",
+      "state" : {
+        "revision" : "cfb1a1d2159277bb553c3dc46f3f742c0275566d",
+        "version" : "5.1.2"
+      }
+    },
+    {
+      "identity" : "store",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/GSM-MSG/Store.git",
+      "state" : {
+        "revision" : "0324714d618b90bc9d99ee66ec1ce157fd043117",
+        "version" : "1.0.1"
+      }
+    },
+    {
+      "identity" : "swinject",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Swinject/Swinject.git",
+      "state" : {
+        "revision" : "463cb2d659c8ae34899d18057ea5b1bb86fc3178",
+        "version" : "2.8.4"
+      }
+    },
+    {
+      "identity" : "ypimagepicker",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Yummypets/YPImagePicker.git",
+      "state" : {
+        "revision" : "2db04eb020e3ef03828d3207d85250e110fa5919",
+        "version" : "5.2.2"
+      }
+    }
+  ],
+  "version" : 2
+}
