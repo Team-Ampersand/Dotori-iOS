@@ -18,17 +18,20 @@ env:
 jobs:
   prepare-dependency:
     name: ⚙️ Prepare for CI
-    runs-on: macos-latest
+    runs-on: macos-14
 
     steps:
       - uses: actions/checkout@v2
+      - uses: jdx/mise-action@v2
+        with:
+          xcode-version: 15.2
 
       - name: Install tuist
-        run: curl -Ls https://install.tuist.io | bash
+        run: mise install tuist
 
       - name: Compute dependency cache key
         id: compute_hash
-        run: echo "hash=${{ hashFiles('Tuist/Dependencies.swift') }}" >> $GITHUB_OUTPUT
+        run: echo "hash=${{ hashFiles('Tuist/Package.swift') }}" >> $GITHUB_OUTPUT
 
       - name: Check dependency cache
         uses: actions/cache@v3
@@ -39,22 +42,23 @@ jobs:
 
       - name: Install dependencies
         if: steps.cache_dependencies.outputs.cache-hit == ''
-        run: tuist fetch
+        run: tuist install
     outputs:
       dependency_cache_key: ${{ steps.compute_hash.outputs.hash }}
 
   test:
     name: 🧪 Test
-    runs-on: macos-latest
+    runs-on: macos-14
     needs: prepare-dependency
 
     steps:
     - uses: actions/checkout@v2
       with:
-        xcode-version: latest
+        xcode-version: 15.2
+    - uses: jdx/mise-action@v2
 
     - name: Install tuist
-      run: curl -Ls https://install.tuist.io | bash
+      run: mise install tuist
 
     - name: Check dependency cache
       uses: actions/cache@v3
@@ -68,10 +72,10 @@ jobs:
 
     - name: Install dependencies
       if: steps.cache_dependencies.outputs.cache-hit != 'true'
-      run: tuist fetch
+      run: tuist install
 
     - name: Test with tuist
-      run: TUIST_ENV=CI tuist test
+      run: TUIST_ENV=CI tuist test --no-selective-testing
 
     - name: Dotori iOS Test Success Discord Notification
       uses: sarisia/actions-status-discord@v1

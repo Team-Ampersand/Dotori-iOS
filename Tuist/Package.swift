@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 5.7
 import PackageDescription
 
 #if TUIST
@@ -36,7 +36,7 @@ let package = Package(
         .package(url: "https://github.com/GSM-MSG/Moordinator.git", from: "2.2.0"),
         .package(url: "https://github.com/GSM-MSG/Emdpoint.git", from: "3.4.0"),
         .package(url: "https://github.com/GSM-MSG/MSGLayout.git", from: "1.3.0"),
-        .package(url: "https://github.com/Swinject/Swinject.git", from: "2.8.3"),
+        .package(url: "https://github.com/Swinject/Swinject.git", from: "2.8.4"),
         .package(url: "https://github.com/GSM-MSG/Configure.git", from: "1.0.1")
     ]
 )
