@@ -1,9 +1,9 @@
 generate:
-	tuist fetch
+	tuist install
 	tuist generate
 
 ci_generate:
-	tuist fetch
+	tuist install
 	TUIST_ENV=CI tuist generate
 
 clean:
@@ -11,7 +11,7 @@ clean:
 	rm -rf *.xcworkspace
 
 reset:
-	tuist clean
+	mise exec -- tuist clean
 	rm -rf **/*.xcodeproj
 	rm -rf *.xcworkspace
 
