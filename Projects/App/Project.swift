@@ -17,12 +17,12 @@ let settings: Settings =
 let scripts: [TargetScript] = generateEnvironment.scripts
 
 let targets: [Target] = [
-    .init(
+    .target(
         name: env.name,
-        platform: env.platform,
+        destinations: env.destination,
         product: .app,
         bundleId: "\(env.organizationName).\(env.name)",
-        deploymentTarget: env.deploymentTarget,
+        deploymentTargets: env.deploymentTargets,
         infoPlist: .file(path: "Support/Info.plist"),
         sources: ["Sources/**"],
         resources: ["Resources/**"],
@@ -42,12 +42,12 @@ let targets: [Target] = [
             base: env.baseSetting
         )
     ),
-    .init(
+    .target(
         name: "\(env.name)ShareExtension",
-        platform: .iOS,
+        destinations: .iOS,
         product: .appExtension,
         bundleId: "\(env.organizationName).\(env.name).share",
-        deploymentTarget: env.deploymentTarget,
+        deploymentTargets: env.deploymentTargets,
         infoPlist: .file(path: "ShareExtension/Support/Info.plist"),
         sources: ["ShareExtension/Sources/**"],
         resources: ["ShareExtension/Resources/**"],
@@ -67,7 +67,7 @@ let targets: [Target] = [
 ]
 
 let schemes: [Scheme] = [
-    .init(
+    .scheme(
         name: "\(env.name)-DEV",
         shared: true,
         buildAction: .buildAction(targets: ["\(env.name)"]),
@@ -76,7 +76,7 @@ let schemes: [Scheme] = [
         profileAction: .profileAction(configuration: .dev),
         analyzeAction: .analyzeAction(configuration: .dev)
     ),
-    .init(
+    .scheme(
         name: "\(env.name)-STAGE",
         shared: true,
         buildAction: .buildAction(targets: ["\(env.name)"]),
@@ -85,7 +85,7 @@ let schemes: [Scheme] = [
         profileAction: .profileAction(configuration: .stage),
         analyzeAction: .analyzeAction(configuration: .stage)
     ),
-    .init(
+    .scheme(
         name: "\(env.name)-PROD",
         shared: true,
         buildAction: .buildAction(targets: ["\(env.name)"]),
