@@ -15,7 +15,7 @@ public enum MicroFeatureTarget {
 public extension Project {
     static func makeModule(
         name: String,
-        platform: Platform = env.platform,
+        destination: Set<Destination> = env.destination,
         product: Product,
         targets: Set<MicroFeatureTarget>,
         packages: [Package] = [],
@@ -29,7 +29,7 @@ public extension Project {
         sources: SourceFilesList = .sources,
         resources: ResourceFileElements? = nil,
         settings: SettingsDictionary = [:],
-        additionalPlistRows: [String: ProjectDescription.InfoPlist.Value] = [:],
+        additionalPlistRows: [String: Plist.Value] = [:],
         additionalFiles: [FileElement] = [],
         configurations: [Configuration] = [],
         resourceSynthesizers: [ResourceSynthesizer] = .default
@@ -58,12 +58,12 @@ public extension Project {
         if targets.contains(.interface) {
             dependencies.append(.target(name: "\(name)Interface"))
             allTargets.append(
-                Target(
+                .target(
                     name: "\(name)Interface",
-                    platform: platform,
+                    destinations: destination,
                     product: .framework,
                     bundleId: "\(env.organizationName).\(name)Interface",
-                    deploymentTarget: env.deploymentTarget,
+                    deploymentTargets: env.deploymentTargets,
                     infoPlist: .default,
                     sources: .interface,
                     scripts: scripts,
@@ -75,12 +75,12 @@ public extension Project {
 
         // MARK: - Sources
         allTargets.append(
-            Target(
+            .target(
                 name: name,
-                platform: platform,
+                destinations: destination,
                 product: product,
                 bundleId: "\(env.organizationName).\(name)",
-                deploymentTarget: env.deploymentTarget,
+                deploymentTargets: env.deploymentTargets,
                 infoPlist: .extendingDefault(with: additionalPlistRows),
                 sources: sources,
                 resources: resources,
@@ -92,12 +92,12 @@ public extension Project {
         // MARK: - Testing
         if targets.contains(.testing) && targets.contains(.interface) {
             allTargets.append(
-                Target(
+                .target(
                     name: "\(name)Testing",
-                    platform: platform,
+                    destinations: destination,
                     product: .framework,
                     bundleId: "\(env.organizationName).\(name)Testing",
-                    deploymentTarget: env.deploymentTarget,
+                    deploymentTargets: env.deploymentTargets,
                     infoPlist: .default,
                     sources: .testing,
                     scripts: scripts,
@@ -120,12 +120,12 @@ public extension Project {
         // MARK: - Unit Test
         if targets.contains(.unitTest) {
             allTargets.append(
-                Target(
+                .target(
                     name: "\(name)Tests",
-                    platform: platform,
+                    destinations: destination,
                     product: .unitTests,
                     bundleId: "\(env.organizationName).\(name)Tests",
-                    deploymentTarget: env.deploymentTarget,
+                    deploymentTargets: env.deploymentTargets,
                     infoPlist: .default,
                     sources: .unitTests,
                     scripts: scripts,
@@ -137,12 +137,12 @@ public extension Project {
         // MARK: - UI Test
         if targets.contains(.uiTest) {
             allTargets.append(
-                Target(
+                .target(
                     name: "\(name)UITests",
-                    platform: platform,
+                    destinations: destination,
                     product: .uiTests,
                     bundleId: "\(env.organizationName).\(name)UITests",
-                    deploymentTarget: env.deploymentTarget,
+                    deploymentTargets: env.deploymentTargets,
                     infoPlist: .default,
                     scripts: scripts,
                     dependencies: testTargetDependencies + uiTestDependencies
@@ -158,12 +158,12 @@ public extension Project {
                 demoDependencies.append(.target(name: "\(name)Testing"))
             }
             allTargets.append(
-                Target(
+                .target(
                     name: "\(name)Demo",
-                    platform: platform,
+                    destinations: destination,
                     product: .app,
                     bundleId: "\(env.organizationName).\(name)Demo",
-                    deploymentTarget: env.deploymentTarget,
+                    deploymentTargets: env.deploymentTargets,
                     infoPlist: .extendingDefault(with: [
                         "UIMainStoryboardFile": "",
                         "UILaunchStoryboardName": "LaunchScreen",
@@ -195,7 +195,7 @@ public extension Project {
 
 extension Scheme {
     static func makeScheme(target: ConfigurationName, name: String) -> Scheme {
-        return Scheme(
+        return .scheme(
             name: name,
             shared: true,
             buildAction: .buildAction(targets: ["\(name)"]),
@@ -211,7 +211,7 @@ extension Scheme {
         )
     }
     static func makeDemoScheme(target: ConfigurationName, name: String) -> Scheme {
-        return Scheme(
+        return .scheme(
             name: name,
             shared: true,
             buildAction: .buildAction(targets: ["\(name)Demo"]),

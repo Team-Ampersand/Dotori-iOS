@@ -4,54 +4,54 @@ import ProjectDescription
 
 public struct TargetSpec: Configurable {
     public var name: String
-    public var platform: Platform
+    public var destination: Set<Destination>
     public var product: Product
     public var productName: String?
     public var bundleId: String?
-    public var deploymentTarget: DeploymentTarget?
+    public var deploymentTargets: DeploymentTargets?
     public var infoPlist: InfoPlist?
     public var sources: SourceFilesList?
     public var resources: ResourceFileElements?
     public var copyFiles: [CopyFilesAction]?
     public var headers: Headers?
-    public var entitlements: Path?
+    public var entitlements: Entitlements?
     public var scripts: [TargetScript]
     public var dependencies: [TargetDependency]
     public var settings: Settings?
     public var coreDataModels: [CoreDataModel]
-    public var environment: [String : String]
+    public var environment: [String : EnvironmentVariable]
     public var launchArguments: [LaunchArgument]
     public var additionalFiles: [FileElement]
     public var buildRules: [BuildRule]
 
     public init(
         name: String = "",
-        platform: Platform = env.platform,
+        destination: Set<Destination> = env.destination,
         product: Product = .staticLibrary,
         productName: String? = nil,
         bundleId: String? = nil,
-        deploymentTarget: DeploymentTarget? = env.deploymentTarget,
+        deploymentTargets: DeploymentTargets? = env.deploymentTargets,
         infoPlist: InfoPlist = .default,
         sources: SourceFilesList? = .sources,
         resources: ResourceFileElements? = nil,
         copyFiles: [CopyFilesAction]? = nil,
         headers: Headers? = nil,
-        entitlements: Path? = nil,
+        entitlements: Entitlements? = nil,
         scripts: [TargetScript] = generateEnvironment.scripts,
         dependencies: [TargetDependency] = [],
         settings: Settings? = nil,
         coreDataModels: [CoreDataModel] = [],
-        environment: [String: String] = [:],
+        environment: [String: EnvironmentVariable] = [:],
         launchArguments: [LaunchArgument] = [],
         additionalFiles: [FileElement] = [],
         buildRules: [BuildRule] = []
     ) {
         self.name = name
-        self.platform = platform
+        self.destination = destination
         self.product = product
         self.productName = productName
         self.bundleId = bundleId
-        self.deploymentTarget = deploymentTarget
+        self.deploymentTargets = deploymentTargets
         self.infoPlist = infoPlist
         self.sources = sources
         self.resources = resources
@@ -73,13 +73,13 @@ public struct TargetSpec: Configurable {
     }
 
     func toTarget(with name: String, product: Product? = nil) -> Target {
-        Target(
+        .target(
             name: name,
-            platform: platform,
+            destinations: destination,
             product: product ?? self.product,
             productName: productName,
             bundleId: bundleId ?? "\(env.organizationName).\(name)",
-            deploymentTarget: deploymentTarget,
+            deploymentTargets: deploymentTargets,
             infoPlist: infoPlist,
             sources: sources,
             resources: resources,
@@ -95,7 +95,7 @@ public struct TargetSpec: Configurable {
                 defaultSettings: .recommended
             ),
             coreDataModels: coreDataModels,
-            environment: environment,
+            environmentVariables: environment,
             launchArguments: launchArguments,
             additionalFiles: additionalFiles,
             buildRules: buildRules
