@@ -78,6 +78,7 @@
 	</array>
 	<key>NSPrivacyTrackingDomains</key>
 	<array>
+		<string>https://server-v2.dotori-gsm.com/v2</string>
 		<string>https://open.neis.go.kr</string>
 	</array>
 	<key>NSPrivacyTracking</key>
